@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+  <display-name>HealthBody-WebService</display-name>
+<!-- 
+	<servlet>
+		<servlet-name>googleTest</servlet-name>
+		<servlet-class>edu.softserveinc.healthbody.webclient.servlets.GoogleTestServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>googleTest</servlet-name>
+		<url-pattern>/googleTest</url-pattern>
+	</servlet-mapping>
+-->
+<!-- @xtralife Google test playground
+	<servlet>
+		<servlet-name>CalendarServletSample</servlet-name>
+		<servlet-class>edu.softserveinc.healthbody.webclient.servlets.CalendarServletSample</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CalendarServletSample</servlet-name>
+		<url-pattern>/calendar</url-pattern>
+	</servlet-mapping>
+-->
+    <servlet>
+        <servlet-name>HelloServlet</servlet-name>
+        <servlet-class>edu.softserveinc.healthbody.servlets.HelloServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+	<servlet-mapping>
+        <servlet-name>HelloServlet</servlet-name>
+        <url-pattern>/hs</url-pattern>
+    </servlet-mapping>
+
+	<welcome-file-list>
+		<welcome-file></welcome-file>
+	</welcome-file-list>
+</web-app>
