@@ -27,7 +27,7 @@ public class HelloServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Github push test 001. GET received by HelloServlet: ").append(request.getContextPath());
+		response.getWriter().append("Github push test 002. GET received by HelloServlet: ").append(request.getContextPath());
 	}
 
 	/**
@@ -35,7 +35,7 @@ public class HelloServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Github push test 001. POST received by HelloServlet: ").append(request.getContextPath());
+		response.getWriter().append("Github push test 002. POST received by HelloServlet: ").append(request.getContextPath());
 	}
 
 }
