@@ -145,6 +145,7 @@
 		<get src="https://repo.maven.apache.org/maven2/org/slf4j/slf4j-log4j12/1.7.21/slf4j-log4j12-1.7.21.jar" dest="${lib}/slf4j-log4j12-1.7.21.jar" usetimestamp="false" ignoreerrors="true" />
 		<get src="https://repo.maven.apache.org/maven2/org/slf4j/slf4j-api/1.7.21/slf4j-api-1.7.21.jar" dest="${lib}/slf4j-api-1.7.21.jar" usetimestamp="false" ignoreerrors="true" />
 		<get src="https://repo.maven.apache.org/maven2/log4j/log4j/1.2.17/log4j-1.2.17.jar" dest="${lib}/log4j-1.2.17.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/javax/servlet/javax.servlet-api/3.0.1/javax.servlet-api-3.0.1.jar" dest="${lib}/javax.servlet-api-3.0.1.jar" usetimestamp="false" ignoreerrors="true" />
 	</target>
 
 	<target name="help">
