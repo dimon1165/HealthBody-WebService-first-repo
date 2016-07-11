@@ -1,0 +1,76 @@
+CREATE TABLE IF NOT EXISTS "users"(
+id_user serial primary key,
+login varchar(50),
+password varchar(25),
+firstname varchar(50),
+lastname varchar(50),
+"e-mail" varchar(50),
+age bigint,
+weight real,
+gender "char",
+health varchar(50),
+avatar varchar(50),
+google_field varchar(150),
+id_role bigint,
+status varchar(50),
+isDisabled boolean);
+
+CREATE TABLE IF NOT EXISTS "roles"(
+id_role serial primary key,
+name varchar(50),
+description varchar(200));
+
+CREATE TABLE IF NOT EXISTS "groups"(
+id_group serial primary key,
+name varchar(50),
+count bigint,
+description varchar(50),
+scoreGroup varchar(50),
+status varchar(50));
+
+CREATE TABLE IF NOT EXISTS "competitions"(
+id_competition serial primary key,
+name varchar(50),
+description varchar(200),
+start date,
+finish date,
+id_criteria bigint);
+
+CREATE TABLE IF NOT EXISTS "awards"(
+id_award serial primary key,
+name varchar(50));
+
+CREATE TABLE IF NOT EXISTS "criteria"(
+id_criteria serial primary key,
+name varchar(50),
+metrics real,
+get_google varchar(200));
+
+CREATE TABLE IF NOT EXISTS "usergroups"(
+id_user_group serial primary key,
+id_user bigint,
+id_group bigint,
+FOREIGN KEY (id_group)  REFERENCES "groups" (id_group),
+FOREIGN KEY (id_user) REFERENCES "users" (id_user));
+
+CREATE TABLE IF NOT EXISTS "groupcompetitions"(
+id_group_competition serial primary key,
+id_group bigint,
+id_competition bigint,
+FOREIGN KEY (id_group)  REFERENCES "groups" (id_group),
+FOREIGN KEY (id_competition) REFERENCES "competitions" (id_competition));
+
+CREATE TABLE IF NOT EXISTS "usercompetitions"(
+id_user_competition serial primary key,
+id_user bigint,
+id_competition bigint,
+id_award bigint,
+user_score bigint,
+time_received varchar(50),
+FOREIGN KEY (id_user) REFERENCES "users" (id_user),
+FOREIGN KEY (id_competition)  REFERENCES "competitions" (id_competition),
+FOREIGN KEY (id_award) REFERENCES "awards" (id_award));
+
+CREATE TABLE IF NOT EXISTS "metadata"(
+id_metadata serial primary key,
+last_synch varchar(50));
