@@ -15,7 +15,7 @@ import org.testng.annotations.Parameters;
 
 import edu.softserveinc.healthbody.db.ConnectionManager;
 import edu.softserveinc.healthbody.db.DBCreationManager;
-import edu.softserveinc.healthbody.db.DBPopulateManager;
+//import edu.softserveinc.healthbody.db.DBPopulateManager;
 import edu.softserveinc.healthbody.db.DataSourceRepository;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 
@@ -69,16 +69,16 @@ public class CreateDropTestDatabase {
 			fail(failMessage, e);
 		}
 		logger.info("Setting up database ends successfully...");
-		DBPopulateManager.getInstance().populateUsersTable();
-		DBPopulateManager.getInstance().populateGroupsTable();
-		DBPopulateManager.getInstance().populateUserGroupsTable();
-		DBPopulateManager.getInstance().populateAwardsTable();
-		DBPopulateManager.getInstance().populateCompetitionsTable();
-		DBPopulateManager.getInstance().populateCriteriaTable();
-		DBPopulateManager.getInstance().populateGroupCompetitionsTable();
-		DBPopulateManager.getInstance().populateMetaDataTable();
-		DBPopulateManager.getInstance().populateRolesTable();
-		DBPopulateManager.getInstance().populateUserCompetitionsTable();
+//		DBPopulateManager.getInstance().populateUsersTable();
+//		DBPopulateManager.getInstance().populateGroupsTable();
+//		DBPopulateManager.getInstance().populateUserGroupsTable();
+//		DBPopulateManager.getInstance().populateAwardsTable();
+//		DBPopulateManager.getInstance().populateCompetitionsTable();
+//		DBPopulateManager.getInstance().populateCriteriaTable();
+//		DBPopulateManager.getInstance().populateGroupCompetitionsTable();
+//		DBPopulateManager.getInstance().populateMetaDataTable();
+//		DBPopulateManager.getInstance().populateRolesTable();
+//		DBPopulateManager.getInstance().populateUserCompetitionsTable();
 	}
 	
 	@AfterSuite
