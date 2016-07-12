@@ -27,7 +27,7 @@ public class HelloServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Github push test 003. GET received by HelloServlet: ").append(request.getContextPath());
+		response.getWriter().append("Github push test 004. GET received by HelloServlet: ").append(request.getContextPath());
 	}
 
 	/**
