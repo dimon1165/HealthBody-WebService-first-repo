@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class HelloServlet
  */
-@WebServlet({ "/HelloServlet", "/" })
+@WebServlet("/HelloServlet")
 public class HelloServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -27,7 +27,7 @@ public class HelloServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Github push test 002. GET received by HelloServlet: ").append(request.getContextPath());
+		response.getWriter().append("Github push test 003. GET received by HelloServlet: ").append(request.getContextPath());
 	}
 
 	/**
@@ -35,7 +35,7 @@ public class HelloServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Github push test 002. POST received by HelloServlet: ").append(request.getContextPath());
+		response.getWriter().append("Github push test 003. POST received by HelloServlet: ").append(request.getContextPath());
 	}
 
 }
