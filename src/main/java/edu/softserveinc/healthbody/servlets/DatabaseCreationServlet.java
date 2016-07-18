@@ -38,45 +38,8 @@ public class DatabaseCreationServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
-		if (System.getenv("OPENSHIFT_POSTGRESQL_DB_HOST") == null) {
-			out.print("OPENSHIFT_POSTGRESQL_DB_HOST null");
-			out.flush();
-			return;
-		}
-		if (System.getenv("OPENSHIFT_POSTGRESQL_DB_PORT") == null) {
-			out.print("OPENSHIFT_POSTGRESQL_DB_PORT null");
-			out.flush();
-			return;
-		}
-		out.print("postgresql://" + System.getenv("OPENSHIFT_POSTGRESQL_DB_HOST")
-				+ ":" + System.getenv("OPENSHIFT_POSTGRESQL_DB_PORT") + "/ws");
-
-		//		Map<String, String> env = System.getenv();   
-//		for (String envName : env.keySet()) {
-//			out.format("%s=%s%n", envName, env.get(envName));
-//		}
-		out.flush();
-		int number = 0;
-		if (number < 1) {
-			return;
-		}
 		Connection con;
-		//		try {
-//			ds = new DataSource(DriverRepository.getInstance().getPostgresDriver(), url, user, password);
-//			con = ConnectionManager.getInstance(ds).getConnection();
-//		} catch (JDBCDriverException e) {
-//			e.printStackTrace(out);
-//			return;
-//		}
-//		try (Statement st = con.createStatement()) {
-//			DBCreationManager.getInstance().createDatabase(st, database);
-//		} catch (SQLException e) {
-//			e.printStackTrace(out);
-//			return;
-//		}
 		try {
-//			ds = new DataSource(DriverRepository.getInstance().getPostgresDriver(), url + database, user, password);
-//			con = ConnectionManager.getInstance(ds).getConnection();
 			con = ConnectionManager.getInstance(DataSourceRepository.getInstance().getPostgresOpenShift()).getConnection();
 		} catch (JDBCDriverException e) {
 			e.printStackTrace(out);

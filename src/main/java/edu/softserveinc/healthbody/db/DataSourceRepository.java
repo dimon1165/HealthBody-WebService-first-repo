@@ -21,7 +21,6 @@ public final class DataSourceRepository {
 	}
 
 	public DataSource getPostgresOpenShift()throws JDBCDriverException{
-//		Map<String, String> env = System.getenv();
 		return new DataSource(DriverRepository.getInstance().getPostgresDriver(), 
 				"postgresql://" + System.getenv("OPENSHIFT_POSTGRESQL_DB_HOST") + ":" + 
 				System.getenv("OPENSHIFT_POSTGRESQL_DB_PORT") + "/ws",
