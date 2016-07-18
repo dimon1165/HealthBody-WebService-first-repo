@@ -1,5 +1,7 @@
 package edu.softserveinc.healthbody.db;
 
+import java.util.Map;
+
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 
 public final class DataSourceRepository {
@@ -21,8 +23,11 @@ public final class DataSourceRepository {
 	}
 
 	public DataSource getPostgresOpenShift()throws JDBCDriverException{
+		Map<String, String> env = System.getenv();
 		return new DataSource(DriverRepository.getInstance().getPostgresDriver(), 
-				"postgresql://$OPENSHIFT_POSTGRESQL_DB_HOST:$OPENSHIFT_POSTGRESQL_DB_PORT/ws", "admindqufr92", "57UAv48D1n2-");
+				"postgresql://" + env.get("OPENSHIFT_POSTGRESQL_DB_HOST") + ":" + 
+				env.get("OPENSHIFT_POSTGRESQL_DB_PORT") + "/ws",
+				"admindqufr92", "57UAv48D1n2-");
 	}
 	
 	public DataSource getPostgresJenkins()throws JDBCDriverException{
