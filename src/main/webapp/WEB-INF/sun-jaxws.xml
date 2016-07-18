@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<endpoints xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime" version="2.0">
+  <endpoint name="HealthBodyService" implementation="edu.softserveinc.healthbody.webservice.HealthBodyServiceImpl"
+  	  url-pattern="/HealthBodyService" />
+</endpoints>

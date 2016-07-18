@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+
+<project name="lv185" default="package" basedir=".">
+
+	<!-- Build environment properties                                           -->
+
+	<property name="build.finalName" value="lv185-1.0" />
+	<property name="build.dir" value="target" />
+	<property name="build.outputDir" value="${build.dir}/classes" />
+	<property name="build.srcDir.0" value="src/main/java" />
+	<property name="build.resourceDir.0" value="src/main/resources" />
+	<property name="build.testOutputDir" value="${build.dir}/test-classes" />
+	<property name="build.testDir.0" value="src/test/java" />
+	<property name="test.reports" value="${build.dir}/test-reports" />
+	<property name="reporting.outputDirectory" value="${build.dir}/site" />
+	<property name="settings.offline" value="false" />
+	<property name="basedir" value="." />
+	<property name="lib" value="${basedir}/lib" />
+	<property name="web.dir" value="src/main/webapp" />
+
+	<!-- Defining classpaths                                                    -->
+
+	<path id="build.classpath">
+		<pathelement location="${basedir}" />
+		<fileset dir="${lib}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+	<path id="build.test.classpath">
+		<pathelement location="${basedir}" />
+		<fileset dir="${lib}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<!-- Cleaning up target                                                     -->
+
+	<target name="clean" description="Clean the output directory">
+		<delete dir="${build.dir}" />
+	</target>
+
+	<!-- Compilation target                                                     -->
+
+	<target name="compile" depends="get-deps" description="Compile the code">
+		<mkdir dir="${build.outputDir}" />
+		<mkdir dir="${build.dir}/lib" />
+		<javac destdir="${build.outputDir}" encoding="UTF-8" nowarn="false" debug="true" optimize="false" deprecation="true" target="1.7" verbose="false" fork="false" source="1.7" includeantruntime="false">
+			<src>
+				<pathelement location="${build.srcDir.0}" />
+			</src>
+			<classpath refid="build.classpath" />
+		</javac>
+		<copy todir="${build.outputDir}">
+			<fileset dir="${build.resourceDir.0}" />
+		</copy>
+		<copy todir="${build.dir}/lib">
+			<fileset dir="${lib}" />
+		</copy>
+	</target>
+
+	<!-- Test-compilation target                                                -->
+
+	<target name="compile-tests" depends="compile" description="Compile the test code" unless="test.skip">
+		<mkdir dir="${build.testOutputDir}" />
+		<javac destdir="${build.testOutputDir}" encoding="UTF-8" nowarn="false" debug="true" optimize="false" deprecation="true" target="1.7" verbose="false" fork="false" source="1.7" includeantruntime="false">
+			<src>
+				<pathelement location="${build.testDir.0}" />
+			</src>
+			<classpath>
+				<path refid="build.test.classpath" />
+				<pathelement location="${build.outputDir}" />
+			</classpath>
+		</javac>
+	</target>
+
+	<!-- Runs the file and generates Reportng report for TestNG                 -->
+	
+	<target name="testngdef" description="description">
+		<taskdef resource="testngtasks" classpath="./target/lib/testng-6.9.10.jar" />
+	</target>
+
+	<!-- Run all tests                                                          -->
+	
+	<target name="test" depends="compile-tests, testngdef, testng-missing" unless="testng.skipped" description="Run the test cases">
+		<mkdir dir="${test.reports}" />
+		<testng outputdir="${test.reports}" classpath="./target/lib/*;./target/classes;./target/test-classes;" useDefaultListeners="true">
+			<xmlfileset dir="." includes="testng.xml" />
+		</testng>
+	</target>
+
+	<target name="test-testng-present">
+		<available classname="testng.framework.Test" property="testng.present" classpathref="build.test.classpath" />
+	</target>
+
+	<target name="test-testng-status" depends="test-testng-present">
+		<condition property="testng.missing">
+			<and>
+				<isfalse value="${testng.present}" />
+				<isfalse value="${test.skip}" />
+			</and>
+		</condition>
+		<condition property="testng.skipped">
+			<or>
+				<isfalse value="${testng.present}" />
+				<istrue value="${test.skip}" />
+			</or>
+		</condition>
+	</target>
+
+	<target name="testng-missing" depends="test-testng-status" if="testng.missing">
+		<echo> WARNING! Tests not executed. Package not created </echo>
+	</target>
+
+	<!-- Javadoc target                                                         -->
+
+	<target name="javadoc" description="Generates the Javadoc of the application">
+		<javadoc sourcepath="${build.srcDir.0}" packagenames="*" destdir="${reporting.outputDirectory}/apidocs" access="protected" old="false" verbose="false" version="true" use="true" author="true" splitindex="false" nodeprecated="false" nodeprecatedlist="false" notree="false" noindex="false" nohelp="false" nonavbar="false" serialwarn="false" charset="ISO-8859-1" linksource="false" breakiterator="false" />
+	</target>
+
+	<!-- Package target                                                         -->
+
+	<target name="package" depends="compile, test" unless="testng.missing" description="Package the application">
+
+		<!--		<jar jarfile="${build.dir}/${build.finalName}.jar" compress="true" index="false" basedir="${build.outputDir}" excludes="**/package.html" /> -->
+
+		<war destfile="${build.dir}/${build.finalName}.war" webxml="${web.dir}/WEB-INF/web.xml">
+			<lib dir="${build.dir}/lib">
+				<exclude name="jdbc1.jar" />
+			</lib>
+			<classes dir="${build.dir}/classes" />
+			<fileset dir="${web.dir}">
+				<include name="**/*.*" />
+			</fileset>
+		</war>
+	</target>
+
+	<!-- Download dependencies target                                           -->
+
+	<target name="test-offline">
+		<condition property="mode.offline">
+			<equals arg1="${settings.offline}" arg2="true" />
+		</condition>
+	</target>
+
+	<target name="get-deps" depends="test-offline" description="Download all dependencies" unless="mode.offline">
+		<mkdir dir="${lib}" />
+		<get src="https://repo.maven.apache.org/maven2/org/testng/testng/6.9.10/testng-6.9.10.jar" dest="${lib}/testng-6.9.10.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/com/beust/jcommander/1.48/jcommander-1.48.jar" dest="${lib}/jcommander-1.48.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/org/beanshell/bsh/2.0b4/bsh-2.0b4.jar" dest="${lib}/bsh-2.0b4.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/org/postgresql/postgresql/9.4-1200-jdbc41/postgresql-9.4-1200-jdbc41.jar" dest="${lib}/postgresql-9.4-1200-jdbc41.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/com/github/dblock/waffle/waffle-jna/1.7/waffle-jna-1.7.jar" dest="${lib}/waffle-jna-1.7.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/net/java/dev/jna/jna/4.1.0/jna-4.1.0.jar" dest="${lib}/jna-4.1.0.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/net/java/dev/jna/jna-platform/4.1.0/jna-platform-4.1.0.jar" dest="${lib}/jna-platform-4.1.0.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/com/google/guava/guava/18.0/guava-18.0.jar" dest="${lib}/guava-18.0.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/org/apache/commons/commons-dbcp2/2.1.1/commons-dbcp2-2.1.1.jar" dest="${lib}/commons-dbcp2-2.1.1.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/org/apache/commons/commons-pool2/2.4.2/commons-pool2-2.4.2.jar" dest="${lib}/commons-pool2-2.4.2.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2.jar" dest="${lib}/commons-logging-1.2.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/org/slf4j/slf4j-log4j12/1.7.21/slf4j-log4j12-1.7.21.jar" dest="${lib}/slf4j-log4j12-1.7.21.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/org/slf4j/slf4j-api/1.7.21/slf4j-api-1.7.21.jar" dest="${lib}/slf4j-api-1.7.21.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/log4j/log4j/1.2.17/log4j-1.2.17.jar" dest="${lib}/log4j-1.2.17.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/com/sun/xml/ws/jaxws-rt/2.2.8/jaxws-rt-2.2.8.jar" dest="${lib}/jaxws-rt-2.2.8.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/javax/xml/bind/jaxb-api/2.2.7/jaxb-api-2.2.7.jar" dest="${lib}/jaxb-api-2.2.7.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/javax/xml/ws/jaxws-api/2.2.9/jaxws-api-2.2.9.jar" dest="${lib}/jaxws-api-2.2.9.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/javax/xml/soap/javax.xml.soap-api/1.3.5/javax.xml.soap-api-1.3.5.jar" dest="${lib}/javax.xml.soap-api-1.3.5.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/javax/annotation/javax.annotation-api/1.2-b03/javax.annotation-api-1.2-b03.jar" dest="${lib}/javax.annotation-api-1.2-b03.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/javax/jws/jsr181-api/1.0-MR1/jsr181-api-1.0-MR1.jar" dest="${lib}/jsr181-api-1.0-MR1.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/com/sun/xml/bind/jaxb-core/2.2.7/jaxb-core-2.2.7.jar" dest="${lib}/jaxb-core-2.2.7.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/com/sun/istack/istack-commons-runtime/2.16/istack-commons-runtime-2.16.jar" dest="${lib}/istack-commons-runtime-2.16.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/com/sun/xml/bind/jaxb-impl/2.2.7/jaxb-impl-2.2.7.jar" dest="${lib}/jaxb-impl-2.2.7.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/com/sun/xml/ws/policy/2.3.1/policy-2.3.1.jar" dest="${lib}/policy-2.3.1.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/org/glassfish/gmbal/gmbal-api-only/3.1.0-b001/gmbal-api-only-3.1.0-b001.jar" dest="${lib}/gmbal-api-only-3.1.0-b001.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/org/glassfish/external/management-api/3.0.0-b012/management-api-3.0.0-b012.jar" dest="${lib}/management-api-3.0.0-b012.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/org/jvnet/staxex/stax-ex/1.7.1/stax-ex-1.7.1.jar" dest="${lib}/stax-ex-1.7.1.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/com/sun/xml/stream/buffer/streambuffer/1.5.1/streambuffer-1.5.1.jar" dest="${lib}/streambuffer-1.5.1.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/org/jvnet/mimepull/mimepull/1.9.1/mimepull-1.9.1.jar" dest="${lib}/mimepull-1.9.1.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/com/sun/xml/fastinfoset/FastInfoset/1.2.12/FastInfoset-1.2.12.jar" dest="${lib}/FastInfoset-1.2.12.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/org/glassfish/ha/ha-api/3.1.9/ha-api-3.1.9.jar" dest="${lib}/ha-api-3.1.9.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/com/sun/xml/messaging/saaj/saaj-impl/1.3.20/saaj-impl-1.3.20.jar" dest="${lib}/saaj-impl-1.3.20.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/javax/xml/soap/saaj-api/1.3.4/saaj-api-1.3.4.jar" dest="${lib}/saaj-api-1.3.4.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/javax/activation/activation/1.1/activation-1.1.jar" dest="${lib}/activation-1.1.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/org/codehaus/woodstox/woodstox-core-asl/4.1.2/woodstox-core-asl-4.1.2.jar" dest="${lib}/woodstox-core-asl-4.1.2.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/org/codehaus/woodstox/stax2-api/3.1.1/stax2-api-3.1.1.jar" dest="${lib}/stax2-api-3.1.1.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/com/sun/org/apache/xml/internal/resolver/20050927/resolver-20050927.jar" dest="${lib}/resolver-20050927.jar" usetimestamp="false" ignoreerrors="true" />
+		<get src="https://repo.maven.apache.org/maven2/javax/servlet/javax.servlet-api/3.0.1/javax.servlet-api-3.0.1.jar" dest="${lib}/javax.servlet-api-3.0.1.jar" usetimestamp="false" ignoreerrors="true" />
+	</target>
+
+	<target name="help">
+		<echo message="Please run: $ant -projecthelp" />
+	</target>
+
+</project>
