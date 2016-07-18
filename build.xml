@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE xml>
 
-<project name="lv185" default="package" basedir=".">
+<project name="HealthBody-WebService" default="package" basedir=".">
 
 	<!-- Build environment properties                                           -->
 
-	<property name="build.finalName" value="lv185-1.0" />
+	<property name="build.finalName" value="HealthBody-WebService" />
 	<property name="build.dir" value="target" />
 	<property name="build.outputDir" value="${build.dir}/classes" />
 	<property name="build.srcDir.0" value="src/main/java" />
@@ -60,6 +60,7 @@
 	</target>
 
 	<!-- Test-compilation target                                                -->
+
 	<target name="compile-tests" depends="compile" description="Compile the test code" unless="test.skip">
 		<mkdir dir="${build.testOutputDir}" />
 		<javac destdir="${build.testOutputDir}" encoding="UTF-8" nowarn="false" debug="true" optimize="false" deprecation="true" target="1.7" verbose="false" fork="false" source="1.7" includeantruntime="false">
@@ -81,7 +82,7 @@
 
 	<!-- Run all tests                                                          -->
 	
-	<target name="test" depends="compile-tests, testngdef, testng-missing" unless="testng.skipped" description="Run the test cases">
+	<target name="test" depends="compile-tests, testngdef" unless="testng.skipped" description="Run the test cases">
 		<mkdir dir="${test.reports}" />
 		<testng outputdir="${test.reports}" classpath="./target/lib/*;./target/classes;./target/test-classes;" useDefaultListeners="true">
 			<xmlfileset dir="." includes="testng.xml" />
@@ -107,9 +108,9 @@
 		</condition>
 	</target>
 
-	<target name="testng-missing" depends="test-testng-status" if="testng.missing">
+<!--	<target name="testng-missing" depends="test-testng-status" if="testng.missing">
 		<echo> WARNING! Tests not executed. Package not created </echo>
-	</target>
+	</target> -->
 
 	<!-- Javadoc target                                                         -->
 
