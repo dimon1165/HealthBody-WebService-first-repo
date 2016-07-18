@@ -60,7 +60,6 @@
 	</target>
 
 	<!-- Test-compilation target                                                -->
-
 	<target name="compile-tests" depends="compile" description="Compile the test code" unless="test.skip">
 		<mkdir dir="${build.testOutputDir}" />
 		<javac destdir="${build.testOutputDir}" encoding="UTF-8" nowarn="false" debug="true" optimize="false" deprecation="true" target="1.7" verbose="false" fork="false" source="1.7" includeantruntime="false">
