@@ -38,10 +38,6 @@ public class DatabaseCreationServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
-		int number = 0;
-		if (number < 1) {
-			return;
-		}
 		Connection con;
 //		try {
 //			ds = new DataSource(DriverRepository.getInstance().getPostgresDriver(), url, user, password);
@@ -62,6 +58,7 @@ public class DatabaseCreationServlet extends HttpServlet {
 			con = ConnectionManager.getInstance(DataSourceRepository.getInstance().getPostgresOpenShift()).getConnection();
 		} catch (JDBCDriverException e) {
 			e.printStackTrace(out);
+			out.flush();
 			return;
 		}
 		try (Statement st = con.createStatement()) {
@@ -70,6 +67,7 @@ public class DatabaseCreationServlet extends HttpServlet {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace(out);
+			out.flush();
 			return;
 		}
 		DBPopulateManager.getInstance().populateUsersTable();
@@ -83,8 +81,9 @@ public class DatabaseCreationServlet extends HttpServlet {
 		DBPopulateManager.getInstance().populateRolesTable();
 		DBPopulateManager.getInstance().populateUserCompetitionsTable();
 
-		response.getWriter().append("Database successfully created and populated at: ")
+		out.append("Database successfully created and populated at: ")
 				.append(request.getContextPath());
+		out.flush();
 	}
 
 }
