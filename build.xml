@@ -42,7 +42,7 @@
 
 	<!-- Compilation target                                                     -->
 
-	<target name="compile" depends="get-deps" description="Compile the code">
+	<target name="compile" depends="get-deps, clean" description="Compile the code">
 		<mkdir dir="${build.outputDir}" />
 		<mkdir dir="${build.dir}/lib" />
 		<javac destdir="${build.outputDir}" encoding="UTF-8" nowarn="false" debug="true" optimize="false" deprecation="true" target="1.7" verbose="false" fork="false" source="1.7" includeantruntime="false">
@@ -60,8 +60,7 @@
 	</target>
 
 	<!-- Test-compilation target                                                -->
-
-	<target name="compile-tests" depends="compile" description="Compile the test code" unless="test.skip">
+	<target name="compile-tests" depends="compile" description="Compile the test code">
 		<mkdir dir="${build.testOutputDir}" />
 		<javac destdir="${build.testOutputDir}" encoding="UTF-8" nowarn="false" debug="true" optimize="false" deprecation="true" target="1.7" verbose="false" fork="false" source="1.7" includeantruntime="false">
 			<src>
@@ -82,45 +81,29 @@
 
 	<!-- Run all tests                                                          -->
 	
-	<target name="test" depends="compile-tests, testngdef" unless="testng.skipped" description="Run the test cases">
+	<target name="testng" depends="compile-tests, testngdef, test-offline" description="Run the test cases">
 		<mkdir dir="${test.reports}" />
-		<testng outputdir="${test.reports}" classpath="./target/lib/*;./target/classes;./target/test-classes;" useDefaultListeners="true">
+		<testng outputdir="${test.reports}" classpath="./target/lib/*;./target/classes;./target/test-classes;" useDefaultListeners="true" failureProperty="test.failed">
 			<xmlfileset dir="." includes="testng.xml" />
 		</testng>
 	</target>
-
-	<target name="test-testng-present">
-		<available classname="testng.framework.Test" property="testng.present" classpathref="build.test.classpath" />
+	
+	<target name="testng-failed" if="test.failed">
+	    <fail message="Some unit tests failed"/>
 	</target>
-
-	<target name="test-testng-status" depends="test-testng-present">
-		<condition property="testng.missing">
-			<and>
-				<isfalse value="${testng.present}" />
-				<isfalse value="${test.skip}" />
-			</and>
-		</condition>
-		<condition property="testng.skipped">
-			<or>
-				<isfalse value="${testng.present}" />
-				<istrue value="${test.skip}" />
-			</or>
-		</condition>
-	</target>
-
-<!--	<target name="testng-missing" depends="test-testng-status" if="testng.missing">
-		<echo> WARNING! Tests not executed. Package not created </echo>
-	</target> -->
+	
+	<target name="test" depends="testng,testng-failed"/>
 
 	<!-- Javadoc target                                                         -->
 
 	<target name="javadoc" description="Generates the Javadoc of the application">
 		<javadoc sourcepath="${build.srcDir.0}" packagenames="*" destdir="${reporting.outputDirectory}/apidocs" access="protected" old="false" verbose="false" version="true" use="true" author="true" splitindex="false" nodeprecated="false" nodeprecatedlist="false" notree="false" noindex="false" nohelp="false" nonavbar="false" serialwarn="false" charset="ISO-8859-1" linksource="false" breakiterator="false" />
+		<echo message="I'm here. Now what?"/>
 	</target>
 
 	<!-- Package target                                                         -->
 
-	<target name="package" depends="compile, test" unless="testng.missing" description="Package the application">
+	<target name="package" depends="compile, test" unless="test.failed" description="Package the application">
 
 		<!--		<jar jarfile="${build.dir}/${build.finalName}.jar" compress="true" index="false" basedir="${build.outputDir}" excludes="**/package.html" /> -->
 
