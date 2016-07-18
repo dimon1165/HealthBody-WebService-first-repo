@@ -138,7 +138,7 @@
 				<configuration>
 <!-- 					<warSourceDirectory>WebContent</warSourceDirectory> -->
 					<failOnMissingWebXml>false</failOnMissingWebXml>
-					<warName>lv185</warName>
+					<warName>HealthBody-WebService</warName>
 				</configuration>
 			</plugin>
 		</plugins>
