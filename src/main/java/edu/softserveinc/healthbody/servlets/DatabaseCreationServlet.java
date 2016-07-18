@@ -38,8 +38,18 @@ public class DatabaseCreationServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
-		out.print("postgresql://" + System.getenv("OPENSHIFT_POSTGRESQL_DB_HOST") + ":" + 
-		System.getenv("OPENSHIFT_POSTGRESQL_DB_PORT") + "/ws");
+		if (System.getenv("OPENSHIFT_POSTGRESQL_DB_HOST") == null) {
+			out.print("OPENSHIFT_POSTGRESQL_DB_HOST null");
+			out.flush();
+			return;
+		}
+		if (System.getenv("OPENSHIFT_POSTGRESQL_DB_PORT") == null) {
+			out.print("OPENSHIFT_POSTGRESQL_DB_PORT null");
+			out.flush();
+			return;
+		}
+		out.print("postgresql://" + System.getenv("OPENSHIFT_POSTGRESQL_DB_HOST")
+				+ ":" + System.getenv("OPENSHIFT_POSTGRESQL_DB_PORT") + "/ws");
 
 		//		Map<String, String> env = System.getenv();   
 //		for (String envName : env.keySet()) {
