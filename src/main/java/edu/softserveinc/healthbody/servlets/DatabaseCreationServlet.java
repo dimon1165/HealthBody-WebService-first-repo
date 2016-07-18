@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,8 +39,17 @@ public class DatabaseCreationServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
+		Map<String, String> env = System.getenv();   
+		for (String envName : env.keySet()) {
+			out.format("%s=%s%n", envName, env.get(envName));
+		}
+		out.flush();
+		int number = 0;
+		if (number < 1) {
+			return;
+		}
 		Connection con;
-//		try {
+		//		try {
 //			ds = new DataSource(DriverRepository.getInstance().getPostgresDriver(), url, user, password);
 //			con = ConnectionManager.getInstance(ds).getConnection();
 //		} catch (JDBCDriverException e) {
