@@ -35,7 +35,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>UserDTOServlet</servlet-name>
-		<url-pattern>/UserDTOServlet</url-pattern>
+		<url-pattern>/UserDTOServlets</url-pattern>
 	</servlet-mapping>
   
   <welcome-file-list>
