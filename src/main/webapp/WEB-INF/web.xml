@@ -29,14 +29,14 @@
 		<url-pattern>/googleTest</url-pattern>
 	</servlet-mapping>
 	
-	  <servlet>
+	<!--   <servlet>
 		<servlet-name>UserDTOServlet</servlet-name>
 		<servlet-class>edu.softserveinc.healthbody.servlets.UserDTOServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>UserDTOServlet</servlet-name>
 		<url-pattern>/UserDTOServlets</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping> -->
   
   <welcome-file-list>
 		<welcome-file>HomePage.html</welcome-file>
