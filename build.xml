@@ -74,31 +74,31 @@
 	</target>
 
 	<!-- Runs the file and generates Reportng report for TestNG                 -->
-	
+
 	<target name="testngdef" description="description">
 		<taskdef resource="testngtasks" classpath="./target/lib/testng-6.9.10.jar" />
 	</target>
 
 	<!-- Run all tests                                                          -->
-	
+
 	<target name="testng" depends="compile-tests, testngdef, test-offline" description="Run the test cases">
 		<mkdir dir="${test.reports}" />
 		<testng outputdir="${test.reports}" classpath="./target/lib/*;./target/classes;./target/test-classes;" useDefaultListeners="true" failureProperty="test.failed">
 			<xmlfileset dir="." includes="testng.xml" />
 		</testng>
 	</target>
-	
+
 	<target name="testng-failed" if="test.failed">
-	    <fail message="Some unit tests failed"/>
+		<fail message="Some unit tests failed" />
 	</target>
-	
-	<target name="test" depends="testng,testng-failed"/>
+
+	<target name="test" depends="testng,testng-failed" />
 
 	<!-- Javadoc target                                                         -->
 
 	<target name="javadoc" description="Generates the Javadoc of the application">
 		<javadoc sourcepath="${build.srcDir.0}" packagenames="*" destdir="${reporting.outputDirectory}/apidocs" access="protected" old="false" verbose="false" version="true" use="true" author="true" splitindex="false" nodeprecated="false" nodeprecatedlist="false" notree="false" noindex="false" nohelp="false" nonavbar="false" serialwarn="false" charset="ISO-8859-1" linksource="false" breakiterator="false" />
-		<echo message="I'm here. Now what?"/>
+		<echo message="I'm here. Now what?" />
 	</target>
 
 	<!-- Package target                                                         -->
@@ -166,10 +166,7 @@
 		<get src="https://repo.maven.apache.org/maven2/org/codehaus/woodstox/stax2-api/3.1.1/stax2-api-3.1.1.jar" dest="${lib}/stax2-api-3.1.1.jar" usetimestamp="false" ignoreerrors="true" />
 		<get src="https://repo.maven.apache.org/maven2/com/sun/org/apache/xml/internal/resolver/20050927/resolver-20050927.jar" dest="${lib}/resolver-20050927.jar" usetimestamp="false" ignoreerrors="true" />
 		<get src="https://repo.maven.apache.org/maven2/javax/servlet/javax.servlet-api/3.0.1/javax.servlet-api-3.0.1.jar" dest="${lib}/javax.servlet-api-3.0.1.jar" usetimestamp="false" ignoreerrors="true" />
-    <get src="https://repo.maven.apache.org/maven2/com/google/code/gson/gson/2.7/gson-2.7.jar" 
-         dest="${lib}/gson-2.7.jar" 
-         usetimestamp="false" 
-         ignoreerrors="true"/>
+		<get src="https://repo.maven.apache.org/maven2/com/google/code/gson/gson/2.7/gson-2.7.jar" dest="${lib}/gson-2.7.jar" usetimestamp="false" ignoreerrors="true" />
 	</target>
 
 	<target name="help">
