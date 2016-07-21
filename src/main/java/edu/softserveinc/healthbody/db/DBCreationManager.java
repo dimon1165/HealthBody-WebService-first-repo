@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import edu.softserveinc.healthbody.log.LoggerWrapper;
+import edu.softserveinc.healthbody.log.Log4jWrapper;
 
 public class DBCreationManager {
 
@@ -39,9 +39,9 @@ public class DBCreationManager {
 			String deleteConnectionsQuery = "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = \'"
 					+ databaseName + "\' AND pid <> pg_backend_pid();";
 			result = statement.execute(deleteConnectionsQuery + "DROP DATABASE " + databaseName + ";");
-			LoggerWrapper.info(this.getClass(), "Database - " + databaseName + " was deleted.");
+			Log4jWrapper.get().info("Database - " + databaseName + " was deleted.");
 		} else {
-			LoggerWrapper.info(this.getClass(), "Database - " + databaseName + " does not exist.");
+			Log4jWrapper.get().info("Database - " + databaseName + " does not exist.");
 			result = false;
 		}
 		return result;
@@ -51,12 +51,12 @@ public class DBCreationManager {
 		boolean result = false;
 		statement.execute("select datname from pg_catalog.pg_database where datname = \'" + databaseName + "\';");
 		if (statement.getResultSet().next()){
-			LoggerWrapper.info(this.getClass(), "Database - " + databaseName + " exists.");
+			Log4jWrapper.get().info("Database - " + databaseName + " exists.");
 		} else {
-			LoggerWrapper.info(this.getClass(), "Creating database " + databaseName);
+			Log4jWrapper.get().info("Creating database " + databaseName);
 			statement.execute("CREATE DATABASE " + databaseName);
 			result = true;
-			LoggerWrapper.info(this.getClass(), "Database " + databaseName + " was created.");
+			Log4jWrapper.get().info("Database " + databaseName + " was created.");
 		}
 		return result;
 	}
@@ -78,7 +78,7 @@ public class DBCreationManager {
 			}
 			queries = Arrays.asList(sb.toString().split(TABLES_SPLIT));
 		} catch (IOException e) {
-			LoggerWrapper.error(this.getClass(), "Cannot access to file " + PATH_FILE + e);
+			Log4jWrapper.get().error("Cannot access to file " + PATH_FILE + e);
 		}
 		return queries;
 	}

@@ -8,7 +8,7 @@ import java.util.Random;
 
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
-import edu.softserveinc.healthbody.log.LoggerWrapper;
+import edu.softserveinc.healthbody.log.Log4jWrapper;
 
 public class DBPopulateManager {
 
@@ -21,7 +21,7 @@ public class DBPopulateManager {
         try {
             con = ConnectionManager.getInstance().getConnection();
         } catch (JDBCDriverException e) {
-            LoggerWrapper.error(this.getClass(), "Error in DBPopulateManager constructor while getting connetion." + e);
+            Log4jWrapper.get().error("Error in DBPopulateManager constructor while getting connetion." + e);
         }
     }
 
@@ -63,7 +63,7 @@ public class DBPopulateManager {
 				}
 			}
 		} catch (SQLException e) {
-			LoggerWrapper.error(this.getClass(), "Error populating users table." + e);
+			Log4jWrapper.get().error("Error populating users table." + e);
 		}
 		return successfulInsert;
 	}
@@ -85,7 +85,7 @@ public class DBPopulateManager {
 				}
 			}
 		} catch (SQLException e) {
-			LoggerWrapper.error(this.getClass(), "Error populating groups table." + e);
+			Log4jWrapper.get().error("Error populating groups table." + e);
 		}
 		return successfulInsert;
 	}
@@ -104,7 +104,7 @@ public class DBPopulateManager {
 				}
 			}
 		} catch (SQLException e) {
-			LoggerWrapper.error(this.getClass(), "Error populating usergroups table." + e);
+			Log4jWrapper.get().error("Error populating usergroups table." + e);
 		}
 		return successfulInsert;
 	}
@@ -123,7 +123,7 @@ public class DBPopulateManager {
 				}
 			}
 		} catch (SQLException e) {
-			LoggerWrapper.error(this.getClass(), "Error populating awards table." + e);
+			Log4jWrapper.get().error("Error populating awards table." + e);
 		}
 		return successfulInsert;
 	}
@@ -149,7 +149,7 @@ public class DBPopulateManager {
 				}
 			}
 		} catch (SQLException e) {
-			LoggerWrapper.error(this.getClass(), "Error populating competitions table." + e);
+			Log4jWrapper.get().error("Error populating competitions table." + e);
 		}
 		return successfulInsert;
 	}
@@ -169,7 +169,7 @@ public class DBPopulateManager {
 				}
 			}
 		} catch (SQLException e) {
-			LoggerWrapper.error(this.getClass(), "Error populating criteria table." + e);
+			Log4jWrapper.get().error("Error populating criteria table." + e);
 		}
 		return successfulInsert;
 	}
@@ -188,7 +188,7 @@ public class DBPopulateManager {
 				}
 			}
 		} catch (SQLException e) {
-			LoggerWrapper.error(this.getClass(), "Error populating groupcompetitions table." + e);
+			Log4jWrapper.get().error("Error populating groupcompetitions table." + e);
 		}
 		return successfulInsert;
 	}
@@ -206,7 +206,7 @@ public class DBPopulateManager {
 				}
 			}
 		} catch (SQLException e) {
-			LoggerWrapper.error(this.getClass(), "Error populating metadata table." + e);
+			Log4jWrapper.get().error("Error populating metadata table." + e);
 		}
 		return successfulInsert;
 	}
@@ -226,7 +226,7 @@ public class DBPopulateManager {
 				}
 			}
 		} catch (SQLException e) {
-			LoggerWrapper.error(this.getClass(), "Error populating roles table." + e);
+			Log4jWrapper.get().error("Error populating roles table." + e);
 		}
 		return successfulInsert;
 	}
@@ -248,7 +248,7 @@ public class DBPopulateManager {
 				}
 			}
 		} catch (SQLException e) {
-			LoggerWrapper.error(this.getClass(), "Error populating usercompetitions table." + e);
+			Log4jWrapper.get().error("Error populating usercompetitions table." + e);
 		}
 		return successfulInsert;
 	}
@@ -263,7 +263,7 @@ public class DBPopulateManager {
 			ConnectionManager.getInstance().commitTransaction();
 		} catch (SQLException e) {
 			ConnectionManager.getInstance().rollbackTransaction();
-			LoggerWrapper.error(this.getClass(), "Error trancating database tables." + e);
+			Log4jWrapper.get().error("Error trancating database tables." + e);
 		}
 		return result;
 	}

@@ -23,7 +23,7 @@ import edu.softserveinc.healthbody.exceptions.EmptyResultSetException;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 import edu.softserveinc.healthbody.exceptions.QueryNotFoundException;
 import edu.softserveinc.healthbody.exceptions.TransactionException;
-import edu.softserveinc.healthbody.log.LoggerWrapper;
+import edu.softserveinc.healthbody.log.Log4jWrapper;
 import edu.softserveinc.healthbody.services.IBaseService;
 
 public class UserProfileServiceImpl implements IBaseService<UserDTO> {
@@ -49,7 +49,7 @@ public class UserProfileServiceImpl implements IBaseService<UserDTO> {
 	public void insert(UserDTO userDTO) throws SQLException, JDBCDriverException, DataBaseReadingException,
 							QueryNotFoundException, EmptyResultSetException, TransactionException, CloseStatementException {
 		if (userDTO == null) {
-			LoggerWrapper.error(this.getClass(), "You didn't enter user");
+			Log4jWrapper.get().error("You didn't enter user");
 			throw new IllegalArgumentException();
 		}
 		else {
@@ -75,7 +75,7 @@ public class UserProfileServiceImpl implements IBaseService<UserDTO> {
 	@Override
 	public UserDTO get(String name) throws SQLException, JDBCDriverException, EmptyResultSetException, TransactionException, CloseStatementException {
 		if (name == null) {
-			LoggerWrapper.error(this.getClass(), "User Login couldn't be null");
+			Log4jWrapper.get().error("User Login couldn't be null");
 			throw new IllegalArgumentException();
 		}
 		else {
@@ -89,7 +89,7 @@ public class UserProfileServiceImpl implements IBaseService<UserDTO> {
 			try {
 				user = UserDao.getInstance().getUserByLoginName(name);
 				if (user == null) {
-					LoggerWrapper.error(this.getClass(), "User " + name + " doesn't exist");
+					Log4jWrapper.get().error("User " + name + " doesn't exist");
 					return null;
 				}
 				else {
@@ -142,7 +142,7 @@ public class UserProfileServiceImpl implements IBaseService<UserDTO> {
 	@Override
 	public void update(UserDTO userDTO) throws SQLException, JDBCDriverException, DataBaseReadingException, QueryNotFoundException, EmptyResultSetException, TransactionException, CloseStatementException {
 		if (userDTO == null) {
-			LoggerWrapper.error(this.getClass(), "You didn't enter user");
+			Log4jWrapper.get().error("You didn't enter user");
 			throw new IllegalArgumentException();
 		}
 		else {
@@ -179,7 +179,7 @@ public class UserProfileServiceImpl implements IBaseService<UserDTO> {
 	//lock and unlock user (for lock - isDisabled = true, for unlock - isDisabled = false)
 	public void lock(UserDTO userDTO, boolean isDisabled) throws SQLException, JDBCDriverException, QueryNotFoundException, DataBaseReadingException, TransactionException, CloseStatementException {
 		if (userDTO == null) {
-			LoggerWrapper.error(this.getClass(), "You didn't enter user");
+			Log4jWrapper.get().error("You didn't enter user");
 			throw new IllegalArgumentException();
 		}
 		else {

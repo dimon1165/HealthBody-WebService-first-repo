@@ -16,7 +16,7 @@ import edu.softserveinc.healthbody.exceptions.IllegalAgrumentCheckedException;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 import edu.softserveinc.healthbody.exceptions.QueryNotFoundException;
 import edu.softserveinc.healthbody.exceptions.TransactionException;
-import edu.softserveinc.healthbody.log.LoggerWrapper;
+import edu.softserveinc.healthbody.log.Log4jWrapper;
 import edu.softserveinc.healthbody.services.ICompetitionsViewService;
 
 public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
@@ -65,7 +65,7 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 	public List<CompetitionDTO> getAllByUser(int partNumber, int partSize, String login) throws IllegalAgrumentCheckedException, SQLException, JDBCDriverException, TransactionException {
 		if (login == null || login.isEmpty()) {
 			String errorStr = "Illegal parameter. \"login\" is empty or null.";
-			LoggerWrapper.error(this.getClass(), errorStr);
+			Log4jWrapper.get().error(errorStr);
 			throw new IllegalAgrumentCheckedException(errorStr);
 		}
 		List<CompetitionDTO> competitionDTO = new ArrayList<>();
@@ -90,7 +90,7 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 	public List<CompetitionDTO> getAllActiveByUser(int partNumber, int partSize, String login) throws IllegalAgrumentCheckedException, SQLException, JDBCDriverException, TransactionException{
 		if (login == null || login.isEmpty()) {
 			String errorStr = "Illegal parameter. \"login\" is empty or null.";
-			LoggerWrapper.error(this.getClass(), errorStr);
+			Log4jWrapper.get().error(errorStr);
 			throw new IllegalAgrumentCheckedException(errorStr);
 		}
 		List<CompetitionDTO> competitionDTO = new ArrayList<>();

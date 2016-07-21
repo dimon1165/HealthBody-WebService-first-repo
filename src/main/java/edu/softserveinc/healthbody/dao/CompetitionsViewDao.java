@@ -16,7 +16,7 @@ import edu.softserveinc.healthbody.exceptions.EmptyResultSetException;
 import edu.softserveinc.healthbody.exceptions.IllegalAgrumentCheckedException;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 import edu.softserveinc.healthbody.exceptions.QueryNotFoundException;
-import edu.softserveinc.healthbody.log.LoggerWrapper;
+import edu.softserveinc.healthbody.log.Log4jWrapper;
 
 public class CompetitionsViewDao extends AbstractDaoRead<CompetitionsView> {
 
@@ -91,7 +91,7 @@ public class CompetitionsViewDao extends AbstractDaoRead<CompetitionsView> {
 			CloseStatementException, IllegalAgrumentCheckedException {
 		if (login == null || login.isEmpty()) {
 			String errorStr = "Illegal parameter. \"login\" is empty or null.";
-			LoggerWrapper.error(this.getClass(), errorStr);
+			Log4jWrapper.get().error(errorStr);
 			throw new IllegalAgrumentCheckedException(errorStr);
 		}
 		List<CompetitionsView> result = new ArrayList<>();
@@ -142,7 +142,7 @@ public class CompetitionsViewDao extends AbstractDaoRead<CompetitionsView> {
 			CloseStatementException, IllegalAgrumentCheckedException {
 		if (login == null || login.isEmpty()) {
 			String errorStr = "Illegal parameter. \"login\" is empty or null.";
-			LoggerWrapper.error(this.getClass(), errorStr);
+			Log4jWrapper.get().error(errorStr);
 			throw new IllegalAgrumentCheckedException(errorStr);
 		}
 		List<CompetitionsView> result = new ArrayList<>();
