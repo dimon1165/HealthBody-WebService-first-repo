@@ -4,77 +4,77 @@ import java.sql.Date;
 
 public class Competition implements IEntity {
 
-	private Integer idCompetition;
-	private String name;
-	private String description;
-	private Date start;
-	private Date finish;
-	private Integer idCriteria;
+    private Integer idCompetition;
+    private String name;
+    private String description;
+    private Date start;
+    private Date finish;
+    private Integer idCriteria;
 
-	public Competition(Integer idCompetition, String name, String description,
-			Date start, Date finish, Integer idCriteria) {
-		this.idCompetition = idCompetition;
-		this.name = name;
-		this.description = description;
-		this.start = start;
-		this.finish = finish;
-		this.idCriteria = idCriteria;
-	}
-	
-	// setters
+    public Competition(Integer idCompetition, String name, String description, Date start, Date finish,
+            Integer idCriteria) {
+        this.idCompetition = idCompetition;
+        this.name = name;
+        this.description = description;
+        this.start = start;
+        this.finish = finish;
+        this.idCriteria = idCriteria;
+    }
 
-	public void setIdCompetitions(Integer idCompetition) {
-		this.idCompetition = idCompetition;
-	}
+    // setters
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setIdCompetitions(Integer idCompetition) {
+        this.idCompetition = idCompetition;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setStart(Date start) {
-		this.start = start;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setFinish(Date finish) {
-		this.finish = finish;
-	}
+    public void setStart(Date start) {
+        this.start = start;
+    }
 
-	public void setIdCriteria(Integer idCriteria) {
-		this.idCriteria = idCriteria;
-	}
+    public void setFinish(Date finish) {
+        this.finish = finish;
+    }
 
-	// getters
-	
-	public Integer getId() {
-		return getIdCompetition();
-	}
-	
-	public Integer getIdCompetition() {
-		return idCompetition;
-	}
+    public void setIdCriteria(Integer idCriteria) {
+        this.idCriteria = idCriteria;
+    }
 
-	public String getName() {
-		return name;
-	}
+    // getters
 
-	public String getDescription() {
-		return description;
-	}
+    public Integer getId() {
+        return getIdCompetition();
+    }
 
-	public Date getStart() {
-		return start;
-	}
+    public Integer getIdCompetition() {
+        return idCompetition;
+    }
 
-	public Date getFinish() {
-		return finish;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public Integer getIdCriteria() {
-		return idCriteria;
-	}
-	
+    public String getDescription() {
+        return description;
+    }
+
+    public Date getStart() {
+        return start;
+    }
+
+    public Date getFinish() {
+        return finish;
+    }
+
+    public Integer getIdCriteria() {
+        return idCriteria;
+    }
+
 }

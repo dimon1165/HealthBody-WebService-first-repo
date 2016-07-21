@@ -12,32 +12,31 @@ import edu.softserveinc.healthbody.log.LoggerWrapper;
 
 public class DBPopulateManager {
 
-	private static volatile DBPopulateManager instance = null;
-	private static int users = 10;
-	private static int competitions = 20;
-	private Connection con = null;
-	
+    private static volatile DBPopulateManager instance = null;
+    private static int users = 10;
+    private static int competitions = 20;
+    private Connection con = null;
 
-	private DBPopulateManager() {
-		try {
-			con = ConnectionManager.getInstance().getConnection();
-		} catch (JDBCDriverException e) {
-			LoggerWrapper.error(this.getClass(), "Error in DBPopulateManager constructor while getting connetion." + e);
-		}
-	}
+    private DBPopulateManager() {
+        try {
+            con = ConnectionManager.getInstance().getConnection();
+        } catch (JDBCDriverException e) {
+            LoggerWrapper.error(this.getClass(), "Error in DBPopulateManager constructor while getting connetion." + e);
+        }
+    }
 
-	public static DBPopulateManager getInstance() {
-		if (instance == null) {
-			synchronized (DBPopulateManager.class) {
-				if (instance == null) {
-					instance = new DBPopulateManager();
-				}
-			}
-		}
-		return instance;
-	}
+    public static DBPopulateManager getInstance() {
+        if (instance == null) {
+            synchronized (DBPopulateManager.class) {
+                if (instance == null) {
+                    instance = new DBPopulateManager();
+                }
+            }
+        }
+        return instance;
+    }
 
-	public boolean populateUsersTable() {
+    public boolean populateUsersTable() {
 		boolean successfulInsert = false;
 		String query = DaoStatementsConstant.UserDBQueries.INSERT.toString();
 		
@@ -69,7 +68,7 @@ public class DBPopulateManager {
 		return successfulInsert;
 	}
 
-	public boolean populateGroupsTable() {
+    public boolean populateGroupsTable() {
 		boolean successfulInsert = false;
 		String query = DaoStatementsConstant.GroupDBQueries.INSERT.toString();
 
@@ -91,7 +90,7 @@ public class DBPopulateManager {
 		return successfulInsert;
 	}
 
-	public boolean populateUserGroupsTable() {
+    public boolean populateUserGroupsTable() {
 		boolean successfulInsert = false;
 		String query = DaoStatementsConstant.UserGroupQueries.INSERT.toString();
 
@@ -110,7 +109,7 @@ public class DBPopulateManager {
 		return successfulInsert;
 	}
 
-	public boolean populateAwardsTable() {
+    public boolean populateAwardsTable() {
 		boolean successfulInsert = false;
 		String query = DaoStatementsConstant.AwardDBQueries.INSERT.toString();
 
@@ -129,7 +128,7 @@ public class DBPopulateManager {
 		return successfulInsert;
 	}
 
-	public boolean populateCompetitionsTable() {
+    public boolean populateCompetitionsTable() {
 		boolean successfulInsert = false;
 		String query = DaoStatementsConstant.CompetitionDBQueries.INSERT.toString();
 
@@ -155,7 +154,7 @@ public class DBPopulateManager {
 		return successfulInsert;
 	}
 
-	public boolean populateCriteriaTable() {
+    public boolean populateCriteriaTable() {
 		boolean successfulInsert = false;
 		String query = DaoStatementsConstant.CriteriaDBQueries.INSERT.toString();
 
@@ -175,7 +174,7 @@ public class DBPopulateManager {
 		return successfulInsert;
 	}
 
-	public boolean populateGroupCompetitionsTable() {
+    public boolean populateGroupCompetitionsTable() {
 		boolean successfulInsert = false;
 		String query = DaoStatementsConstant.GroupCompetitionsDBQueries.INSERT.toString();
 
@@ -194,7 +193,7 @@ public class DBPopulateManager {
 		return successfulInsert;
 	}
 
-	public boolean populateMetaDataTable() {
+    public boolean populateMetaDataTable() {
 		boolean successfulInsert = false;
 		String query = DaoStatementsConstant.MetaDataDBQueries.INSERT.toString();
 
@@ -212,7 +211,7 @@ public class DBPopulateManager {
 		return successfulInsert;
 	}
 
-	public boolean populateRolesTable() {
+    public boolean populateRolesTable() {
 		boolean successfulInsert = false;
 		String query = DaoStatementsConstant.RoleDBQueries.INSERT.toString();
 
@@ -232,7 +231,7 @@ public class DBPopulateManager {
 		return successfulInsert;
 	}
 
-	public boolean populateUserCompetitionsTable() {
+    public boolean populateUserCompetitionsTable() {
 		boolean successfulInsert = false;
 		String query = DaoStatementsConstant.UserCompetitionsDBQueries.INSERT.toString();
 
@@ -253,8 +252,8 @@ public class DBPopulateManager {
 		}
 		return successfulInsert;
 	}
-	
-	public boolean deleteAllFromTables() throws SQLException, JDBCDriverException {
+
+    public boolean deleteAllFromTables() throws SQLException, JDBCDriverException {
 		boolean result = false;
 		ConnectionManager.getInstance().beginTransaction();
 		String query = "drop TABLE if exists usergroups, groupcompetitions, usercompetitions, users, " 

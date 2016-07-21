@@ -1,59 +1,57 @@
 package edu.softserveinc.healthbody.entity;
 
 public class Criteria implements IEntity {
-	
-	private Integer idCriteria;
-	private String name;
-	private Double metrics;
-	private String getGoogle;
-	
-	public Criteria (Integer idCriteria, String name, Double metrics,
-			String getGoogle) {
-		this.idCriteria = idCriteria;
-		this.name = name;
-		this.metrics = metrics;
-		this.getGoogle = getGoogle;
-	}
 
-	// setters
-	
-	public void setIdCriteria(Integer idCriteria) {
-		this.idCriteria = idCriteria;
-	}
+    private Integer idCriteria;
+    private String name;
+    private Double metrics;
+    private String getGoogle;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public Criteria(Integer idCriteria, String name, Double metrics, String getGoogle) {
+        this.idCriteria = idCriteria;
+        this.name = name;
+        this.metrics = metrics;
+        this.getGoogle = getGoogle;
+    }
 
-	public void setMetrics(Double metrics) {
-		this.metrics = metrics;
-	}
+    // setters
 
-	public void setGetGoogle(String getGoogle) {
-		this.getGoogle = getGoogle;
-	}
-	
-	// getters
-	
-	public Integer getId() {
-		return getIdCriteria();
-	}
-	  
-	public Integer getIdCriteria() {
-		return idCriteria;
-	}
+    public void setIdCriteria(Integer idCriteria) {
+        this.idCriteria = idCriteria;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Double getMetrics() {
-		return metrics;
-	}
+    public void setMetrics(Double metrics) {
+        this.metrics = metrics;
+    }
 
-	public String getGetGoogle() {
-		return getGoogle;
-	}
-	  
+    public void setGetGoogle(String getGoogle) {
+        this.getGoogle = getGoogle;
+    }
+
+    // getters
+
+    public Integer getId() {
+        return getIdCriteria();
+    }
+
+    public Integer getIdCriteria() {
+        return idCriteria;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Double getMetrics() {
+        return metrics;
+    }
+
+    public String getGetGoogle() {
+        return getGoogle;
+    }
 
 }

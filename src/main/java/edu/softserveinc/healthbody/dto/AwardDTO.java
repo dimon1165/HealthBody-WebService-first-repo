@@ -2,16 +2,17 @@ package edu.softserveinc.healthbody.dto;
 
 public class AwardDTO {
 
-	private String name;
+    private String name;
 
-	public AwardDTO() {}
-	
-	public AwardDTO(String name) {
-		this.name = name;
-	}
+    public AwardDTO() {
+    }
 
-	public String getName() {
-		return name;
-	}
+    public AwardDTO(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 
 }

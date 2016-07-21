@@ -141,6 +141,48 @@
 					<warName>HealthBody-WebService</warName>
 				</configuration>
 			</plugin>
+			<!--formatter -->
+<!-- 			<plugin>
+				<groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+				<artifactId>maven-java-formatter-plugin</artifactId>
+				<version>0.4</version>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>format</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<tasks>
+						<echo>validate phase</echo>
+					</tasks>
+					<encoding>UTF-8</encoding>
+					<configFile>formatter.xml</configFile>
+				</configuration>
+			</plugin>  -->
+			<!--checkstyle -->
+	<!--  		<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>2.16</version>
+				<executions>
+					<execution>
+						<id>checkstyle</id>
+						<phase>validate</phase>
+						<configuration>
+							<configLocation>checkstyle.xml</configLocation>
+							<failsOnError>true</failsOnError>
+							<failOnViolation>true</failOnViolation>
+							<violationSeverity>warning</violationSeverity>
+						</configuration>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin> -->
 		</plugins>
 	</build>
 	<profiles>

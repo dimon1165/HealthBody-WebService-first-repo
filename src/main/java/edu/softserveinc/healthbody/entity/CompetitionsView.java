@@ -1,83 +1,78 @@
 package edu.softserveinc.healthbody.entity;
 
-
 public class CompetitionsView implements IEntity {
 
-	private Integer idCompetition;
-	private String name;
-	private String description;
-	private String start;
-	private String finish;
-	private Integer usersCount;
+    private Integer idCompetition;
+    private String name;
+    private String description;
+    private String start;
+    private String finish;
+    private Integer usersCount;
 
-	public CompetitionsView(Integer idCompetition, String name, String description,
-			String start, String finish, Integer usersCount) {
-		this.idCompetition = idCompetition;
-		this.name = name;
-		this.description = description;
-		this.start = start;
-		this.finish = finish;
-		this.usersCount = usersCount;
-	}
-	
-	// setters
+    public CompetitionsView(Integer idCompetition, String name, String description, String start, String finish,
+            Integer usersCount) {
+        this.idCompetition = idCompetition;
+        this.name = name;
+        this.description = description;
+        this.start = start;
+        this.finish = finish;
+        this.usersCount = usersCount;
+    }
 
-	public void setIdCompetitions(Integer idCompetition) {
-		this.idCompetition = idCompetition;
-	}
+    // setters
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setIdCompetitions(Integer idCompetition) {
+        this.idCompetition = idCompetition;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setStart(String start) {
-		this.start = start;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setFinish(String finish) {
-		this.finish = finish;
-	}
+    public void setStart(String start) {
+        this.start = start;
+    }
 
-	
-	public void setUsersCount(Integer usersCount) {
-		this.usersCount = usersCount;
-	}
+    public void setFinish(String finish) {
+        this.finish = finish;
+    }
 
+    public void setUsersCount(Integer usersCount) {
+        this.usersCount = usersCount;
+    }
 
-	// getters
-	
-	public Integer getId() {
-		return getIdCompetition();
-	}
-	
-	public Integer getIdCompetition() {
-		return idCompetition;
-	}
+    // getters
 
-	public String getName() {
-		return name;
-	}
+    public Integer getId() {
+        return getIdCompetition();
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public Integer getIdCompetition() {
+        return idCompetition;
+    }
 
-	public String getStart() {
-		return start;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getFinish() {
-		return finish;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public Integer getUsersCount() {
-		return usersCount;
-	}
-	
-	
-	
+    public String getStart() {
+        return start;
+    }
+
+    public String getFinish() {
+        return finish;
+    }
+
+    public Integer getUsersCount() {
+        return usersCount;
+    }
+
 }
