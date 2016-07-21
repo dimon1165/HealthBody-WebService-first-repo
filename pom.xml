@@ -24,7 +24,7 @@
 		<postgresql.connector.version>9.4-1200-jdbc41</postgresql.connector.version>
 		<!-- - - - - - DB Connection Pool- - - - - -->
 		<org.apache.commons.pool2.version>2.4.2</org.apache.commons.pool2.version>
-	    <org.apache.commons.dbcp2.version>2.1.1</org.apache.commons.dbcp2.version>
+		<org.apache.commons.dbcp2.version>2.1.1</org.apache.commons.dbcp2.version>
 		<!-- - - - - - Logger - - - - - -->
 		<org.slf4j.version>1.7.21</org.slf4j.version>
 		<!-- - - - - - Test - - - - - -->
@@ -46,18 +46,10 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- - - - DBConnect - - - -->
-<!--
-		<dependency>
-			<groupId>net.sourceforge.jtds</groupId>
-			<artifactId>jtds</artifactId>
-			<version>${net.sourceforge.jtds.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>${mysql.connector.version}</version>
-		</dependency>
--->
+		<!-- <dependency> <groupId>net.sourceforge.jtds</groupId> <artifactId>jtds</artifactId> 
+			<version>${net.sourceforge.jtds.version}</version> </dependency> <dependency> 
+			<groupId>mysql</groupId> <artifactId>mysql-connector-java</artifactId> <version>${mysql.connector.version}</version> 
+			</dependency> -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
@@ -75,9 +67,9 @@
 		</dependency>
 		<!-- - - - DBConnection Pool - - - -->
 		<dependency>
-		    <groupId>org.apache.commons</groupId>
-		    <artifactId>commons-dbcp2</artifactId>
-		    <version>${org.apache.commons.dbcp2.version}</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-dbcp2</artifactId>
+			<version>${org.apache.commons.dbcp2.version}</version>
 		</dependency>
 		<!-- - - - Logger - - - -->
 		<dependency>
@@ -85,40 +77,36 @@
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>${org.slf4j.version}</version>
 		</dependency>
-<!-- 		
+		<!-- <dependency> <groupId>org.seleniumhq.selenium</groupId> <artifactId>selenium-server</artifactId> 
+			<version>2.53.0</version> </dependency> <dependency> <groupId>org.seleniumhq.selenium</groupId> 
+			<artifactId>selenium-java</artifactId> <version>2.53.0</version> </dependency> -->
+		<!-- jax-ws maven dependency -->
 		<dependency>
-			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>selenium-server</artifactId>
-			<version>2.53.0</version>
+			<groupId>com.sun.xml.ws</groupId>
+			<artifactId>jaxws-rt</artifactId>
+			<version>2.2.8</version>
+		</dependency>
+		<!-- servlet provided by tomcat -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>selenium-java</artifactId>
-			<version>2.53.0</version>
-		</dependency>
- -->		
-		 <!-- jax-ws maven dependency -->
-        <dependency>
-            <groupId>com.sun.xml.ws</groupId>
-            <artifactId>jaxws-rt</artifactId>
-            <version>2.2.8</version>
-        </dependency>
-        <!-- servlet provided by tomcat -->
-		<dependency>
-		    <groupId>javax.servlet</groupId>
-		    <artifactId>javax.servlet-api</artifactId>
-		    <version>3.0.1</version>
-            <scope>provided</scope>
-		</dependency>
-		<dependency>
-   			 <groupId>jstl</groupId>
-    		<artifactId>jstl</artifactId>
-    		<version>1.2</version>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>2.7</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.api-client</groupId>
+			<artifactId>google-api-client</artifactId>
+			<version>1.19.1</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -136,7 +124,7 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>${maven.war.plugin.version}</version>
 				<configuration>
-<!-- 					<warSourceDirectory>WebContent</warSourceDirectory> -->
+					<!-- <warSourceDirectory>WebContent</warSourceDirectory> -->
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 					<warName>HealthBody-WebService</warName>
 				</configuration>
@@ -209,7 +197,8 @@
 						<version>1.0.0</version>
 						<inherited>false</inherited>
 						<configuration>
-							<message>Hello, ${localRepository} artifactId =	${project.artifactId}</message>
+							<message>Hello, ${localRepository} artifactId =
+								${project.artifactId}</message>
 						</configuration>
 						<executions>
 							<execution>
@@ -231,10 +220,10 @@
 								<surefire.reports.directory>
 									${testng.reports.directory}
 								</surefire.reports.directory>
-<!-- 								<surefire.reports.profile> -->
-<!-- 									${my.text} profile id -->
-<!-- 									=${project.activeProfiles[0].id} -->
-<!-- 								</surefire.reports.profile> -->
+								<!-- <surefire.reports.profile> -->
+								<!-- ${my.text} profile id -->
+								<!-- =${project.activeProfiles[0].id} -->
+								<!-- </surefire.reports.profile> -->
 							</systemPropertyVariables>
 							<suiteXmlFiles>
 								<suiteXmlFile>testng.xml</suiteXmlFile>
