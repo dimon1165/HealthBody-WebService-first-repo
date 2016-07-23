@@ -6,30 +6,29 @@ public class Award implements IEntity {
 	private Integer idAward;
 	private String name;
 	
-	public Award(Integer idAward, String name) {
-		super();
+	public Award(final Integer idAward, final String name) {
 		this.idAward = idAward;
 		this.name = name;
 	}
 
 	@Override
-	public Integer getId() {
+	public final Integer getId() {
 		return getIdAward();
 	}
 	
 	//getters
-	public Integer getIdAward() {
+	public final Integer getIdAward() {
 		return idAward;
 	}
-	public String getName() {
+	public final String getName() {
 		return name;
 	}
 	
 	//setters
-	public void setIdAward(Integer idAward) {
+	public final void setIdAward(final Integer idAward) {
 		this.idAward = idAward;
 	}
-	public void setName(String name) {
+	public final void setName(final String name) {
 		this.name = name;
 	}
 }

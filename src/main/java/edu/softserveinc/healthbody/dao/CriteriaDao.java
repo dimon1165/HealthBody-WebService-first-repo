@@ -5,15 +5,13 @@ import java.util.List;
 
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.CriteriaDBQueries;
 import edu.softserveinc.healthbody.entity.Criteria;
-import edu.softserveinc.healthbody.exceptions.CloseStatementException;
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
-import edu.softserveinc.healthbody.exceptions.EmptyResultSetException;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 import edu.softserveinc.healthbody.exceptions.QueryNotFoundException;
 
-public class CriteriaDao extends AbstractDao<Criteria> {
+public final class CriteriaDao extends AbstractDao<Criteria> {
 	
-	private static volatile CriteriaDao instance = null;
+	private static volatile CriteriaDao instance;
 
 	private CriteriaDao() {
 		init();
@@ -30,6 +28,7 @@ public class CriteriaDao extends AbstractDao<Criteria> {
 		return instance;
 	}
 
+	@Override
 	protected void init() {
 		for (CriteriaDBQueries criteriaDBQueries : CriteriaDBQueries.values()) {
 			sqlQueries.put(criteriaDBQueries.getDaoQuery(), criteriaDBQueries);
@@ -37,7 +36,7 @@ public class CriteriaDao extends AbstractDao<Criteria> {
 	}
 
 	@Override
-	public Criteria createInstance(String[] args) {
+	public Criteria createInstance(final String[] args) {
 		return new Criteria(
 				Integer.parseInt(args[0] == null ? "0" : args[0]),
 				args[1] == null ? new String() : args[1],
@@ -46,7 +45,7 @@ public class CriteriaDao extends AbstractDao<Criteria> {
 	}
 
 	@Override
-	protected String[] getFields(Criteria entity) {
+	protected String[] getFields(final Criteria entity) {
 		List<String> fields = new ArrayList<>();
 		fields.add(entity.getIdCriteria().toString());
 		fields.add(entity.getName());
@@ -55,28 +54,30 @@ public class CriteriaDao extends AbstractDao<Criteria> {
 		return (String[]) fields.toArray();
 	}
 	
-	public boolean createCriteria(Criteria criteria) throws JDBCDriverException, QueryNotFoundException, DataBaseReadingException{
+	public boolean createCriteria(final Criteria criteria)
+			throws JDBCDriverException, QueryNotFoundException, DataBaseReadingException {
 		return insert(criteria);
 	}
 	
-	public boolean editCriteria(Criteria criteria, String idCriteria, String name, String metrics,
-			String getGoogle) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException{
+	public boolean editCriteria(final Criteria criteria, final String idCriteria, final String name, final String metrics,
+			final String getGoogle) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		String[] fields = getFields(criteria);	
 		boolean result = false;
-		updateByField(fields[0], idCriteria, fields[1]	, name);
-		updateByField(fields[0], idCriteria, fields[2]	, metrics);
-		updateByField(fields[0], idCriteria, fields[3]	, getGoogle);
+		updateByField(fields[0], idCriteria, fields[1], name);
+		updateByField(fields[0], idCriteria, fields[2], metrics);
+		updateByField(fields[0], idCriteria, fields[3], getGoogle);
 		if (fields[1] == name && fields[2] == metrics && fields[3] == getGoogle){
 			result = true;			
 		}
 		return result;
 	}
 	
-	public boolean deleteCriteria(Criteria criteria) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException{
+	public boolean deleteCriteria(final Criteria criteria) 
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		return delete(criteria);
 	}
 	
-	public List<Criteria> view() throws JDBCDriverException, DataBaseReadingException, EmptyResultSetException, CloseStatementException{
+	public List<Criteria> view() throws JDBCDriverException, DataBaseReadingException {
 		return getAll();
 	}
 	

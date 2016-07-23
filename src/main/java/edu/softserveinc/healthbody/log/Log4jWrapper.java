@@ -3,8 +3,8 @@ package edu.softserveinc.healthbody.log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Log4jWrapper implements ILogger {
-    private static volatile Log4jWrapper instance = null;
+public final class Log4jWrapper implements ILogger {
+    private static volatile Log4jWrapper instance;
     private final String PICTURE_PATH = "Path to Picture ";
     private Logger logger;
 
@@ -23,15 +23,18 @@ public class Log4jWrapper implements ILogger {
         return instance;
     }
 
-    public void error(String message) {
+    @Override
+    public void error(final String message) {
         logger.error(message);
     }
 
-    public void warning(String message) {
+    @Override
+    public void warning(final String message) {
         logger.warn(message);
     }
 
-    public void info(String message) {
+    @Override
+    public void info(final String message) {
         logger.info(message);
     }
 
@@ -39,7 +42,8 @@ public class Log4jWrapper implements ILogger {
 //        logger.debug(message);
 //    }
     
-    public void insertScreenShot(String fileNamePath) {
+    @Override
+    public void insertScreenShot(final String fileNamePath) {
         logger.error(PICTURE_PATH + fileNamePath);
     }
 

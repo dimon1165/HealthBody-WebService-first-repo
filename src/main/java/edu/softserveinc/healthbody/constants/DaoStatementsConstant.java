@@ -3,13 +3,18 @@ package edu.softserveinc.healthbody.constants;
 import edu.softserveinc.healthbody.dao.IBasicDao.DaoQueries;
 
 public class DaoStatementsConstant {
-	public static enum UserDBQueries {
-        INSERT(DaoQueries.INSERT, "INSERT INTO users (login, password, firstname, lastname, \"e-mail\", age, weight, gender, health, avatar, "
-        		+ "google_field, id_role, status, isdisabled) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"),
-        GET_BY_ID(DaoQueries.GET_BY_ID, "SELECT id_user, login, password, firstname, lastname, \"e-mail\", age, weight, gender, health, avatar, google_field, id_role, status, isdisabled FROM users WHERE id_user = ?;"),
-        GET_BY_FIELD(DaoQueries.GET_BY_FIELD, "SELECT id_user, login, password, firstname, lastname, \"e-mail\", age, weight, gender, health, avatar, google_field, id_role, status, isdisabled FROM users WHERE ? = ?;"),
-        GET_BY_FIELD_NAME(DaoQueries.GET_BY_FIELD_NAME, "SELECT id_user, login, password, firstname, lastname, \"e-mail\", age, weight, gender, health, avatar, google_field, id_role, status, isdisabled FROM users WHERE login = ?;"),
-        GET_ALL(DaoQueries.GET_ALL, "SELECT id_user, login, password, firstname, lastname, \"e-mail\", age, weight, gender, health, avatar, google_field, id_role, status FROM users WHERE isdisabled = 'false';"),
+	
+	public enum UserDBQueries {
+        INSERT(DaoQueries.INSERT, "INSERT INTO users (login, password, firstname, lastname, \"e-mail\", age, weight, gender, "
+        		+ "health, avatar, google_field, id_role, status, isdisabled) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"),
+        GET_BY_ID(DaoQueries.GET_BY_ID, "SELECT id_user, login, password, firstname, lastname, \"e-mail\", age, weight, gender, "
+        		+ "health, avatar, google_field, id_role, status, isdisabled FROM users WHERE id_user = ?;"),
+        GET_BY_FIELD(DaoQueries.GET_BY_FIELD, "SELECT id_user, login, password, firstname, lastname, \"e-mail\", age, weight, "
+        		+ "gender, health, avatar, google_field, id_role, status, isdisabled FROM users WHERE ? = ?;"),
+        GET_BY_FIELD_NAME(DaoQueries.GET_BY_FIELD_NAME, "SELECT id_user, login, password, firstname, lastname, \"e-mail\", "
+        		+ "age, weight, gender, health, avatar, google_field, id_role, status, isdisabled FROM users WHERE login = ?;"),
+        GET_ALL(DaoQueries.GET_ALL, "SELECT id_user, login, password, firstname, lastname, \"e-mail\", age, weight, gender, "
+        		+ "health, avatar, google_field, id_role, status FROM users WHERE isdisabled = 'false';"),
         UPDATE(DaoQueries.UPDATE, "UPDATE users SET password = ?, firstname = ?, lastname = ?, gender = ?, weight = ?, age = ? WHERE login = ?"),
         UPDATE_BY_FIELD(DaoQueries.UPDATE_BY_FIELD, "UPDATE users SET ? = ? WHERE ? = ?;"),
         ISDISABLED(DaoQueries.ISDISABLED, "UPDATE users SET isDisabled = ? WHERE login = ?"),
@@ -18,7 +23,7 @@ public class DaoStatementsConstant {
 		private DaoQueries daoQuery;
 		private String query;
 		
-		private UserDBQueries(DaoQueries daoQuery, String query) {
+		UserDBQueries(final DaoQueries daoQuery, final String query) {
 			this.daoQuery = daoQuery;
 			this.query = query;
 		}
@@ -27,11 +32,13 @@ public class DaoStatementsConstant {
 			return daoQuery;
 		}
 
+		@Override
 		public String toString() {
 			return query;
 		}
 	}
-	public static enum GroupDBQueries {
+	
+	public enum GroupDBQueries {
 		INSERT(DaoQueries.INSERT, "INSERT INTO groups (name, count, description, scoreGroup, status) VALUES (?, ?, ?, ?, ?);"),
 		GET_BY_ID(DaoQueries.GET_BY_ID, "SELECT id_group, name, count, description, scoreGroup, status FROM groups WHERE id_group = ?;"),
 		GET_BY_FIELD(DaoQueries.GET_BY_FIELD, "SELECT id_group, name, count, description, scoreGroup, status FROM groups WHERE ? = ?;"),
@@ -44,7 +51,7 @@ public class DaoStatementsConstant {
 		private DaoQueries daoQuery;
 		private String query;
 		
-		private GroupDBQueries(DaoQueries daoQuery, String query) {
+		GroupDBQueries(final DaoQueries daoQuery, final String query) {
 			this.daoQuery = daoQuery;
 			this.query = query;
 		}
@@ -52,11 +59,14 @@ public class DaoStatementsConstant {
 		public DaoQueries getDaoQuery() {
 			return daoQuery;
 		}
+		
+		@Override
 		public String toString() {
 			return query;
 		}
 	}
-	public static enum UserGroupQueries {
+	
+	public enum UserGroupQueries {
 		INSERT(DaoQueries.INSERT, "INSERT INTO usergroups (id_user, id_group) VALUES (?, ?);"),
         GET_BY_ID(DaoQueries.GET_BY_ID, "SELECT id_user_group, id_user, id_group FROM usergroups WHERE id_user = ?;"),
         GET_ID_BY_FIELDS(DaoQueries.GET_ID_BY_FIELDS, "SELECT usergroups.id_user_group FROM usergroups WHERE usergroups.id_user = ? AND usergroups.id_group = ?;"),		
@@ -66,7 +76,7 @@ public class DaoStatementsConstant {
 		private DaoQueries daoQuery;
         private String query;
 
-        private UserGroupQueries(DaoQueries daoQuery, String query) {
+        UserGroupQueries(final DaoQueries daoQuery, final String query) {
         	this.daoQuery = daoQuery;
             this.query = query;
         }
@@ -80,7 +90,8 @@ public class DaoStatementsConstant {
             return query;
         }
     }
-	public static enum CompetitionDBQueries {
+	
+	public enum CompetitionDBQueries {
 		INSERT(DaoQueries.INSERT, "INSERT INTO competitions (name, description, start, finish, id_criteria) VALUES (?, ?, ?, ?, ?);"),
 		GET_BY_ID(DaoQueries.GET_BY_ID,	"SELECT id_competition, name, description, start_date, finish_date, id_criteria FROM competitions WHERE id_competition = ?;"),
 		GET_BY_FIELD(DaoQueries.GET_BY_FIELD, "SELECT id_competition, name, description, start_date, finish_date, id_criteria FROM competitions WHERE ? = ?;"),
@@ -91,7 +102,7 @@ public class DaoStatementsConstant {
 		private DaoQueries daoQuery;
 		private String query;
 
-		private CompetitionDBQueries(DaoQueries daoQuery, String query) {
+		CompetitionDBQueries(final DaoQueries daoQuery, final String query) {
 			this.daoQuery = daoQuery;
 			this.query = query;
 		}
@@ -99,11 +110,14 @@ public class DaoStatementsConstant {
 		public DaoQueries getDaoQuery() {
 			return daoQuery;
 		}
+		
+		@Override
 		public String toString() {
 			return query;
 		}
 	}
-	public static enum MetaDataDBQueries {
+	
+	public enum MetaDataDBQueries {
 		INSERT(DaoQueries.INSERT, "INSERT INTO metadata (last_synch) VALUES (?);"),
 		GET_BY_ID(DaoQueries.GET_BY_ID, "SELECT id_metadata, last_synch FROM metadata WHERE id_metadata = ?;"),
 		GET_BY_FIELD(DaoQueries.GET_BY_FIELD, "SELECT id_metadata, last_synch FROM metadata WHERE ? = ?;"),
@@ -114,7 +128,7 @@ public class DaoStatementsConstant {
 		private DaoQueries daoQuery;
 		private String query;
 		
-		private MetaDataDBQueries(DaoQueries daoQuery, String query) {
+		MetaDataDBQueries(final DaoQueries daoQuery, final String query) {
 			this.daoQuery = daoQuery;
 			this.query = query;
 		}
@@ -122,11 +136,14 @@ public class DaoStatementsConstant {
 		public DaoQueries getDaoQuery() {
 			return daoQuery;
 		}
+		
+		@Override
 		public String toString() {
 			return query;
 		}
 	}
-	public static enum AwardDBQueries {
+	
+	public enum AwardDBQueries {
 		INSERT(DaoQueries.INSERT, "INSERT INTO awards (name) VALUES (?);"),
 		GET_BY_ID(DaoQueries.GET_BY_ID, "SELECT id_award, name FROM awards WHERE id_award = ?;"),
 		GET_BY_FIELD(DaoQueries.GET_BY_FIELD, "SELECT id_award, name FROM awards WHERE ? = ?;"),
@@ -137,7 +154,7 @@ public class DaoStatementsConstant {
 		private DaoQueries daoQuery;
 		private String query;
 		
-		private AwardDBQueries(DaoQueries daoQuery, String query) {
+		AwardDBQueries(final DaoQueries daoQuery, final String query) {
 			this.daoQuery = daoQuery;
 			this.query = query;
 		}
@@ -145,10 +162,14 @@ public class DaoStatementsConstant {
 		public DaoQueries getDaoQuery() {
 			return daoQuery;
 		}
+		
+		@Override
 		public String toString() {
 			return query;
 		}
-}	public static enum GroupCompetitionsDBQueries {
+	}
+	
+	public enum GroupCompetitionsDBQueries {
 		INSERT(DaoQueries.INSERT, "INSERT INTO groupcompetitions (id_group, id_competition) VALUES (?, ?);"),
 		GET_BY_ID(DaoQueries.GET_BY_ID,	"SELECT id_group_competition, id_group, id_competition FROM groupcompetitions WHERE id_group_competition = ?;"),
 		GET_BY_FIELD(DaoQueries.GET_BY_FIELD, "SELECT id_group_competition, id_group, id_competition FROM groupcompetitions WHERE ? = ?;"),
@@ -158,7 +179,7 @@ public class DaoStatementsConstant {
 		private DaoQueries daoQuery;
 		private String query;
 
-		private GroupCompetitionsDBQueries(DaoQueries daoQuery, String query) {
+		GroupCompetitionsDBQueries(final DaoQueries daoQuery, final String query) {
 			this.daoQuery = daoQuery;
 			this.query = query;
 		}
@@ -166,11 +187,14 @@ public class DaoStatementsConstant {
 		public DaoQueries getDaoQuery() {
 			return daoQuery;
 		}
+		
+		@Override
 		public String toString() {
 			return query;
 		}
 	}
-	public static enum RoleDBQueries {
+	
+	public enum RoleDBQueries {
 		INSERT(DaoQueries.INSERT, "INSERT INTO roles (name, description) VALUES (?, ?);"),
 		GET_BY_ID(DaoQueries.GET_BY_ID, "SELECT id_role, name, description FROM roles WHERE id_role = ?;"),
 		GET_BY_FIELD(DaoQueries.GET_BY_FIELD, "SELECT id_role, name, description FROM roles WHERE ? = ?;"),
@@ -182,7 +206,7 @@ public class DaoStatementsConstant {
 		private DaoQueries daoQuery;
 		private String query;
 		
-		private RoleDBQueries(DaoQueries daoQuery, String query) {
+		RoleDBQueries(final DaoQueries daoQuery, final String query) {
 			this.daoQuery = daoQuery;
 			this.query = query;
 		}
@@ -190,22 +214,26 @@ public class DaoStatementsConstant {
 		public DaoQueries getDaoQuery() {
 			return daoQuery;
 		}
+		
+		@Override
 		public String toString() {
 			return query;
 		}
 	}
 	
-    public static enum UserCompetitionsDBQueries {
+    public enum UserCompetitionsDBQueries {
 		INSERT(DaoQueries.INSERT, "INSERT INTO usercompetitions (id_user, id_competition, id_award, user_score, time_received) VALUES (?, ?, ?, ?, ?);"),
-		GET_BY_ID(DaoQueries.GET_BY_ID,	"SELECT id_user_competition, id_user, id_competition, user_score, id_award, time_received FROM usercompetitions WHERE id_user_competition = ?;"),
-		GET_BY_FIELD(DaoQueries.GET_BY_FIELD, "SELECT id_user_competition, id_user, id_competition, user_score, id_award, time_received FROM usercompetitions WHERE ? = ?;"),
+		GET_BY_ID(DaoQueries.GET_BY_ID,	"SELECT id_user_competition, id_user, id_competition, user_score, id_award, time_received FROM usercompetitions "
+				+ "WHERE id_user_competition = ?;"),
+		GET_BY_FIELD(DaoQueries.GET_BY_FIELD, "SELECT id_user_competition, id_user, id_competition, user_score, id_award, time_received FROM usercompetitions "
+				+ "WHERE ? = ?;"),
 		GET_ALL(DaoQueries.GET_ALL,	"SELECT id_user_competition, id_user, id_competition, user_score, id_award, time_received FROM usercompetitions;"),
 		UPDATE_BY_FIELD(DaoQueries.UPDATE_BY_FIELD,	"UPDATE usercompetitions SET ? = ? WHERE ? = ?;"),
 		DELETE_BY_ID(DaoQueries.DELETE_BY_ID, "DELETE FROM usercompetitions WHERE id_user = ?;");
 		private DaoQueries daoQuery;
 		private String query;
 
-		private UserCompetitionsDBQueries(DaoQueries daoQuery, String query) {
+		UserCompetitionsDBQueries(final DaoQueries daoQuery, final String query) {
 			this.daoQuery = daoQuery;
 			this.query = query;
 		}
@@ -213,11 +241,14 @@ public class DaoStatementsConstant {
 		public DaoQueries getDaoQuery() {
 			return daoQuery;
 		}
+		
+		@Override
 		public String toString() {
 			return query;
 		}
 	}
-    public static enum CriteriaDBQueries {
+    
+    public enum CriteriaDBQueries {
 		INSERT(DaoQueries.INSERT, "INSERT INTO criteria (name, metrics, get_google) VALUES (?, ?, ?);"),
 		GET_BY_ID(DaoQueries.GET_BY_ID, "SELECT id_criteria, name, metrics, get_google FROM criteria WHERE id_criteria = ?;"),
 		GET_BY_FIELD(DaoQueries.GET_BY_FIELD, "SELECT id_criteria, name, metrics, get_google FROM criteria WHERE ? = ?;"),
@@ -229,7 +260,7 @@ public class DaoStatementsConstant {
 		private DaoQueries daoQuery;
 		private String query;
 		
-		private CriteriaDBQueries(DaoQueries daoQuery, String query) {
+		CriteriaDBQueries(final DaoQueries daoQuery, final String query) {
 			this.daoQuery = daoQuery;
 			this.query = query;
 		}
@@ -237,21 +268,24 @@ public class DaoStatementsConstant {
 		public DaoQueries getDaoQuery() {
 			return daoQuery;
 		}
+		
+		@Override
 		public String toString() {
 			return query;
 		}
 	}
     
-    public static enum UserGroupViewQueries {
-		GET_BY_ID(DaoQueries.GET_BY_ID, "SELECT users.id_user, users.login, groups.name FROM users INNER JOIN groups ON users.id_group = groups.id_group WHERE users.id_user = ?;"),
+    public enum UserGroupViewQueries {
+		GET_BY_ID(DaoQueries.GET_BY_ID, "SELECT users.id_user, users.login, groups.name FROM users INNER JOIN groups ON users.id_group = groups.id_group "
+				+ "WHERE users.id_user = ?;"),
         GET_ID_BY_FIELDS(DaoQueries.GET_ID_BY_FIELDS, "SELECT usergroups.id_user_group FROM usergroups, users, groups WHERE usergroups.id_user = ? AND "
-					 																										+"usergroups.id_group = ?;"),		
+				+"usergroups.id_group = ?;"),		
         UPDATE_BY_FIELD(DaoQueries.UPDATE_BY_FIELD, "UPDATE usergroups SET ? = ? WHERE ? = ?;"),
         GET_ALL(DaoQueries.GET_ALL, "SELECT users.id_user, users.login, roles.name FROM users INNER JOIN roles ON users.id_role = roles.id_role;");
         private DaoQueries daoQuery;
         private String query;
 
-        private UserGroupViewQueries(DaoQueries daoQuery, String query) {
+        UserGroupViewQueries(final DaoQueries daoQuery, final String query) {
         	this.daoQuery = daoQuery;
             this.query = query;
         }
@@ -260,12 +294,13 @@ public class DaoStatementsConstant {
             return daoQuery;
         }
 
+        @Override
         public String toString() {
             return query;
         }
 	}
     
-    public static enum CompetitionsViewQueries {
+    public enum CompetitionsViewQueries {
 		GET_ALL_ACTIVE("SELECT competitions.id_competition, competitions.name, competitions.description, competitions.start, competitions.finish, COUNT(usercompetitions.id_user)"
 				+ " FROM competitions"
 				+ " LEFT OUTER JOIN usercompetitions ON competitions.id_competition = usercompetitions.id_competition"
@@ -304,7 +339,7 @@ public class DaoStatementsConstant {
 		
 		private String query;
 		
-		private CompetitionsViewQueries(String query) {
+		CompetitionsViewQueries(final String query) {
 			this.query = query;
 		}
 
@@ -312,13 +347,15 @@ public class DaoStatementsConstant {
             return this;
         }
 		
+		@Override
 		public String toString() {
 			return query;
 		}
 	}
     
-    public static enum UsersViewQueries {
- 		GET_ALL("SELECT users.id_user, users.login, users.password, users.firstname, users.lastname, users.\"e-mail\", users.age, users.weight, users.gender, users.health, users.avatar, users.google_field, roles.name, users.status, SUM(usercompetitions.user_score)"
+    public enum UsersViewQueries {
+ 		GET_ALL("SELECT users.id_user, users.login, users.password, users.firstname, users.lastname, users.\"e-mail\", users.age, "
+ 				+ "users.weight, users.gender, users.health, users.avatar, users.google_field, roles.name, users.status, SUM(usercompetitions.user_score)"
  				+ " FROM users"
  				+ " JOIN roles ON users.id_role = roles.id_role"
  				+ " LEFT OUTER JOIN usercompetitions ON users.id_user = usercompetitions.id_user"
@@ -327,7 +364,7 @@ public class DaoStatementsConstant {
  		
  		private String query;
  		
- 		private UsersViewQueries(String query) {
+ 		UsersViewQueries(final String query) {
  			this.query = query;
  		}
 
@@ -335,6 +372,7 @@ public class DaoStatementsConstant {
              return this;
          }
  		
+ 		@Override
  		public String toString() {
  			return query;
  		}

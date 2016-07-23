@@ -9,10 +9,9 @@ public class GroupDTO {
 
     // private String status;
 
-    public GroupDTO() {
-    }
+    public GroupDTO() { }
 
-    public GroupDTO(String name, String count, String descriptions, String scoreGroup) {
+    public GroupDTO(final String name, final String count, final String descriptions, final String scoreGroup) {
         this.name = name;
         this.count = count;
         this.descriptions = descriptions;
@@ -21,37 +20,36 @@ public class GroupDTO {
     }
 
     // getters
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public String getCount() {
+    public final String getCount() {
         return count;
     }
 
-    public String getDescriptions() {
+    public final String getDescriptions() {
         return descriptions;
     }
 
-    public String getScoreGroup() {
+    public final String getScoreGroup() {
         return scoreGroup;
     }
 
     // setters
-    public void setName(String name) {
+    public final void setName(final String name) {
         this.name = name;
     }
 
-    public void setCount(String count) {
+    public final void setCount(final String count) {
         this.count = count;
     }
 
-    public void setDescriptions(String descriptions) {
+    public final void setDescriptions(final String descriptions) {
         this.descriptions = descriptions;
     }
 
-    public void setScoreGroup(String scoreGroup) {
+    public final void setScoreGroup(final String scoreGroup) {
         this.scoreGroup = scoreGroup;
     }
-
 }

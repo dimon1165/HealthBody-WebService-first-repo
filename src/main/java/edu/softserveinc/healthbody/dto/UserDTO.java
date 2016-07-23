@@ -21,11 +21,12 @@ public class UserDTO {
 	private List<GroupDTO> groups;
 	private String isDisabled;
 
-	public UserDTO() {}
+	public UserDTO() { }
 	
-	public UserDTO(String login, String password, String firstname, String lastname, String email, String age,
-			String weight, String gender, String photoURL, String roleName, String status, String score,
-			List<GroupDTO> groups, String isDisabled) {
+	public UserDTO(final String login, final String password, final String firstname, final String lastname,
+			final String email, final String age, final String weight, final String gender,
+			final String photoURL, final String roleName, final String status, final String score,
+			final List<GroupDTO> groups, final String isDisabled) {
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.login = login;
@@ -42,136 +43,136 @@ public class UserDTO {
 	}
 	
 	//getters
-	public String getFirstname() {
+	public final String getFirstname() {
 		return firstname;
 	}
 
-	public String getLastname() {
+	public final String getLastname() {
 		return lastname;
 	}
 
-	public String getLogin() {
+	public final String getLogin() {
 		return login;
 	}
 
-	public String getPassword() {
+	public final String getPassword() {
 		return password;
 	}
 
-	public String getEmail() {
+	public final String getEmail() {
 		return email;
 	}
 
-	public String getAge() {
+	public final String getAge() {
 		return age;
 	}
 
-	public String getWeight() {
+	public final String getWeight() {
 		return weight;
 	}
 
-	public String getGender() {
+	public final String getGender() {
 		return gender;
 	}
 
-	public String getPhotoURL() {
+	public final String getPhotoURL() {
 		return photoURL;
 	}
 
-	public String getRoleName() {
+	public final String getRoleName() {
 		return roleName;
 	}
-	public String getStatus() {
+	public final String getStatus() {
 		return status;
 	}
 
-	public String getScore() {
+	public final String getScore() {
 		return score;
 	}
 
-	public List<GroupDTO> getGroups() {
+	public final List<GroupDTO> getGroups() {
 		return groups;
 	}
 
-	public String getHealth() {
+	public final String getHealth() {
 		return health;
 	}
 
-	public String getIsDisabled() {
+	public final String getIsDisabled() {
 		return isDisabled;
 	}
 
 	//setters
-	public void setFirstname(String firstname) {
+	public final void setFirstname(final String firstname) {
 		this.firstname = firstname;
 	}
 
-	public void setLastname(String lastname) {
+	public final void setLastname(final String lastname) {
 		this.lastname = lastname;
 	}
 
-	public void setLogin(String login) {
+	public final void setLogin(final String login) {
 		this.login = login;
 	}
 
-	public void setPassword(String password) {
+	public final void setPassword(final String password) {
 		this.password = password;
 	}
 
-	public void setEmail(String email) {
+	public final void setEmail(final String email) {
 		this.email = email;
 	}
 
-	public void setAge(String age) {
+	public final void setAge(final String age) {
 		this.age = age;
 	}
 
-	public void setWeight(String weight) {
+	public final void setWeight(final String weight) {
 		this.weight = weight;
 	}
 
-	public void setGender(String gender) {
+	public final void setGender(final String gender) {
 		this.gender = gender;
 	}
 
-	public void setPhotoURL(String photoURL) {
+	public final void setPhotoURL(final String photoURL) {
 		this.photoURL = photoURL;
 	}
 
-	public void setRoleName(String roleName) {
+	public final void setRoleName(final String roleName) {
 		this.roleName = roleName;
 	}
 
-	public void setStatus(String status) {
+	public final void setStatus(final String status) {
 		this.status = status;
 	}
 
-	public void setScore(String score) {
+	public final void setScore(final String score) {
 		this.score = score;
 	}
 
-	public void setGroups(List<GroupDTO> groups) {
+	public final void setGroups(final List<GroupDTO> groups) {
 		this.groups = groups;
 	}
 	
-	public void setHealth(String health) {
+	public final void setHealth(final String health) {
 		this.health = health;
 	}
 
-	public String getGoogleApi() {
+	public final String getGoogleApi() {
 		return googleApi;
 	}
 
-	public void setGoogleApi(String googleApi) {
+	public final void setGoogleApi(final String googleApi) {
 		this.googleApi = googleApi;
 	}
 	
-	public void setIsDisabled(String isDisabled) {
+	public final void setIsDisabled(final String isDisabled) {
 	this.isDisabled = isDisabled;
 	}
 
 	@Override
-	public String toString() {
+	public final String toString() {
 		return "UserDTO [firstname=" + firstname + ", lastname=" + lastname + ", login=" + login + ", password="
 				+ password + ", email=" + email + ", age=" + age + ", weight=" + weight + ", gender=" + gender
 				+ ", photoURL=" + photoURL + ", roleName=" + roleName + ", health=" + health + ", googleApi="

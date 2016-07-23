@@ -27,13 +27,9 @@ public class GoogleAuth extends HttpServlet {
 
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	@Override
+	protected final void doGet(final HttpServletRequest request, final HttpServletResponse response)
 			throws ServletException, IOException {
-
 		try {
 			// get code
 			String code = request.getParameter("code");

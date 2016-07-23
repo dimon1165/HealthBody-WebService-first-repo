@@ -19,28 +19,23 @@ import edu.softserveinc.healthbody.db.DataSourceRepository;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 
 /**
- * Servlet implementation class DatabaseCreationServlet
+ * Servlet implementation class DatabaseCreationServlet.
  */
 @WebServlet("/PleaseCreateDatabase")
 public class DatabaseCreationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public DatabaseCreationServlet() {
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	@Override
+	protected final void doGet(final HttpServletRequest request, final HttpServletResponse response)
 			throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 		Connection con;
 		try {
-			con = ConnectionManager.getInstance(DataSourceRepository.getInstance().getPostgresOpenShift()).getConnection();
+			con = ConnectionManager.getInstance(DataSourceRepository.getInstance()
+					.getPostgresOpenShift()).getConnection();
 		} catch (JDBCDriverException e) {
 			e.printStackTrace(out);
 			out.flush();

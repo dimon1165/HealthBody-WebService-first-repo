@@ -9,9 +9,7 @@ import edu.softserveinc.healthbody.dao.UsersViewDao;
 import edu.softserveinc.healthbody.db.ConnectionManager;
 import edu.softserveinc.healthbody.dto.UserDTO;
 import edu.softserveinc.healthbody.entity.UsersView;
-import edu.softserveinc.healthbody.exceptions.CloseStatementException;
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
-import edu.softserveinc.healthbody.exceptions.EmptyResultSetException;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 import edu.softserveinc.healthbody.exceptions.QueryNotFoundException;
 import edu.softserveinc.healthbody.exceptions.TransactionException;
@@ -25,7 +23,7 @@ public class UsersViewServiceImpl implements IUsersViewService {
 	 * getAllinGroup, getAllinCompetition.
 	 **/
 	@Override
-	public List<UserDTO> getAll(int partNumber, int partSize)
+	public final List<UserDTO> getAll(final int partNumber, final int partSize)
 			throws JDBCDriverException, SQLException, TransactionException {
 		List<UserDTO> userDTO = new ArrayList<>();
 		ConnectionManager.getInstance().beginTransaction();
@@ -36,8 +34,7 @@ public class UsersViewServiceImpl implements IUsersViewService {
 						usersView.getWeight().toString(), usersView.getGender(), usersView.getAvatar(),
 						usersView.getRoleName(), usersView.getStatus(), usersView.getScore().toString(), null, null));
 			}
-		} catch (CloseStatementException | QueryNotFoundException | EmptyResultSetException
-				| DataBaseReadingException e) {
+		} catch (QueryNotFoundException | DataBaseReadingException e) {
 			ConnectionManager.getInstance().rollbackTransaction();
 			throw new TransactionException(ServiceConstants.TRANSACTION_ERROR, e);
 		}
@@ -50,7 +47,7 @@ public class UsersViewServiceImpl implements IUsersViewService {
 	 * for admin role on a pages where users lists presented.
 	 **/
 	@Override
-	public List<UserDTO> getAllbyAdmin(int partNumber, int partSize)
+	public final List<UserDTO> getAllbyAdmin(final int partNumber, final int partSize)
 			throws JDBCDriverException, SQLException, TransactionException {
 		return getAll(partNumber, partSize);
 	}
@@ -61,18 +58,17 @@ public class UsersViewServiceImpl implements IUsersViewService {
 	 * button) invite user.
 	 **/
 	@Override
-	public List<UserDTO> getAlltoAddInCompetition(int partNumber, int partSize)
+	public final List<UserDTO> getAlltoAddInCompetition(final int partNumber, final int partSize)
 			throws JDBCDriverException, SQLException, TransactionException {
 		List<UserDTO> userDTO = new ArrayList<>();
 		ConnectionManager.getInstance().beginTransaction();
 		try {
 				for (UsersView usersView : UsersViewDao.getInstance().getAllUsersView(partNumber, partSize)) {
 					userDTO.add(new UserDTO(usersView.getFirsName(), usersView.getLastName(), null, null, null,
-							usersView.getAge().toString(), usersView.getWeight().toString(), null, usersView.getAvatar(), null,
-							null, usersView.getScore().toString(), null, null));
+							usersView.getAge().toString(), usersView.getWeight().toString(), null,
+							usersView.getAvatar(), null, null, usersView.getScore().toString(), null, null));
 				}
-		} catch (CloseStatementException | QueryNotFoundException | EmptyResultSetException
-				| DataBaseReadingException e) {
+		} catch (QueryNotFoundException | DataBaseReadingException e) {
 			ConnectionManager.getInstance().rollbackTransaction();
 			throw new TransactionException(ServiceConstants.TRANSACTION_ERROR, e);
 		}
@@ -86,7 +82,7 @@ public class UsersViewServiceImpl implements IUsersViewService {
 	 * invite user to group.
 	 **/
 	@Override
-	public List<UserDTO> getAllinGroup(int partNumber, int partSize)
+	public final List<UserDTO> getAllinGroup(final int partNumber, final int partSize)
 			throws JDBCDriverException, SQLException, TransactionException {
 		return getAlltoAddInCompetition(partNumber, partSize);
 	}
@@ -96,23 +92,21 @@ public class UsersViewServiceImpl implements IUsersViewService {
 	 * competitions UI
 	 **/
 	@Override
-	public List<UserDTO> getAllinCompetition(int partNumber, int partSize)
+	public final List<UserDTO> getAllinCompetition(final int partNumber, final int partSize)
 			throws JDBCDriverException, SQLException, TransactionException {
 		List<UserDTO> userDTO = new ArrayList<>();
 		ConnectionManager.getInstance().beginTransaction();
 		try {
 				for (UsersView usersView : UsersViewDao.getInstance().getAllUsersView(partNumber, partSize)) {
 					userDTO.add(new UserDTO(usersView.getFirsName(), usersView.getLastName(), null, null, null,
-							usersView.getAge().toString(), usersView.getWeight().toString(), null, usersView.getAvatar(), null,
-							null, usersView.getScore().toString(), null, null));
+							usersView.getAge().toString(), usersView.getWeight().toString(), null,
+							usersView.getAvatar(), null, null, usersView.getScore().toString(), null, null));
 				}
-		} catch (CloseStatementException | QueryNotFoundException | EmptyResultSetException
-				| DataBaseReadingException e) {
+		} catch (QueryNotFoundException | DataBaseReadingException e) {
 			ConnectionManager.getInstance().rollbackTransaction();
 			throw new TransactionException(ServiceConstants.TRANSACTION_ERROR, e);
 		}
 		ConnectionManager.getInstance().commitTransaction();	
 		return userDTO;
 	}
-
 }

@@ -1,48 +1,45 @@
 package edu.softserveinc.healthbody.entity;
 
-public class UserGroup implements IEntity{
+public class UserGroup implements IEntity {
 
 	private Integer idUserGroup;
     private Integer idUser;
 	private Integer idGroup;
 	
-	public UserGroup(Integer idUserGroup, Integer idUser, Integer idGroup) {
+	public UserGroup(final Integer idUserGroup, final Integer idUser, final Integer idGroup) {
 		this.idUserGroup = idUserGroup;
 		this.idUser = idUser;
 		this.idGroup = idGroup;
 	}
 
 	// setters
-
-	public void setIdUserGroup(Integer idUserGroup) {
+	public final void setIdUserGroup(final Integer idUserGroup) {
 		this.idUserGroup = idUserGroup;
 	}
 
-	public void setIdUser(Integer idUser) {
+	public final void setIdUser(final Integer idUser) {
 		this.idUser = idUser;
 	}
 
-	public void setIdGroup(Integer idGroup) {
+	public final void setIdGroup(final Integer idGroup) {
 		this.idGroup = idGroup;
 	}
-	
 
 	// getters
-
-	public Integer getIdUserGroup() {
+	public final Integer getIdUserGroup() {
 		return idUserGroup;
 	}
 
-	public Integer getIdUser() {
+	public final Integer getIdUser() {
 		return idUser;
 	}
 
-	public Integer getIdGroup() {
+	public final Integer getIdGroup() {
 		return idGroup;
 	}
 	
 	@Override
-	public Integer getId() {
+	public final Integer getId() {
 		return getIdUser();
 	}
 

@@ -9,7 +9,7 @@ public final class DataSource {
 	private String user;
 	private String passwrd;
 
-	public DataSource(Driver jdbcDriver, String connectionUrl, String user, String passwrd) {
+	public DataSource(final Driver jdbcDriver, final String connectionUrl, final String user, final String passwrd) {
 		this.jdbcDriver = jdbcDriver;
 		this.connectionUrl = connectionUrl;
 		this.user = user;
@@ -17,19 +17,19 @@ public final class DataSource {
 	}
 
 	//setters
-	public void setJdbcDriver(Driver jdbcDriver) {
+	public void setJdbcDriver(final Driver jdbcDriver) {
 		this.jdbcDriver = jdbcDriver;
 	}
 
-	public void setConnectionUrl(String connectionUrl) {
+	public void setConnectionUrl(final String connectionUrl) {
 		this.connectionUrl = connectionUrl;
 	}
 
-	public void setUser(String user) {
+	public void setUser(final String user) {
 		this.user = user;
 	}
 
-	public void setPasswrd(String passwrd) {
+	public void setPasswrd(final String passwrd) {
 		this.passwrd = passwrd;
 	}
 	
@@ -51,7 +51,7 @@ public final class DataSource {
 	}
 
 	@Override
-	public boolean equals(Object dataSource) {
+	public boolean equals(final Object dataSource) {
 		boolean result = false;
 		if (dataSource instanceof DataSource) {
 			result  = getJdbcDriver().getClass().getName().equals(((DataSource) dataSource).getJdbcDriver().getClass().getName())
@@ -60,7 +60,5 @@ public final class DataSource {
 				&& getPasswrd().equals(((DataSource) dataSource).getPasswrd());
 		}
 		return result;
-	}
-	
-	
+	}	
 }
