@@ -10,19 +10,17 @@ import edu.softserveinc.healthbody.constants.DaoConstants;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.CompetitionsViewQueries;
 import edu.softserveinc.healthbody.db.ConnectionManager;
 import edu.softserveinc.healthbody.entity.CompetitionsView;
-import edu.softserveinc.healthbody.exceptions.CloseStatementException;
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
-import edu.softserveinc.healthbody.exceptions.EmptyResultSetException;
 import edu.softserveinc.healthbody.exceptions.IllegalAgrumentCheckedException;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 import edu.softserveinc.healthbody.exceptions.QueryNotFoundException;
 import edu.softserveinc.healthbody.log.Log4jWrapper;
 
-public class CompetitionsViewDao extends AbstractDaoRead<CompetitionsView> {
+public class CompetitionsViewDao extends AbstractDao<CompetitionsView> {
 
-	private static volatile CompetitionsViewDao instance = null;
+	private static volatile CompetitionsViewDao instance;
 
-	public CompetitionsViewDao() {
+	private CompetitionsViewDao() {
 		init();
 	}
 
@@ -37,6 +35,7 @@ public class CompetitionsViewDao extends AbstractDaoRead<CompetitionsView> {
 		return instance;
 	}
 
+	@Override
 	protected void init() {
 		for (CompetitionsViewQueries competitionsViewQueries : CompetitionsViewQueries.values()) {
 			sqlQueries.put(competitionsViewQueries.getDaoQuery(), competitionsViewQueries);
@@ -44,14 +43,14 @@ public class CompetitionsViewDao extends AbstractDaoRead<CompetitionsView> {
 	}
 
 	@Override
-	public CompetitionsView createInstance(String[] args) {
+	public CompetitionsView createInstance(final String[] args) {
 		return new CompetitionsView(Integer.parseInt(args[0] == null ? "0" : args[0]), args[1] == null ? "0" : args[1],
 				args[2] == null ? "0" : args[2], args[3] == null ? "0" : args[3], args[4] == null ? "0" : args[4],
 				Integer.parseInt(args[5] == null ? "0" : args[5]));
 	}
 
 	@Override
-	protected String[] getFields(CompetitionsView entity) {
+	protected String[] getFields(final CompetitionsView entity) {
 		List<String> fields = new ArrayList<>();
 		fields.add(entity.getIdCompetition().toString());
 		fields.add(entity.getName());
@@ -62,8 +61,8 @@ public class CompetitionsViewDao extends AbstractDaoRead<CompetitionsView> {
 		return (String[]) fields.toArray();
 	}
 
-	public List<CompetitionsView> getActiveCompetitionsView(int partNumber, int partSize) throws QueryNotFoundException,
-			JDBCDriverException, DataBaseReadingException, EmptyResultSetException, CloseStatementException {
+	public List<CompetitionsView> getActiveCompetitionsView(final int partNumber, final int partSize) 
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		List<CompetitionsView> result = new ArrayList<>();
 		String query = sqlQueries.get(CompetitionsViewQueries.GET_ALL_ACTIVE).toString();
 		if (query == null) {
@@ -74,7 +73,7 @@ public class CompetitionsViewDao extends AbstractDaoRead<CompetitionsView> {
 			query = query.substring(0, query.lastIndexOf(";")) + SQL_LIMIT;
 		}
 		try (PreparedStatement pst = createPreparedStatement(query, partNumber, partSize);
-			ResultSet resultSet = pst.executeQuery()){
+			ResultSet resultSet = pst.executeQuery()) {
 			String[] queryResult = new String[resultSet.getMetaData().getColumnCount()];
 			while (resultSet.next()) {
 				result.add(createInstance(getQueryResultArr(queryResult, resultSet)));
@@ -85,10 +84,8 @@ public class CompetitionsViewDao extends AbstractDaoRead<CompetitionsView> {
 		return result;
 	}
 	
-	
-	public List<CompetitionsView> getActiveCompetitionsByUserView(int partNumber, int partSize, String login)
-			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, EmptyResultSetException,
-			CloseStatementException, IllegalAgrumentCheckedException {
+	public List<CompetitionsView> getActiveCompetitionsByUserView(final int partNumber, final int partSize, final String login)
+			throws DataBaseReadingException, IllegalAgrumentCheckedException, QueryNotFoundException, JDBCDriverException {
 		if (login == null || login.isEmpty()) {
 			String errorStr = "Illegal parameter. \"login\" is empty or null.";
 			Log4jWrapper.get().error(errorStr);
@@ -115,8 +112,8 @@ public class CompetitionsViewDao extends AbstractDaoRead<CompetitionsView> {
 		return result;
 	}
 
-	public List<CompetitionsView> getAllCompetitionsView(int partNumber, int partSize) throws QueryNotFoundException,
-			JDBCDriverException, DataBaseReadingException, EmptyResultSetException, CloseStatementException {
+	public List<CompetitionsView> getAllCompetitionsView(final int partNumber, final int partSize)
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		List<CompetitionsView> result = new ArrayList<>();
 		String query = sqlQueries.get(CompetitionsViewQueries.GET_ALL).toString();
 		if (query == null) {
@@ -126,7 +123,7 @@ public class CompetitionsViewDao extends AbstractDaoRead<CompetitionsView> {
 			query = query.substring(0, query.lastIndexOf(";")) + SQL_LIMIT;
 		}
 		try (PreparedStatement pst = createPreparedStatement(query, partNumber, partSize);
-			ResultSet resultSet = pst.executeQuery()){
+			ResultSet resultSet = pst.executeQuery()) {
 			String[] queryResult = new String[resultSet.getMetaData().getColumnCount()];
 			while (resultSet.next()) {
 				result.add(createInstance(getQueryResultArr(queryResult, resultSet)));
@@ -137,9 +134,8 @@ public class CompetitionsViewDao extends AbstractDaoRead<CompetitionsView> {
 		return result;
 	}
 	
-	public List<CompetitionsView> getCompetitionsByUserView(int partNumber, int partSize, String login)
-			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, EmptyResultSetException,
-			CloseStatementException, IllegalAgrumentCheckedException {
+	public List<CompetitionsView> getCompetitionsByUserView(int partNumber, final int partSize, final String login)
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, IllegalAgrumentCheckedException {
 		if (login == null || login.isEmpty()) {
 			String errorStr = "Illegal parameter. \"login\" is empty or null.";
 			Log4jWrapper.get().error(errorStr);
@@ -167,23 +163,26 @@ public class CompetitionsViewDao extends AbstractDaoRead<CompetitionsView> {
 	}
 	
 	//methods for try-with-resources
-	private PreparedStatement createPreparedStatement(String query, int partNumber, int partSize) throws SQLException, JDBCDriverException {
+	private PreparedStatement createPreparedStatement(final String query, final int partNumber, final int partSize)
+			throws SQLException, JDBCDriverException {
 		PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query);
 			if ((partNumber >= 0) && (partSize > 0)) {
 				pst.setInt(1, (partNumber - 1) * partSize);
 				pst.setInt(2, partSize);
 			}
-			return pst;
-	}
-	
-	private PreparedStatement createPreparedStatementLogin(String query, String login, int partNumber, int partSize) throws SQLException, JDBCDriverException {
-		PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query);
-		    pst.setString(1, login);
-		if ((partNumber >= 0) && (partSize > 0)) {
-			pst.setInt(2, (partNumber - 1) * partSize);
-			pst.setInt(3, partSize);
-		}
 		return pst;
 	}
 	
+	private PreparedStatement createPreparedStatementLogin(final String query, final String login,
+			final int partNumber, final int partSize)
+			throws SQLException, JDBCDriverException {
+		PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query);
+		int i = 1;    
+		pst.setString(i++, login);
+		if ((partNumber >= 0) && (partSize > 0)) {
+			pst.setInt(i++, (partNumber - 1) * partSize);
+			pst.setInt(i++, partSize);
+		}
+		return pst;
+	}
 }

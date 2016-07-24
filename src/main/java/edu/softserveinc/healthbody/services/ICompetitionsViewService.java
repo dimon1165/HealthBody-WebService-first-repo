@@ -11,11 +11,15 @@ import edu.softserveinc.healthbody.exceptions.TransactionException;
 
 public interface ICompetitionsViewService {
 
-	List<CompetitionDTO> getAll(int partNumber, int partSize) throws JDBCDriverException, SQLException, TransactionException;
+	List<CompetitionDTO> getAll(int partNumber, int partSize)
+			throws JDBCDriverException, SQLException, TransactionException;
 
-	List<CompetitionDTO> getAllActive(int partNumber, int partSize) throws JDBCDriverException, SQLException, TransactionException;
+	List<CompetitionDTO> getAllActive(int partNumber, int partSize)
+			throws JDBCDriverException, SQLException, TransactionException;
 
-	List<CompetitionDTO> getAllByUser(int partNumber, int partSize, String login) throws IllegalAgrumentCheckedException, SQLException, JDBCDriverException, TransactionException;
+	List<CompetitionDTO> getAllByUser(int partNumber, int partSize, String login)
+			throws IllegalAgrumentCheckedException, SQLException, JDBCDriverException, TransactionException;
 
-	List<CompetitionDTO> getAllActiveByUser(int partNumber, int partSize, String login) throws IllegalAgrumentCheckedException, SQLException, JDBCDriverException, TransactionException;
+	List<CompetitionDTO> getAllActiveByUser(int partNumber, int partSize, String login)
+			throws IllegalAgrumentCheckedException, SQLException, JDBCDriverException, TransactionException;
 }

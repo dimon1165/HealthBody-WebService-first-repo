@@ -11,5 +11,4 @@ public interface ILogger {
     //void debug(String message);
 
     void insertScreenShot(String fileNamePath);
-
 }

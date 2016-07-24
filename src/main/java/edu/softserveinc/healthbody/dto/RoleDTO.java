@@ -8,23 +8,23 @@ public class RoleDTO {
 	private String description;
 	private List<UserDTO> users;
 
-	public RoleDTO() {}
+	public RoleDTO() { }
 	
-	public RoleDTO(String name, String description, List<UserDTO> users) {
+	public RoleDTO(final String name, final String description, final List<UserDTO> users) {
 		this.name = name;
 		this.description = description;
 		this.users = users;
 	}
 
-	public String getName() {
+	public final String getName() {
 		return name;
 	}
 
-	public String getDescription() {
+	public final String getDescription() {
 		return description;
 	}
 
-	public List<UserDTO> getUsers() {
+	public final List<UserDTO> getUsers() {
 		return users;
 	}
 }

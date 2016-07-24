@@ -17,24 +17,22 @@ import edu.softserveinc.healthbody.entity.Group;
 import edu.softserveinc.healthbody.entity.Role;
 import edu.softserveinc.healthbody.entity.User;
 import edu.softserveinc.healthbody.entity.UserGroup;
-import edu.softserveinc.healthbody.exceptions.CloseStatementException;
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
-import edu.softserveinc.healthbody.exceptions.EmptyResultSetException;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 import edu.softserveinc.healthbody.exceptions.QueryNotFoundException;
 import edu.softserveinc.healthbody.exceptions.TransactionException;
 import edu.softserveinc.healthbody.log.Log4jWrapper;
 import edu.softserveinc.healthbody.services.IBaseService;
 
-public class UserProfileServiceImpl implements IBaseService<UserDTO> {
+public final class UserProfileServiceImpl implements IBaseService<UserDTO> {
 	
-	private static volatile UserProfileServiceImpl instance = null;
+	private static volatile UserProfileServiceImpl instance;
 
 	private UserProfileServiceImpl() {
 	}
 	
 	public static UserProfileServiceImpl getInstance() {
-		if(instance == null) {
+		if (instance == null) {
 			synchronized (UserProfileServiceImpl.class) {
 				if (instance == null) {
 					instance = new UserProfileServiceImpl();
@@ -46,20 +44,21 @@ public class UserProfileServiceImpl implements IBaseService<UserDTO> {
 	
 	//create user
 	@Override
-	public void insert(UserDTO userDTO) throws SQLException, JDBCDriverException, DataBaseReadingException,
-							QueryNotFoundException, EmptyResultSetException, TransactionException, CloseStatementException {
+	public void insert(final UserDTO userDTO)
+			throws SQLException, JDBCDriverException, TransactionException {
 		if (userDTO == null) {
 			Log4jWrapper.get().error("You didn't enter user");
 			throw new IllegalArgumentException();
-		}
-		else {
-			ConnectionManager.getInstance().beginTransaction();
-			Role roles = RoleDao.getInstance().getRoleByName(userDTO.getRoleName());
-		
+		} else {
 			try {
-				UserDao.getInstance().createUser(new User(0, userDTO.getLogin(), userDTO.getPassword(), userDTO.getFirstname(), userDTO.getLastname(),
-					 userDTO.getEmail(), Integer.parseInt(userDTO.getAge()), Double.parseDouble(userDTO.getWeight()), userDTO.getGender(),
-					 userDTO.getHealth(), userDTO.getPhotoURL(), userDTO.getGoogleApi(), roles.getIdRole(), userDTO.getStatus(), Boolean.parseBoolean(userDTO.getIsDisabled())));
+				ConnectionManager.getInstance().beginTransaction();
+				Role roles = RoleDao.getInstance().getRoleByName(userDTO.getRoleName());
+				UserDao.getInstance().createUser(new User(0, userDTO.getLogin(), userDTO.getPassword(),
+						userDTO.getFirstname(), userDTO.getLastname(), userDTO.getEmail(),
+						Integer.parseInt(userDTO.getAge()), Double.parseDouble(userDTO.getWeight()),
+						userDTO.getGender(), userDTO.getHealth(), userDTO.getPhotoURL(),
+						userDTO.getGoogleApi(), roles.getIdRole(), userDTO.getStatus(),
+						Boolean.parseBoolean(userDTO.getIsDisabled())));
 				User user = UserDao.getInstance().getUserByLoginName(userDTO.getLogin());
 				Group group = GroupDao.getInstance().getGroupByName(userDTO.getGroups().get(0).getName());
 				UserGroupDao.getInstance().createUserGroup(user, group);
@@ -73,12 +72,12 @@ public class UserProfileServiceImpl implements IBaseService<UserDTO> {
 
 	//get user by login
 	@Override
-	public UserDTO get(String name) throws SQLException, JDBCDriverException, EmptyResultSetException, TransactionException, CloseStatementException {
+	public UserDTO get(final String name)
+			throws SQLException, JDBCDriverException, TransactionException {
 		if (name == null) {
 			Log4jWrapper.get().error("User Login couldn't be null");
 			throw new IllegalArgumentException();
-		}
-		else {
+		} else {
 			User user = null;
 			Role role = null;
 			Group group = null;
@@ -91,11 +90,10 @@ public class UserProfileServiceImpl implements IBaseService<UserDTO> {
 				if (user == null) {
 					Log4jWrapper.get().error("User " + name + " doesn't exist");
 					return null;
-				}
-				else {
+				} else {
 					role = RoleDao.getInstance().getRoleById(user.getIdRole());
 					ugs = UserGroupDao.getInstance().getUGbyId(user.getId());
-					for( UserGroup ug : ugs ){
+					for (UserGroup ug : ugs) {
 						group = GroupDao.getInstance().getById(ug.getIdGroup());
 						groups.add(new GroupDTO(group.getName(), "", "", ""));
 					}
@@ -105,14 +103,14 @@ public class UserProfileServiceImpl implements IBaseService<UserDTO> {
 				 throw new TransactionException(ServiceConstants.TRANSACTION_ERROR, e);
 			 }
 			ConnectionManager.getInstance().commitTransaction();
-		
-			return new UserDTO(user.getLogin(), user.getPasswd(), user.getFirsName(), user.getLastName(), user.getMail(),
-				user.getAge().toString(), user.getWeight().toString(), user.getGender(), user.getAvatar(), role.getName(), user.getStatus(), "", groups, String.valueOf(user.getIsDisabled()));
+		return new UserDTO(user.getLogin(), user.getPasswd(), user.getFirsName(), user.getLastName(), user.getMail(),
+				user.getAge().toString(), user.getWeight().toString(), user.getGender(), user.getAvatar(),
+				role.getName(), user.getStatus(), "", groups, String.valueOf(user.getIsDisabled()));
 		}
 	}
 	
 	//get user by id
-	public UserDTO getById(Integer id) throws SQLException, JDBCDriverException, TransactionException, CloseStatementException, EmptyResultSetException {
+	public UserDTO getById(final Integer id) throws SQLException, JDBCDriverException, TransactionException {
 		User user = null;
 		Role role = null;
 		Group group = null;
@@ -124,7 +122,7 @@ public class UserProfileServiceImpl implements IBaseService<UserDTO> {
 			 user = UserDao.getInstance().getUserById(id);
 			 role = RoleDao.getInstance().getRoleById(user.getIdRole());
 			 ugs = UserGroupDao.getInstance().getUGbyId(user.getId());
-			 for( UserGroup ug : ugs ){
+			 for (UserGroup ug : ugs) {
 				 group = GroupDao.getInstance().getById(ug.getIdGroup());
 				 groups.add(new GroupDTO(group.getName(), "", "", ""));
 			}
@@ -135,24 +133,28 @@ public class UserProfileServiceImpl implements IBaseService<UserDTO> {
 		ConnectionManager.getInstance().commitTransaction();
 		
 		return new UserDTO(user.getLogin(), user.getPasswd(), user.getFirsName(), user.getLastName(), user.getMail(),
-				user.getAge().toString(), user.getWeight().toString(), user.getGender(), user.getAvatar(), role.getName(), user.getStatus(), "", groups, String.valueOf(user.getIsDisabled()));
+				user.getAge().toString(), user.getWeight().toString(), user.getGender(), user.getAvatar(),
+				role.getName(), user.getStatus(), "", groups, String.valueOf(user.getIsDisabled()));
 	}
 
 	//Update user
 	@Override
-	public void update(UserDTO userDTO) throws SQLException, JDBCDriverException, DataBaseReadingException, QueryNotFoundException, EmptyResultSetException, TransactionException, CloseStatementException {
+	public void update(final UserDTO userDTO)
+			throws SQLException, JDBCDriverException, TransactionException {
 		if (userDTO == null) {
 			Log4jWrapper.get().error("You didn't enter user");
 			throw new IllegalArgumentException();
-		}
-		else {
-			ConnectionManager.getInstance().beginTransaction();
-			Role role = RoleDao.getInstance().getByFieldName(userDTO.getRoleName());
-			try {	
-				UserDao.getInstance().updateUser(new User(0, userDTO.getLogin(), userDTO.getPassword(), userDTO.getFirstname(), userDTO.getLastname(),
-					 userDTO.getEmail(), Integer.parseInt(userDTO.getAge()), Double.parseDouble(userDTO.getWeight()), userDTO.getGender(),
-					 userDTO.getHealth(), userDTO.getPhotoURL(), userDTO.getGoogleApi(), role.getIdRole(), userDTO.getStatus(), Boolean.parseBoolean(userDTO.getIsDisabled())));
-			}catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException e) {
+		} else {			
+			try {
+				ConnectionManager.getInstance().beginTransaction();
+				Role role = RoleDao.getInstance().getByFieldName(userDTO.getRoleName());
+				UserDao.getInstance().updateUser(new User(0, userDTO.getLogin(), userDTO.getPassword(),
+						userDTO.getFirstname(), userDTO.getLastname(), userDTO.getEmail(),
+						Integer.parseInt(userDTO.getAge()), Double.parseDouble(userDTO.getWeight()),
+						userDTO.getGender(), userDTO.getHealth(), userDTO.getPhotoURL(),
+						userDTO.getGoogleApi(), role.getIdRole(), userDTO.getStatus(),
+						Boolean.parseBoolean(userDTO.getIsDisabled())));
+			} catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException e) {
 				ConnectionManager.getInstance().rollbackTransaction();
 				throw new TransactionException(ServiceConstants.TRANSACTION_ERROR, e);
 			}
@@ -162,14 +164,15 @@ public class UserProfileServiceImpl implements IBaseService<UserDTO> {
 
 	//use just for test
 	@Override
-	public void test_delete(UserDTO userDTO) throws SQLException, JDBCDriverException, QueryNotFoundException, DataBaseReadingException, CloseStatementException, TransactionException {
+	public void test_delete(final UserDTO userDTO)
+			throws SQLException, JDBCDriverException, TransactionException {
 		ConnectionManager.getInstance().beginTransaction();
 		try {
 			User user = UserDao.getInstance().getUserByLoginName(userDTO.getLogin());
 			UserGroupDao.getInstance().deleteByUserId(user.getId());
 			UserCompetitionsDao.getInstance().deleteByUserId(user.getId());
 			UserDao.getInstance().deleteUserForTests(user.getId());
-		}catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException e) {
+		} catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException e) {
 			ConnectionManager.getInstance().rollbackTransaction();
 			throw new TransactionException(ServiceConstants.TRANSACTION_ERROR, e);
 		}
@@ -177,16 +180,16 @@ public class UserProfileServiceImpl implements IBaseService<UserDTO> {
 	}
 	
 	//lock and unlock user (for lock - isDisabled = true, for unlock - isDisabled = false)
-	public void lock(UserDTO userDTO, boolean isDisabled) throws SQLException, JDBCDriverException, QueryNotFoundException, DataBaseReadingException, TransactionException, CloseStatementException {
+	public void lock(final UserDTO userDTO, final boolean isDisabled)
+			throws SQLException, JDBCDriverException, TransactionException {
 		if (userDTO == null) {
 			Log4jWrapper.get().error("You didn't enter user");
 			throw new IllegalArgumentException();
-		}
-		else {
+		} else {
 			ConnectionManager.getInstance().beginTransaction();
 			try {
 				UserDao.getInstance().lockUser(isDisabled, userDTO.getLogin());
-			}catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException e) {
+			} catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException e) {
 				ConnectionManager.getInstance().rollbackTransaction();
 				throw new TransactionException(ServiceConstants.TRANSACTION_ERROR, e);
 			}

@@ -11,8 +11,8 @@ public class Competition implements IEntity {
     private Date finish;
     private Integer idCriteria;
 
-    public Competition(Integer idCompetition, String name, String description, Date start, Date finish,
-            Integer idCriteria) {
+    public Competition(final Integer idCompetition, final String name, final String description,
+    		final Date start, final Date finish, final Integer idCriteria) {
         this.idCompetition = idCompetition;
         this.name = name;
         this.description = description;
@@ -22,58 +22,57 @@ public class Competition implements IEntity {
     }
 
     // setters
-
-    public void setIdCompetitions(Integer idCompetition) {
+    public final void setIdCompetitions(final Integer idCompetition) {
         this.idCompetition = idCompetition;
     }
 
-    public void setName(String name) {
+    public final void setName(final String name) {
         this.name = name;
     }
 
-    public void setDescription(String description) {
+    public final void setDescription(final String description) {
         this.description = description;
     }
 
-    public void setStart(Date start) {
+    public final void setStart(final Date start) {
         this.start = start;
     }
 
-    public void setFinish(Date finish) {
+    public final void setFinish(final Date finish) {
         this.finish = finish;
     }
 
-    public void setIdCriteria(Integer idCriteria) {
+    public final void setIdCriteria(final Integer idCriteria) {
         this.idCriteria = idCriteria;
     }
 
     // getters
-
-    public Integer getId() {
+    @Override
+    public final Integer getId() {
         return getIdCompetition();
     }
 
-    public Integer getIdCompetition() {
+    public final Integer getIdCompetition() {
         return idCompetition;
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public String getDescription() {
+    public final String getDescription() {
         return description;
     }
 
-    public Date getStart() {
+    public final Date getStart() {
         return start;
     }
 
-    public Date getFinish() {
+    public final Date getFinish() {
         return finish;
     }
 
-    public Integer getIdCriteria() {
+    public final Integer getIdCriteria() {
         return idCriteria;
     }
 

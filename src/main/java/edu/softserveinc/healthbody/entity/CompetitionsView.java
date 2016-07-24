@@ -9,8 +9,8 @@ public class CompetitionsView implements IEntity {
     private String finish;
     private Integer usersCount;
 
-    public CompetitionsView(Integer idCompetition, String name, String description, String start, String finish,
-            Integer usersCount) {
+    public CompetitionsView(final Integer idCompetition, final String name, final String description,
+    		final String start, final String finish, final Integer usersCount) {
         this.idCompetition = idCompetition;
         this.name = name;
         this.description = description;
@@ -20,59 +20,57 @@ public class CompetitionsView implements IEntity {
     }
 
     // setters
-
-    public void setIdCompetitions(Integer idCompetition) {
+    public final void setIdCompetitions(final Integer idCompetition) {
         this.idCompetition = idCompetition;
     }
 
-    public void setName(String name) {
+    public final void setName(final String name) {
         this.name = name;
     }
 
-    public void setDescription(String description) {
+    public final void setDescription(final String description) {
         this.description = description;
     }
 
-    public void setStart(String start) {
+    public final void setStart(final String start) {
         this.start = start;
     }
 
-    public void setFinish(String finish) {
+    public final void setFinish(final String finish) {
         this.finish = finish;
     }
 
-    public void setUsersCount(Integer usersCount) {
+    public final void setUsersCount(final Integer usersCount) {
         this.usersCount = usersCount;
     }
 
     // getters
-
-    public Integer getId() {
+    @Override
+	public final Integer getId() {
         return getIdCompetition();
     }
 
-    public Integer getIdCompetition() {
+    public final Integer getIdCompetition() {
         return idCompetition;
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public String getDescription() {
+    public final String getDescription() {
         return description;
     }
 
-    public String getStart() {
+    public final String getStart() {
         return start;
     }
 
-    public String getFinish() {
+    public final String getFinish() {
         return finish;
     }
 
-    public Integer getUsersCount() {
+    public final Integer getUsersCount() {
         return usersCount;
     }
-
 }

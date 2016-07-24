@@ -9,15 +9,13 @@ import edu.softserveinc.healthbody.constants.DaoConstants;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.CompetitionDBQueries;
 import edu.softserveinc.healthbody.db.ConnectionManager;
 import edu.softserveinc.healthbody.entity.Competition;
-import edu.softserveinc.healthbody.exceptions.CloseStatementException;
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
-import edu.softserveinc.healthbody.exceptions.EmptyResultSetException;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 import edu.softserveinc.healthbody.exceptions.QueryNotFoundException;;
 
 public final class CompetitionDao extends AbstractDao<Competition> {
 	
-	private static volatile CompetitionDao instance = null;
+	private static volatile CompetitionDao instance;
 
 	private CompetitionDao() {
 		init();
@@ -34,6 +32,7 @@ public final class CompetitionDao extends AbstractDao<Competition> {
 		return instance;
 	}
 
+	@Override
 	protected void init() {
 		for (CompetitionDBQueries competitionDBQueries : CompetitionDBQueries.values()) {
 			sqlQueries.put(competitionDBQueries.getDaoQuery(), competitionDBQueries);
@@ -41,7 +40,7 @@ public final class CompetitionDao extends AbstractDao<Competition> {
 	}
 	
 	@Override
-	public Competition createInstance(String[] args) {
+	public Competition createInstance(final String[] args) {
 		return null;
 //				new Competition(
 //			Integer.parseInt(args[0] == null ? "0" : args[0]),
@@ -53,7 +52,7 @@ public final class CompetitionDao extends AbstractDao<Competition> {
 	}
 	
 	@Override
-	protected String[] getFields(Competition entity) {
+	protected String[] getFields(final Competition entity) {
 		List<String> fields = new ArrayList<>();
 		fields.add(entity.getIdCompetition().toString());
 		fields.add(entity.getName());
@@ -64,7 +63,8 @@ public final class CompetitionDao extends AbstractDao<Competition> {
 		return (String[]) fields.toArray();
 	}
 	
-	public boolean createCompetition(Competition competition) throws JDBCDriverException, QueryNotFoundException, DataBaseReadingException {
+	public boolean createCompetition(final Competition competition)
+			throws JDBCDriverException, QueryNotFoundException, DataBaseReadingException {
 		boolean result = false;
 		String query = sqlQueries.get(DaoQueries.INSERT).toString();
 		if (query == null) {
@@ -77,8 +77,6 @@ public final class CompetitionDao extends AbstractDao<Competition> {
 			pst.setDate(i++, competition.getStart());
 			pst.setDate(i++, competition.getFinish());
 			pst.setInt(i++, competition.getIdCriteria());
-		
-		
 			result = pst.execute();
 		} catch (SQLException e) {
 			throw new DataBaseReadingException(DaoConstants.DATABASE_READING_ERROR, e);
@@ -86,23 +84,27 @@ public final class CompetitionDao extends AbstractDao<Competition> {
 		return result;
 	}
 	
-	public boolean editCompetition(Competition competition, String idCompetition, String name, String description,
-			String start, String finish, String idCriteria) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException{
+	public boolean editCompetition(final Competition competition, final String idCompetition,
+			final String name, final String description, final String start,
+			final String finish, final String idCriteria)
+					throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		String[] fields = getFields(competition);	
 		boolean result = false;
-		updateByField(fields[0], idCompetition, fields[1]	, name);
-		updateByField(fields[0], idCompetition, fields[2]	, description);
-		updateByField(fields[0], idCompetition, fields[3]	, start);
-		updateByField(fields[0], idCompetition, fields[4]	, finish);
-		updateByField(fields[0], idCompetition, fields[5]	, idCriteria);
-		if (fields[3] != null) result = false;
-		else if (fields[1] == name && fields[2] == description && fields[3] == start && fields[4] == finish && fields[5] == idCriteria){
+		int i = 1;
+		updateByField(fields[0], idCompetition, fields[i++], name);
+		updateByField(fields[0], idCompetition, fields[i++], description);
+		updateByField(fields[0], idCompetition, fields[i++], start);
+		updateByField(fields[0], idCompetition, fields[i++], finish);
+		updateByField(fields[0], idCompetition, fields[i++], idCriteria);
+		if (fields[3] != null) {
+			result = false;
+		} else if (fields[1] == name && fields[2] == description && fields[3] == start && fields[4] == finish && fields[5] == idCriteria){
 			result = true;			
 		}
 		return result;
 	}
 	
-	public List<Competition> view() throws JDBCDriverException, DataBaseReadingException, EmptyResultSetException, CloseStatementException{
+	public List<Competition> view() throws JDBCDriverException, DataBaseReadingException {
 		return getAll();
 	}
 

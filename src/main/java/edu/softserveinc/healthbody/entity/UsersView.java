@@ -19,9 +19,10 @@ public class UsersView implements IEntity {
 	private String status;
 	private Integer score;
 	
-	public UsersView(Integer idUser, String firsName, String lastName, String login, String passwd, String mail,
-			Integer age, Double weight, String gender, String avatar, String roleName, String health, String googleApi,
-			String status, Integer score) {
+	public UsersView(final Integer idUser, final String firsName, final String lastName, final String login,
+			final String passwd, final String mail, final Integer age, final Double weight,
+			final String gender, final String avatar, final String roleName, final String health,
+			final String googleApi, final String status, final Integer score) {
 		this.idUser = idUser;
 		this.firsName = firsName;
 		this.lastName = lastName;
@@ -40,131 +41,129 @@ public class UsersView implements IEntity {
 	}
 	
 	// setters
-	public void setIdUser(Integer idUser) {
+	public final void setIdUser(final Integer idUser) {
 		this.idUser = idUser;
 	}
 
-	public void setFirsName(String firsName) {
+	public final void setFirsName(final String firsName) {
 		this.firsName = firsName;
 	}
 
-	public void setLastName(String lastName) {
+	public final void setLastName(final String lastName) {
 		this.lastName = lastName;
 	}
 
-	public void setLogin(String login) {
+	public final void setLogin(final String login) {
 		this.login = login;
 	}
 
-	public void setPasswd(String passwd) {
+	public final void setPasswd(final String passwd) {
 		this.passwd = passwd;
 	}
 
-	public void setMail(String mail) {
+	public final void setMail(final String mail) {
 		this.mail = mail;
 	}
 
-	public void setAge(Integer age) {
+	public final void setAge(final Integer age) {
 		this.age = age;
 	}
 
-	public void setWeight(Double weight) {
+	public final void setWeight(final Double weight) {
 		this.weight = weight;
 	}
 
-	public void setGender(String gender) {
+	public final void setGender(final String gender) {
 		this.gender = gender;
 	}
 
-	public void setAvatar(String avatar) {
+	public final void setAvatar(final String avatar) {
 		this.avatar = avatar;
 	}
 
-	public void setRoleName(String roleName) {
+	public final void setRoleName(final String roleName) {
 		this.roleName = roleName;
 	}
 
-	public void setHealth(String health) {
+	public final void setHealth(final String health) {
 		this.health = health;
 	}
 
-	public void setGoogleApi(String googleApi) {
+	public final void setGoogleApi(final String googleApi) {
 		this.googleApi = googleApi;
 	}
 
-	public void setStatus(String status) {
+	public final void setStatus(final String status) {
 		this.status = status;
 	}
 
-	public void setScore(Integer score) {
+	public final void setScore(final Integer score) {
 		this.score = score;
 	}
 	
 	// getters
-	
 	@Override
-	public Integer getId() {
+	public final Integer getId() {
 		return getIdUser();
 	}
 	
-	public Integer getIdUser() {
+	public final Integer getIdUser() {
 		return idUser;
 	}
 
-	public String getFirsName() {
+	public final String getFirsName() {
 		return firsName;
 	}
 
-	public String getLastName() {
+	public final String getLastName() {
 		return lastName;
 	}
 
-	public String getLogin() {
+	public final String getLogin() {
 		return login;
 	}
 
-	public String getPasswd() {
+	public final String getPasswd() {
 		return passwd;
 	}
 
-	public String getMail() {
+	public final String getMail() {
 		return mail;
 	}
 
-	public Integer getAge() {
+	public final Integer getAge() {
 		return age;
 	}
 
-	public Double getWeight() {
+	public final Double getWeight() {
 		return weight;
 	}
 
-	public String getGender() {
+	public final String getGender() {
 		return gender;
 	}
 
-	public String getAvatar() {
+	public final String getAvatar() {
 		return avatar;
 	}
 
-	public String getRoleName() {
+	public final String getRoleName() {
 		return roleName;
 	}
 
-	public String getHealth() {
+	public final String getHealth() {
 		return health;
 	}
 
-	public String getGoogleApi() {
+	public final String getGoogleApi() {
 		return googleApi;
 	}
 
-	public String getStatus() {
+	public final String getStatus() {
 		return status;
 	}
 
-	public Integer getScore() {
+	public final Integer getScore() {
 		return score;
 	}
-	
 }

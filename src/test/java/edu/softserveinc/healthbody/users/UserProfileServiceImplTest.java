@@ -17,11 +17,7 @@ import edu.softserveinc.healthbody.db.CreateDropTestDatabase;
 import edu.softserveinc.healthbody.db.DBPopulateManager;
 import edu.softserveinc.healthbody.dto.GroupDTO;
 import edu.softserveinc.healthbody.dto.UserDTO;
-import edu.softserveinc.healthbody.exceptions.CloseStatementException;
-import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
-import edu.softserveinc.healthbody.exceptions.EmptyResultSetException;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
-import edu.softserveinc.healthbody.exceptions.QueryNotFoundException;
 import edu.softserveinc.healthbody.exceptions.TransactionException;
 import edu.softserveinc.healthbody.log.Log4jWrapper;
 import edu.softserveinc.healthbody.services.impl.UserProfileServiceImpl;
@@ -60,8 +56,7 @@ public class UserProfileServiceImplTest {
 			for (GroupDTO group : userDTO1.getGroups()) {
 				Log4jWrapper.get().info(group.getName() + "     ");
 			}
-		} catch (SQLException | JDBCDriverException | EmptyResultSetException | TransactionException
-				| CloseStatementException e) {
+		} catch (SQLException | JDBCDriverException | TransactionException e) {
 			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
@@ -72,8 +67,7 @@ public class UserProfileServiceImplTest {
 	public void testGetUserByLoginNull() {
 		try {
 			UserProfileServiceImpl.getInstance().get(null);
-		} catch (SQLException | JDBCDriverException | EmptyResultSetException | TransactionException
-				| CloseStatementException e) {
+		} catch (SQLException | JDBCDriverException | TransactionException e) {
 			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
@@ -86,8 +80,7 @@ public class UserProfileServiceImplTest {
 		try {
 			userDTO = UserProfileServiceImpl.getInstance().get("Marisol");
 			assertEquals(null, userDTO);
-		} catch (SQLException | JDBCDriverException | EmptyResultSetException | TransactionException
-				| CloseStatementException e) {
+		} catch (SQLException | JDBCDriverException | TransactionException e) {
 			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
@@ -115,8 +108,7 @@ public class UserProfileServiceImplTest {
 			for (GroupDTO group : userDTO.getGroups()) {
 				Log4jWrapper.get().info(group.getName() + "     ");
 			}
-		} catch (SQLException | JDBCDriverException | EmptyResultSetException | TransactionException
-				| CloseStatementException e) {
+		} catch (SQLException | JDBCDriverException | TransactionException e) {
 			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
@@ -148,8 +140,7 @@ public class UserProfileServiceImplTest {
 			for (GroupDTO group : userDTO2.getGroups()) {
 				Log4jWrapper.get().info(group.getName() + "     ");
 			}
-		} catch (SQLException | JDBCDriverException | EmptyResultSetException | TransactionException
-				| CloseStatementException | DataBaseReadingException | QueryNotFoundException e) {
+		} catch (SQLException | JDBCDriverException | TransactionException e) {
 			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
@@ -161,8 +152,7 @@ public class UserProfileServiceImplTest {
 		UserDTO userDTO2 = null;
 		try {
 			UserProfileServiceImpl.getInstance().update(userDTO2);
-		} catch (SQLException | JDBCDriverException | DataBaseReadingException | QueryNotFoundException
-				| EmptyResultSetException | TransactionException | CloseStatementException e) {
+		} catch (SQLException | JDBCDriverException	| TransactionException e) {
 			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
@@ -193,8 +183,7 @@ public class UserProfileServiceImplTest {
 		 	}
 		 	UserProfileServiceImpl.getInstance().test_delete(userDTO4);
 		 	Log4jWrapper.get().info("Delete user from database for test");
-	 	} catch (SQLException | JDBCDriverException | DataBaseReadingException | QueryNotFoundException
-				| EmptyResultSetException | TransactionException | CloseStatementException e) {
+	 	} catch (SQLException | JDBCDriverException | TransactionException e) {
 	 		Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
@@ -206,8 +195,7 @@ public class UserProfileServiceImplTest {
 		UserDTO userDTO3 = null;
 		try {
 			UserProfileServiceImpl.getInstance().insert(userDTO3);
-		} catch (SQLException | JDBCDriverException | DataBaseReadingException | QueryNotFoundException
-				| EmptyResultSetException | TransactionException | CloseStatementException e) {
+		} catch (SQLException | JDBCDriverException	| TransactionException e) {
 			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
@@ -221,8 +209,7 @@ public class UserProfileServiceImplTest {
 			userDTO5.setIsDisabled("true");
 			UserProfileServiceImpl.getInstance().lock(userDTO5, true);
 			assertEquals("true", userDTO5.getIsDisabled());
-		} catch (SQLException | JDBCDriverException | EmptyResultSetException | TransactionException
-				| CloseStatementException | QueryNotFoundException | DataBaseReadingException e) {
+		} catch (SQLException | JDBCDriverException | TransactionException e) {
 			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
@@ -235,8 +222,7 @@ public class UserProfileServiceImplTest {
 		UserDTO userDTO5 = null;
 		try {
 			UserProfileServiceImpl.getInstance().lock(userDTO5, true);
-		} catch (SQLException | JDBCDriverException | QueryNotFoundException | DataBaseReadingException
-				| TransactionException | CloseStatementException e) {
+		} catch (SQLException | JDBCDriverException | TransactionException e) {
 			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}

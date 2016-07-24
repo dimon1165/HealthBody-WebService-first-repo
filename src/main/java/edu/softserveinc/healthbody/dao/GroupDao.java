@@ -10,15 +10,13 @@ import edu.softserveinc.healthbody.constants.DaoConstants;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.GroupDBQueries;
 import edu.softserveinc.healthbody.db.ConnectionManager;
 import edu.softserveinc.healthbody.entity.Group;
-import edu.softserveinc.healthbody.exceptions.CloseStatementException;
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
-import edu.softserveinc.healthbody.exceptions.EmptyResultSetException;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 import edu.softserveinc.healthbody.exceptions.QueryNotFoundException;;
 
 public final class GroupDao extends AbstractDao<Group> {
 
-	private static volatile GroupDao instance = null;
+	private static volatile GroupDao instance;
 
 	private GroupDao() {
 		init();
@@ -35,6 +33,7 @@ public final class GroupDao extends AbstractDao<Group> {
 		return instance;
 	}
 
+	@Override
 	protected void init() {
 		for (GroupDBQueries groupDBQueries : GroupDBQueries.values()) {
 			sqlQueries.put(groupDBQueries.getDaoQuery(), groupDBQueries);
@@ -42,14 +41,14 @@ public final class GroupDao extends AbstractDao<Group> {
 	}
 
 	@Override
-	public Group createInstance(String[] args) {
+	public Group createInstance(final String[] args) {
 		return new Group(Integer.parseInt(args[0] == null ? "0" : args[0]), args[1] == null ? new String() : args[1],
 				Integer.parseInt(args[2] == null ? "0" : args[2]), args[3] == null ? new String() : args[3],
 				args[4] == null ? new String() : args[4], args[5] == null ? new String() : args[5]);
 	}
 
 	@Override
-	protected String[] getFields(Group entity) {
+	protected String[] getFields(final Group entity) {
 		List<String> fields = new ArrayList<>();
 		fields.add(entity.getIdGroup().toString());
 		fields.add(entity.getName());
@@ -60,12 +59,13 @@ public final class GroupDao extends AbstractDao<Group> {
 		return (String[]) fields.toArray();
 	}
 
-	public boolean createGroup(Group group)
+	public boolean createGroup(final Group group)
 			throws JDBCDriverException, QueryNotFoundException, DataBaseReadingException {
 		return insert(group);
 	}
 
-	public boolean editGroup(Group group) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
+	public boolean editGroup(final Group group)
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		boolean result = false;
 		String query = sqlQueries.get(DaoQueries.UPDATE).toString();
 		if (query == null) {
@@ -84,13 +84,13 @@ public final class GroupDao extends AbstractDao<Group> {
 		return result;
 	}
 
-	public boolean deleteGroup(Group group)
+	public boolean deleteGroup(final Group group)
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		return delete(group);
 	}
 
-	public List<Group> getAll(int partNumber, int partSize) throws QueryNotFoundException, JDBCDriverException,
-			DataBaseReadingException, EmptyResultSetException, CloseStatementException {
+	public List<Group> getAll(final int partNumber, final int partSize) 
+			throws QueryNotFoundException, JDBCDriverException,	DataBaseReadingException {
 		List<Group> result = new ArrayList<>();
 		String query = sqlQueries.get(DaoQueries.GET_ALL).toString();
 		if (query == null) {
@@ -100,7 +100,7 @@ public final class GroupDao extends AbstractDao<Group> {
 			query = query.substring(0, query.lastIndexOf(";")) + SQL_LIMIT;
 		}
 		try (PreparedStatement pst = createPreparedStatement(query, partNumber, partSize);
-			ResultSet resultSet = pst.executeQuery()){
+			ResultSet resultSet = pst.executeQuery()) {
 			String[] queryResult = new String[resultSet.getMetaData().getColumnCount()];
 			while (resultSet.next()) {
 				result.add(createInstance(getQueryResultArr(queryResult, resultSet)));
@@ -112,18 +112,18 @@ public final class GroupDao extends AbstractDao<Group> {
 	}
 
 	public Group getGroupByName(String name)
-			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, CloseStatementException {
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		return getByFieldName(name);
 	}
 	
 	//methods for try-with-resources
-	private PreparedStatement createPreparedStatement(String query, int partNumber, int partSize) throws SQLException, JDBCDriverException {
+	private PreparedStatement createPreparedStatement(final String query, final int partNumber, final int partSize) 
+			throws SQLException, JDBCDriverException {
 		PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query);
 			if ((partNumber >= 0) && (partSize > 0)) {
 				pst.setInt(1, (partNumber - 1) * partSize);
 				pst.setInt(2, partSize);
 			}
-			return pst;
+		return pst;
 	}
-
 }

@@ -4,9 +4,9 @@ import java.sql.Driver;
 
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 
-public class DriverRepository {
+public final class DriverRepository {
     private static final String FAILED_JDBC_DRIVER = "Failed to Create JDBC Driver";
-    private static volatile DriverRepository instance = null;
+    private static volatile DriverRepository instance;
 
     private DriverRepository() {
     }

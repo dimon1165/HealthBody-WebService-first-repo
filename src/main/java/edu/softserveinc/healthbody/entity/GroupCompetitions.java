@@ -1,47 +1,44 @@
 package edu.softserveinc.healthbody.entity;
 
-public class GroupCompetitions implements IEntity{
+public class GroupCompetitions implements IEntity {
 	private Integer idGroupCompetitions;
 	private Integer idGroup;
 	private Integer idCompetition;
 	
 	@Override
-	public Integer getId() {
+	public final Integer getId() {
 		return idGroupCompetitions;
 	}
 
-
-	public GroupCompetitions(Integer idGroupCompetitions, Integer idGroup, Integer idCompetition) {
+	public GroupCompetitions(final Integer idGroupCompetitions, final Integer idGroup, final Integer idCompetition) {
 		this.idGroupCompetitions = idGroupCompetitions;
 		this.idGroup = idGroup;
 		this.idCompetition = idCompetition;
 	}
 
 	//	getters
-	public Integer getIdGroupCompetitions() {
+	public final Integer getIdGroupCompetitions() {
 		return idGroupCompetitions;
 	}
 
-	public Integer getIdGroup() {
+	public final Integer getIdGroup() {
 		return idGroup;
 	}
 
-	public Integer getIdCompetition() {
+	public final Integer getIdCompetition() {
 		return idCompetition;
 	}
 
-//	setters
-	public void setIdGroupCompetitions(Integer idGroupCompetitions) {
+	//	setters
+	public final void setIdGroupCompetitions(final Integer idGroupCompetitions) {
 		this.idGroupCompetitions = idGroupCompetitions;
 	}
 
-	public void setIdGroup(Integer idGroup) {
+	public final void setIdGroup(final Integer idGroup) {
 		this.idGroup = idGroup;
 	}
 
-	public void setIdCompetition(Integer idCompetition) {
+	public final void setIdCompetition(final Integer idCompetition) {
 		this.idCompetition = idCompetition;
 	}
-	
-		
 }

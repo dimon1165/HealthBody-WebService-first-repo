@@ -9,9 +9,9 @@ public class UserCompetitions implements IEntity {
 	private Integer idAwards;
 	private String timeReceived;
 	
-	public UserCompetitions(Integer idUserCompetition, Integer idUser, Integer idCompetition, Integer userScore,
-			Integer idAwards, String timeReceived) {
-		
+	public UserCompetitions(final Integer idUserCompetition, final Integer idUser,
+			final Integer idCompetition, final Integer userScore,
+			final Integer idAwards, final String timeReceived) {
 		this.idUserCompetition = idUserCompetition;
 		this.idUser = idUser;
 		this.idCompetition = idCompetition;
@@ -21,62 +21,57 @@ public class UserCompetitions implements IEntity {
 	}
 
 	//setters
-	public void setIdUserCompetition(Integer idUserCompetition) {
+	public final void setIdUserCompetition(final Integer idUserCompetition) {
 		this.idUserCompetition = idUserCompetition;
 	}
 
-	public void setIdUser(Integer idUser) {
+	public final void setIdUser(final Integer idUser) {
 		this.idUser = idUser;
 	}
 
-	public void setIdCompetition(Integer idCompetition) {
+	public final void setIdCompetition(final Integer idCompetition) {
 		this.idCompetition = idCompetition;
 	}
 
-	public void setUserScore(Integer userScore) {
+	public final void setUserScore(final Integer userScore) {
 		this.userScore = userScore;
 	}
 
-	public void setIdAwardsTypes(Integer idAwards) {
+	public final void setIdAwardsTypes(final Integer idAwards) {
 		this.idAwards = idAwards;
 	}
 
-	public void setTimeReceived(String timeReceived) {
+	public final void setTimeReceived(final String timeReceived) {
 		this.timeReceived = timeReceived;
 	}
 	
-	
 	@Override
-	public Integer getId() {
+	public final Integer getId() {
 		return getIdUserCompetition();
 	}
 	
 	//getters
-	public Integer getIdUserCompetition() {
+	public final Integer getIdUserCompetition() {
 		return idUserCompetition;
 	}
 
-	public Integer getIdUser() {
+	public final Integer getIdUser() {
 		return idUser;
 	}
 
-	public Integer getIdCompetition() {
+	public final Integer getIdCompetition() {
 		return idCompetition;
 	}
 
-	public Integer getUserScore() {
+	public final Integer getUserScore() {
 		return userScore;
 	}
 
-	public Integer getIdAwards() {
+	public final Integer getIdAwards() {
 		return idAwards;
 	}
 
-	public String getTimeReceived() {
+	public final String getTimeReceived() {
 		return timeReceived;
 	}
-
-	
-	
-
 }

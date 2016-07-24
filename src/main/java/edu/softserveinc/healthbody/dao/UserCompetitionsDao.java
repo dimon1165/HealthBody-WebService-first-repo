@@ -5,15 +5,13 @@ import java.util.List;
 
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.UserCompetitionsDBQueries;
 import edu.softserveinc.healthbody.entity.UserCompetitions;
-import edu.softserveinc.healthbody.exceptions.CloseStatementException;
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
-import edu.softserveinc.healthbody.exceptions.EmptyResultSetException;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 import edu.softserveinc.healthbody.exceptions.QueryNotFoundException;
 
 public final class UserCompetitionsDao extends AbstractDao<UserCompetitions> {
 	
-	private static volatile UserCompetitionsDao instance = null;
+	private static volatile UserCompetitionsDao instance;
 	
 	private UserCompetitionsDao() {
 		init();
@@ -38,7 +36,7 @@ public final class UserCompetitionsDao extends AbstractDao<UserCompetitions> {
 	}
 
 	@Override
-	public UserCompetitions createInstance(String[] args) {
+	public UserCompetitions createInstance(final String[] args) {
 		return new UserCompetitions(
 				Integer.parseInt(args[0] == null ? "0" : args[0]),
 				Integer.parseInt(args[1] == null ? "0" : args[1]),
@@ -48,7 +46,7 @@ public final class UserCompetitionsDao extends AbstractDao<UserCompetitions> {
 				args[5] == null ? new String() : args[5]);
 	}
 	@Override
-	protected String[] getFields(UserCompetitions entity) {
+	protected String[] getFields(final UserCompetitions entity) {
 		List<String> fields = new ArrayList<>();
 		fields.add(entity.getIdUserCompetition().toString());
 		fields.add(entity.getIdUser().toString());
@@ -56,32 +54,31 @@ public final class UserCompetitionsDao extends AbstractDao<UserCompetitions> {
 		fields.add(entity.getUserScore().toString());
 		fields.add(entity.getIdAwards().toString());
 		fields.add(entity.getTimeReceived());
-		
 		return (String[]) fields.toArray();
 	}
 	
-	public boolean createUserCompetitions(UserCompetitions obj) throws JDBCDriverException, QueryNotFoundException, DataBaseReadingException {
-		
+	public boolean createUserCompetitions(final UserCompetitions obj)
+			throws JDBCDriverException, QueryNotFoundException, DataBaseReadingException {
 		return insert(obj);
 	}
 	
-	public boolean updateUserCompetitions(String fieldName, String text, String fieldCondition,
-			String textCondition) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
-		
+	public boolean updateUserCompetitions(final String fieldName, final String text,
+			final String fieldCondition, final String textCondition)
+					throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		return updateByField(fieldName, text, fieldCondition, textCondition);
 	}
 	
-	public List<UserCompetitions> viewAll() throws JDBCDriverException, DataBaseReadingException, EmptyResultSetException, CloseStatementException {
-		
+	public List<UserCompetitions> viewAll() throws JDBCDriverException, DataBaseReadingException {
 		return getAll();
 	}
 	
-	public List<UserCompetitions> getUCbyId(Integer id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, CloseStatementException, EmptyResultSetException {
-		
+	public List<UserCompetitions> getUCbyId(final Integer id)
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		return getAllbyId(id);
 	}
 
-	public boolean deleteByUserId(Integer id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
+	public boolean deleteByUserId(final Integer id)
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		return deleteById(id);
 	}
 }

@@ -4,7 +4,7 @@ import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 
 public final class DataSourceRepository {
 
-    private static volatile DataSourceRepository instance = null;
+    private static volatile DataSourceRepository instance;
 
     private DataSourceRepository() {
     }
@@ -31,7 +31,7 @@ public final class DataSourceRepository {
                 "jdbc:postgresql://127.10.182.2:5432/jenkins", "adminud8ggnm", "6JxTBU-ab6KR");
     }
 
-    public DataSource getPostgresJenkinsByDatabaseName(String databaseName) throws JDBCDriverException {
+    public DataSource getPostgresJenkinsByDatabaseName(final String databaseName) throws JDBCDriverException {
         return new DataSource(DriverRepository.getInstance().getPostgresDriver(),
                 "jdbc:postgresql://127.10.182.2:5432/" + databaseName, "adminud8ggnm", "6JxTBU-ab6KR");
     }
@@ -51,7 +51,7 @@ public final class DataSourceRepository {
                 "postgres", "root");
     }
 
-    public DataSource getPostgresLocalHostByDatabaseName(String databaseName) throws JDBCDriverException {
+    public DataSource getPostgresLocalHostByDatabaseName(final String databaseName) throws JDBCDriverException {
         return new DataSource(DriverRepository.getInstance().getPostgresDriver(), "jdbc:postgresql://localhost:5432/"
                 + databaseName, "postgres", "root");
     }

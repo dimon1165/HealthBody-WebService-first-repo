@@ -11,26 +11,24 @@ import edu.softserveinc.healthbody.db.ConnectionManager;
 import edu.softserveinc.healthbody.entity.Group;
 import edu.softserveinc.healthbody.entity.User;
 import edu.softserveinc.healthbody.entity.UserGroup;
-import edu.softserveinc.healthbody.exceptions.CloseStatementException;
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
-import edu.softserveinc.healthbody.exceptions.EmptyResultSetException;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 import edu.softserveinc.healthbody.exceptions.QueryNotFoundException;
 
-public class UserGroupDao extends AbstractDao<UserGroup>{
+public final class UserGroupDao extends AbstractDao<UserGroup> {
 	
-	private static volatile UserGroupDao instance = null;
+	private static volatile UserGroupDao instance;
 
 	
-	public UserGroupDao() {
+	private UserGroupDao() {
 		init();
 	}
 	
 	
 	public static UserGroupDao getInstance(){
-		if (instance == null){
+		if (instance == null) {
 			synchronized (UserGroupDao.class) {
-				if (instance == null){
+				if (instance == null) {
 					instance = new UserGroupDao();
 				}
 			}
@@ -38,9 +36,10 @@ public class UserGroupDao extends AbstractDao<UserGroup>{
 		return instance;
 	}
 
+	@Override
 	protected void init() {
-		for(UserGroupQueries userGroupViewQueries:UserGroupQueries.values()){
-			sqlQueries.put(userGroupViewQueries.getDaoQuery(),userGroupViewQueries);
+		for (UserGroupQueries userGroupViewQueries:UserGroupQueries.values()) {
+			sqlQueries.put(userGroupViewQueries.getDaoQuery(), userGroupViewQueries);
 		}
 		
 	}
@@ -48,15 +47,15 @@ public class UserGroupDao extends AbstractDao<UserGroup>{
 	
 
 	@Override
-	public UserGroup createInstance(String[] args) {
+	public UserGroup createInstance(final String[] args) {
 		return new UserGroup(Integer.parseInt(args[0] == null ? "0" : args[0]),
-								   Integer.parseInt(args[1] == null ? "0" : args[1]), 
-								   Integer.parseInt(args[2] == null ? "0" : args[2]));
+				Integer.parseInt(args[1] == null ? "0" : args[1]), 
+				Integer.parseInt(args[2] == null ? "0" : args[2]));
 	}
 
 
 	@Override
-	protected String[] getFields(UserGroup entity) {
+	protected String[] getFields(final UserGroup entity) {
 		List<String> fields = new ArrayList<>();
 		fields.add(entity.getIdUserGroup().toString());
 		fields.add(entity.getIdUser().toString());
@@ -65,18 +64,20 @@ public class UserGroupDao extends AbstractDao<UserGroup>{
 	}
 	
 	
-	public boolean addUserToGroup(User user, Group group) throws QueryNotFoundException, JDBCDriverException, EmptyResultSetException, DataBaseReadingException{
+	public boolean addUserToGroup(final User user, final Group group)
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		boolean result = false;		
 		result = insert(new UserGroup(null, user.getId(), group.getId()));
 		return result;
 	}
 	
-	public List<UserGroup> getUGbyId(Integer id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, CloseStatementException, EmptyResultSetException {
-		
+	public List<UserGroup> getUGbyId(final Integer id) 
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		return getAllbyId(id);
 	}
 	
-	public boolean createUserGroup (User user, Group group) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
+	public boolean createUserGroup (final User user, final Group group)
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		boolean result = false;
 		String query = sqlQueries.get(DaoQueries.INSERT).toString();
 			if (query == null) {
@@ -94,7 +95,8 @@ public class UserGroupDao extends AbstractDao<UserGroup>{
 		return result;
 	}
 	
-	public boolean deleteByUserId (Integer id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
+	public boolean deleteByUserId (final Integer id)
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		return deleteById(id);
 	}
 }

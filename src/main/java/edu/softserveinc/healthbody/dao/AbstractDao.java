@@ -16,19 +16,20 @@ abstract class AbstractDao<TEntity extends IEntity> extends AbstractDaoRead<TEnt
 		super();
 	}
 
+	@Override
 	protected abstract String[] getFields(TEntity entity);
 	
-
 	// create
-	public boolean insert(TEntity entity) throws JDBCDriverException, QueryNotFoundException, DataBaseReadingException {
+	@Override
+	public boolean insert(final TEntity entity)
+			throws JDBCDriverException, QueryNotFoundException, DataBaseReadingException {
 		boolean result = false;
 		String query = sqlQueries.get(DaoQueries.INSERT).toString();
 		if (query == null) {
 			throw new QueryNotFoundException(String.format(DaoConstants.QUERY_NOT_FOUND, DaoQueries.INSERT.name()));
 		}
 		try (PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query)) {
-
-			for (int i = 1; i < getFields(entity).length; i++){
+			for (int i = 1; i < getFields(entity).length; i++) {
 				pst.setString(i, getFields(entity)[i]);
 			}
 			result = pst.execute();
@@ -39,9 +40,8 @@ abstract class AbstractDao<TEntity extends IEntity> extends AbstractDaoRead<TEnt
 	}
 
 	// update
-	
 	@Override
-	public boolean updateByField(String fieldName, String text, String fieldCondition, String textCondition) 
+	public boolean updateByField(final String fieldName, final String text, final String fieldCondition, final String textCondition) 
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		boolean result = false;
 		String query = sqlQueries.get(DaoQueries.UPDATE_BY_FIELD).toString();
@@ -49,10 +49,11 @@ abstract class AbstractDao<TEntity extends IEntity> extends AbstractDaoRead<TEnt
 			throw new QueryNotFoundException(String.format(DaoConstants.QUERY_NOT_FOUND, DaoQueries.UPDATE_BY_FIELD.name()));
 		}
 		try (PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query)) {
-			pst.setString(1, fieldName);
-			pst.setString(2, text);
-			pst.setString(3, fieldCondition);
-			pst.setString(4, textCondition);
+			int i = 1;
+			pst.setString(i++, fieldName);
+			pst.setString(i++, text);
+			pst.setString(i++, fieldCondition);
+			pst.setString(i++, textCondition);
 			result = pst.execute();
 		} catch (SQLException e) {
 			throw new DataBaseReadingException(DaoConstants.DATABASE_READING_ERROR, e);
@@ -60,9 +61,10 @@ abstract class AbstractDao<TEntity extends IEntity> extends AbstractDaoRead<TEnt
 		return result;
 	}
 
-	// delete
+	// delete by id
 	@Override
-	public boolean deleteById(Integer id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
+	public boolean deleteById(final Integer id) 
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		boolean result = false;
 		String query = sqlQueries.get(DaoQueries.DELETE_BY_ID).toString();
 		if (query == null) {
@@ -77,8 +79,9 @@ abstract class AbstractDao<TEntity extends IEntity> extends AbstractDaoRead<TEnt
 		return result;
 	}
 
+	// delete by field
 	@Override
-	public boolean deleteByField(String textCondition)
+	public boolean deleteByField(final String textCondition)
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		boolean result = false;
 		String query = sqlQueries.get(DaoQueries.DELETE_BY_FIELD).toString();
@@ -93,7 +96,10 @@ abstract class AbstractDao<TEntity extends IEntity> extends AbstractDaoRead<TEnt
 		}
 		return result;
 	}
-	public boolean delete(TEntity entity) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
+	
+	// delete by entity
+	public boolean delete(final TEntity entity)
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		return deleteById(entity.getId());
 	}
 }
