@@ -13,7 +13,7 @@ import edu.softserveinc.healthbody.log.Log4jWrapper;
 import edu.softserveinc.healthbody.services.impl.CompetitionsViewServiceImpl;
 
 @Controller
-public class CompetitionCntr {
+public class CompetitionController {
 
 	@Request(url = "/allComp")
 	public List<CompetitionDTO> getAllComp(/*HttpServletRequest rqst, HttpServletResponse rspns*/) {
