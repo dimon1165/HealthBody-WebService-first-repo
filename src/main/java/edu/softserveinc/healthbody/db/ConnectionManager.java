@@ -44,7 +44,7 @@ public class ConnectionManager {
 	private void checkStatus(final DataSource dataSource) throws JDBCDriverException {
 		if (dataSource == null) {
 			if (getDataSource() == null) {
-				setDataSource(DataSourceRepository.getInstance().getPostgresJenkins()/*getPostgresLocalHost()*/);
+				setDataSource(DataSourceRepository.getInstance().getPostgresLocalHost());
 			}
 		} else if ((getDataSource() == null) || (!getDataSource().equals(dataSource))) {
 			setDataSource(dataSource);
