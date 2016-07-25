@@ -40,7 +40,7 @@ public class CompetitionsViewServiceImplTest {
 	
 	@Test
 	public void testGetAll() {
-		ICompetitionsViewService cv = new CompetitionsViewServiceImpl();
+		ICompetitionsViewService cv = CompetitionsViewServiceImpl.getInstance();
 		List<CompetitionDTO> result;
 		try {
 			result = cv.getAll(1, 2);
@@ -58,7 +58,7 @@ public class CompetitionsViewServiceImplTest {
 
 	@Test
 	public void testGetAllActive() {
-		ICompetitionsViewService cv = new CompetitionsViewServiceImpl();
+		ICompetitionsViewService cv = CompetitionsViewServiceImpl.getInstance();  
 		List<CompetitionDTO> result;
 		try {
 			result = cv.getAllActive(1, 10);
@@ -76,7 +76,7 @@ public class CompetitionsViewServiceImplTest {
 	@Test
 	@Parameters("userlogin")
 	public void testGetAllByUser(@Optional("Login 7") String userlogin) {
-		ICompetitionsViewService cv = new CompetitionsViewServiceImpl();
+		ICompetitionsViewService cv = CompetitionsViewServiceImpl.getInstance();
 		List<CompetitionDTO> result;
 		try {
 			result = cv.getAllByUser(1, 10, userlogin);
@@ -93,7 +93,7 @@ public class CompetitionsViewServiceImplTest {
 
 	@Test(expectedExceptions = IllegalAgrumentCheckedException.class)
 	public void testGetAllByUserNullLogin() throws IllegalAgrumentCheckedException {
-		ICompetitionsViewService cv = new CompetitionsViewServiceImpl();
+		ICompetitionsViewService cv = CompetitionsViewServiceImpl.getInstance();
 		List<CompetitionDTO> result;
 		try {
 			result = cv.getAllByUser(1, 10, null);
@@ -106,7 +106,7 @@ public class CompetitionsViewServiceImplTest {
 
 	@Test(expectedExceptions = IllegalAgrumentCheckedException.class)
 	public void testGetAllByUserEmptyLogin() throws IllegalAgrumentCheckedException {
-		ICompetitionsViewService cv = new CompetitionsViewServiceImpl();
+		ICompetitionsViewService cv = CompetitionsViewServiceImpl.getInstance();
 		List<CompetitionDTO> result;
 		try {
 			result = cv.getAllByUser(1, 10, "");
@@ -120,7 +120,7 @@ public class CompetitionsViewServiceImplTest {
 	@Test
 	@Parameters("userlogin")
 	public void testGetAllByUserBadPaginationParams(@Optional("Login 7") String userlogin) {
-		ICompetitionsViewService cv = new CompetitionsViewServiceImpl();
+		ICompetitionsViewService cv = CompetitionsViewServiceImpl.getInstance();
 		List<CompetitionDTO> result;
 		try {
 			result = cv.getAllByUser(1, 100, userlogin);
@@ -145,7 +145,7 @@ public class CompetitionsViewServiceImplTest {
 	@Test
 	@Parameters("userlogin")
 	public void testGetAllActiveByUser(@Optional("Login 7") String userlogin) {
-		ICompetitionsViewService cv = new CompetitionsViewServiceImpl();
+		ICompetitionsViewService cv = CompetitionsViewServiceImpl.getInstance();
 		List<CompetitionDTO> result;
 		try {
 			result = cv.getAllActiveByUser(1, 10, userlogin);
@@ -164,7 +164,7 @@ public class CompetitionsViewServiceImplTest {
 
 	@Test(expectedExceptions = IllegalAgrumentCheckedException.class)
 	public void testGetAllActiveByUserNullLogin() throws IllegalAgrumentCheckedException {
-		ICompetitionsViewService cv = new CompetitionsViewServiceImpl();
+		ICompetitionsViewService cv = CompetitionsViewServiceImpl.getInstance();
 		List<CompetitionDTO> result;
 		try {
 			result = cv.getAllActiveByUser(1, 10, null);
@@ -177,7 +177,7 @@ public class CompetitionsViewServiceImplTest {
 
 	@Test(expectedExceptions = IllegalAgrumentCheckedException.class)
 	public void testGetAllActiveByUserEmptyLogin() throws IllegalAgrumentCheckedException {
-		ICompetitionsViewService cv = new CompetitionsViewServiceImpl();
+		ICompetitionsViewService cv = CompetitionsViewServiceImpl.getInstance();
 		List<CompetitionDTO> result;
 		try {
 			result = cv.getAllActiveByUser(1, 10, "");
