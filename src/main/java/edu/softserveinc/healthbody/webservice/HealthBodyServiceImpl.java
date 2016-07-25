@@ -146,9 +146,8 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 
 	@Override
 	public final List<CompetitionDTO> getAllCompetitions(final int partNumber, final int partSize) {
-		CompetitionsViewServiceImpl competitionView = new CompetitionsViewServiceImpl();
 		try {
-			return competitionView.getAll(partNumber, partSize);
+			return CompetitionsViewServiceImpl.getInstance().getAll(partNumber, partSize);
 		} catch (JDBCDriverException | SQLException | TransactionException e) {
 			Log4jWrapper.get().error("get all competitions failed" + e);
 		}
@@ -157,9 +156,8 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 
 	@Override
 	public final List<CompetitionDTO> getAllActiveCompetitions(final int partNumber, final int partSize) {
-		CompetitionsViewServiceImpl competitionView = new CompetitionsViewServiceImpl();
 		try {
-			return competitionView.getAllActive(partNumber, partSize);
+			return CompetitionsViewServiceImpl.getInstance().getAllActive(partNumber, partSize);
 		} catch (JDBCDriverException | SQLException | TransactionException e) {
 			Log4jWrapper.get().error("get all active competitions failed" + e);
 		}
@@ -169,9 +167,8 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 	@Override
 	public final List<CompetitionDTO> getAllCompetitionsByUser(final int partNumber,
 			final int partSize, final String login) {
-		CompetitionsViewServiceImpl competitionView = new CompetitionsViewServiceImpl();
 		try {
-			return competitionView.getAllByUser(partNumber, partSize, login);
+			return CompetitionsViewServiceImpl.getInstance().getAllByUser(partNumber, partSize, login);
 		} catch (IllegalAgrumentCheckedException | SQLException | JDBCDriverException | TransactionException e) {
 			Log4jWrapper.get().error("get all competitions by user failed" + e);
 		}
@@ -181,9 +178,8 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 	@Override
 	public final List<CompetitionDTO> getAllActiveCompetitionsByUser(final int partNumber,
 			final int partSize, final String login) {
-		CompetitionsViewServiceImpl competitionView = new CompetitionsViewServiceImpl();
 		try {
-			return competitionView.getAllActiveByUser(partNumber, partSize, login);
+			return CompetitionsViewServiceImpl.getInstance().getAllActiveByUser(partNumber, partSize, login);
 		} catch (IllegalAgrumentCheckedException | SQLException | JDBCDriverException | TransactionException e) {
 			Log4jWrapper.get().error("get all active competitions by user failed" + e);
 		}
