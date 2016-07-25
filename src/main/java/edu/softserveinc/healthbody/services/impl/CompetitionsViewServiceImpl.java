@@ -19,18 +19,34 @@ import edu.softserveinc.healthbody.services.ICompetitionsViewService;
 
 public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 
+	private static volatile CompetitionsViewServiceImpl instance;
+
+	private CompetitionsViewServiceImpl() {
+	}
+
+	public static CompetitionsViewServiceImpl getInstance() {
+		if (instance == null) {
+			synchronized (CompetitionsViewServiceImpl.class) {
+				if (instance == null) {
+					instance = new CompetitionsViewServiceImpl();
+				}
+			}
+		}
+		return instance;
+	}
+
 	@Override
-	public final List<CompetitionDTO> getAll(final int partNumber, final int partSize)
+	public List<CompetitionDTO> getAll(final int partNumber, final int partSize)
 			throws JDBCDriverException, SQLException, TransactionException {
 		List<CompetitionDTO> competitionDTO = new ArrayList<>();
 		ConnectionManager.getInstance().beginTransaction();
 		try {
 			for (CompetitionsView competitionsView : CompetitionsViewDao.getInstance()
-					.getAllCompetitionsView(partNumber,	partSize)) {
+					.getAllCompetitionsView(partNumber, partSize)) {
 				competitionDTO.add(new CompetitionDTO(competitionsView.getName(),
-					competitionsView.getUsersCount().toString(), competitionsView.getStart(),
-					competitionsView.getFinish(), competitionsView.getDescription(), null, new ArrayList<String>(),
-					new ArrayList<String>()));
+						competitionsView.getUsersCount().toString(), competitionsView.getStart(),
+						competitionsView.getFinish(), competitionsView.getDescription(), null, new ArrayList<String>(),
+						new ArrayList<String>()));
 			}
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
 			ConnectionManager.getInstance().rollbackTransaction();
@@ -41,7 +57,7 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 	}
 
 	@Override
-	public final List<CompetitionDTO> getAllActive(final int partNumber, final int partSize)
+	public List<CompetitionDTO> getAllActive(final int partNumber, final int partSize)
 			throws JDBCDriverException, SQLException, TransactionException {
 		List<CompetitionDTO> competitionDTO = new ArrayList<>();
 		ConnectionManager.getInstance().beginTransaction();
@@ -62,7 +78,7 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 	}
 
 	@Override
-	public final List<CompetitionDTO> getAllByUser(final int partNumber, final int partSize, final String login)
+	public List<CompetitionDTO> getAllByUser(final int partNumber, final int partSize, final String login)
 			throws IllegalAgrumentCheckedException, SQLException, JDBCDriverException, TransactionException {
 		if (login == null || login.isEmpty()) {
 			String errorStr = "Illegal parameter. \"login\" is empty or null.";
@@ -88,7 +104,7 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 	}
 
 	@Override
-	public final List<CompetitionDTO> getAllActiveByUser(final int partNumber, final int partSize, final String login)
+	public List<CompetitionDTO> getAllActiveByUser(final int partNumber, final int partSize, final String login)
 			throws IllegalAgrumentCheckedException, SQLException, JDBCDriverException, TransactionException {
 		if (login == null || login.isEmpty()) {
 			String errorStr = "Illegal parameter. \"login\" is empty or null.";
