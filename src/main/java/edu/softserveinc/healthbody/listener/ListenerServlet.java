@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 
 import edu.softserveinc.healthbody.controller.MethodMapUtil;
 import edu.softserveinc.healthbody.controller.Pair;
+import edu.softserveinc.healthbody.controller.ParamUtils;
 import edu.softserveinc.healthbody.log.Log4jWrapper;
 
 /**
@@ -23,7 +24,7 @@ import edu.softserveinc.healthbody.log.Log4jWrapper;
 @WebServlet("/listener")
 public class ListenerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	Gson gson;
+	private Gson gson;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -31,7 +32,6 @@ public class ListenerServlet extends HttpServlet {
 	public ListenerServlet() {
 		super();
 		this.gson = new Gson();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -42,16 +42,18 @@ public class ListenerServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		String path = request.getPathInfo();
-		Pair<Method, Class<?>> methodClassPair = MethodMapUtil.getInstanse().getMethodsClasUrlMapping().get(path.toLowerCase());
+		Pair<Method, Class<?>> methodClassPair = MethodMapUtil.getInstanse().getMethodsClasUrlMapping()
+				.get(path.toLowerCase());
 
 		try {
-			wrightResponse(methodClassPair.getL().invoke(methodClassPair.getR()
-					.newInstance()/* , request, response */), response);
+			wrightResponse(methodClassPair.getL().invoke(methodClassPair.getR().newInstance(), request), response);
+			ParamUtils.getLogin(request);
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
 				| InstantiationException e) {
 			Log4jWrapper.get().error("Could't load data");
 		}
 
+		// getPartNumber(request), getPartSize(request),getName(request)
 		/*
 		 * if (path.equals("/c")) {
 		 * 
@@ -85,5 +87,4 @@ public class ListenerServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

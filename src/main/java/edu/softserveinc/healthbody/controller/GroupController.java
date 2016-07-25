@@ -2,6 +2,8 @@ package edu.softserveinc.healthbody.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import edu.softserveinc.healthbody.annotation.Controller;
 import edu.softserveinc.healthbody.annotation.Request;
 import edu.softserveinc.healthbody.dto.GroupDTO;
@@ -12,22 +14,24 @@ import edu.softserveinc.healthbody.services.impl.GroupServiceImpl;
 
 @Controller
 public class GroupController {
-	
-	@Request(url="/allGroups")
-	public List<GroupDTO> getAllGroups() {
+
+	@Request(url = "/allGroups")
+	public List<GroupDTO> getAllGroups(HttpServletRequest request) {
 		try {
-			return GroupServiceImpl.getInstance().getAll(1, 10);
+			return GroupServiceImpl.getInstance().getAll(ParamUtils.getPartNumber(request),
+					ParamUtils.getPartSize(request));
 		} catch (QueryNotFoundException | JDBCDriverException | DataBaseReadingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
-	@Request(url="/getDescrp")
-	public String getDescription() {
+
+	@Request(url = "/groupDescr")
+	public String getDescription(HttpServletRequest request) {
 		try {
-			return GroupServiceImpl.getInstance().getDescriptionOfGroup(GroupServiceImpl.getInstance().getGroup("Name group number 2"));
+			return GroupServiceImpl.getInstance()
+					.getDescriptionOfGroup(GroupServiceImpl.getInstance().getGroup("Name group number 2"));
 		} catch (QueryNotFoundException | JDBCDriverException | DataBaseReadingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
