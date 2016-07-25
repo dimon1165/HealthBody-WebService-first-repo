@@ -23,4 +23,15 @@ public class GroupController {
 		}
 		return null;
 	}
+	
+	@Request(url="/getDescrp")
+	public String getDescription() {
+		try {
+			return GroupServiceImpl.getInstance().getDescriptionOfGroup(GroupServiceImpl.getInstance().getGroup("Name group number 2"));
+		} catch (QueryNotFoundException | JDBCDriverException | DataBaseReadingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

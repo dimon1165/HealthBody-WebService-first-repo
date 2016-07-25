@@ -34,4 +34,34 @@ public class UserController {
 		return null;
 	}
 
+	@Request(url = "/allUByAdmin")
+	public List<UserDTO> getAllByAdmin() {
+		try {
+			return new UsersViewServiceImpl().getAllbyAdmin(1, 10);
+		} catch (JDBCDriverException | SQLException | TransactionException e) {
+			Log4jWrapper.get().error("Could't get all users by admin role");
+		}
+		return null;
+	}
+
+	@Request(url = "/allUInGroup")
+	public List<UserDTO> getAllinGroup() {
+		try {
+			return new UsersViewServiceImpl().getAllinGroup(1, 10);
+		} catch (JDBCDriverException | SQLException | TransactionException e) {
+			Log4jWrapper.get().error("Could't get all users in group");
+		}
+		return null;
+	}
+	
+	@Request(url = "/UWithNoComp")
+	public List<UserDTO> getAllToAddInComp() {
+		try {
+			return new UsersViewServiceImpl().getAlltoAddInCompetition(1, 10);
+		} catch (JDBCDriverException | SQLException | TransactionException e) {
+			Log4jWrapper.get().error("Could't get all users in group");
+		}
+		return null;
+	}
+
 }
