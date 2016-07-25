@@ -88,7 +88,7 @@ public final class UserProfileServiceImpl implements IBaseService<UserDTO> {
 			try {
 				user = UserDao.getInstance().getUserByLoginName(name);
 				if (user == null) {
-					Log4jWrapper.get().error("User " + name + " doesn't exist");
+//					Log4jWrapper.get().error("User " + name + " doesn't exist");
 					return null;
 				} else {
 					role = RoleDao.getInstance().getRoleById(user.getIdRole());

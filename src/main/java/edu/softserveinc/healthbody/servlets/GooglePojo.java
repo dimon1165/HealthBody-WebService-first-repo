@@ -8,65 +8,65 @@ public class GooglePojo {
 	String family_name;
 	String picture;
 	String gender;
-	
-	public final String getPicture() {
+
+	public String getPicture() {
 		return picture;
 	}
 
-	public final void setPicture(final String picture) {
+	public void setPicture(String picture) {
 		this.picture = picture;
 	}
 
-	public final String getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public final void setGender(final String gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 
-	public final String getId() {
+	public String getId() {
 		return id;
 	}
 
-	public final void setId(final String id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public final String getEmail() {
+	public String getEmail() {
 		return email;
 	}
 
-	public final void setEmail(final String email) {
+	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	public final String getName() {
+	public String getName() {
 		return name;
 	}
 
-	public final void setName(final String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
-	public final String getGiven_name() {
+	public String getGiven_name() {
 		return given_name;
 	}
 
-	public final void setGiven_name(final String given_name) {
+	public void setGiven_name(String given_name) {
 		this.given_name = given_name;
 	}
 
-	public final String getFamily_name() {
+	public String getFamily_name() {
 		return family_name;
 	}
 
-	public final void setFamily_name(final String family_name) {
+	public void setFamily_name(String family_name) {
 		this.family_name = family_name;
 	}
 
 	@Override
-	public final String toString() {
+	public String toString() {
 		return "GooglePojo [id=" + id + ", email=" + email + ", name=" + name + ", given_name=" + given_name
 				+ ", family_name=" + family_name + ", picture=" + picture + ", gender=" + gender + "]";
 	}
