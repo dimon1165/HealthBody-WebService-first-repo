@@ -42,7 +42,7 @@ public class ListenerServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		String path = request.getPathInfo();
-		Pair<Method, Class<?>> methodClassPair = MethodMapUtil.getInstanse().getMethodsClasUrlMapping().get(path);
+		Pair<Method, Class<?>> methodClassPair = MethodMapUtil.getInstanse().getMethodsClasUrlMapping().get(path.toLowerCase());
 
 		try {
 			wrightResponse(methodClassPair.getL().invoke(methodClassPair.getR()

@@ -34,7 +34,7 @@ public class MethodMapUtil {
 		methodsClasUrlMapping = new HashMap<>();
 		for (Class<?> annotatedClass : classes) {
 			for (Method method : annotatedClass.getDeclaredMethods()) {
-				methodsClasUrlMapping.put(method.getAnnotation(Request.class).url(),
+				methodsClasUrlMapping.put(method.getAnnotation(Request.class).url().toLowerCase(),
 						new Pair<Method, Class<?>>(method, annotatedClass));
 			}
 		}
