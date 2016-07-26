@@ -1,17 +1,16 @@
 package edu.softserveinc.healthbody.entity;
 
-
 public class CompetitionsView implements IEntity {
 
-	private Integer idCompetition;
+	private String idCompetition;
 	private String name;
 	private String description;
 	private String start;
 	private String finish;
 	private Integer usersCount;
 
-	public CompetitionsView(Integer idCompetition, String name, String description,
-			String start, String finish, Integer usersCount) {
+	public CompetitionsView(String idCompetition, String name, String description, String start, 
+			String finish, Integer usersCount) {
 		this.idCompetition = idCompetition;
 		this.name = name;
 		this.description = description;
@@ -20,9 +19,8 @@ public class CompetitionsView implements IEntity {
 		this.usersCount = usersCount;
 	}
 	
-	// setters
-
-	public void setIdCompetitions(Integer idCompetition) {
+	// Setters
+	public void setIdCompetitions(String idCompetition) {
 		this.idCompetition = idCompetition;
 	}
 
@@ -41,20 +39,17 @@ public class CompetitionsView implements IEntity {
 	public void setFinish(String finish) {
 		this.finish = finish;
 	}
-
 	
 	public void setUsersCount(Integer usersCount) {
 		this.usersCount = usersCount;
 	}
 
-
-	// getters
-	
-	public Integer getId() {
+	// Getters	
+	public String getId() {
 		return getIdCompetition();
 	}
 	
-	public Integer getIdCompetition() {
+	public String getIdCompetition() {
 		return idCompetition;
 	}
 
@@ -77,7 +72,4 @@ public class CompetitionsView implements IEntity {
 	public Integer getUsersCount() {
 		return usersCount;
 	}
-	
-	
-	
 }

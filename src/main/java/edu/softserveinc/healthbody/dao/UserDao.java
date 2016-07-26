@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import edu.softserveinc.healthbody.constants.DaoConstants;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.UserDBQueries;
@@ -61,7 +62,7 @@ public final class UserDao extends AbstractDao<User> {
 
 	@Override
 	protected User createInstance(String[] args) {
-		return new User(Integer.parseInt(args[0] == null ? "0" : args[0]), 
+		return new User(args[0] == null ? UUID.randomUUID().toString() : args[0], 
 				args[1] == null ? new String() : args[1],
 				args[2] == null ? new String() : args[2], 
 				args[3] == null ? new String() : args[3],
@@ -73,7 +74,7 @@ public final class UserDao extends AbstractDao<User> {
 				args[9] == null ? new String() : args[9],
 				args[10] == null ? new String() : args[10],
 				args[11] == null ? new String() : args[11], 
-				Integer.parseInt(args[12] == null ? "0" : args[12]),
+				args[12] == null ? UUID.randomUUID().toString() : args[12],
 				args[13] == null ? "0" : args[13],
 				Boolean.parseBoolean(args[14] == null ? "false" : args[14]));
 	}
@@ -82,7 +83,7 @@ public final class UserDao extends AbstractDao<User> {
 		return getByField(login, login).get(0);
 	}
 	
-	public User getUserById(Integer id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, CloseStatementException {
+	public User getUserById(String id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, CloseStatementException {
 		return getById(id);
 	}
 	
@@ -93,7 +94,8 @@ public final class UserDao extends AbstractDao<User> {
 			throw new QueryNotFoundException(String.format(DaoConstants.QUERY_NOT_FOUND, DaoQueries.INSERT.name()));
 		}
 		try (PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query)) {
-			int i = 1;
+			int i = 0;
+			pst.setString(i++, user.getId());
 			pst.setString(i++, user.getLogin());
 			pst.setString(i++, user.getPasswd());
 			pst.setString(i++, user.getFirsName());
@@ -105,7 +107,7 @@ public final class UserDao extends AbstractDao<User> {
 			pst.setString(i++, user.getHealth());
 			pst.setString(i++, user.getAvatar());
 			pst.setString(i++, user.getGoogleApi());
-			pst.setInt(i++, user.getIdRole());
+			pst.setString(i++, user.getIdRole());
 			pst.setString(i++, user.getStatus());
 			pst.setBoolean(i++, user.getIsDisabled());
 		
@@ -123,7 +125,8 @@ public final class UserDao extends AbstractDao<User> {
 			throw new QueryNotFoundException(String.format(DaoConstants.QUERY_NOT_FOUND, DaoQueries.UPDATE.name()));
 		}
 		try (PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query)) {
-			int i = 1;
+			int i = 0;
+			pst.setString(i++, user.getId());
 			pst.setString(i++, user.getPasswd());
 			pst.setString(i++, user.getFirsName());
 			pst.setString(i++, user.getLastName());
@@ -158,7 +161,7 @@ public final class UserDao extends AbstractDao<User> {
 		return result;
 	}
 	
-	public boolean deleteUserForTests(Integer id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
+	public boolean deleteUserForTests(String id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		return deleteById(id);
 	}
 }

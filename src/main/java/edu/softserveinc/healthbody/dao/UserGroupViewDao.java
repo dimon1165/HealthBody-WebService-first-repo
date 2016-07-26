@@ -3,6 +3,7 @@ package edu.softserveinc.healthbody.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import edu.softserveinc.healthbody.entity.Group;
 import edu.softserveinc.healthbody.entity.User;
@@ -47,19 +48,19 @@ public class UserGroupViewDao extends AbstractDao<UserGroupView>{
 
 	@Override
 	public UserGroupView createInstance(String[] args) {
-		return new UserGroupView(Integer.parseInt(args[0] == null ? "0" : args[0]),
-								   Integer.parseInt(args[1] == null ? "0" : args[1]), 
-								   Integer.parseInt(args[2] == null ? "0" : args[2]),
-								   Boolean.parseBoolean(args[3] == null ? "false" : args[3]));
+		return new UserGroupView(args[0] == null ? UUID.randomUUID().toString() : args[0],
+								 args[1] == null ? UUID.randomUUID().toString() : args[1], 
+								 args[2] == null ? UUID.randomUUID().toString() : args[2],
+								 Boolean.parseBoolean(args[3] == null ? "false" : args[3]));
 	}
 
 
 	@Override
 	protected String[] getFields(UserGroupView entity) {
 		List<String> fields = new ArrayList<>();
-		fields.add(entity.getIdUserGroup().toString());
-		fields.add(entity.getIdUser().toString());
-		fields.add(entity.getIdGroup().toString());
+		fields.add(entity.getIdUserGroup());
+		fields.add(entity.getIdUser());
+		fields.add(entity.getIdGroup());
 		fields.add(entity.getMemberGgoup().toString());
 		return (String[]) fields.toArray();
 	}

@@ -4,16 +4,22 @@ import java.util.List;
 
 public class RoleDTO {
 
+	private String idRole;
 	private String name;
 	private String description;
 	private List<UserDTO> users;
 
 	public RoleDTO() {}
 	
-	public RoleDTO(String name, String description, List<UserDTO> users) {
+	public RoleDTO(String idRole, String name, String description, List<UserDTO> users) {
+		this.idRole = idRole;
 		this.name = name;
 		this.description = description;
 		this.users = users;
+	}
+	
+	public String getIdRole() {
+		return idRole;
 	}
 
 	public String getName() {

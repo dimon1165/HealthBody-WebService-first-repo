@@ -31,8 +31,8 @@ public class UsersViewServiceImpl implements IUsersViewService {
 		ConnectionManager.getInstance().beginTransaction();
 		try {
 			for (UsersView usersView : UsersViewDao.getInstance().getAllUsersView(partNumber, partSize)) {
-				userDTO.add(new UserDTO(usersView.getFirsName(), usersView.getLastName(), usersView.getLogin(),
-						usersView.getPasswd(), usersView.getMail(), usersView.getAge().toString(),
+				userDTO.add(new UserDTO(usersView.getId(), usersView.getFirsName(), usersView.getLastName(), 
+						usersView.getLogin(), usersView.getPasswd(), usersView.getMail(), usersView.getAge().toString(),
 						usersView.getWeight().toString(), usersView.getGender(), usersView.getAvatar(),
 						usersView.getRoleName(), usersView.getStatus(), usersView.getScore().toString(), null, null));
 			}
@@ -67,7 +67,7 @@ public class UsersViewServiceImpl implements IUsersViewService {
 		ConnectionManager.getInstance().beginTransaction();
 		try {
 				for (UsersView usersView : UsersViewDao.getInstance().getAllUsersView(partNumber, partSize)) {
-					userDTO.add(new UserDTO(usersView.getFirsName(), usersView.getLastName(), null, null, null,
+					userDTO.add(new UserDTO(usersView.getId(), usersView.getFirsName(), usersView.getLastName(), null, null, null,
 							usersView.getAge().toString(), usersView.getWeight().toString(), null, usersView.getAvatar(), null,
 							null, usersView.getScore().toString(), null, null));
 				}
@@ -102,7 +102,7 @@ public class UsersViewServiceImpl implements IUsersViewService {
 		ConnectionManager.getInstance().beginTransaction();
 		try {
 				for (UsersView usersView : UsersViewDao.getInstance().getAllUsersView(partNumber, partSize)) {
-					userDTO.add(new UserDTO(usersView.getFirsName(), usersView.getLastName(), null, null, null,
+					userDTO.add(new UserDTO(usersView.getId(), usersView.getFirsName(), usersView.getLastName(), null, null, null,
 							usersView.getAge().toString(), usersView.getWeight().toString(), null, usersView.getAvatar(), null,
 							null, usersView.getScore().toString(), null, null));
 				}

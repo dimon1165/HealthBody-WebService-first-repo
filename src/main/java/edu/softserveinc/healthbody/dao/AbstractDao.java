@@ -16,10 +16,9 @@ abstract class AbstractDao<TEntity extends IEntity> extends AbstractDaoRead<TEnt
 		super();
 	}
 
-	protected abstract String[] getFields(TEntity entity);
-	
+	protected abstract String[] getFields(TEntity entity);	
 
-	// create
+	// Create
 	public boolean insert(TEntity entity) throws JDBCDriverException, QueryNotFoundException, DataBaseReadingException {
 		boolean result = false;
 		String query = sqlQueries.get(DaoQueries.INSERT).toString();
@@ -27,8 +26,7 @@ abstract class AbstractDao<TEntity extends IEntity> extends AbstractDaoRead<TEnt
 			throw new QueryNotFoundException(String.format(DaoConstants.QUERY_NOT_FOUND, DaoQueries.INSERT.name()));
 		}
 		try (PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query)) {
-
-			for (int i = 1; i < getFields(entity).length; i++){
+			for (int i = 0; i < getFields(entity).length; i++){
 				pst.setString(i, getFields(entity)[i]);
 			}
 			result = pst.execute();
@@ -38,8 +36,7 @@ abstract class AbstractDao<TEntity extends IEntity> extends AbstractDaoRead<TEnt
 		return result;
 	}
 
-	// update
-	
+	// Update	
 	@Override
 	public boolean updateByField(String fieldName, String text, String fieldCondition, String textCondition) 
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
@@ -62,14 +59,14 @@ abstract class AbstractDao<TEntity extends IEntity> extends AbstractDaoRead<TEnt
 
 	// delete
 	@Override
-	public boolean deleteById(Integer id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
+	public boolean deleteById(String id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		boolean result = false;
 		String query = sqlQueries.get(DaoQueries.DELETE_BY_ID).toString();
 		if (query == null) {
 			throw new QueryNotFoundException(String.format(DaoConstants.QUERY_NOT_FOUND, DaoQueries.DELETE_BY_ID.name()));
 		}
 		try (PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query)) {
-			pst.setInt(1, id);
+			pst.setString(1, id);
 			result = pst.execute();
 		} catch (SQLException e) {
 			throw new DataBaseReadingException(DaoConstants.DATABASE_READING_ERROR, e);

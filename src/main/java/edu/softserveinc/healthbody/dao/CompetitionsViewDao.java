@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import edu.softserveinc.healthbody.constants.DaoConstants;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.CompetitionsViewQueries;
@@ -45,15 +46,18 @@ public class CompetitionsViewDao extends AbstractDaoRead<CompetitionsView> {
 
 	@Override
 	public CompetitionsView createInstance(String[] args) {
-		return new CompetitionsView(Integer.parseInt(args[0] == null ? "0" : args[0]), args[1] == null ? "0" : args[1],
-				args[2] == null ? "0" : args[2], args[3] == null ? "0" : args[3], args[4] == null ? "0" : args[4],
+		return new CompetitionsView(args[0] == null ? UUID.randomUUID().toString() : args[0], 
+				args[1] == null ? "0" : args[1],
+				args[2] == null ? "0" : args[2], 
+				args[3] == null ? "0" : args[3], 
+				args[4] == null ? "0" : args[4],
 				Integer.parseInt(args[5] == null ? "0" : args[5]));
 	}
 
 	@Override
 	protected String[] getFields(CompetitionsView entity) {
 		List<String> fields = new ArrayList<>();
-		fields.add(entity.getIdCompetition().toString());
+		fields.add(entity.getIdCompetition());
 		fields.add(entity.getName());
 		fields.add(entity.getDescription());
 		fields.add(entity.getStart());

@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import edu.softserveinc.healthbody.constants.DaoConstants;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.GroupDBQueries;
@@ -43,15 +44,18 @@ public final class GroupDao extends AbstractDao<Group> {
 
 	@Override
 	public Group createInstance(String[] args) {
-		return new Group(Integer.parseInt(args[0] == null ? "0" : args[0]), args[1] == null ? new String() : args[1],
-				Integer.parseInt(args[2] == null ? "0" : args[2]), args[3] == null ? new String() : args[3],
-				args[4] == null ? new String() : args[4], args[5] == null ? new String() : args[5]);
+		return new Group(args[0] == null ? UUID.randomUUID().toString() : args[0], 
+				args[1] == null ? new String() : args[1],
+				Integer.parseInt(args[2] == null ? "0" : args[2]), 
+				args[3] == null ? new String() : args[3],
+				args[4] == null ? new String() : args[4], 
+				args[5] == null ? new String() : args[5]);
 	}
 
 	@Override
 	protected String[] getFields(Group entity) {
 		List<String> fields = new ArrayList<>();
-		fields.add(entity.getIdGroup().toString());
+		fields.add(entity.getIdGroup());
 		fields.add(entity.getName());
 		fields.add(entity.getCount().toString());
 		fields.add(entity.getDescription());
@@ -72,7 +76,8 @@ public final class GroupDao extends AbstractDao<Group> {
 			throw new QueryNotFoundException(String.format(DaoConstants.QUERY_NOT_FOUND, DaoQueries.UPDATE.name()));
 		}
 		try (PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query)) {
-			int i = 1;
+			int i = 0;
+			pst.setString(i++, group.getId());
 			pst.setInt(i++, group.getCount());
 			pst.setString(i++, group.getDescription());
 			pst.setString(i++, group.getScoreGroup());

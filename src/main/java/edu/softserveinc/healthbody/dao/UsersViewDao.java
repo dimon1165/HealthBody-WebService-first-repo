@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import edu.softserveinc.healthbody.constants.DaoConstants;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.UsersViewQueries;
@@ -43,20 +44,20 @@ public class UsersViewDao extends AbstractDaoRead<UsersView> {
 
 	@Override
 	protected UsersView createInstance(String[] args) {
-		return new UsersView(Integer.parseInt(args[0] == null ? "0" : args[0]),
-				args[1] == null ? new String() : args[1], args[2] == null ? new String() : args[2],
-				args[3] == null ? new String() : args[3], args[4] == null ? new String() : args[4],
-				args[5] == null ? new String() : args[5], Integer.parseInt(args[6] == null ? "0" : args[6]),
-				Double.parseDouble(args[7] == null ? "0" : args[7]), args[8] == null ? new String() : args[8],
-				args[9] == null ? new String() : args[9], args[10] == null ? new String() : args[10],
-				args[11] == null ? new String() : args[11], args[12] == null ? "0" : args[12],
-				args[13] == null ? "0" : args[13], Integer.parseInt(args[14] == null ? "0" : args[14]));
+		return new UsersView(args[0] == null ? UUID.randomUUID().toString() : args[0],
+							 args[1] == null ? new String() : args[1], args[2] == null ? new String() : args[2],
+							 args[3] == null ? new String() : args[3], args[4] == null ? new String() : args[4],
+							 args[5] == null ? new String() : args[5], Integer.parseInt(args[6] == null ? "0" : args[6]),
+							 Double.parseDouble(args[7] == null ? "0" : args[7]), args[8] == null ? new String() : args[8],
+							 args[9] == null ? new String() : args[9], args[10] == null ? new String() : args[10],
+							 args[11] == null ? new String() : args[11], args[12] == null ? "0" : args[12],
+							 args[13] == null ? "0" : args[13], Integer.parseInt(args[14] == null ? "0" : args[14]));
 	}
 
 	@Override
 	protected String[] getFields(UsersView entity) {
 		List<String> fields = new ArrayList<>();
-		fields.add(entity.getIdUser().toString());
+		fields.add(entity.getIdUser());
 		fields.add(entity.getFirsName());
 		fields.add(entity.getLastName());
 		fields.add(entity.getLogin());

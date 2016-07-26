@@ -2,6 +2,7 @@ package edu.softserveinc.healthbody.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.GroupCompetitionsDBQueries;
 import edu.softserveinc.healthbody.entity.GroupCompetitions;
@@ -39,18 +40,18 @@ public final class GroupCompetitionsDao extends AbstractDao<GroupCompetitions> {
 	@Override
 	public GroupCompetitions createInstance(String[] args) {
 		return new GroupCompetitions(
-				Integer.parseInt(args[0] == null ? "0" : args[0]) , 
-				Integer.parseInt(args[1] == null ? "0" : args[1]),
-				Integer.parseInt(args[2] == null ? "0" : args[2]));
+				args[0] == null ? UUID.randomUUID().toString() : args[0], 
+				args[1] == null ? UUID.randomUUID().toString() : args[1],
+				args[2] == null ? UUID.randomUUID().toString() : args[2]);
 
 	}
 	
 	@Override
 	protected String[] getFields(GroupCompetitions entity) {
 		List<String> fields = new ArrayList<>();
-		fields.add(entity.getIdGroupCompetitions().toString());
-		fields.add(entity.getIdGroup().toString());
-		fields.add(entity.getIdCompetition().toString());
+		fields.add(entity.getIdGroupCompetitions());
+		fields.add(entity.getIdGroup());
+		fields.add(entity.getIdCompetition());
 		return (String[]) fields.toArray();
 	}
 

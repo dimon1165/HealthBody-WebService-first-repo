@@ -2,6 +2,7 @@ package edu.softserveinc.healthbody.dto;
 
 public class GroupDTO {
 
+	private String idGroup;
 	private String name;
 	private String count;
 	private String descriptions;
@@ -10,7 +11,8 @@ public class GroupDTO {
 
 	public GroupDTO() {}
 	
-	public GroupDTO(String name, String count, String descriptions, String scoreGroup) {
+	public GroupDTO(String idGroup, String name, String count, String descriptions, String scoreGroup) {
+		this.idGroup = idGroup;
 		this.name = name;
 		this.count = count;
 		this.descriptions = descriptions;
@@ -18,7 +20,10 @@ public class GroupDTO {
 		
 	}
 
-	// getters
+	// Getters
+	public String getIdGroup() {
+		return idGroup;
+	}
 	public String getName() {
 		return name;
 	}
@@ -32,7 +37,11 @@ public class GroupDTO {
 		return scoreGroup;
 	}
 
-	// setters
+	// Setters
+	public void setIdGroup(String idGroup) {
+		this.idGroup = idGroup;
+	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}

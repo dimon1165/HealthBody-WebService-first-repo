@@ -3,6 +3,7 @@ package edu.softserveinc.healthbody.dao;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.GroupDBQueries;
 import edu.softserveinc.healthbody.entity.Award;
@@ -40,14 +41,14 @@ public final class AwardDao extends AbstractDao<Award> {
 		@Override
 		public Award createInstance(String[] args) {
 			return new Award(
-					Integer.parseInt(args[0] == null ? "0" : args[0]),
+					args[0] == null ? UUID.randomUUID().toString() : args[0],
 					args[1] == null ? new String() : args[1]);
 		}
 
 		@Override
 		protected String[] getFields(Award entity) {
 			List<String> fields = new ArrayList<>();
-			fields.add(entity.getIdAward().toString());
+			fields.add(entity.getIdAward());
 			fields.add(entity.getName());
 			return (String[]) fields.toArray();
 		}

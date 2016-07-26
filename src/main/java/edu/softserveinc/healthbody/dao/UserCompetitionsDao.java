@@ -2,6 +2,7 @@ package edu.softserveinc.healthbody.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.UserCompetitionsDBQueries;
 import edu.softserveinc.healthbody.entity.UserCompetitions;
@@ -40,28 +41,27 @@ public final class UserCompetitionsDao extends AbstractDao<UserCompetitions> {
 	@Override
 	public UserCompetitions createInstance(String[] args) {
 		return new UserCompetitions(
-				Integer.parseInt(args[0] == null ? "0" : args[0]),
-				Integer.parseInt(args[1] == null ? "0" : args[1]),
-				Integer.parseInt(args[2] == null ? "0" : args[2]),
+				args[0] == null ? UUID.randomUUID().toString() : args[0],
+				args[1] == null ? UUID.randomUUID().toString() : args[1],
+				args[2] == null ? UUID.randomUUID().toString() : args[2],
 				Integer.parseInt(args[3] == null ? "0" : args[3]),
-				Integer.parseInt(args[4] == null ? "0" : args[4]),
+				args[4] == null ? UUID.randomUUID().toString() : args[4],
 				args[5] == null ? new String() : args[5]);
 	}
+	
 	@Override
 	protected String[] getFields(UserCompetitions entity) {
 		List<String> fields = new ArrayList<>();
-		fields.add(entity.getIdUserCompetition().toString());
-		fields.add(entity.getIdUser().toString());
-		fields.add(entity.getIdCompetition().toString());
+		fields.add(entity.getIdUserCompetition());
+		fields.add(entity.getIdUser());
+		fields.add(entity.getIdCompetition());
 		fields.add(entity.getUserScore().toString());
-		fields.add(entity.getIdAwards().toString());
-		fields.add(entity.getTimeReceived());
-		
+		fields.add(entity.getIdAwards());
+		fields.add(entity.getTimeReceived());		
 		return (String[]) fields.toArray();
 	}
 	
 	public boolean createUserCompetitions(UserCompetitions obj) throws JDBCDriverException, QueryNotFoundException, DataBaseReadingException {
-		
 		return insert(obj);
 	}
 	
@@ -71,17 +71,15 @@ public final class UserCompetitionsDao extends AbstractDao<UserCompetitions> {
 		return updateByField(fieldName, text, fieldCondition, textCondition);
 	}
 	
-	public List<UserCompetitions> viewAll() throws JDBCDriverException, DataBaseReadingException, EmptyResultSetException, CloseStatementException {
-		
+	public List<UserCompetitions> viewAll() throws JDBCDriverException, DataBaseReadingException, EmptyResultSetException, CloseStatementException {		
 		return getAll();
 	}
 	
-	public List<UserCompetitions> getUCbyId(Integer id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, CloseStatementException, EmptyResultSetException {
-		
+	public List<UserCompetitions> getUCbyId(String id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, CloseStatementException, EmptyResultSetException {		
 		return getAllbyId(id);
 	}
 
-	public boolean deleteByUserId(Integer id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
+	public boolean deleteByUserId(String id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		return deleteById(id);
 	}
 }

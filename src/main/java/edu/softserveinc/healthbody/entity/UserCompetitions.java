@@ -2,16 +2,15 @@ package edu.softserveinc.healthbody.entity;
 
 public class UserCompetitions implements IEntity {
 	
-	private Integer idUserCompetition;
-    private Integer idUser;
-	private Integer idCompetition;
+	private String idUserCompetition;
+    private String idUser;
+	private String idCompetition;
 	private Integer userScore;
-	private Integer idAwards;
+	private String idAwards;
 	private String timeReceived;
 	
-	public UserCompetitions(Integer idUserCompetition, Integer idUser, Integer idCompetition, Integer userScore,
-			Integer idAwards, String timeReceived) {
-		
+	public UserCompetitions(String idUserCompetition, String idUser, String idCompetition, Integer userScore,
+			String idAwards, String timeReceived) {		
 		this.idUserCompetition = idUserCompetition;
 		this.idUser = idUser;
 		this.idCompetition = idCompetition;
@@ -20,16 +19,16 @@ public class UserCompetitions implements IEntity {
 		this.timeReceived = timeReceived;
 	}
 
-	//setters
-	public void setIdUserCompetition(Integer idUserCompetition) {
+	// Setters
+	public void setIdUserCompetition(String idUserCompetition) {
 		this.idUserCompetition = idUserCompetition;
 	}
 
-	public void setIdUser(Integer idUser) {
+	public void setIdUser(String idUser) {
 		this.idUser = idUser;
 	}
 
-	public void setIdCompetition(Integer idCompetition) {
+	public void setIdCompetition(String idCompetition) {
 		this.idCompetition = idCompetition;
 	}
 
@@ -37,30 +36,24 @@ public class UserCompetitions implements IEntity {
 		this.userScore = userScore;
 	}
 
-	public void setIdAwardsTypes(Integer idAwards) {
+	public void setIdAwardsTypes(String idAwards) {
 		this.idAwards = idAwards;
 	}
 
 	public void setTimeReceived(String timeReceived) {
 		this.timeReceived = timeReceived;
-	}
+	}	
 	
-	
-	@Override
-	public Integer getId() {
-		return getIdUserCompetition();
-	}
-	
-	//getters
-	public Integer getIdUserCompetition() {
+	// Getters
+	public String getIdUserCompetition() {
 		return idUserCompetition;
 	}
 
-	public Integer getIdUser() {
+	public String getIdUser() {
 		return idUser;
 	}
 
-	public Integer getIdCompetition() {
+	public String getIdCompetition() {
 		return idCompetition;
 	}
 
@@ -68,15 +61,16 @@ public class UserCompetitions implements IEntity {
 		return userScore;
 	}
 
-	public Integer getIdAwards() {
+	public String getIdAwards() {
 		return idAwards;
 	}
 
 	public String getTimeReceived() {
 		return timeReceived;
 	}
-
 	
-	
-
+	@Override
+	public String getId() {
+		return getIdUserCompetition();
+	}
 }

@@ -24,7 +24,7 @@ public interface IBasicDao<TEntity> extends IBasicReadDao<TEntity> {
 	
 	boolean updateByField(String fieldName, String text, String fieldCondition, String textCondition) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException;
 	
-	boolean deleteById(Integer id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException;
+	boolean deleteById(String id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException;
 	
 	boolean deleteByField(String textCondition) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException;
 }

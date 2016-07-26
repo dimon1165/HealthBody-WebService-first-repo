@@ -41,7 +41,7 @@ public class GroupServiceImpl implements IGroupService{
 					JDBCDriverException, DataBaseReadingException, EmptyResultSetException, CloseStatementException {
 		List<GroupDTO> resultGroup = new ArrayList<GroupDTO>();
 		for (Group group : GroupDao.getInstance().getAll(partNumber, partSize)){
-			resultGroup.add(new GroupDTO(group.getName(), group.getCount().toString(), group.getDescription(),
+			resultGroup.add(new GroupDTO(group.getIdGroup(), group.getName(), group.getCount().toString(), group.getDescription(),
 					group.getScoreGroup()));
 		}		
 		return resultGroup;	
@@ -50,7 +50,7 @@ public class GroupServiceImpl implements IGroupService{
 	@Override
 	public GroupDTO getGroup(String name) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, CloseStatementException{
 		 Group group = GroupDao.getInstance().getGroupByName(name);
-		 return new GroupDTO(group.getName(), String.valueOf(group.getCount()), group.getDescription(), group.getScoreGroup());
+		 return new GroupDTO(group.getIdGroup(), group.getName(), String.valueOf(group.getCount()), group.getDescription(), group.getScoreGroup());
 	}	
 	
 	@Override
@@ -63,7 +63,7 @@ public class GroupServiceImpl implements IGroupService{
 		ConnectionManager.getInstance().beginTransaction();
 		Group group = GroupDao.getInstance().getByFieldName(groupDTO.getName());
 		try {	
-			GroupDao.getInstance().editGroup(new Group(0, groupDTO.getName(), Integer.parseInt(groupDTO.getCount()), 
+			GroupDao.getInstance().editGroup(new Group(groupDTO.getIdGroup(), groupDTO.getName(), Integer.parseInt(groupDTO.getCount()), 
 					groupDTO.getDescriptions(), groupDTO.getScoreGroup(), group.getStatus()));
 		}catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException e) {
 			ConnectionManager.getInstance().rollbackTransaction();
@@ -77,7 +77,6 @@ public class GroupServiceImpl implements IGroupService{
 	public List<GroupDTO> getAll(int partNumber, int partSize, Map<String, String> filters)
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, EmptyResultSetException,
 			CloseStatementException, SQLException, TransactionException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

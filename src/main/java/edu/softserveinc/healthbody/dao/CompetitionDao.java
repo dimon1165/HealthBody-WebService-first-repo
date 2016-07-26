@@ -1,9 +1,11 @@
 package edu.softserveinc.healthbody.dao;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import edu.softserveinc.healthbody.constants.DaoConstants;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.CompetitionDBQueries;
@@ -42,20 +44,19 @@ public final class CompetitionDao extends AbstractDao<Competition> {
 	
 	@Override
 	public Competition createInstance(String[] args) {
-		return null;
-//				new Competition(
-//			Integer.parseInt(args[0] == null ? "0" : args[0]),
-//			args[1] == null ? new String() : args[1],
-//			args[2] == null ? new String() : args[2],
-//			args[3] == null ? new String() : args[3],
-//			args[4] == null ? new String() :  args[4],
-//			Integer.parseInt(args[5] == null ? "0" : args[5]));
+		return new Competition(
+			args[0] == null ? UUID.randomUUID().toString() : args[0],
+			args[1] == null ? new String() : args[1],
+			args[2] == null ? new String() : args[2],
+			Date.valueOf(args[3] == null ? new Date(System.currentTimeMillis()).toString() : args[3]),
+			Date.valueOf(args[4] == null ? new Date(System.currentTimeMillis()).toString() : args[4]),
+			args[5] == null ? UUID.randomUUID().toString() : args[5]);
 	}
 	
 	@Override
 	protected String[] getFields(Competition entity) {
 		List<String> fields = new ArrayList<>();
-		fields.add(entity.getIdCompetition().toString());
+		fields.add(entity.getIdCompetition());
 		fields.add(entity.getName());
 		fields.add(entity.getDescription());
 		fields.add(entity.getStart().toString());
@@ -71,12 +72,13 @@ public final class CompetitionDao extends AbstractDao<Competition> {
 			throw new QueryNotFoundException(String.format(DaoConstants.QUERY_NOT_FOUND, DaoQueries.INSERT.name()));
 		}
 		try (PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query)) {
-			int i = 1;
+			int i = 0;
+			pst.setString(i++, competition.getId());
 			pst.setString(i++, competition.getName());
 			pst.setString(i++, competition.getDescription());
 			pst.setDate(i++, competition.getStart());
 			pst.setDate(i++, competition.getFinish());
-			pst.setInt(i++, competition.getIdCriteria());
+			pst.setString(i++, competition.getIdCriteria());
 		
 		
 			result = pst.execute();
@@ -104,6 +106,11 @@ public final class CompetitionDao extends AbstractDao<Competition> {
 	
 	public List<Competition> view() throws JDBCDriverException, DataBaseReadingException, EmptyResultSetException, CloseStatementException{
 		return getAll();
+	}
+
+	@Override
+	public boolean deleteById(String id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
+		return false;
 	}
 
 }

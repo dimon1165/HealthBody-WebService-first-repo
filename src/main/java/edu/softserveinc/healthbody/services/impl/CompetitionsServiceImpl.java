@@ -2,7 +2,6 @@ package edu.softserveinc.healthbody.services.impl;
 
 import java.sql.Date;
 import java.sql.SQLException;
-
 import edu.softserveinc.healthbody.dao.CompetitionDao;
 import edu.softserveinc.healthbody.dao.CriteriaDao;
 import edu.softserveinc.healthbody.dto.CompetitionDTO;
@@ -21,8 +20,8 @@ public class CompetitionsServiceImpl implements ICompetitionsService {
 	public void insert(CompetitionDTO competitionDTO)
 			throws SQLException, JDBCDriverException, DataBaseReadingException, QueryNotFoundException,
 			EmptyResultSetException, TransactionException, CloseStatementException {
-		int idCriteria = CriteriaDao.getInstance().getByFieldName(competitionDTO.getNameCriteria()).getIdCriteria();
-		CompetitionDao.getInstance().createCompetition(new Competition(0, competitionDTO.getName(), competitionDTO.getDescription(), Date.valueOf(competitionDTO.getStartDate()), Date.valueOf(competitionDTO.getFinishDate()), idCriteria));
+		String idCriteria = CriteriaDao.getInstance().getByFieldName(competitionDTO.getNameCriteria()).getIdCriteria();
+		CompetitionDao.getInstance().createCompetition(new Competition(competitionDTO.getIdCompetition(), competitionDTO.getName(), competitionDTO.getDescription(), Date.valueOf(competitionDTO.getStartDate()), Date.valueOf(competitionDTO.getFinishDate()), idCriteria));
 
 	}
 	// TODO 

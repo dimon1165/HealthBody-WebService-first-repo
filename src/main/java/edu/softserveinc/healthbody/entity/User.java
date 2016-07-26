@@ -1,9 +1,8 @@
 package edu.softserveinc.healthbody.entity;
 
-
 public class User implements IEntity {
 	
-	private Integer idUser;
+	private String idUser;
 	private String login;
 	private String passwd;
 	private String firsName;
@@ -15,12 +14,12 @@ public class User implements IEntity {
 	private String health;
 	private String avatar;
 	private String googleApi;
-	private Integer idRole;
+	private String idRole;
 	private String status;
 	private boolean isDisabled;
 	
-	public User(Integer idUser, String login, String passwd, String firsName, String lastName, String mail, Integer age,
-			Double weight, String gender, String health, String avatar, String googleApi, Integer idRole, String status,
+	public User(String idUser, String login, String passwd, String firsName, String lastName, String mail, Integer age,
+			Double weight, String gender, String health, String avatar, String googleApi, String idRole, String status,
 			boolean isDisabled) {
 
 		this.idUser = idUser;
@@ -37,19 +36,16 @@ public class User implements IEntity {
 		this.googleApi = googleApi;
 		this.idRole = idRole;
 		this.status = status;
-		this.isDisabled = isDisabled;
-		
+		this.isDisabled = isDisabled;		
 	}
 
-
 	@Override
-	public Integer getId() {
-
+	public String getId() {
 		return idUser;
 	}
 
-	// setters
-	public void setIdUser(Integer idUser) {
+	// Setters
+	public void setIdUser(String idUser) {
 		this.idUser = idUser;
 	}
 
@@ -101,7 +97,7 @@ public class User implements IEntity {
 		this.status = status;
 	}
 
-	public void setIdRole(Integer idRole) {
+	public void setIdRole(String idRole) {
 		this.idRole = idRole;
 	}
 	
@@ -109,9 +105,9 @@ public class User implements IEntity {
 		this.isDisabled = isDisabled;
 	}
 	
-	// getters
-	public Integer getIdUser() {
-		return getId();
+	// Getters
+	public String getIdUser() {
+		return idUser;
 	}
 
 	public String getLogin() {
@@ -162,7 +158,7 @@ public class User implements IEntity {
 		return status;
 	}
 
-	public Integer getIdRole() {
+	public String getIdRole() {
 		return idRole;
 	}
 

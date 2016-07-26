@@ -57,7 +57,7 @@ public class UserProfileServiceImpl implements IBaseService<UserDTO> {
 			Role roles = RoleDao.getInstance().getRoleByName(userDTO.getRoleName());
 		
 			try {
-				UserDao.getInstance().createUser(new User(0, userDTO.getLogin(), userDTO.getPassword(), userDTO.getFirstname(), userDTO.getLastname(),
+				UserDao.getInstance().createUser(new User(userDTO.getIdUser(), userDTO.getLogin(), userDTO.getPassword(), userDTO.getFirstname(), userDTO.getLastname(),
 					 userDTO.getEmail(), Integer.parseInt(userDTO.getAge()), Double.parseDouble(userDTO.getWeight()), userDTO.getGender(),
 					 userDTO.getHealth(), userDTO.getPhotoURL(), userDTO.getGoogleApi(), roles.getIdRole(), userDTO.getStatus(), Boolean.parseBoolean(userDTO.getIsDisabled())));
 				User user = UserDao.getInstance().getUserByLoginName(userDTO.getLogin());
@@ -97,7 +97,7 @@ public class UserProfileServiceImpl implements IBaseService<UserDTO> {
 					ugs = UserGroupDao.getInstance().getUGbyId(user.getId());
 					for( UserGroup ug : ugs ){
 						group = GroupDao.getInstance().getById(ug.getIdGroup());
-						groups.add(new GroupDTO(group.getName(), "", "", ""));
+						groups.add(new GroupDTO("", group.getName(), "", "", ""));
 					}
 				}
 			 } catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException e) {
@@ -106,13 +106,13 @@ public class UserProfileServiceImpl implements IBaseService<UserDTO> {
 			 }
 			ConnectionManager.getInstance().commitTransaction();
 		
-			return new UserDTO(user.getLogin(), user.getPasswd(), user.getFirsName(), user.getLastName(), user.getMail(),
+			return new UserDTO(user.getId(), user.getLogin(), user.getPasswd(), user.getFirsName(), user.getLastName(), user.getMail(),
 				user.getAge().toString(), user.getWeight().toString(), user.getGender(), user.getAvatar(), role.getName(), user.getStatus(), "", groups, String.valueOf(user.getIsDisabled()));
 		}
 	}
 	
 	//get user by id
-	public UserDTO getById(Integer id) throws SQLException, JDBCDriverException, TransactionException, CloseStatementException, EmptyResultSetException {
+	public UserDTO getById(String id) throws SQLException, JDBCDriverException, TransactionException, CloseStatementException, EmptyResultSetException {
 		User user = null;
 		Role role = null;
 		Group group = null;
@@ -126,7 +126,7 @@ public class UserProfileServiceImpl implements IBaseService<UserDTO> {
 			 ugs = UserGroupDao.getInstance().getUGbyId(user.getId());
 			 for( UserGroup ug : ugs ){
 				 group = GroupDao.getInstance().getById(ug.getIdGroup());
-				 groups.add(new GroupDTO(group.getName(), "", "", ""));
+				 groups.add(new GroupDTO("", group.getName(), "", "", ""));
 			}
 		} catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException e) {
 			ConnectionManager.getInstance().rollbackTransaction();
@@ -134,7 +134,7 @@ public class UserProfileServiceImpl implements IBaseService<UserDTO> {
 		}
 		ConnectionManager.getInstance().commitTransaction();
 		
-		return new UserDTO(user.getLogin(), user.getPasswd(), user.getFirsName(), user.getLastName(), user.getMail(),
+		return new UserDTO(user.getId(), user.getLogin(), user.getPasswd(), user.getFirsName(), user.getLastName(), user.getMail(),
 				user.getAge().toString(), user.getWeight().toString(), user.getGender(), user.getAvatar(), role.getName(), user.getStatus(), "", groups, String.valueOf(user.getIsDisabled()));
 	}
 
@@ -149,7 +149,7 @@ public class UserProfileServiceImpl implements IBaseService<UserDTO> {
 			ConnectionManager.getInstance().beginTransaction();
 			Role role = RoleDao.getInstance().getByFieldName(userDTO.getRoleName());
 			try {	
-				UserDao.getInstance().updateUser(new User(0, userDTO.getLogin(), userDTO.getPassword(), userDTO.getFirstname(), userDTO.getLastname(),
+				UserDao.getInstance().updateUser(new User(userDTO.getIdUser(), userDTO.getLogin(), userDTO.getPassword(), userDTO.getFirstname(), userDTO.getLastname(),
 					 userDTO.getEmail(), Integer.parseInt(userDTO.getAge()), Double.parseDouble(userDTO.getWeight()), userDTO.getGender(),
 					 userDTO.getHealth(), userDTO.getPhotoURL(), userDTO.getGoogleApi(), role.getIdRole(), userDTO.getStatus(), Boolean.parseBoolean(userDTO.getIsDisabled())));
 			}catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException e) {

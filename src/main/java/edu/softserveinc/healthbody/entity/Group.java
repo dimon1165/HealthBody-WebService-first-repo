@@ -1,9 +1,8 @@
 package edu.softserveinc.healthbody.entity;
 
-
 public class Group implements IEntity {
 
-	private Integer idGroup;
+	private String idGroup;
 	private String name;
 	private Integer count;
 	private String description;
@@ -11,8 +10,7 @@ public class Group implements IEntity {
 	private String status;
 	
 
-	public Group(Integer idGroup, String name, Integer count, String description, String scoreGroup, String status) {
-		super();
+	public Group(String idGroup, String name, Integer count, String description, String scoreGroup, String status) {
 		this.idGroup = idGroup;
 		this.name = name;
 		this.count = count;
@@ -22,12 +20,12 @@ public class Group implements IEntity {
 	}
 
 	@Override
-	public Integer getId() {
+	public String getId() {
 		return getIdGroup();
 	}
 	
-	//getters
-	public Integer getIdGroup() {
+	// Getters
+	public String getIdGroup() {
 		return idGroup;
 	}
 	public String getName() {
@@ -44,11 +42,10 @@ public class Group implements IEntity {
 	}
 	public String getStatus() {
 		return status;
-	}
+	}	
 	
-	
-	//setters
-	public void setIdGroup(Integer idGroup) {
+	// Setters
+	public void setIdGroup(String idGroup) {
 		this.idGroup = idGroup;
 	}
 	public void setName(String name) {
@@ -65,8 +62,6 @@ public class Group implements IEntity {
 	}
 	public void setStatus(String status) {
 		this.status = status;
-	}
-	
-	
+	}	
 
 }

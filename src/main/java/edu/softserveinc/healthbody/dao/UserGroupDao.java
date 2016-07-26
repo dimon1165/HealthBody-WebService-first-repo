@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import edu.softserveinc.healthbody.constants.DaoConstants;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.UserGroupQueries;
@@ -49,29 +50,29 @@ public class UserGroupDao extends AbstractDao<UserGroup>{
 
 	@Override
 	public UserGroup createInstance(String[] args) {
-		return new UserGroup(Integer.parseInt(args[0] == null ? "0" : args[0]),
-								   Integer.parseInt(args[1] == null ? "0" : args[1]), 
-								   Integer.parseInt(args[2] == null ? "0" : args[2]));
+		return new UserGroup(args[0] == null ? UUID.randomUUID().toString() : args[0],
+							 args[1] == null ? UUID.randomUUID().toString() : args[1], 
+							 args[2] == null ? UUID.randomUUID().toString() : args[2]);
 	}
 
 
 	@Override
 	protected String[] getFields(UserGroup entity) {
 		List<String> fields = new ArrayList<>();
-		fields.add(entity.getIdUserGroup().toString());
-		fields.add(entity.getIdUser().toString());
-		fields.add(entity.getIdGroup().toString());
+		fields.add(entity.getIdUserGroup());
+		fields.add(entity.getIdUser());
+		fields.add(entity.getIdGroup());
 		return (String[]) fields.toArray();
 	}
 	
 	
 	public boolean addUserToGroup(User user, Group group) throws QueryNotFoundException, JDBCDriverException, EmptyResultSetException, DataBaseReadingException{
 		boolean result = false;		
-		result = insert(new UserGroup(null, user.getId(), group.getId()));
+		result = insert(new UserGroup(UUID.randomUUID().toString(), user.getId(), group.getId()));
 		return result;
 	}
 	
-	public List<UserGroup> getUGbyId(Integer id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, CloseStatementException, EmptyResultSetException {
+	public List<UserGroup> getUGbyId(String id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, CloseStatementException, EmptyResultSetException {
 		
 		return getAllbyId(id);
 	}
@@ -83,9 +84,10 @@ public class UserGroupDao extends AbstractDao<UserGroup>{
 				throw new QueryNotFoundException(String.format(DaoConstants.QUERY_NOT_FOUND, DaoQueries.INSERT.name()));
 			}
 			try (PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query)) {
-				int i = 1;
-				pst.setInt(i++, user.getId());
-				pst.setInt(i++, group.getIdGroup());
+				int i = 0;
+				pst.setString(i++, UUID.randomUUID().toString());
+				pst.setString(i++, user.getId());
+				pst.setString(i++, group.getIdGroup());
 					
 				result = pst.execute();
 			} catch (SQLException e) {
@@ -94,7 +96,7 @@ public class UserGroupDao extends AbstractDao<UserGroup>{
 		return result;
 	}
 	
-	public boolean deleteByUserId (Integer id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
+	public boolean deleteByUserId (String id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		return deleteById(id);
 	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 public class CompetitionDTO {
 
+	private String idCompetition;
 	private String name;
 	private String count;
 	private String startDate;
@@ -15,8 +16,9 @@ public class CompetitionDTO {
 
 	public CompetitionDTO() {}
 	
-	public CompetitionDTO(String name, String count, String startDate, String finishDate, String description,
+	public CompetitionDTO(String idCompetition, String name, String count, String startDate, String finishDate, String description,
 			String nameCriteria, List<String> groups, List<String> logins) {
+		this.idCompetition = idCompetition;
 		this.name = name;
 		this.count = count;
 		this.startDate = startDate;
@@ -25,6 +27,11 @@ public class CompetitionDTO {
 		this.nameCriteria = nameCriteria;
 		this.groups = groups;
 		this.logins = logins;
+	}
+	
+	// Getters
+	public String getIdCompetition(){
+		return idCompetition;
 	}
 
 	public String getName() {
@@ -60,6 +67,10 @@ public class CompetitionDTO {
 	}
 
 	//setters
+	public void setIdCompetition(String idCompetition) {
+		this.idCompetition = idCompetition;
+	}	
+	
 	public void setName(String name) {
 		this.name = name;
 	}

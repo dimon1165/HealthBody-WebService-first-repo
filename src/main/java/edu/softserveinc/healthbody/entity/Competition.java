@@ -4,15 +4,15 @@ import java.sql.Date;
 
 public class Competition implements IEntity {
 
-	private Integer idCompetition;
+	private String idCompetition;
 	private String name;
 	private String description;
 	private Date start;
 	private Date finish;
-	private Integer idCriteria;
+	private String idCriteria;
 
-	public Competition(Integer idCompetition, String name, String description,
-			Date start, Date finish, Integer idCriteria) {
+	public Competition(String idCompetition, String name, String description, Date start, Date finish, 
+			String idCriteria) {
 		this.idCompetition = idCompetition;
 		this.name = name;
 		this.description = description;
@@ -21,9 +21,8 @@ public class Competition implements IEntity {
 		this.idCriteria = idCriteria;
 	}
 	
-	// setters
-
-	public void setIdCompetitions(Integer idCompetition) {
+	// Setters
+	public void setIdCompetitions(String idCompetition) {
 		this.idCompetition = idCompetition;
 	}
 
@@ -43,17 +42,16 @@ public class Competition implements IEntity {
 		this.finish = finish;
 	}
 
-	public void setIdCriteria(Integer idCriteria) {
+	public void setIdCriteria(String idCriteria) {
 		this.idCriteria = idCriteria;
 	}
 
-	// getters
-	
-	public Integer getId() {
+	// Getters	
+	public String getId() {
 		return getIdCompetition();
 	}
 	
-	public Integer getIdCompetition() {
+	public String getIdCompetition() {
 		return idCompetition;
 	}
 
@@ -73,7 +71,7 @@ public class Competition implements IEntity {
 		return finish;
 	}
 
-	public Integer getIdCriteria() {
+	public String getIdCriteria() {
 		return idCriteria;
 	}
 	

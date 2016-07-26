@@ -4,6 +4,7 @@ import java.util.List;
 
 public class CriteriaDTO {
 
+	private String idCriteria;
 	private String name;
 	private String metrics;
 	private String getGoogle;
@@ -11,13 +12,18 @@ public class CriteriaDTO {
 	
 	public CriteriaDTO() {}
 	
-	public CriteriaDTO(String name, String metrics, String getGoogle, List<CompetitionDTO> competitions) {
+	public CriteriaDTO(String idCriteria, String name, String metrics, String getGoogle, List<CompetitionDTO> competitions) {
+		this.idCriteria = idCriteria;
 		this.name = name;
 		this.metrics = metrics;
 		this.getGoogle = getGoogle;
 		this.competitions = competitions;
 	}
 
+	public String getIdCriteria() {
+		return idCriteria;
+	}
+	
 	public String getName() {
 		return name;
 	}

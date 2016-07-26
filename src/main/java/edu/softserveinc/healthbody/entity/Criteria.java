@@ -2,12 +2,12 @@ package edu.softserveinc.healthbody.entity;
 
 public class Criteria implements IEntity {
 	
-	private Integer idCriteria;
+	private String idCriteria;
 	private String name;
 	private Double metrics;
 	private String getGoogle;
 	
-	public Criteria (Integer idCriteria, String name, Double metrics,
+	public Criteria (String idCriteria, String name, Double metrics,
 			String getGoogle) {
 		this.idCriteria = idCriteria;
 		this.name = name;
@@ -15,9 +15,8 @@ public class Criteria implements IEntity {
 		this.getGoogle = getGoogle;
 	}
 
-	// setters
-	
-	public void setIdCriteria(Integer idCriteria) {
+	// Setters	
+	public void setIdCriteria(String idCriteria) {
 		this.idCriteria = idCriteria;
 	}
 
@@ -33,13 +32,12 @@ public class Criteria implements IEntity {
 		this.getGoogle = getGoogle;
 	}
 	
-	// getters
-	
-	public Integer getId() {
+	// Getters	
+	public String getId() {
 		return getIdCriteria();
 	}
 	  
-	public Integer getIdCriteria() {
+	public String getIdCriteria() {
 		return idCriteria;
 	}
 
@@ -54,6 +52,4 @@ public class Criteria implements IEntity {
 	public String getGetGoogle() {
 		return getGoogle;
 	}
-	  
-
 }

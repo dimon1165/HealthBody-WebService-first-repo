@@ -28,7 +28,7 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 		try {
 			for (CompetitionsView competitionsView : CompetitionsViewDao.getInstance().getAllCompetitionsView(partNumber,
 					partSize)) {
-				competitionDTO.add(new CompetitionDTO(competitionsView.getName(),
+				competitionDTO.add(new CompetitionDTO(competitionsView.getIdCompetition(), competitionsView.getName(),
 						competitionsView.getUsersCount().toString(), competitionsView.getStart(),
 						competitionsView.getFinish(), competitionsView.getDescription(), null, new ArrayList<String>(),
 						new ArrayList<String>()));
@@ -48,7 +48,7 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 		try {
 			for (CompetitionsView competitionsView : CompetitionsViewDao.getInstance().getActiveCompetitionsView(partNumber,
 					partSize)) {
-				competitionDTO.add(new CompetitionDTO(competitionsView.getName(),
+				competitionDTO.add(new CompetitionDTO(competitionsView.getIdCompetition(), competitionsView.getName(),
 						competitionsView.getUsersCount().toString(), competitionsView.getStart(),
 						competitionsView.getFinish(), competitionsView.getDescription(), null, new ArrayList<String>(),
 						new ArrayList<String>()));
@@ -73,7 +73,7 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 		try {
 			for (CompetitionsView competitionsView : CompetitionsViewDao.getInstance().getCompetitionsByUserView(partNumber,
 					partSize, login)) {
-				competitionDTO.add(new CompetitionDTO(competitionsView.getName(),
+				competitionDTO.add(new CompetitionDTO(competitionsView.getIdCompetition(), competitionsView.getName(),
 						competitionsView.getUsersCount().toString(), competitionsView.getStart(),
 						competitionsView.getFinish(), competitionsView.getDescription(), null, new ArrayList<String>(),
 						new ArrayList<String>()));
@@ -98,7 +98,7 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 		try {
 			for (CompetitionsView competitionsView : CompetitionsViewDao.getInstance().getActiveCompetitionsByUserView(partNumber,
 					partSize, login)) {
-				competitionDTO.add(new CompetitionDTO(competitionsView.getName(),
+				competitionDTO.add(new CompetitionDTO(competitionsView.getIdCompetition(), competitionsView.getName(),
 						competitionsView.getUsersCount().toString(), competitionsView.getStart(),
 						competitionsView.getFinish(), competitionsView.getDescription(), null, new ArrayList<String>(),
 						new ArrayList<String>()));

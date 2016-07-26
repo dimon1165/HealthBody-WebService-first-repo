@@ -1,9 +1,8 @@
 package edu.softserveinc.healthbody.entity;
 
-
 public class UsersView implements IEntity {
 	
-	private Integer idUser;
+	private String idUser;
 	private String firsName;
 	private String lastName;
 	private String login;
@@ -19,7 +18,7 @@ public class UsersView implements IEntity {
 	private String status;
 	private Integer score;
 	
-	public UsersView(Integer idUser, String firsName, String lastName, String login, String passwd, String mail,
+	public UsersView(String idUser, String firsName, String lastName, String login, String passwd, String mail,
 			Integer age, Double weight, String gender, String avatar, String roleName, String health, String googleApi,
 			String status, Integer score) {
 		this.idUser = idUser;
@@ -39,8 +38,8 @@ public class UsersView implements IEntity {
 		this.score = score;
 	}
 	
-	// setters
-	public void setIdUser(Integer idUser) {
+	// Setters
+	public void setIdUser(String idUser) {
 		this.idUser = idUser;
 	}
 
@@ -100,14 +99,8 @@ public class UsersView implements IEntity {
 		this.score = score;
 	}
 	
-	// getters
-	
-	@Override
-	public Integer getId() {
-		return getIdUser();
-	}
-	
-	public Integer getIdUser() {
+	// Getters	
+	public String getIdUser() {
 		return idUser;
 	}
 
@@ -167,4 +160,8 @@ public class UsersView implements IEntity {
 		return score;
 	}
 	
+	@Override
+	public String getId() {
+		return getIdUser();
+	}
 }

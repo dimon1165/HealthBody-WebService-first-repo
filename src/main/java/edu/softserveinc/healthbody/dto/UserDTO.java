@@ -4,6 +4,7 @@ import java.util.List;
 
 public class UserDTO {
 
+	private String idUser;
 	private String firstname;
 	private String lastname;
 	private String login;
@@ -23,9 +24,10 @@ public class UserDTO {
 
 	public UserDTO() {}
 	
-	public UserDTO(String login, String password, String firstname, String lastname, String email, String age,
+	public UserDTO(String idUser, String login, String password, String firstname, String lastname, String email, String age,
 			String weight, String gender, String photoURL, String roleName, String status, String score,
 			List<GroupDTO> groups, String isDisabled) {
+		this.idUser = idUser;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.login = login;
@@ -41,7 +43,11 @@ public class UserDTO {
 		this.groups = groups;
 	}
 	
-	//getters
+	// Getters
+	public String getIdUser() {
+		return idUser;
+	}
+	
 	public String getFirstname() {
 		return firstname;
 	}
@@ -101,7 +107,11 @@ public class UserDTO {
 		return isDisabled;
 	}
 
-	//setters
+	// Setters
+	public void setIdUser(String idUser) {
+		this.idUser = idUser;
+	}
+	
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
 	}

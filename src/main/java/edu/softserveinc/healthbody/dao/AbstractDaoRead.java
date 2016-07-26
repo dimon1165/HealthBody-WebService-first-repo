@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import edu.softserveinc.healthbody.constants.DaoConstants;
 import edu.softserveinc.healthbody.dao.IBasicDao.DaoQueries;
@@ -49,7 +50,7 @@ abstract class AbstractDaoRead<TEntity> implements IBasicReadDao<TEntity> {
 		return queryResult;
 	}
 
-	public TEntity getById(Integer id)
+	public TEntity getById(String id)
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, CloseStatementException {
 		TEntity entity = null;
 		String query = sqlQueries.get(DaoQueries.GET_BY_ID).toString();
@@ -148,7 +149,7 @@ abstract class AbstractDaoRead<TEntity> implements IBasicReadDao<TEntity> {
 		return id;
 	}
 
-	public List<TEntity> getAllbyId(Integer id) throws QueryNotFoundException, JDBCDriverException,
+	public List<TEntity> getAllbyId(String id) throws QueryNotFoundException, JDBCDriverException,
 			DataBaseReadingException, CloseStatementException, EmptyResultSetException {
 
 		List<TEntity> all = new ArrayList<>();
@@ -212,10 +213,10 @@ abstract class AbstractDaoRead<TEntity> implements IBasicReadDao<TEntity> {
 	}
 
 	// methods try-with-resources
-	private PreparedStatement createPreparedStatement(String query, Integer id)
+	private PreparedStatement createPreparedStatementId(String query, String id)
 			throws SQLException, JDBCDriverException {
 		PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query);
-		pst.setInt(1, id);
+		pst.setString(1, id);
 		return pst;
 	}
 
@@ -231,5 +232,9 @@ abstract class AbstractDaoRead<TEntity> implements IBasicReadDao<TEntity> {
 		PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query);
 		pst.setString(1, name);
 		return pst;
+	}
+
+	public boolean deleteById(String id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
+		return false;
 	}
 }

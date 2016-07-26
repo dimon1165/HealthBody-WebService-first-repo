@@ -2,6 +2,7 @@ package edu.softserveinc.healthbody.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.CriteriaDBQueries;
 import edu.softserveinc.healthbody.entity.Criteria;
@@ -39,7 +40,7 @@ public class CriteriaDao extends AbstractDao<Criteria> {
 	@Override
 	public Criteria createInstance(String[] args) {
 		return new Criteria(
-				Integer.parseInt(args[0] == null ? "0" : args[0]),
+				args[0] == null ? UUID.randomUUID().toString() : args[0],
 				args[1] == null ? new String() : args[1],
 				Double.parseDouble(args[2] == null ? "0" : args[2]),
 				args[3] == null ? new String() : args[3]);
@@ -48,7 +49,7 @@ public class CriteriaDao extends AbstractDao<Criteria> {
 	@Override
 	protected String[] getFields(Criteria entity) {
 		List<String> fields = new ArrayList<>();
-		fields.add(entity.getIdCriteria().toString());
+		fields.add(entity.getIdCriteria());
 		fields.add(entity.getName());
 		fields.add(entity.getMetrics().toString());
 		fields.add(entity.getGetGoogle());

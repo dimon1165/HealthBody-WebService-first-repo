@@ -22,9 +22,8 @@ public class UserGroupView implements IEntity{
 
 		public static enum UserGroupViewQueries {
 	        GET_BY_ID(DaoQueries.GET_BY_ID, "SELECT users.id_user, users.login, roles.name FROM users INNER JOIN roles ON users.id_role = roles.id_role WHERE users.id_user = ?;"),
-	        GET_ID_BY_FIELDS(DaoQueries.GET_ID_BY_FIELDS, "SELECT usersgroups.id_user_group FROM usersgroups, users, groups WHERE usersgroups.id_user = ? AND "
-						 																										+"usersgroups.id_group = ?;"),		
-//	        											  "SELECT usersgroups.id_user_group FROM usersgroup INNER JOIN users ON usersgroups.id_user = %s INNER JOIN groups ON usersgroups.id_group = %s;"),
+	        GET_ID_BY_FIELDS(DaoQueries.GET_ID_BY_FIELDS, "SELECT usersgroups.id_user_group FROM usersgroups, users, groups "
+	        		+ "WHERE usersgroups.id_user = ? AND usersgroups.id_group = ?;"),	
 	        UPDATE_BY_FIELD(DaoQueries.UPDATE_BY_FIELD, "UPDATE usersgroup SET ? = ? WHERE ? = ?;"),
 	        GET_ALL(DaoQueries.GET_ALL, "SELECT users.id_user, users.login, roles.name FROM users INNER JOIN roles ON users.id_role = roles.id_role;");
 	        private DaoQueries daoQuery;
@@ -45,47 +44,45 @@ public class UserGroupView implements IEntity{
 	        }
 	    }
 
-	    private Integer idUserGroup;
-	    private Integer idUser;
-		private Integer idGroup;
+	    private String idUserGroup;
+	    private String idUser;
+		private String idGroup;
 		private Boolean memberGgoup;
 
-		public UserGroupView(Integer idUserGroup, Integer idUser, Integer idGroup, Boolean memberGgoup) {
+		public UserGroupView(String idUserGroup, String idUser, String idGroup, Boolean memberGgoup) {
 			this.idUserGroup = idUserGroup;
 			this.idUser = idUser;
 			this.idGroup = idGroup;
 			this.memberGgoup = memberGgoup;
 		}
 
-		// setters
-
-		public void setIdUserGroup(Integer idUserGroup) {
+		// Setters
+		public void setIdUserGroup(String idUserGroup) {
 			this.idUserGroup = idUserGroup;
 		}
 
-		public void setIdUser(Integer idUser) {
+		public void setIdUser(String idUser) {
 			this.idUser = idUser;
 		}
 
-		public void setIdGroup(Integer idGroup) {
+		public void setIdGroup(String idGroup) {
 			this.idGroup = idGroup;
 		}
 
-		// getters
-
+		// Getters
 		public void setMemberGgoup(Boolean memberGgoup) {
 			this.memberGgoup = memberGgoup;
 		}
 
-		public Integer getIdUserGroup() {
+		public String getIdUserGroup() {
 			return idUserGroup;
 		}
 
-		public Integer getIdUser() {
+		public String getIdUser() {
 			return idUser;
 		}
 
-		public Integer getIdGroup() {
+		public String getIdGroup() {
 			return idGroup;
 		}
 
@@ -94,7 +91,7 @@ public class UserGroupView implements IEntity{
 		}
 
 		@Override
-		public Integer getId() {
+		public String getId() {
 			return idUserGroup;
 		}
 

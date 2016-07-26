@@ -4,6 +4,7 @@ import java.util.List;
 
 public class UserCompetitionsDTO {
 	
+	private String idUserCompetition;
 	private String login;
 	private List<String> competitions;
 	private String userScore;
@@ -12,9 +13,9 @@ public class UserCompetitionsDTO {
 	
 	public UserCompetitionsDTO() {}
 	
-	public UserCompetitionsDTO(String login, List<String> competitions, String userScore, String awardsName,
+	public UserCompetitionsDTO(String idUserCompetition, String login, List<String> competitions, String userScore, String awardsName,
 			String timeReceivedAward) {
-		
+		this.idUserCompetition = idUserCompetition;
 		this.login = login;
 		this.competitions = competitions;
 		this.userScore = userScore;
@@ -23,6 +24,10 @@ public class UserCompetitionsDTO {
 	}
 
 	//getters
+	public String getIdUserCompetition() {
+		return idUserCompetition;
+	}
+	
 	public String getLogin() {
 		return login;
 	}

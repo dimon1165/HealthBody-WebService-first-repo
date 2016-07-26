@@ -2,21 +2,21 @@ package edu.softserveinc.healthbody.entity;
 
 public class MetaData implements IEntity {
 
-	private Integer idMetaData;
+	private String idMetaData;
 	private String lastSynch;
 
-	public MetaData(Integer idMetaData, String lastSynch) {
+	public MetaData(String idMetaData, String lastSynch) {
 		this.idMetaData = idMetaData;
 		this.lastSynch = lastSynch;
 	}
 
 	@Override
-	public Integer getId() {
+	public String getId() {
 		return getIdMetaData();
 	}
 
 	// getters
-	public Integer getIdMetaData() {
+	public String getIdMetaData() {
 		return idMetaData;
 	}
 
@@ -25,7 +25,7 @@ public class MetaData implements IEntity {
 	}
 
 	// setters
-	public void setIdMetaData(Integer idMetaData) {
+	public void setIdMetaData(String idMetaData) {
 		this.idMetaData = idMetaData;
 	}
 
