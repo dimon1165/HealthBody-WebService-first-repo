@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public final class Log4jWrapper implements ILogger {
-	private static volatile Log4jWrapper instance;
+//	private static volatile Log4jWrapper instance;
 	private final String PICTURE_PATH = "Path to Picture ";
 	private Logger logger;
 
@@ -22,10 +22,6 @@ public final class Log4jWrapper implements ILogger {
 	// }
 	// return instance;
 	// }
-
-	public Log4jWrapper(Logger logger) {
-		this.logger = logger;
-	}
 	
 	public static Logger get() {
 	    final Throwable t = new Throwable();
