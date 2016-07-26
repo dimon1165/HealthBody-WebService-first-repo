@@ -7,9 +7,9 @@ import java.util.UUID;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.MetaDataDBQueries;
 import edu.softserveinc.healthbody.entity.MetaData;
 
-public class MetaDataDao extends AbstractDao<MetaData> {
+public final class MetaDataDao extends AbstractDao<MetaData> {
 	
-	private static volatile MetaDataDao instance = null;
+	private static volatile MetaDataDao instance;
 	
 	
 
@@ -18,9 +18,9 @@ public class MetaDataDao extends AbstractDao<MetaData> {
 	}
 	
 	public MetaDataDao getInstance() {
-		if(instance == null) {
+		if (instance == null) {
 			synchronized (MetaDataDao.class) {
-				if(instance == null) {
+				if (instance == null) {
 					instance = new MetaDataDao();
 				}
 				
@@ -29,6 +29,7 @@ public class MetaDataDao extends AbstractDao<MetaData> {
 		return instance;
 	}
 
+	@Override
 	protected void init() {
 		for (MetaDataDBQueries metaDataDBQueries : MetaDataDBQueries.values()) {
 			sqlQueries.put(metaDataDBQueries.getDaoQuery(), metaDataDBQueries);
@@ -36,15 +37,15 @@ public class MetaDataDao extends AbstractDao<MetaData> {
 
 	}
 	@Override
-	protected String[] getFields(MetaData entity) {
+	protected String[] getFields(final MetaData entity) {
 		List<String> fields = new ArrayList<>();
 		fields.add(entity.getIdMetaData());
 		fields.add(entity.getLastSynch());
-		return (String[])fields.toArray();
+		return (String[]) fields.toArray();
 	}
 
 	@Override
-	public MetaData createInstance(String[] args) {
+	public MetaData createInstance(final String[] args) {
 		return new MetaData(
 				args[0] == null ? UUID.randomUUID().toString() : args[0],
 				args[1] == null ? new String() : args[1]);

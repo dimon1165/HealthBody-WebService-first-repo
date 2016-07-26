@@ -9,8 +9,8 @@ public class CompetitionsView implements IEntity {
 	private String finish;
 	private Integer usersCount;
 
-	public CompetitionsView(String idCompetition, String name, String description, String start, 
-			String finish, Integer usersCount) {
+	public CompetitionsView(final String idCompetition, final String name, final String description, final String start,
+			final String finish, final Integer usersCount) {
 		this.idCompetition = idCompetition;
 		this.name = name;
 		this.description = description;
@@ -20,56 +20,57 @@ public class CompetitionsView implements IEntity {
 	}
 	
 	// Setters
-	public void setIdCompetitions(String idCompetition) {
+	public final void setIdCompetitions(final String idCompetition) {
 		this.idCompetition = idCompetition;
 	}
 
-	public void setName(String name) {
+	public final void setName(final String name) {
 		this.name = name;
 	}
 
-	public void setDescription(String description) {
+	public final void setDescription(final String description) {
 		this.description = description;
 	}
 
-	public void setStart(String start) {
+	public final void setStart(final String start) {
 		this.start = start;
 	}
 
-	public void setFinish(String finish) {
+	public final void setFinish(final String finish) {
 		this.finish = finish;
 	}
 	
-	public void setUsersCount(Integer usersCount) {
+	public final void setUsersCount(final Integer usersCount) {
 		this.usersCount = usersCount;
 	}
 
 	// Getters	
-	public String getId() {
+	public final String getId() {
 		return getIdCompetition();
 	}
 	
-	public String getIdCompetition() {
+	public final String getIdCompetition() {
 		return idCompetition;
 	}
 
-	public String getName() {
+	public final String getName() {
 		return name;
 	}
 
-	public String getDescription() {
+	public final String getDescription() {
 		return description;
 	}
 
-	public String getStart() {
+	public final String getStart() {
 		return start;
 	}
 
-	public String getFinish() {
+	public final String getFinish() {
 		return finish;
 	}
 
-	public Integer getUsersCount() {
+	public final Integer getUsersCount() {
 		return usersCount;
 	}
 }
+

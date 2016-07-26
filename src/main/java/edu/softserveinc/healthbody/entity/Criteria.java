@@ -7,8 +7,8 @@ public class Criteria implements IEntity {
 	private Double metrics;
 	private String getGoogle;
 	
-	public Criteria (String idCriteria, String name, Double metrics,
-			String getGoogle) {
+	public Criteria (final String idCriteria, final String name, final Double metrics,
+			final String getGoogle) {
 		this.idCriteria = idCriteria;
 		this.name = name;
 		this.metrics = metrics;
@@ -16,40 +16,41 @@ public class Criteria implements IEntity {
 	}
 
 	// Setters	
-	public void setIdCriteria(String idCriteria) {
+	public final void setIdCriteria(final String idCriteria) {
 		this.idCriteria = idCriteria;
 	}
 
-	public void setName(String name) {
+	public final void setName(final String name) {
 		this.name = name;
 	}
 
-	public void setMetrics(Double metrics) {
+	public final void setMetrics(final Double metrics) {
 		this.metrics = metrics;
 	}
 
-	public void setGetGoogle(String getGoogle) {
+	public final void setGetGoogle(final String getGoogle) {
 		this.getGoogle = getGoogle;
 	}
 	
 	// Getters	
-	public String getId() {
+	public final String getId() {
 		return getIdCriteria();
 	}
 	  
-	public String getIdCriteria() {
+	public final String getIdCriteria() {
 		return idCriteria;
 	}
 
-	public String getName() {
+	public final String getName() {
 		return name;
 	}
 
-	public Double getMetrics() {
+	public final Double getMetrics() {
 		return metrics;
 	}
 
-	public String getGetGoogle() {
+	public final String getGetGoogle() {
 		return getGoogle;
 	}
 }
+

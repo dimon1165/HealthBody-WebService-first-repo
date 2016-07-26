@@ -13,7 +13,7 @@ public class KeysForFilters {
 
 		private String keys;
 
-		private CompetitionsServiceKeys(String keys) {
+		CompetitionsServiceKeys(final String keys) {
 			this.keys = keys;
 		}
 
@@ -30,19 +30,19 @@ public class KeysForFilters {
 		LAST_NAME("lastname"),
 		LOGIN("login"),
 		PASSWORD("password"),
-		EMAIL ("email"),
-		AGE ("age"),
-		WEIGHT ("weight"),
-		GENDER ("gender"),
-		PHOTO_URL ("photoURL"),
-		ROLE_NAME ("roleName"),
-		STATUS ("status"),
-		SCORE ("score"),
-		GROUPS ("groups");
+		EMAIL("email"),
+		AGE("age"),
+		WEIGHT("weight"),
+		GENDER("gender"),
+		PHOTO_URL("photoURL"),
+		ROLE_NAME("roleName"),
+		STATUS("status"),
+		SCORE("score"),
+		GROUPS("groups");
 
 		private String keys;
 
-		private UsersServiceKeys(String keys) {
+		UsersServiceKeys(final String keys) {
 			this.keys = keys;
 		}
 

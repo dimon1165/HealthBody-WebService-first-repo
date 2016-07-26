@@ -7,6 +7,8 @@ public class GooglePojo {
 	String given_name;
 	String family_name;
 	String picture;
+	String gender;
+
 	public String getPicture() {
 		return picture;
 	}
@@ -14,8 +16,6 @@ public class GooglePojo {
 	public void setPicture(String picture) {
 		this.picture = picture;
 	}
-
-	String gender;
 
 	public String getGender() {
 		return gender;

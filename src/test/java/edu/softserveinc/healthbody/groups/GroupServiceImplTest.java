@@ -19,7 +19,7 @@ import edu.softserveinc.healthbody.exceptions.EmptyResultSetException;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 import edu.softserveinc.healthbody.exceptions.QueryNotFoundException;
 import edu.softserveinc.healthbody.exceptions.TransactionException;
-import edu.softserveinc.healthbody.log.LoggerWrapper;
+import edu.softserveinc.healthbody.log.Log4jWrapper;
 import edu.softserveinc.healthbody.services.impl.GroupServiceImpl;
 
 public class GroupServiceImplTest {
@@ -32,7 +32,7 @@ public class GroupServiceImplTest {
 	@AfterClass
 	public void CleanTableAfterTest() throws SQLException, JDBCDriverException{
 		DBPopulateManager.getInstance().deleteAllFromTables();
-		LoggerWrapper.info(this.getClass(), "Aftertest block Userviewserviceimpl worked");
+		Log4jWrapper.get().info("Aftertest block Userviewserviceimpl worked");
 	}
 	
 	@Test
@@ -42,13 +42,13 @@ public class GroupServiceImplTest {
 		int partNumber = 1;
 		int partSize = 2;
 		List<GroupDTO> groupAll = groupService.getAll(partNumber, partSize);
-		LoggerWrapper.info(this.getClass(), "Printing all range of GroupDTO from " + partNumber + " to " + partSize);
-		LoggerWrapper.info(this.getClass(), "[");
+		Log4jWrapper.get().info("Printing all range of GroupDTO from " + partNumber + " to " + partSize);
+		Log4jWrapper.get().info("[");
 		for (GroupDTO group:groupAll){
-			LoggerWrapper.info(this.getClass(), "  "+group.getName()+"   "+group.getCount()+"   "+group.getDescriptions()+"   "
+			Log4jWrapper.get().info("  "+group.getName()+"   "+group.getCount()+"   "+group.getDescriptions()+"   "
 					+group.getScoreGroup()+",");
 		}
-		LoggerWrapper.info(this.getClass(), "]");
+		Log4jWrapper.get().info("]");
 	}
 
 	 @Test

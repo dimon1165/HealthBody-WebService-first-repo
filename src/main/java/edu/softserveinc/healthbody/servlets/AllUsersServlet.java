@@ -18,12 +18,15 @@ public class AllUsersServlet extends HttpServlet {
         super();
     }
     
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @Override
+    protected final void doGet(final HttpServletRequest request, final HttpServletResponse response)
+    		throws ServletException, IOException {
 		HealthBodyServiceImpl healthBodyServiceImpl = new HealthBodyServiceImpl();
 		String partNumber = request.getParameter("partNumber");
 		String partSize = request.getParameter("partSize");
 		if ((partNumber != null) && (partSize != null)) {
-			request.setAttribute("GetAllUsers", healthBodyServiceImpl.getAllUsers(Integer.parseInt(partNumber), Integer.parseInt(partSize)));
+			request.setAttribute("GetAllUsers", 
+					healthBodyServiceImpl.getAllUsers(Integer.parseInt(partNumber), Integer.parseInt(partSize)));
 			getServletContext().getRequestDispatcher("/WEB-INF/views/AllUsersView.jsp").forward(request, response);
 		} else {
 			getServletContext().getRequestDispatcher("/WEB-INF/views/AllUsersViewInitial.jsp").forward(request, response);

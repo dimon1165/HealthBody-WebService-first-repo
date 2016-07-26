@@ -5,32 +5,31 @@ public class MetaData implements IEntity {
 	private String idMetaData;
 	private String lastSynch;
 
-	public MetaData(String idMetaData, String lastSynch) {
+	public MetaData(final String idMetaData, final String lastSynch) {
 		this.idMetaData = idMetaData;
 		this.lastSynch = lastSynch;
 	}
 
 	@Override
-	public String getId() {
+	public final String getId() {
 		return getIdMetaData();
 	}
 
-	// getters
-	public String getIdMetaData() {
+	// Getters
+	public final String getIdMetaData() {
 		return idMetaData;
 	}
 
-	public String getLastSynch() {
+	public final String getLastSynch() {
 		return lastSynch;
 	}
 
-	// setters
-	public void setIdMetaData(String idMetaData) {
+	// Setters
+	public final void setIdMetaData(final String idMetaData) {
 		this.idMetaData = idMetaData;
 	}
 
-	public void setLastSynch(String lastSynch) {
+	public final void setLastSynch(final String lastSynch) {
 		this.lastSynch = lastSynch;
 	}
-
 }

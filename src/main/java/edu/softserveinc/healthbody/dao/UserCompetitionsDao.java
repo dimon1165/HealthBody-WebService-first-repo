@@ -14,7 +14,7 @@ import edu.softserveinc.healthbody.exceptions.QueryNotFoundException;
 
 public final class UserCompetitionsDao extends AbstractDao<UserCompetitions> {
 	
-	private static volatile UserCompetitionsDao instance = null;
+	private static volatile UserCompetitionsDao instance;
 	
 	private UserCompetitionsDao() {
 		init();
@@ -39,7 +39,7 @@ public final class UserCompetitionsDao extends AbstractDao<UserCompetitions> {
 	}
 
 	@Override
-	public UserCompetitions createInstance(String[] args) {
+	public UserCompetitions createInstance(final String[] args) {
 		return new UserCompetitions(
 				args[0] == null ? UUID.randomUUID().toString() : args[0],
 				args[1] == null ? UUID.randomUUID().toString() : args[1],
@@ -50,7 +50,7 @@ public final class UserCompetitionsDao extends AbstractDao<UserCompetitions> {
 	}
 	
 	@Override
-	protected String[] getFields(UserCompetitions entity) {
+	protected String[] getFields(final UserCompetitions entity) {
 		List<String> fields = new ArrayList<>();
 		fields.add(entity.getIdUserCompetition());
 		fields.add(entity.getIdUser());
@@ -61,25 +61,27 @@ public final class UserCompetitionsDao extends AbstractDao<UserCompetitions> {
 		return (String[]) fields.toArray();
 	}
 	
-	public boolean createUserCompetitions(UserCompetitions obj) throws JDBCDriverException, QueryNotFoundException, DataBaseReadingException {
+	public boolean createUserCompetitions(final UserCompetitions obj) throws JDBCDriverException, QueryNotFoundException, DataBaseReadingException {
 		return insert(obj);
 	}
 	
-	public boolean updateUserCompetitions(String fieldName, String text, String fieldCondition,
-			String textCondition) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
-		
+	public boolean updateUserCompetitions(final String fieldName, final String text,
+			final String fieldCondition, final String textCondition)
+					throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		return updateByField(fieldName, text, fieldCondition, textCondition);
 	}
 	
-	public List<UserCompetitions> viewAll() throws JDBCDriverException, DataBaseReadingException, EmptyResultSetException, CloseStatementException {		
+	public List<UserCompetitions> viewAll() 
+			throws JDBCDriverException, DataBaseReadingException, EmptyResultSetException, CloseStatementException {		
 		return getAll();
 	}
 	
-	public List<UserCompetitions> getUCbyId(String id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, CloseStatementException, EmptyResultSetException {		
+	public List<UserCompetitions> getUCbyId(final String id) 
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, CloseStatementException, EmptyResultSetException {		
 		return getAllbyId(id);
 	}
 
-	public boolean deleteByUserId(String id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
+	public boolean deleteByUserId(final String id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		return deleteById(id);
 	}
 }

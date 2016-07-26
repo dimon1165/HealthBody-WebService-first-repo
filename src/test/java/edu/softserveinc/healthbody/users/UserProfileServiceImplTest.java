@@ -17,13 +17,9 @@ import edu.softserveinc.healthbody.db.CreateDropTestDatabase;
 import edu.softserveinc.healthbody.db.DBPopulateManager;
 import edu.softserveinc.healthbody.dto.GroupDTO;
 import edu.softserveinc.healthbody.dto.UserDTO;
-import edu.softserveinc.healthbody.exceptions.CloseStatementException;
-import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
-import edu.softserveinc.healthbody.exceptions.EmptyResultSetException;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
-import edu.softserveinc.healthbody.exceptions.QueryNotFoundException;
 import edu.softserveinc.healthbody.exceptions.TransactionException;
-import edu.softserveinc.healthbody.log.LoggerWrapper;
+import edu.softserveinc.healthbody.log.Log4jWrapper;
 import edu.softserveinc.healthbody.services.impl.UserProfileServiceImpl;
 
 public class UserProfileServiceImplTest {
@@ -36,7 +32,7 @@ public class UserProfileServiceImplTest {
 	@AfterClass
 	public void CleanTableAfterTest() throws SQLException, JDBCDriverException{
 		DBPopulateManager.getInstance().deleteAllFromTables();
-		LoggerWrapper.info(this.getClass(), "Aftertest block Userviewserviceimpl worked");
+		Log4jWrapper.get().info("Aftertest block Userviewserviceimpl worked");
 	}
 	@Test
 	public void testGetUserByLogin() {
@@ -53,16 +49,15 @@ public class UserProfileServiceImplTest {
 			assertEquals("28", userDTO1.getAge());
 			assertEquals("w", userDTO1.getGender());
 			assertEquals("user", userDTO1.getRoleName());
-			LoggerWrapper.info(this.getClass(), "\n\nFirstname: "+ userDTO1.getFirstname() + "\nLastname: " +userDTO1.getLastname() +
+			Log4jWrapper.get().info("\n\nFirstname: "+ userDTO1.getFirstname() + "\nLastname: " +userDTO1.getLastname() +
 					"\nLogin: " + userDTO1.getLogin() + "\nPassword: " + userDTO1.getPassword() + "\nE-mail: " + userDTO1.getEmail() +
 					"\nWeight: " + userDTO1.getWeight() + "\nAge: " + userDTO1.getAge() + "\nGender: " + userDTO1.getGender() + "\nUserRole: " + userDTO1.getRoleName());
-			LoggerWrapper.info(this.getClass(), "User's groups:  ");
+			Log4jWrapper.get().info("User's groups:  ");
 			for (GroupDTO group : userDTO1.getGroups()) {
-				LoggerWrapper.info(this.getClass(), group.getName() + "     ");
+				Log4jWrapper.get().info(group.getName() + "     ");
 			}
-		} catch (SQLException | JDBCDriverException | EmptyResultSetException | TransactionException
-				| CloseStatementException e) {
-			LoggerWrapper.error(this.getClass(), TestConstants.EXCEPTION_CATCHED + e);
+		} catch (SQLException | JDBCDriverException | TransactionException e) {
+			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
 	}
@@ -72,9 +67,8 @@ public class UserProfileServiceImplTest {
 	public void testGetUserByLoginNull() {
 		try {
 			UserProfileServiceImpl.getInstance().get(null);
-		} catch (SQLException | JDBCDriverException | EmptyResultSetException | TransactionException
-				| CloseStatementException e) {
-			LoggerWrapper.error(this.getClass(), TestConstants.EXCEPTION_CATCHED + e);
+		} catch (SQLException | JDBCDriverException | TransactionException e) {
+			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
 	}
@@ -86,9 +80,8 @@ public class UserProfileServiceImplTest {
 		try {
 			userDTO = UserProfileServiceImpl.getInstance().get("Marisol");
 			assertEquals(null, userDTO);
-		} catch (SQLException | JDBCDriverException | EmptyResultSetException | TransactionException
-				| CloseStatementException e) {
-			LoggerWrapper.error(this.getClass(), TestConstants.EXCEPTION_CATCHED + e);
+		} catch (SQLException | JDBCDriverException | TransactionException e) {
+			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
 	}
@@ -108,16 +101,15 @@ public class UserProfileServiceImplTest {
 			assertEquals("35", userDTO.getAge());
 			assertEquals("m", userDTO.getGender());
 			assertEquals("user", userDTO.getRoleName());
-			LoggerWrapper.info(this.getClass(), "\n\nFirstname: "+ userDTO.getFirstname() + "\nLastname: " +userDTO.getLastname() +
+			Log4jWrapper.get().info("\n\nFirstname: "+ userDTO.getFirstname() + "\nLastname: " +userDTO.getLastname() +
 					"\nLogin: " + userDTO.getLogin() + "\nPassword: " + userDTO.getPassword() + "\nE-mail: " + userDTO.getEmail() +
 					"\nWeight: " + userDTO.getWeight() + " \nAge: " + userDTO.getAge() + "\nGender: " + userDTO.getGender() + "\nUserRole: " + userDTO.getRoleName());
-			LoggerWrapper.info(this.getClass(), "User's groups:  ");
+			Log4jWrapper.get().info("User's groups:  ");
 			for (GroupDTO group : userDTO.getGroups()) {
-				LoggerWrapper.info(this.getClass(), group.getName() + "     ");
+				Log4jWrapper.get().info(group.getName() + "     ");
 			}
-		} catch (SQLException | JDBCDriverException | EmptyResultSetException | TransactionException
-				| CloseStatementException e) {
-			LoggerWrapper.error(this.getClass(), TestConstants.EXCEPTION_CATCHED + e);
+		} catch (SQLException | JDBCDriverException | TransactionException e) {
+			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
 	}
@@ -141,16 +133,15 @@ public class UserProfileServiceImplTest {
 			assertEquals("56", userDTO2.getAge());
 			assertEquals("w", userDTO2.getGender());
 			assertEquals("user", userDTO2.getRoleName());
-			LoggerWrapper.info(this.getClass(), "\n\nFirstname: "+ userDTO2.getFirstname() + "\nLastname: " +userDTO2.getLastname() +
+			Log4jWrapper.get().info("\n\nFirstname: "+ userDTO2.getFirstname() + "\nLastname: " +userDTO2.getLastname() +
 					"\nLogin: " + userDTO2.getLogin() + "\nPassword: " + userDTO2.getPassword() + "\nE-mail: " + userDTO2.getEmail() +
 					"\nWeight: " + userDTO2.getWeight() + " \nAge: " + userDTO2.getAge() + "\nGender: " + userDTO2.getGender() + "\nUserRole: " + userDTO2.getRoleName());
-			LoggerWrapper.info(this.getClass(), "User's groups:  ");
+			Log4jWrapper.get().info("User's groups:  ");
 			for (GroupDTO group : userDTO2.getGroups()) {
-				LoggerWrapper.info(this.getClass(), group.getName() + "     ");
+				Log4jWrapper.get().info(group.getName() + "     ");
 			}
-		} catch (SQLException | JDBCDriverException | EmptyResultSetException | TransactionException
-				| CloseStatementException | DataBaseReadingException | QueryNotFoundException e) {
-			LoggerWrapper.error(this.getClass(), TestConstants.EXCEPTION_CATCHED + e);
+		} catch (SQLException | JDBCDriverException | TransactionException e) {
+			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
 	}
@@ -161,9 +152,8 @@ public class UserProfileServiceImplTest {
 		UserDTO userDTO2 = null;
 		try {
 			UserProfileServiceImpl.getInstance().update(userDTO2);
-		} catch (SQLException | JDBCDriverException | DataBaseReadingException | QueryNotFoundException
-				| EmptyResultSetException | TransactionException | CloseStatementException e) {
-			LoggerWrapper.error(this.getClass(), TestConstants.EXCEPTION_CATCHED + e);
+		} catch (SQLException | JDBCDriverException	| TransactionException e) {
+			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
 	}
@@ -184,18 +174,17 @@ public class UserProfileServiceImplTest {
 		 	assertEquals("80.5", userDTO4.getWeight());
 		 	assertEquals("67", userDTO4.getAge());
 		 	assertEquals("m", userDTO4.getGender());
-		 	LoggerWrapper.info(this.getClass(), "\n\nFirstname: "+ userDTO4.getFirstname() + "\nLastname: " +userDTO4.getLastname() +
+		 	Log4jWrapper.get().info("\n\nFirstname: "+ userDTO4.getFirstname() + "\nLastname: " +userDTO4.getLastname() +
 		 			"\nLogin: " + userDTO4.getLogin() + "\nPassword: " + userDTO4.getPassword() + "\nE-mail: " + userDTO4.getEmail() +
 		 			"\nWeight: " + userDTO4.getWeight() + "\nAge: " + userDTO4.getAge() + "\nGender: " + userDTO4.getGender() + "\nUserRole: " + userDTO4.getRoleName());
-		 	LoggerWrapper.info(this.getClass(), "User's groups:  ");
+		 	Log4jWrapper.get().info("User's groups:  ");
 		 	for (GroupDTO group : userDTO4.getGroups()) {
-		 		LoggerWrapper.info(this.getClass(), group.getName() + "     ");
+		 		Log4jWrapper.get().info(group.getName() + "     ");
 		 	}
 		 	UserProfileServiceImpl.getInstance().test_delete(userDTO4);
-		 	LoggerWrapper.info(this.getClass(), "Delete user from database for test");
-	 	} catch (SQLException | JDBCDriverException | DataBaseReadingException | QueryNotFoundException
-				| EmptyResultSetException | TransactionException | CloseStatementException e) {
-	 		LoggerWrapper.error(this.getClass(), TestConstants.EXCEPTION_CATCHED + e);
+		 	Log4jWrapper.get().info("Delete user from database for test");
+	 	} catch (SQLException | JDBCDriverException | TransactionException e) {
+	 		Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
 	}
@@ -206,9 +195,8 @@ public class UserProfileServiceImplTest {
 		UserDTO userDTO3 = null;
 		try {
 			UserProfileServiceImpl.getInstance().insert(userDTO3);
-		} catch (SQLException | JDBCDriverException | DataBaseReadingException | QueryNotFoundException
-				| EmptyResultSetException | TransactionException | CloseStatementException e) {
-			LoggerWrapper.error(this.getClass(), TestConstants.EXCEPTION_CATCHED + e);
+		} catch (SQLException | JDBCDriverException	| TransactionException e) {
+			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
 	}
@@ -221,9 +209,8 @@ public class UserProfileServiceImplTest {
 			userDTO5.setIsDisabled("true");
 			UserProfileServiceImpl.getInstance().lock(userDTO5, true);
 			assertEquals("true", userDTO5.getIsDisabled());
-		} catch (SQLException | JDBCDriverException | EmptyResultSetException | TransactionException
-				| CloseStatementException | QueryNotFoundException | DataBaseReadingException e) {
-			LoggerWrapper.error(this.getClass(), TestConstants.EXCEPTION_CATCHED + e);
+		} catch (SQLException | JDBCDriverException | TransactionException e) {
+			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
 		
@@ -235,9 +222,8 @@ public class UserProfileServiceImplTest {
 		UserDTO userDTO5 = null;
 		try {
 			UserProfileServiceImpl.getInstance().lock(userDTO5, true);
-		} catch (SQLException | JDBCDriverException | QueryNotFoundException | DataBaseReadingException
-				| TransactionException | CloseStatementException e) {
-			LoggerWrapper.error(this.getClass(), TestConstants.EXCEPTION_CATCHED + e);
+		} catch (SQLException | JDBCDriverException | TransactionException e) {
+			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
 	}

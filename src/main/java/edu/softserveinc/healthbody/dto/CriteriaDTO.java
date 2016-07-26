@@ -10,9 +10,10 @@ public class CriteriaDTO {
 	private String getGoogle;
 	private List<CompetitionDTO> competitions;
 	
-	public CriteriaDTO() {}
+	public CriteriaDTO() { }
 	
-	public CriteriaDTO(String idCriteria, String name, String metrics, String getGoogle, List<CompetitionDTO> competitions) {
+	public CriteriaDTO(final String idCriteria, final String name, final String metrics, final String getGoogle, 
+			final List<CompetitionDTO> competitions) {
 		this.idCriteria = idCriteria;
 		this.name = name;
 		this.metrics = metrics;
@@ -20,24 +21,23 @@ public class CriteriaDTO {
 		this.competitions = competitions;
 	}
 
-	public String getIdCriteria() {
+	public final String getIdCriteria() {
 		return idCriteria;
 	}
 	
-	public String getName() {
+	public final String getName() {
 		return name;
 	}
 
-	public String getMetrics() {
+	public final String getMetrics() {
 		return metrics;
 	}
 
-	public String getGetGoogle() {
+	public final String getGetGoogle() {
 		return getGoogle;
 	}
 
-	public List<CompetitionDTO> getCompetitions() {
+	public final List<CompetitionDTO> getCompetitions() {
 		return competitions;
 	}
-
 }

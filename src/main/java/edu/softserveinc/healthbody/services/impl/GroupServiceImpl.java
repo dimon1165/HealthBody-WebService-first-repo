@@ -18,15 +18,15 @@ import edu.softserveinc.healthbody.exceptions.QueryNotFoundException;
 import edu.softserveinc.healthbody.exceptions.TransactionException;
 import edu.softserveinc.healthbody.services.IGroupService;
 
-public class GroupServiceImpl implements IGroupService{
+public final class GroupServiceImpl implements IGroupService {
 	
-	private static volatile GroupServiceImpl instance = null;
+	private static volatile GroupServiceImpl instance;
 	
 	private GroupServiceImpl() {
 	}
 	
 	public static GroupServiceImpl getInstance() {
-		if(instance == null) {
+		if (instance == null) {
 			synchronized (GroupServiceImpl.class) {
 				if (instance == null) {
 					instance = new GroupServiceImpl();
@@ -37,8 +37,8 @@ public class GroupServiceImpl implements IGroupService{
 	}	
 
 	@Override
-	public List<GroupDTO> getAll(int partNumber, int partSize) throws QueryNotFoundException, 
-					JDBCDriverException, DataBaseReadingException, EmptyResultSetException, CloseStatementException {
+	public List<GroupDTO> getAll(final int partNumber, final int partSize)
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		List<GroupDTO> resultGroup = new ArrayList<GroupDTO>();
 		for (Group group : GroupDao.getInstance().getAll(partNumber, partSize)){
 			resultGroup.add(new GroupDTO(group.getIdGroup(), group.getName(), group.getCount().toString(), group.getDescription(),
@@ -48,24 +48,25 @@ public class GroupServiceImpl implements IGroupService{
 	}
 	
 	@Override
-	public GroupDTO getGroup(String name) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, CloseStatementException{
+	public GroupDTO getGroup(String name)
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		 Group group = GroupDao.getInstance().getGroupByName(name);
 		 return new GroupDTO(group.getIdGroup(), group.getName(), String.valueOf(group.getCount()), group.getDescription(), group.getScoreGroup());
 	}	
 	
 	@Override
-	public String getDescriptionOfGroup(GroupDTO groupDTO) {
+	public String getDescriptionOfGroup(final GroupDTO groupDTO) {
 		return groupDTO.getDescriptions();
 	}
 	
 	@Override
-	public void update(GroupDTO groupDTO) throws SQLException, JDBCDriverException, DataBaseReadingException, QueryNotFoundException, EmptyResultSetException, TransactionException, CloseStatementException {
+	public void update(GroupDTO groupDTO) throws SQLException, JDBCDriverException, TransactionException, QueryNotFoundException, DataBaseReadingException {
 		ConnectionManager.getInstance().beginTransaction();
 		Group group = GroupDao.getInstance().getByFieldName(groupDTO.getName());
 		try {	
 			GroupDao.getInstance().editGroup(new Group(groupDTO.getIdGroup(), groupDTO.getName(), Integer.parseInt(groupDTO.getCount()), 
 					groupDTO.getDescriptions(), groupDTO.getScoreGroup(), group.getStatus()));
-		}catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException e) {
+		} catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException e) {
 			ConnectionManager.getInstance().rollbackTransaction();
 			throw new TransactionException(ServiceConstants.TRANSACTION_ERROR, e);			
 		}
@@ -74,7 +75,7 @@ public class GroupServiceImpl implements IGroupService{
 	
 
 	@Override
-	public List<GroupDTO> getAll(int partNumber, int partSize, Map<String, String> filters)
+	public List<GroupDTO> getAll(final int partNumber, final int partSize, final Map<String, String> filters)
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, EmptyResultSetException,
 			CloseStatementException, SQLException, TransactionException {
 		return null;

@@ -12,12 +12,11 @@ import edu.softserveinc.healthbody.db.ConnectionManager;
 import edu.softserveinc.healthbody.entity.User;
 import edu.softserveinc.healthbody.exceptions.CloseStatementException;
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
-import edu.softserveinc.healthbody.exceptions.EmptyResultSetException;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 import edu.softserveinc.healthbody.exceptions.QueryNotFoundException;
 
 public final class UserDao extends AbstractDao<User> {
-	private static volatile UserDao instance = null;
+	private static volatile UserDao instance;
 
 	private UserDao() {
 		init();
@@ -34,6 +33,7 @@ public final class UserDao extends AbstractDao<User> {
 		return instance;
 	}
 
+	@Override
 	protected void init() {
 		for (UserDBQueries userDBQueries : UserDBQueries.values()) {
 			sqlQueries.put(userDBQueries.getDaoQuery(), userDBQueries);
@@ -41,7 +41,7 @@ public final class UserDao extends AbstractDao<User> {
 	}
 
 	@Override
-	protected String[] getFields(User entity) {
+	protected String[] getFields(final User entity) {
 		List<String> fields = new ArrayList<>();
 		fields.add(entity.getIdUser().toString());
 		fields.add(entity.getLogin());
@@ -61,7 +61,7 @@ public final class UserDao extends AbstractDao<User> {
 	}
 
 	@Override
-	protected User createInstance(String[] args) {
+	protected User createInstance(final String[] args) {
 		return new User(args[0] == null ? UUID.randomUUID().toString() : args[0], 
 				args[1] == null ? new String() : args[1],
 				args[2] == null ? new String() : args[2], 
@@ -79,15 +79,18 @@ public final class UserDao extends AbstractDao<User> {
 				Boolean.parseBoolean(args[14] == null ? "false" : args[14]));
 	}
 
-	public User getUserByLogin(String login) throws JDBCDriverException, DataBaseReadingException, QueryNotFoundException, EmptyResultSetException, CloseStatementException {
+	public User getUserByLogin(final String login)
+			throws JDBCDriverException, DataBaseReadingException, QueryNotFoundException {
 		return getByField(login, login).get(0);
 	}
 	
-	public User getUserById(String id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, CloseStatementException {
+	public User getUserById(final String id) 
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, CloseStatementException {
 		return getById(id);
 	}
-	
-	public boolean createUser(User user) throws JDBCDriverException, QueryNotFoundException, DataBaseReadingException {
+
+	public boolean createUser(final User user)
+			throws JDBCDriverException, QueryNotFoundException, DataBaseReadingException {
 		boolean result = false;
 		String query = sqlQueries.get(DaoQueries.INSERT).toString();
 		if (query == null) {
@@ -110,15 +113,15 @@ public final class UserDao extends AbstractDao<User> {
 			pst.setString(i++, user.getIdRole());
 			pst.setString(i++, user.getStatus());
 			pst.setBoolean(i++, user.getIsDisabled());
-		
 			result = pst.execute();
 		} catch (SQLException e) {
 			throw new DataBaseReadingException(DaoConstants.DATABASE_READING_ERROR, e);
 		}
 		return result;
 	}
-	
-	public boolean updateUser(User user) throws DataBaseReadingException, JDBCDriverException, QueryNotFoundException {
+
+	public boolean updateUser(final User user) 
+			throws DataBaseReadingException, JDBCDriverException, QueryNotFoundException {
 		boolean result = false;
 		String query = sqlQueries.get(DaoQueries.UPDATE).toString();
 		if (query == null) {
@@ -140,16 +143,18 @@ public final class UserDao extends AbstractDao<User> {
 		}
 		return result;
 	}
-	
-	public User getUserByLoginName(String login) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, CloseStatementException {
+
+	public User getUserByLoginName(final String login)
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		return getByFieldName(login);
 	}
-	
-	public boolean lockUser(boolean isDisabled, String login) throws QueryNotFoundException, SQLException, JDBCDriverException, DataBaseReadingException {
+
+	public boolean lockUser(final boolean isDisabled, final String login)
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		boolean result = false;
 		String query = sqlQueries.get(DaoQueries.ISDISABLED).toString();
 		if (query == null) {
-			throw new QueryNotFoundException(String.format(DaoConstants.QUERY_NOT_FOUND, DaoQueries.ISDISABLED.name())); 
+			throw new QueryNotFoundException(String.format(DaoConstants.QUERY_NOT_FOUND, DaoQueries.ISDISABLED.name()));
 		}
 		try (PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query)) {
 			pst.setBoolean(1, isDisabled);
@@ -161,7 +166,8 @@ public final class UserDao extends AbstractDao<User> {
 		return result;
 	}
 	
-	public boolean deleteUserForTests(String id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
+	public boolean deleteUserForTests(final String id) 
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		return deleteById(id);
 	}
 }

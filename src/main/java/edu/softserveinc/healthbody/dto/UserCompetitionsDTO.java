@@ -11,10 +11,10 @@ public class UserCompetitionsDTO {
 	private String awardsName;
 	private String timeReceivedAward;
 	
-	public UserCompetitionsDTO() {}
+	public UserCompetitionsDTO() { }
 	
-	public UserCompetitionsDTO(String idUserCompetition, String login, List<String> competitions, String userScore, String awardsName,
-			String timeReceivedAward) {
+	public UserCompetitionsDTO(final String idUserCompetition, final String login, final List<String> competitions, 
+			final String userScore, final String awardsName, final String timeReceivedAward) {
 		this.idUserCompetition = idUserCompetition;
 		this.login = login;
 		this.competitions = competitions;
@@ -23,31 +23,28 @@ public class UserCompetitionsDTO {
 		this.timeReceivedAward = timeReceivedAward;
 	}
 
-	//getters
-	public String getIdUserCompetition() {
+	// Getters
+	public final String getIdUserCompetition() {
 		return idUserCompetition;
 	}
 	
-	public String getLogin() {
+	public final String getLogin() {
 		return login;
 	}
 
-	public List<String> getCompetitions() {
+	public final List<String> getCompetitions() {
 		return competitions;
 	}
 
-	public String getUserScore() {
+	public final String getUserScore() {
 		return userScore;
 	}
 
-	public String getAwardsName() {
+	public final String getAwardsName() {
 		return awardsName;
 	}
 
-	public String getTimeReceivedAward() {
+	public final String getTimeReceivedAward() {
 		return timeReceivedAward;
 	}
-	
-	
-
 }

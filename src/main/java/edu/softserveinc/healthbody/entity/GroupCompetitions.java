@@ -10,35 +10,35 @@ public class GroupCompetitions implements IEntity{
 		return idGroupCompetitions;
 	}
 
-	public GroupCompetitions(String idGroupCompetitions, String idGroup, String idCompetition) {
+	public GroupCompetitions(final String idGroupCompetitions, final String idGroup, final String idCompetition) {
 		this.idGroupCompetitions = idGroupCompetitions;
 		this.idGroup = idGroup;
 		this.idCompetition = idCompetition;
 	}
 
 	//	Getters
-	public String getIdGroupCompetitions() {
+	public final String getIdGroupCompetitions() {
 		return idGroupCompetitions;
 	}
 
-	public String getIdGroup() {
+	public final String getIdGroup() {
 		return idGroup;
 	}
 
-	public String getIdCompetition() {
+	public final String getIdCompetition() {
 		return idCompetition;
 	}
 
 	//	Setters
-	public void setIdGroupCompetitions(String idGroupCompetitions) {
+	public final void setIdGroupCompetitions(final String idGroupCompetitions) {
 		this.idGroupCompetitions = idGroupCompetitions;
 	}
 
-	public void setIdGroup(String idGroup) {
+	public final void setIdGroup(final String idGroup) {
 		this.idGroup = idGroup;
 	}
 
-	public void setIdCompetition(String idCompetition) {
+	public final void setIdCompetition(final String idCompetition) {
 		this.idCompetition = idCompetition;
 	}	
 		

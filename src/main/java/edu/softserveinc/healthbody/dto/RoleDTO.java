@@ -9,9 +9,9 @@ public class RoleDTO {
 	private String description;
 	private List<UserDTO> users;
 
-	public RoleDTO() {}
+	public RoleDTO() { }
 	
-	public RoleDTO(String idRole, String name, String description, List<UserDTO> users) {
+	public RoleDTO(final String idRole, final String name, final String description, final List<UserDTO> users) {
 		this.idRole = idRole;
 		this.name = name;
 		this.description = description;
@@ -22,15 +22,15 @@ public class RoleDTO {
 		return idRole;
 	}
 
-	public String getName() {
+	public final String getName() {
 		return name;
 	}
 
-	public String getDescription() {
+	public final String getDescription() {
 		return description;
 	}
 
-	public List<UserDTO> getUsers() {
+	public final List<UserDTO> getUsers() {
 		return users;
 	}
 }

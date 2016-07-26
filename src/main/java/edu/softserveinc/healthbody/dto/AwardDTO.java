@@ -7,7 +7,7 @@ public class AwardDTO {
 
 	public AwardDTO() {}
 	
-	public AwardDTO(String idAward, String name) {
+	public AwardDTO(final String idAward, final String name) {
 		this.idAward = idAward;
 		this.name = name;
 	}
@@ -15,7 +15,7 @@ public class AwardDTO {
 	public String getIdAward() {
 		return idAward;
 	}
-	public String getName() {
+	public final String getName() {
 		return name;
 	}
 

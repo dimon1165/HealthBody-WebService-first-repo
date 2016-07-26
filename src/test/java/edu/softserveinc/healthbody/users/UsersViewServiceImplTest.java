@@ -17,7 +17,7 @@ import edu.softserveinc.healthbody.db.DBPopulateManager;
 import edu.softserveinc.healthbody.dto.UserDTO;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 import edu.softserveinc.healthbody.exceptions.TransactionException;
-import edu.softserveinc.healthbody.log.LoggerWrapper;
+import edu.softserveinc.healthbody.log.Log4jWrapper;
 import edu.softserveinc.healthbody.services.impl.UsersViewServiceImpl;
 
 public class UsersViewServiceImplTest {
@@ -30,7 +30,7 @@ public class UsersViewServiceImplTest {
 	@AfterClass
 	public void CleanTableAfterTest() throws SQLException, JDBCDriverException{
 		DBPopulateManager.getInstance().deleteAllFromTables();
-		LoggerWrapper.info(this.getClass(), "Aftertest block Userviewserviceimpl worked");
+		Log4jWrapper.get().info("Aftertest block Userviewserviceimpl worked");
 	}
 
 	@Test
@@ -41,10 +41,10 @@ public class UsersViewServiceImplTest {
 			ud1 = uvs.getAll(1, 2);
 			assertNotNull(ud1);
 			assertEquals(ud1.size(), 2);
-			LoggerWrapper.info(this.getClass(), "testUserViewGetAll");
-			LoggerWrapper.info(this.getClass(), ud1.toString());
+			Log4jWrapper.get().info("testUserViewGetAll");
+			Log4jWrapper.get().info(ud1.toString());
 		} catch (JDBCDriverException | SQLException | TransactionException e) {
-			LoggerWrapper.error(this.getClass(), TestConstants.EXCEPTION_CATCHED + e);
+			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
 	}
@@ -57,10 +57,10 @@ public class UsersViewServiceImplTest {
 			ud3 = uvs.getAllbyAdmin(1, 2);
 			assertNotNull(ud3);
 			assertEquals(ud3.size(), 2);
-			LoggerWrapper.info(this.getClass(), "testUserViewGetAllbyAdmin");
-			LoggerWrapper.info(this.getClass(), ud3.toString());
+			Log4jWrapper.get().info("testUserViewGetAllbyAdmin");
+			Log4jWrapper.get().info(ud3.toString());
 		} catch (JDBCDriverException | SQLException | TransactionException e) {
-			LoggerWrapper.error(this.getClass(), TestConstants.EXCEPTION_CATCHED + e);
+			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
 	}
@@ -73,10 +73,10 @@ public class UsersViewServiceImplTest {
 			ud4 = uvs.getAllinCompetition(1, 2);
 			assertNotNull(ud4);
 			assertEquals(ud4.size(), 2);
-			LoggerWrapper.info(this.getClass(), "testUserViewGetAllinCompetition");
-			LoggerWrapper.info(this.getClass(), ud4.toString());
+			Log4jWrapper.get().info("testUserViewGetAllinCompetition");
+			Log4jWrapper.get().info(ud4.toString());
 		} catch (JDBCDriverException | SQLException | TransactionException e) {
-			LoggerWrapper.error(this.getClass(), TestConstants.EXCEPTION_CATCHED + e);
+			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
 	}
@@ -89,10 +89,10 @@ public class UsersViewServiceImplTest {
 			ud5 = uvs.getAllinGroup(1, 2);
 			assertNotNull(ud5);
 			assertEquals(ud5.size(), 2);
-			LoggerWrapper.info(this.getClass(), "testUserViewGetAllinGroup");
-			LoggerWrapper.info(this.getClass(), ud5.toString());
+			Log4jWrapper.get().info("testUserViewGetAllinGroup");
+			Log4jWrapper.get().info(ud5.toString());
 		} catch (JDBCDriverException | SQLException | TransactionException e) {
-			LoggerWrapper.error(this.getClass(), TestConstants.EXCEPTION_CATCHED + e);
+			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
 	}
@@ -105,10 +105,10 @@ public class UsersViewServiceImplTest {
 			ud6 = uvs.getAlltoAddInCompetition(1, 2);
 			assertNotNull(ud6);
 			assertEquals(ud6.size(), 2);
-			LoggerWrapper.info(this.getClass(), "testUserViewGetAlltoAddInCompetition");
-			LoggerWrapper.info(this.getClass(), ud6.toString());
+			Log4jWrapper.get().info("testUserViewGetAlltoAddInCompetition");
+			Log4jWrapper.get().info(ud6.toString());
 		} catch (JDBCDriverException | SQLException | TransactionException e) {
-			LoggerWrapper.error(this.getClass(), TestConstants.EXCEPTION_CATCHED + e);
+			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
 	}

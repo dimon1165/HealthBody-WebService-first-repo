@@ -26,10 +26,11 @@ public class UserDTOServlet extends HttpServlet {
         super();
     }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	@Override
+    protected final void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 		HealthBodyServiceImpl healthBody = new HealthBodyServiceImpl();
 		String UserLogin = request.getParameter("login");
-		if(UserLogin != null){
+		if (UserLogin != null) {
 			request.setAttribute("data", (healthBody.getUserByLogin(UserLogin)));
 			getServletContext().getRequestDispatcher("/WEB-INF/views/UserDTOView.jsp").forward(request, response);
 		     UserDTO userdto = new UserDTO();
@@ -51,7 +52,8 @@ public class UserDTOServlet extends HttpServlet {
 		      userdto.setGroups(healthBody.getUserByLogin(UserLogin).getGroups());	
 		      try {
 		    	  	 File file = new File("/Users/Daniel/Desktop/File.xml");
-		         JAXBElement<UserDTO> jaxbElement =  new JAXBElement<UserDTO>(new QName(UserDTO.class.getName()), UserDTO.class, userdto);
+		         JAXBElement<UserDTO> jaxbElement =  new JAXBElement<UserDTO>(new QName(UserDTO.class.getName()),
+		        		 UserDTO.class, userdto);
 		         StringWriter writer = new StringWriter();
 		         JAXBContext context = JAXBContext.newInstance(UserDTO.class);
 		         context.createMarshaller().setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
@@ -60,7 +62,7 @@ public class UserDTOServlet extends HttpServlet {
 		      } catch (JAXBException e) {			
 		         e.printStackTrace(); 
 		      } 
-		}else{
+		} else {
 			getServletContext().getRequestDispatcher("/WEB-INF/views/UserDTOViewInit.jsp").forward(request, response);
 		}	
 	}

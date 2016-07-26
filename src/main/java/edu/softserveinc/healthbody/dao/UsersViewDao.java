@@ -11,17 +11,15 @@ import edu.softserveinc.healthbody.constants.DaoConstants;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.UsersViewQueries;
 import edu.softserveinc.healthbody.db.ConnectionManager;
 import edu.softserveinc.healthbody.entity.UsersView;
-import edu.softserveinc.healthbody.exceptions.CloseStatementException;
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
-import edu.softserveinc.healthbody.exceptions.EmptyResultSetException;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 import edu.softserveinc.healthbody.exceptions.QueryNotFoundException;
 
-public class UsersViewDao extends AbstractDaoRead<UsersView> {
+public final class UsersViewDao extends AbstractDaoRead<UsersView> {
 
-	private static volatile UsersViewDao instance = null;
+	private static volatile UsersViewDao instance;
 
-	public UsersViewDao() {
+	private UsersViewDao() {
 		init();
 	}
 
@@ -36,6 +34,7 @@ public class UsersViewDao extends AbstractDaoRead<UsersView> {
 		return instance;
 	}
 
+	@Override
 	protected void init() {
 		for (UsersViewQueries usersViewQueries : UsersViewQueries.values()) {
 			sqlQueries.put(usersViewQueries.getDaoQuery(), usersViewQueries);
@@ -43,7 +42,7 @@ public class UsersViewDao extends AbstractDaoRead<UsersView> {
 	}
 
 	@Override
-	protected UsersView createInstance(String[] args) {
+	protected UsersView createInstance(final String[] args) {
 		return new UsersView(args[0] == null ? UUID.randomUUID().toString() : args[0],
 							 args[1] == null ? new String() : args[1], args[2] == null ? new String() : args[2],
 							 args[3] == null ? new String() : args[3], args[4] == null ? new String() : args[4],
@@ -55,7 +54,7 @@ public class UsersViewDao extends AbstractDaoRead<UsersView> {
 	}
 
 	@Override
-	protected String[] getFields(UsersView entity) {
+	protected String[] getFields(final UsersView entity) {
 		List<String> fields = new ArrayList<>();
 		fields.add(entity.getIdUser());
 		fields.add(entity.getFirsName());
@@ -75,8 +74,8 @@ public class UsersViewDao extends AbstractDaoRead<UsersView> {
 		return (String[]) fields.toArray();
 	}
 
-	public List<UsersView> getAllUsersView(int partNumber, int partSize) throws QueryNotFoundException,
-			JDBCDriverException, DataBaseReadingException, EmptyResultSetException, CloseStatementException {
+	public List<UsersView> getAllUsersView(final int partNumber, final int partSize)
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		List<UsersView> result = new ArrayList<>();
 		String query = sqlQueries.get(UsersViewQueries.GET_ALL).toString();
 		if (query == null) {
@@ -86,7 +85,7 @@ public class UsersViewDao extends AbstractDaoRead<UsersView> {
 			query = query.substring(0, query.lastIndexOf(";")) + SQL_LIMIT;
 		}
 		try (PreparedStatement pst = createPreparedStatement(query, partNumber, partSize);
-			ResultSet resultSet = pst.executeQuery()){
+			ResultSet resultSet = pst.executeQuery()) {
 			String[] queryResult = new String[resultSet.getMetaData().getColumnCount()];
 			while (resultSet.next()) {
 				result.add(createInstance(getQueryResultArr(queryResult, resultSet)));
@@ -98,13 +97,13 @@ public class UsersViewDao extends AbstractDaoRead<UsersView> {
 	}
 	
 	//methods for try-with-resources
-	private PreparedStatement createPreparedStatement(String query, int partNumber, int partSize) throws SQLException, JDBCDriverException {
+	private PreparedStatement createPreparedStatement(final String query, final int partNumber, final int partSize)
+			throws SQLException, JDBCDriverException {
 		PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query);
 			if ((partNumber >= 0) && (partSize > 0)) {
 				pst.setInt(1, (partNumber - 1) * partSize);
 				pst.setInt(2, partSize);
 			}
-			return pst;
+		return pst;
 	}
-
 }

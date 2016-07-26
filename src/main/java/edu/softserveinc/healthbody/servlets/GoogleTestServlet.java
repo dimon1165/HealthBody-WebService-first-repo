@@ -11,24 +11,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class GoogleTestServlet
+ * Servlet implementation class GoogleTestServlet.
  */
 @WebServlet("/gt")
 public class GoogleTestServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public GoogleTestServlet() {
 		super();
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	@Override
+	protected final void doGet(final HttpServletRequest request, final HttpServletResponse response)
 			throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 		String rn = System.lineSeparator();
@@ -62,18 +56,16 @@ public class GoogleTestServlet extends HttpServlet {
 		out.print("</html>" + rn);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	@Override
+	protected final void doPost(final HttpServletRequest request, final HttpServletResponse response)
 			throws ServletException, IOException {
 		StringBuffer sb = new StringBuffer();
 		String line = null;
 		try {
 			BufferedReader reader = request.getReader();
-			while ((line = reader.readLine()) != null)
+			while ((line = reader.readLine()) != null) {
 				sb.append(line);
+			}
 		} catch (Exception e) {
 		}
 

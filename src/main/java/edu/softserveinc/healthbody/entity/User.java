@@ -18,10 +18,9 @@ public class User implements IEntity {
 	private String status;
 	private boolean isDisabled;
 	
-	public User(String idUser, String login, String passwd, String firsName, String lastName, String mail, Integer age,
-			Double weight, String gender, String health, String avatar, String googleApi, String idRole, String status,
-			boolean isDisabled) {
-
+	public User(final String idUser, final String login, final String passwd, final String firsName, final String lastName, 
+			final String mail, final Integer age, final Double weight, final String gender, final String health,
+			final String avatar, final String googleApi, final String idRole, final String status, final boolean isDisabled) {
 		this.idUser = idUser;
 		this.login = login;
 		this.passwd = passwd;
@@ -40,129 +39,129 @@ public class User implements IEntity {
 	}
 
 	@Override
-	public String getId() {
+	public final String getId() {
 		return idUser;
 	}
 
 	// Setters
-	public void setIdUser(String idUser) {
+	public final void setIdUser(final String idUser) {
 		this.idUser = idUser;
 	}
 
-	public void setLogin(String login) {
+	public final void setLogin(final String login) {
 		this.login = login;
 	}
 
-	public void setPasswd(String passwd) {
+	public final void setPasswd(final String passwd) {
 		this.passwd = passwd;
 	}
 
-	public void setFirsName(String firsName) {
+	public final void setFirsName(final String firsName) {
 		this.firsName = firsName;
 	}
 
-	public void setLastName(String lastName) {
+	public final void setLastName(final String lastName) {
 		this.lastName = lastName;
 	}
 
-	public void setMail(String mail) {
+	public final void setMail(final String mail) {
 		this.mail = mail;
 	}
 
-	public void setGender(String gender) {
+	public final void setGender(final String gender) {
 		this.gender = gender;
 	}
 
-	public void setWeight(Double weight) {
+	public final void setWeight(final Double weight) {
 		this.weight = weight;
 	}
 
-	public void setAge(Integer age) {
+	public final void setAge(final Integer age) {
 		this.age = age;
 	}
 
-	public void setGoogleApi(String googleApi) {
+	public final void setGoogleApi(final String googleApi) {
 		this.googleApi = googleApi;
 	}
 
-	public void setHealth(String health) {
+	public final void setHealth(final String health) {
 		this.health = health;
 	}
 
-	public void setAvatar(String avatar) {
+	public final void setAvatar(final String avatar) {
 		this.avatar = avatar;
 	}
 
-	public void setStatus(String status) {
+	public final void setStatus(final String status) {
 		this.status = status;
 	}
 
-	public void setIdRole(String idRole) {
+	public final void setIdRole(final String idRole) {
 		this.idRole = idRole;
 	}
 	
-	public void setIsDisabled(boolean isDisabled) {
+	public final void setIsDisabled(final boolean isDisabled) {
 		this.isDisabled = isDisabled;
 	}
 	
 	// Getters
-	public String getIdUser() {
+	public final String getIdUser() {
 		return idUser;
 	}
 
-	public String getLogin() {
+	public final String getLogin() {
 		return login;
 	}
 
-	public String getPasswd() {
+	public final String getPasswd() {
 		return passwd;
 	}
 
-	public String getFirsName() {
+	public final String getFirsName() {
 		return firsName;
 	}
 
-	public String getLastName() {
+	public final String getLastName() {
 		return lastName;
 	}
 
-	public String getMail() {
+	public final String getMail() {
 		return mail;
 	}
 
-	public String getGender() {
+	public final String getGender() {
 		return gender;
 	}
 
-	public Double getWeight() {
+	public final Double getWeight() {
 		return weight;
 	}
 
-	public Integer getAge() {
+	public final Integer getAge() {
 		return age;
 	}
 
-	public String getGoogleApi() {
+	public final String getGoogleApi() {
 		return googleApi;
 	}
 
-	public String getHealth() {
+	public final String getHealth() {
 		return health;
 	}
 
-	public String getAvatar() {
+	public final String getAvatar() {
 		return avatar;
 	}
 
-	public String getStatus() {
+	public final String getStatus() {
 		return status;
 	}
 
-	public String getIdRole() {
+	public final String getIdRole() {
 		return idRole;
 	}
 
-	public boolean getIsDisabled() {
+	public final boolean getIsDisabled() {
 		return isDisabled;
 	}
 }

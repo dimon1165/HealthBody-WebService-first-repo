@@ -14,10 +14,11 @@ public class CompetitionDTO {
 	private List<String> groups;
 	private List<String> logins;
 
-	public CompetitionDTO() {}
+	public CompetitionDTO() { }
 	
-	public CompetitionDTO(String idCompetition, String name, String count, String startDate, String finishDate, String description,
-			String nameCriteria, List<String> groups, List<String> logins) {
+	public CompetitionDTO(final String idCompetition, final String name, final String count, final String startDate,
+			final String finishDate, final String description, final String nameCriteria, final List<String> groups, 
+			final List<String> logins) {
 		this.idCompetition = idCompetition;
 		this.name = name;
 		this.count = count;
@@ -34,79 +35,79 @@ public class CompetitionDTO {
 		return idCompetition;
 	}
 
-	public String getName() {
+	public final String getName() {
 		return name;
 	}
 
-	public String getCount() {
+	public final String getCount() {
 		return count;
 	}
 
-	public String getStartDate() {
+	public final String getStartDate() {
 		return startDate;
 	}
 
-	public String getFinishDate() {
+	public final String getFinishDate() {
 		return finishDate;
 	}
 
-	public List<String> getGroups() {
+	public final List<String> getGroups() {
 		return groups;
 	}
 
-	public List<String> getLogins() {
+	public final List<String> getLogins() {
 		return logins;
 	}
 
-	public String getDescription() {
+	public final String getDescription() {
 		return description;
 	}
 
-	public String getNameCriteria() {
+	public final String getNameCriteria() {
 		return nameCriteria;
 	}
 
-	//setters
-	public void setIdCompetition(String idCompetition) {
+	// Setters
+	public final void setIdCompetition(final String idCompetition) {
 		this.idCompetition = idCompetition;
 	}	
 	
-	public void setName(String name) {
+	public final void setName(final String name) {
 		this.name = name;
 	}
 
-	public void setCount(String count) {
+	public final void setCount(final String count) {
 		this.count = count;
 	}
 
-	public void setStartDate(String startDate) {
+	public final void setStartDate(final String startDate) {
 		this.startDate = startDate;
 	}
 
-	public void setFinishDate(String finishDate) {
+	public final void setFinishDate(String finishDate) {
 		this.finishDate = finishDate;
 	}
 
-	public void setDescription(String description) {
+	public final void setDescription(String description) {
 		this.description = description;
 	}
 
-	public void setNameCriteria(String nameCriteria) {
+	public final void setNameCriteria(final String nameCriteria) {
 		this.nameCriteria = nameCriteria;
 	}
 
-	public void setGroups(List<String> groups) {
+	public final void setGroups(final List<String> groups) {
 		this.groups = groups;
 	}
 
-	public void setLogins(List<String> logins) {
+	public final void setLogins(final List<String> logins) {
 		this.logins = logins;
 	}
 
 	@Override
-	public String toString() {
-		return "CompetitionDTO [name=" + name + ", count=" + count + ", startDate=" + startDate + ", finishDate="
-				+ finishDate + "]" + System.lineSeparator();
+	public final String toString() {
+		return "CompetitionDTO [name=" + name + ", count=" + count + ", startDate="
+				+ startDate + ", finishDate=" + finishDate + "]" + System.lineSeparator();
 	}
 
 }

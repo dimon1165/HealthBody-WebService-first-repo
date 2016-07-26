@@ -1,44 +1,42 @@
 package edu.softserveinc.healthbody.entity;
 
-public class Role implements IEntity{
+public class Role implements IEntity {
 
 	private String idRole;
 	private String name;
 	private String description;
 	
-	public Role(String idRole, String name, String description) {
+	public Role(final String idRole, String name, final String description) {
 		this.idRole = idRole;
 		this.name = name;
 		this.description = description;
 	}
 	
-	// getters
-	public String getIdRole() {
+	// Getters
+	public final String getIdRole() {
 		return idRole;
 	}
-	public String getName() {
+	public final String getName() {
 		return name;
 	}
-	public String getDescription() {
+	public final String getDescription() {
 		return description;
 	}
 
-
-	// setters
-	public void setIdRole(String idRole) {
+	// Setters
+	public final void setIdRole(final String idRole) {
 		this.idRole = idRole;
 	}
-	public void setName(String name) {
+	public final void setName(final String name) {
 		this.name = name;
 	}
-	public void setDescription(String description) {
+	public final void setDescription(final String description) {
 		this.description = description;
 	}
 	
-	
 	@Override
-	public String getId() {
-		return null;
+	public final String getId() {
+		return getIdRole();
 	}
 
 }

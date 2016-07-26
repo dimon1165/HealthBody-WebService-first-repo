@@ -6,7 +6,7 @@ import edu.softserveinc.healthbody.exceptions.QueryNotFoundException;
 
 public interface IBasicDao<TEntity> extends IBasicReadDao<TEntity> {
 	
-	public static enum DaoQueries {
+	enum DaoQueries {
 		INSERT,
 		GET_BY_ID,
 		GET_BY_FIELD,
@@ -20,11 +20,14 @@ public interface IBasicDao<TEntity> extends IBasicReadDao<TEntity> {
 		DELETE_BY_FIELD;
 	}
 	
-	boolean insert(TEntity entity) throws JDBCDriverException, QueryNotFoundException, DataBaseReadingException;
+	boolean insert(TEntity entity)
+			throws JDBCDriverException, QueryNotFoundException, DataBaseReadingException;
 	
-	boolean updateByField(String fieldName, String text, String fieldCondition, String textCondition) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException;
+	boolean updateByField(String fieldName, String text, String fieldCondition, String textCondition)
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException;
 	
 	boolean deleteById(String id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException;
 	
-	boolean deleteByField(String textCondition) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException;
+	boolean deleteByField(String textCondition)
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException;
 }

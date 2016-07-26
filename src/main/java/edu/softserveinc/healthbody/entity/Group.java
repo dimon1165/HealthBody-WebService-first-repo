@@ -8,9 +8,9 @@ public class Group implements IEntity {
 	private String description;
 	private String scoreGroup;
 	private String status;
-	
 
-	public Group(String idGroup, String name, Integer count, String description, String scoreGroup, String status) {
+	public Group(final String idGroup, final String name, final Integer count, final String description, 
+			final String scoreGroup, final String status) {
 		this.idGroup = idGroup;
 		this.name = name;
 		this.count = count;
@@ -20,47 +20,47 @@ public class Group implements IEntity {
 	}
 
 	@Override
-	public String getId() {
+	public final String getId() {
 		return getIdGroup();
 	}
 	
 	// Getters
-	public String getIdGroup() {
+	public final String getIdGroup() {
 		return idGroup;
 	}
-	public String getName() {
+	public final String getName() {
 		return name;
 	}
-	public Integer getCount() {
+	public final Integer getCount() {
 		return count;
 	}
-	public String getDescription() {
+	public final String getDescription() {
 		return description;
 	}	
-	public String getScoreGroup() {
+	public final String getScoreGroup() {
 		return scoreGroup;
 	}
-	public String getStatus() {
+	public final String getStatus() {
 		return status;
 	}	
 	
 	// Setters
-	public void setIdGroup(String idGroup) {
+	public final void setIdGroup(final String idGroup) {
 		this.idGroup = idGroup;
 	}
-	public void setName(String name) {
+	public final void setName(final String name) {
 		this.name = name;
 	}
-	public void setCount(Integer count) {
+	public final void setCount(final Integer count) {
 		this.count = count;
 	}
-	public void setDescription(String description) {
+	public final void setDescription(final String description) {
 		this.description = description;
 	}
-	public void setScoreGroup(String scoreGroup) {
+	public final void setScoreGroup(final String scoreGroup) {
 		this.scoreGroup = scoreGroup;
 	}
-	public void setStatus(String status) {
+	public final void setStatus(final String status) {
 		this.status = status;
 	}	
 

@@ -21,7 +21,7 @@ import edu.softserveinc.healthbody.dto.CompetitionDTO;
 import edu.softserveinc.healthbody.exceptions.IllegalAgrumentCheckedException;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 import edu.softserveinc.healthbody.exceptions.TransactionException;
-import edu.softserveinc.healthbody.log.LoggerWrapper;
+import edu.softserveinc.healthbody.log.Log4jWrapper;
 import edu.softserveinc.healthbody.services.ICompetitionsViewService;
 import edu.softserveinc.healthbody.services.impl.CompetitionsViewServiceImpl;
 
@@ -35,12 +35,12 @@ public class CompetitionsViewServiceImplTest {
 	@AfterClass
 	public void CleanTableAfterTest() throws SQLException, JDBCDriverException{
 		DBPopulateManager.getInstance().deleteAllFromTables();
-		LoggerWrapper.info(this.getClass(), "Aftertest block UserviewServiceimpl worked");
+		Log4jWrapper.get().info("Aftertest block UserviewServiceimpl worked");
 	}
 	
 	@Test
 	public void testGetAll() {
-		ICompetitionsViewService cv = new CompetitionsViewServiceImpl();
+		ICompetitionsViewService cv = CompetitionsViewServiceImpl.getInstance();
 		List<CompetitionDTO> result;
 		try {
 			result = cv.getAll(1, 2);
@@ -51,14 +51,14 @@ public class CompetitionsViewServiceImplTest {
 //			System.out.println("testGetAll");
 //			System.out.println(result);
 		} catch (JDBCDriverException | SQLException | TransactionException e) {
-			LoggerWrapper.error(this.getClass(), TestConstants.EXCEPTION_CATCHED + e);
+			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
 	}
 
 	@Test
 	public void testGetAllActive() {
-		ICompetitionsViewService cv = new CompetitionsViewServiceImpl();
+		ICompetitionsViewService cv = CompetitionsViewServiceImpl.getInstance();  
 		List<CompetitionDTO> result;
 		try {
 			result = cv.getAllActive(1, 10);
@@ -68,7 +68,7 @@ public class CompetitionsViewServiceImplTest {
 //			System.out.println("testGetAllActive");
 //			System.out.println(result);
 		} catch (JDBCDriverException | SQLException | TransactionException e) {
-			LoggerWrapper.error(this.getClass(), TestConstants.EXCEPTION_CATCHED + e);
+			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
 	}
@@ -76,7 +76,7 @@ public class CompetitionsViewServiceImplTest {
 	@Test
 	@Parameters("userlogin")
 	public void testGetAllByUser(@Optional("Login 7") String userlogin) {
-		ICompetitionsViewService cv = new CompetitionsViewServiceImpl();
+		ICompetitionsViewService cv = CompetitionsViewServiceImpl.getInstance();
 		List<CompetitionDTO> result;
 		try {
 			result = cv.getAllByUser(1, 10, userlogin);
@@ -86,33 +86,33 @@ public class CompetitionsViewServiceImplTest {
 //			System.out.println("testGetAllByUser");
 //			System.out.println(result);
 		} catch (IllegalAgrumentCheckedException | SQLException | JDBCDriverException | TransactionException e) {
-			LoggerWrapper.error(this.getClass(), TestConstants.EXCEPTION_CATCHED + e);
+			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
 	}
 
 	@Test(expectedExceptions = IllegalAgrumentCheckedException.class)
 	public void testGetAllByUserNullLogin() throws IllegalAgrumentCheckedException {
-		ICompetitionsViewService cv = new CompetitionsViewServiceImpl();
+		ICompetitionsViewService cv = CompetitionsViewServiceImpl.getInstance();
 		List<CompetitionDTO> result;
 		try {
 			result = cv.getAllByUser(1, 10, null);
 			assertNull(result);
 		} catch (SQLException | JDBCDriverException | TransactionException e) {
-			LoggerWrapper.error(this.getClass(), TestConstants.EXCEPTION_CATCHED + e);
+			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
 	}
 
 	@Test(expectedExceptions = IllegalAgrumentCheckedException.class)
 	public void testGetAllByUserEmptyLogin() throws IllegalAgrumentCheckedException {
-		ICompetitionsViewService cv = new CompetitionsViewServiceImpl();
+		ICompetitionsViewService cv = CompetitionsViewServiceImpl.getInstance();
 		List<CompetitionDTO> result;
 		try {
 			result = cv.getAllByUser(1, 10, "");
 			assertNull(result);
 		} catch (SQLException | JDBCDriverException | TransactionException e) {
-			LoggerWrapper.error(this.getClass(), TestConstants.EXCEPTION_CATCHED + e);
+			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
 	}
@@ -120,7 +120,7 @@ public class CompetitionsViewServiceImplTest {
 	@Test
 	@Parameters("userlogin")
 	public void testGetAllByUserBadPaginationParams(@Optional("Login 7") String userlogin) {
-		ICompetitionsViewService cv = new CompetitionsViewServiceImpl();
+		ICompetitionsViewService cv = CompetitionsViewServiceImpl.getInstance();
 		List<CompetitionDTO> result;
 		try {
 			result = cv.getAllByUser(1, 100, userlogin);
@@ -137,7 +137,7 @@ public class CompetitionsViewServiceImplTest {
 			result = cv.getAllByUser(2_000_000_000, 2_000_000_000, userlogin);
 			assertEquals(0, result.size());
 		} catch (IllegalAgrumentCheckedException | SQLException | JDBCDriverException | TransactionException e) {
-			LoggerWrapper.error(this.getClass(), TestConstants.EXCEPTION_CATCHED + e);
+			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
 	}
@@ -145,7 +145,7 @@ public class CompetitionsViewServiceImplTest {
 	@Test
 	@Parameters("userlogin")
 	public void testGetAllActiveByUser(@Optional("Login 7") String userlogin) {
-		ICompetitionsViewService cv = new CompetitionsViewServiceImpl();
+		ICompetitionsViewService cv = CompetitionsViewServiceImpl.getInstance();
 		List<CompetitionDTO> result;
 		try {
 			result = cv.getAllActiveByUser(1, 10, userlogin);
@@ -155,7 +155,7 @@ public class CompetitionsViewServiceImplTest {
 //			System.out.println("testGetAllActiveByUser");
 //			System.out.println(result);
 		} catch (IllegalAgrumentCheckedException | SQLException | JDBCDriverException | TransactionException e) {
-			LoggerWrapper.error(this.getClass(), TestConstants.EXCEPTION_CATCHED + e);
+			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
 //		System.out.println("testGetAllActiveByUser");
@@ -164,26 +164,26 @@ public class CompetitionsViewServiceImplTest {
 
 	@Test(expectedExceptions = IllegalAgrumentCheckedException.class)
 	public void testGetAllActiveByUserNullLogin() throws IllegalAgrumentCheckedException {
-		ICompetitionsViewService cv = new CompetitionsViewServiceImpl();
+		ICompetitionsViewService cv = CompetitionsViewServiceImpl.getInstance();
 		List<CompetitionDTO> result;
 		try {
 			result = cv.getAllActiveByUser(1, 10, null);
 			assertNull(result);
 		} catch (SQLException | JDBCDriverException | TransactionException e) {
-			LoggerWrapper.error(this.getClass(), TestConstants.EXCEPTION_CATCHED + e);
+			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
 	}
 
 	@Test(expectedExceptions = IllegalAgrumentCheckedException.class)
 	public void testGetAllActiveByUserEmptyLogin() throws IllegalAgrumentCheckedException {
-		ICompetitionsViewService cv = new CompetitionsViewServiceImpl();
+		ICompetitionsViewService cv = CompetitionsViewServiceImpl.getInstance();
 		List<CompetitionDTO> result;
 		try {
 			result = cv.getAllActiveByUser(1, 10, "");
 			assertNull(result);
 		} catch (SQLException | JDBCDriverException | TransactionException e) {
-			LoggerWrapper.error(this.getClass(), TestConstants.EXCEPTION_CATCHED + e);
+			Log4jWrapper.get().error(TestConstants.EXCEPTION_CATCHED + e);
 			fail(TestConstants.EXCEPTION_CATCHED, e);
 		}
 	}

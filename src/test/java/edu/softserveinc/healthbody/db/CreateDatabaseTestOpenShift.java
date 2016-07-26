@@ -12,7 +12,7 @@ import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
-import edu.softserveinc.healthbody.log.LoggerWrapper;
+import edu.softserveinc.healthbody.log.Log4jWrapper;
 
 public class CreateDatabaseTestOpenShift extends CreateDropTestDatabase {
  	
@@ -20,36 +20,36 @@ public class CreateDatabaseTestOpenShift extends CreateDropTestDatabase {
  	@Parameters("testDatabase")
  	@Override
  	public void createTestDatabase(@Optional("healthbodydbtest") String testDatabase) {
- 		LoggerWrapper.info(this.getClass(), "Setting up database " + testDatabase + ".");
+ 		Log4jWrapper.get().info("Setting up database " + testDatabase + ".");
 		try (Connection con = ConnectionManager
  				.getInstance(DataSourceRepository.getInstance().getPostgresJenkins()).getConnection();
  				Statement st = con.createStatement()) {
  			if (!DBCreationManager.getInstance().dropDatabase(st, testDatabase)) {
  				String failMessage = "Database " + testDatabase + " does not exist.";
- 				LoggerWrapper.info(this.getClass(), failMessage);
+ 				Log4jWrapper.get().info(failMessage);
  
  			}
  			if (!DBCreationManager.getInstance().createDatabase(st, testDatabase)) {
  				String failMessage = "Couldn't create database " + testDatabase + ".";
- 				LoggerWrapper.error(this.getClass(), failMessage);
+ 				Log4jWrapper.get().error(failMessage);
  				fail(failMessage);
  			}
  		} catch (SQLException e) {
  			String failMessage = "Problem with deleting/creating database " + testDatabase + ".";
- 			LoggerWrapper.error(this.getClass(), failMessage + e);
+ 			Log4jWrapper.get().error(failMessage + e);
  			fail(failMessage, e);
  		} catch (JDBCDriverException e) {
  			String failMessage = "Couldn't get connection.";
- 			LoggerWrapper.error(this.getClass(), failMessage + e);
+ 			Log4jWrapper.get().error(failMessage + e);
  			fail(failMessage, e);
  		}
 		try {
 			ConnectionManager.getInstance(DataSourceRepository.getInstance().getPostgresJenkinsByDatabaseName(testDatabase)).getConnection();
 		} catch (JDBCDriverException e) {
 			String failMessage = "Couldn't get connection.";
-			LoggerWrapper.error(this.getClass(), failMessage + e);
+			Log4jWrapper.get().error(failMessage + e);
 			fail(failMessage, e);
-		}		LoggerWrapper.info(this.getClass(), "Setting up database ends successfully...");
+		}		Log4jWrapper.get().info("Setting up database ends successfully...");
 	}
  	
  	
@@ -63,20 +63,20 @@ public class CreateDatabaseTestOpenShift extends CreateDropTestDatabase {
 					.getConnection();
  		} catch (JDBCDriverException e) {
  			String failMessage = "Couldn't get connection.";
- 			LoggerWrapper.error(this.getClass(), failMessage + e);
+ 			Log4jWrapper.get().error(failMessage + e);
  			fail(failMessage, e);
  		}
  		try (Statement st = con.createStatement()) {
  			if (!DBCreationManager.getInstance().dropDatabase(st, testDatabase)) {
  				String failMessage = "Couldn't delete database " + testDatabase + ".";
- 				LoggerWrapper.error(this.getClass(), failMessage);
+ 				Log4jWrapper.get().error(failMessage);
  				fail(failMessage);
  			} else {
- 				LoggerWrapper.info(this.getClass(), "Database " + testDatabase + " was deleted.");
+ 				Log4jWrapper.get().info("Database " + testDatabase + " was deleted.");
  			}
  		} catch (SQLException e) {
 			String failMessage = "Problem with deleting database " + testDatabase + ".";
- 			LoggerWrapper.error(this.getClass(), failMessage + e);
+ 			Log4jWrapper.get().error(failMessage + e);
  			fail(failMessage, e);
  		}
  	}

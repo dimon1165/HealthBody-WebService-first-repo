@@ -8,9 +8,9 @@ import java.util.HashMap;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 
 public class ConnectionManager {
-	private final static String FAILED_REGISTRATE_DRIVER = "Failed to Registrate JDBC Driver";
+	private static final String FAILED_REGISTRATE_DRIVER = "Failed to Registrate JDBC Driver";
 
-	private static volatile ConnectionManager instance = null;
+	private static volatile ConnectionManager instance;
 
 	private DataSource dataSource;
 	private final HashMap<Long, Connection> connections;
@@ -23,7 +23,7 @@ public class ConnectionManager {
 		return getInstance(null);
 	}
 
-	public static ConnectionManager getInstance(DataSource dataSource) throws JDBCDriverException {
+	public static ConnectionManager getInstance(final DataSource dataSource) throws JDBCDriverException {
 		if (instance == null) {
 			synchronized (ConnectionManager.class) {
 				if (instance == null) {
@@ -41,7 +41,7 @@ public class ConnectionManager {
 	 * 			not null		null				save dataSource
 	 * 			not null		not null			if equals then nothing 
 	 */
-	private void checkStatus(DataSource dataSource) throws JDBCDriverException {
+	private void checkStatus(final DataSource dataSource) throws JDBCDriverException {
 		if (dataSource == null) {
 			if (getDataSource() == null) {
 				setDataSource(DataSourceRepository.getInstance().getPostgresLocalHost());
@@ -49,14 +49,13 @@ public class ConnectionManager {
 		} else if ((getDataSource() == null) || (!getDataSource().equals(dataSource))) {
 			setDataSource(dataSource);
 		}
-
 	}
 
 	private DataSource getDataSource() {
 		return this.dataSource;
 	}
 
-	private void setDataSource(DataSource dataSource) throws JDBCDriverException {
+	private void setDataSource(final DataSource dataSource) throws JDBCDriverException {
 		synchronized (ConnectionManager.class) {
 			this.dataSource = dataSource;
 			registerDriver();
@@ -70,18 +69,17 @@ public class ConnectionManager {
 		} catch (SQLException e) {
 			throw new JDBCDriverException(FAILED_REGISTRATE_DRIVER, e);
 		}
-
 	}
 
 	private HashMap<Long, Connection> getAllConections() {
 		return this.connections;
 	}
 
-	private void addConnection(Connection connection) {
+	private void addConnection(final Connection connection) {
 		getAllConections().put(Thread.currentThread().getId(), connection);
 	}
 
-	public Connection getConnection() throws JDBCDriverException {
+	public final Connection getConnection() throws JDBCDriverException {
 		Connection connection = getAllConections().get(Thread.currentThread().getId());
 		if (connection == null) {
 			try {
@@ -95,16 +93,16 @@ public class ConnectionManager {
 		return connection;
 	}
 
-	public void beginTransaction() throws SQLException, JDBCDriverException {
+	public final void beginTransaction() throws SQLException, JDBCDriverException {
 		getConnection().setAutoCommit(false);
 	}
 
-	public void commitTransaction() throws SQLException, JDBCDriverException {
+	public final void commitTransaction() throws SQLException, JDBCDriverException {
 		getConnection().commit();
 		getConnection().setAutoCommit(true);
 	}
 
-	public void rollbackTransaction() throws SQLException, JDBCDriverException {
+	public final void rollbackTransaction() throws SQLException, JDBCDriverException {
 		getConnection().rollback();
 		getConnection().setAutoCommit(true);
 	}
@@ -121,8 +119,6 @@ public class ConnectionManager {
 					instance.getAllConections().put(key, null);
 				}
 			}
-
 		}
 	}
-
 }

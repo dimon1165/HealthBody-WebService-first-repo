@@ -2,17 +2,13 @@ package edu.softserveinc.healthbody.exceptions;
 
 public class JDBCDriverException extends Exception {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public JDBCDriverException(String message) {
-		super(message);
-	}
+    public JDBCDriverException(final String message) {
+        super(message);
+    }
 
-	public JDBCDriverException(String message, Throwable cause) {
-		super(message, cause);
-	}
-
+    public JDBCDriverException(final String message, final Throwable cause) {
+        super(message, cause);
+    }
 }

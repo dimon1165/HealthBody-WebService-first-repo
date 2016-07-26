@@ -7,9 +7,9 @@ import java.sql.Statement;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 
 public class DatabaseCreatorWithMain {
-	private final static String DATABASE_NAME = "healthbodydb"; 
+    private final static String DATABASE_NAME = "healthbodydb";
 
-	public static void main(String[] args) throws JDBCDriverException, SQLException {
+    public static void main(String[] args) throws JDBCDriverException, SQLException {
 		DataSource ds = DataSourceRepository.getInstance().getPostgresLocalHostNoDatabase();
 		Connection con = ConnectionManager.getInstance(ds).getConnection();
 		Statement st = con.createStatement();
@@ -32,5 +32,4 @@ public class DatabaseCreatorWithMain {
 	    DBPopulateManager.getInstance().populateRolesTable();
 	    DBPopulateManager.getInstance().populateUserCompetitionsTable();
 	}
-
 }
