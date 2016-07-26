@@ -62,10 +62,11 @@ public class GoogleAuthServlet extends HttpServlet {
 
 			// get output in outputString
 			String line, outputString = "";
-			BufferedReader reader = new BufferedReader(new InputStreamReader(urlConn.getInputStream(), "windows-1251"));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
 			while ((line = reader.readLine()) != null) {
 				outputString += line;
 			}
+			Log4jWrapper.get().info(outputString + rn);
 
 			// get Access Token
 			JsonObject json = new JsonParser().parse(outputString).getAsJsonObject();
@@ -76,7 +77,7 @@ public class GoogleAuthServlet extends HttpServlet {
 			url = new URL("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + access_token);
 			urlConn = url.openConnection();
 			outputString = "";
-			reader = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
+			reader = new BufferedReader(new InputStreamReader(urlConn.getInputStream(), "windows-1251"));
 			while ((line = reader.readLine()) != null)
 				outputString += line;
 			Log4jWrapper.get().info(outputString + rn);
@@ -107,7 +108,7 @@ public class GoogleAuthServlet extends HttpServlet {
 				if (healthBodyServiceImpl.getUserByLogin(login) == null) {
 					healthBodyServiceImpl.createUser(userDTO);
 					UserDTO ud = healthBodyServiceImpl.getUserByLogin(login);
-					out.append(login + ", wellcome HealthBody!" + rn);
+					out.append(login + ", wellcome! You've singed up HealthBody!" + rn);
 					out.flush();
 				} else {
 					UserDTO ud = healthBodyServiceImpl.getUserByLogin(login);

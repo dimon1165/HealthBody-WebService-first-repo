@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
-
 import edu.softserveinc.healthbody.constants.DaoConstants;
 import edu.softserveinc.healthbody.dao.IBasicDao.DaoQueries;
 import edu.softserveinc.healthbody.db.ConnectionManager;

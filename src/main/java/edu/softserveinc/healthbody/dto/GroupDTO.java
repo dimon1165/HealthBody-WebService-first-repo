@@ -58,5 +58,4 @@ public class GroupDTO {
 	public final void setScoreGroup(final String scoreGroup) {
 		this.scoreGroup = scoreGroup;
 	}
-	
 }
