@@ -19,41 +19,47 @@ public final class DataSourceRepository {
         }
         return instance;
     }
+    
 
     public DataSource getPostgresOpenShift() throws JDBCDriverException {
         return new DataSource(DriverRepository.getInstance().getPostgresDriver(), "jdbc:postgresql://"
                 + System.getenv("OPENSHIFT_POSTGRESQL_DB_HOST") + ":" + System.getenv("OPENSHIFT_POSTGRESQL_DB_PORT")
-                + "/ws", "admindqufr92", "57UAv48D1n2-");
+                + "/ws", ReadDBPropertyFile.DB_USERNAME_OPENSHIFT, ReadDBPropertyFile.DB_PASSWORD_OPENSHIFT);
     }
 
     public DataSource getPostgresJenkins() throws JDBCDriverException {
         return new DataSource(DriverRepository.getInstance().getPostgresDriver(),
-                "jdbc:postgresql://127.10.182.2:5432/jenkins", "adminud8ggnm", "6JxTBU-ab6KR");
+        		"jdbc:postgresql://"
+                        + System.getenv("OPENSHIFT_POSTGRESQL_DB_HOST") + ":" + System.getenv("OPENSHIFT_POSTGRESQL_DB_PORT")
+                        + "/jenkins", ReadDBPropertyFile.DB_USERNAME_JENKINS, ReadDBPropertyFile.DB_PASSWORD_JENKINS);
     }
 
     public DataSource getPostgresJenkinsByDatabaseName(final String databaseName) throws JDBCDriverException {
         return new DataSource(DriverRepository.getInstance().getPostgresDriver(),
-                "jdbc:postgresql://127.10.182.2:5432/" + databaseName, "adminud8ggnm", "6JxTBU-ab6KR");
+        		"jdbc:postgresql://"
+                        + System.getenv("OPENSHIFT_POSTGRESQL_DB_HOST") + ":" + System.getenv("OPENSHIFT_POSTGRESQL_DB_PORT")
+                        + "/"+databaseName, ReadDBPropertyFile.DB_USERNAME_JENKINS, ReadDBPropertyFile.DB_PASSWORD_JENKINS);
+                
     }
 
     public DataSource getPostgresLocalHost() throws JDBCDriverException {
         return new DataSource(DriverRepository.getInstance().getPostgresDriver(),
-                "jdbc:postgresql://localhost:5432/healthbodydb", "postgres", "root");
+        		ReadDBPropertyFile.DB_LOCALHOST_URL +"healthbodydb", ReadDBPropertyFile.DB_LOCALHOST_USERNAME , ReadDBPropertyFile.DB_LOCALHOST_PASSWORD);
     }
 
     public DataSource getPostgresLocalHostTest() throws JDBCDriverException {
         return new DataSource(DriverRepository.getInstance().getPostgresDriver(),
-                "jdbc:postgresql://localhost:5432/healthbodydbtest", "postgres", "root");
+                ReadDBPropertyFile.DB_LOCALHOST_URL +"healthbodydbtest", ReadDBPropertyFile.DB_LOCALHOST_USERNAME , ReadDBPropertyFile.DB_LOCALHOST_PASSWORD);
     }
 
     public DataSource getPostgresLocalHostNoDatabase() throws JDBCDriverException {
-        return new DataSource(DriverRepository.getInstance().getPostgresDriver(), "jdbc:postgresql://localhost:5432/",
-                "postgres", "root");
+        return new DataSource(DriverRepository.getInstance().getPostgresDriver(), ReadDBPropertyFile.DB_LOCALHOST_URL,
+        		ReadDBPropertyFile.DB_LOCALHOST_USERNAME , ReadDBPropertyFile.DB_LOCALHOST_PASSWORD);
     }
 
     public DataSource getPostgresLocalHostByDatabaseName(final String databaseName) throws JDBCDriverException {
-        return new DataSource(DriverRepository.getInstance().getPostgresDriver(), "jdbc:postgresql://localhost:5432/"
-                + databaseName, "postgres", "root");
+        return new DataSource(DriverRepository.getInstance().getPostgresDriver(), ReadDBPropertyFile.DB_LOCALHOST_URL
+                + databaseName, ReadDBPropertyFile.DB_LOCALHOST_USERNAME , ReadDBPropertyFile.DB_LOCALHOST_PASSWORD);
     }
 
 }
