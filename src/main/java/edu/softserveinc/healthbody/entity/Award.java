@@ -5,7 +5,7 @@ public class Award implements IEntity {
 	private String idAward;
 	private String name;
 	
-	public Award(final String idAward, String name) {
+	public Award(final String idAward, final String name) {
 		this.idAward = idAward;
 		this.name = name;
 	}
