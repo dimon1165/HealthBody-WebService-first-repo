@@ -9,7 +9,8 @@ public class GroupDTO {
 
     // private String status;
 
-    public GroupDTO() { }
+    public GroupDTO() {
+    }
 
     public GroupDTO(final String name, final String count, final String descriptions, final String scoreGroup) {
         this.name = name;
