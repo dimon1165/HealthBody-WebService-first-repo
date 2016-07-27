@@ -124,13 +124,12 @@ public class GoogleAuthServlet extends HttpServlet {
 
 	public String getGoogleGender(String a) {
 		String b = null;
-		if (a.equalsIgnoreCase("male"))
+		if ("male".equalsIgnoreCase(a))
 			b = "m";
-		else if (a.equalsIgnoreCase("female"))
+		else if ("female".equalsIgnoreCase(a))
 			b = "w";
 		else
 			b = "o";
 		return b;
 	}
-
 }
