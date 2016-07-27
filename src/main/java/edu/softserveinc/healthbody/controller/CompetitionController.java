@@ -3,9 +3,8 @@ package edu.softserveinc.healthbody.controller;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import edu.softserveinc.healthbody.annotation.Controller;
+import edu.softserveinc.healthbody.annotation.Param;
 import edu.softserveinc.healthbody.annotation.Request;
 import edu.softserveinc.healthbody.dto.CompetitionDTO;
 import edu.softserveinc.healthbody.exceptions.IllegalAgrumentCheckedException;
@@ -18,10 +17,11 @@ import edu.softserveinc.healthbody.services.impl.CompetitionsViewServiceImpl;
 public class CompetitionController {
 
 	@Request(url = "/allComp")
-	public List<CompetitionDTO> getAllComp(HttpServletRequest request) {
+	public List<CompetitionDTO> getAllComp(@Param(name = "partNumber") int partNumber,
+			@Param(name = "partSize") int partSize) {
 		try {
-			return CompetitionsViewServiceImpl.getInstance().getAll(ParamUtils.getPartNumber(request),
-					ParamUtils.getPartSize(request));
+			return CompetitionsViewServiceImpl.getInstance().getAll(partNumber, partSize);
+
 		} catch (NumberFormatException | JDBCDriverException | SQLException | TransactionException e) {
 			Log4jWrapper.get().error("Could't get all compettitions");
 		}
@@ -30,23 +30,22 @@ public class CompetitionController {
 	}
 
 	@Request(url = "/allUComp")
-	public List<CompetitionDTO> getAllUserComp(HttpServletRequest request) {
+	public List<CompetitionDTO> getAllUserComp(@Param(name = "partNumber") int partNumber,
+			@Param(name = "partSize") int partSize, @Param(name = "login") String login) {
 		try {
-			return CompetitionsViewServiceImpl.getInstance().getAllByUser(ParamUtils.getPartNumber(request),
-					ParamUtils.getPartSize(request), ParamUtils.getLogin(request));
+			return CompetitionsViewServiceImpl.getInstance().getAllByUser(partNumber, partSize, login);
 		} catch (IllegalAgrumentCheckedException | SQLException | JDBCDriverException | TransactionException e) {
 			Log4jWrapper.get().error("Could't get all users compettitions");
 			e.printStackTrace();
 		}
-		System.out.println(ParamUtils.getLogin(request));
 		return null;
 	}
 
 	@Request(url = "/activeComp")
-	public List<CompetitionDTO> getActiveComp(HttpServletRequest request) {
+	public List<CompetitionDTO> getActiveComp(@Param(name = "partNumber") int partNumber,
+			@Param(name = "partSize") int partSize) {
 		try {
-			return CompetitionsViewServiceImpl.getInstance().getAllActive(ParamUtils.getPartNumber(request),
-					ParamUtils.getPartSize(request));
+			return CompetitionsViewServiceImpl.getInstance().getAllActive(partNumber, partSize);
 		} catch (JDBCDriverException | SQLException | TransactionException e) {
 			Log4jWrapper.get().error("Could't get active compettitions");
 		}
@@ -54,10 +53,10 @@ public class CompetitionController {
 	}
 
 	@Request(url = "/activeUComp")
-	public List<CompetitionDTO> getUserActiveComp(HttpServletRequest request) {
+	public List<CompetitionDTO> getUserActiveComp(@Param(name = "partNumber") int partNumber,
+			@Param(name = "partSize") int partSize, @Param(name = "login") String login) {
 		try {
-			return CompetitionsViewServiceImpl.getInstance().getAllActiveByUser(ParamUtils.getPartNumber(request),
-					ParamUtils.getPartSize(request), ParamUtils.getLogin(request));
+			return CompetitionsViewServiceImpl.getInstance().getAllActiveByUser(partNumber, partSize, login);
 		} catch (IllegalAgrumentCheckedException | SQLException | JDBCDriverException | TransactionException e) {
 			Log4jWrapper.get().error("Could't get active user compettitions");
 		}

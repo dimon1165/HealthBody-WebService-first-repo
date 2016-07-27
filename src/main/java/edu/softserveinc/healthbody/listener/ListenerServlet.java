@@ -2,8 +2,11 @@ package edu.softserveinc.healthbody.listener;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,9 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import edu.softserveinc.healthbody.annotation.Param;
 import edu.softserveinc.healthbody.controller.MethodMapUtil;
 import edu.softserveinc.healthbody.controller.Pair;
 import edu.softserveinc.healthbody.controller.ParamUtils;
+import edu.softserveinc.healthbody.controller.RequestParamUtils;
 import edu.softserveinc.healthbody.log.Log4jWrapper;
 
 /**
@@ -46,29 +51,26 @@ public class ListenerServlet extends HttpServlet {
 				.get(path.toLowerCase());
 
 		try {
-			wrightResponse(methodClassPair.getL().invoke(methodClassPair.getR().newInstance(), request), response);
+			Method method = methodClassPair.getL();
+			List<Object> parameters = new ArrayList<>();
+			Class<?>[] types = method.getParameterTypes();
+			int i = 0;
+			for (Annotation[] annotations : method.getParameterAnnotations()) {
+
+				for (Annotation annotation : annotations) {
+					Param param = (Param) annotation;
+					parameters.add(RequestParamUtils.toObject(types[i], request.getParameter(param.name())));
+					i++;
+				}
+
+			}
+			wrightResponse(method.invoke(methodClassPair.getR().newInstance(), parameters.toArray()), response);
 			ParamUtils.getLogin(request);
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
 				| InstantiationException e) {
-			Log4jWrapper.get().error("Could't load data");
+			Log4jWrapper.get().error("Could't load data: " + e);
 		}
 
-		// getPartNumber(request), getPartSize(request),getName(request)
-		/*
-		 * if (path.equals("/c")) {
-		 * 
-		 * CompetitionCntr competitionCntr = new CompetitionCntr();
-		 * response.setContentType("application/json"); PrintWriter out =
-		 * response.getWriter();
-		 * out.print(gson.toJson(competitionCntr.getAllComp(request,
-		 * response))); out.flush();
-		 * 
-		 * }
-		 */
-		/*
-		 * System.out.println(methodClassPair.getL().invoke(methodClassPair.getR
-		 * () .newInstance() , request, response ));
-		 */
 	}
 
 	private void wrightResponse(Object object, HttpServletResponse response) throws IOException {
