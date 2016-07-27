@@ -1,7 +1,7 @@
 package edu.softserveinc.healthbody.db;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 import edu.softserveinc.healthbody.log.Log4jWrapper;
@@ -16,22 +16,27 @@ public class ReadDBPropertyFile {
 	public static String DB_USERNAME_OPENSHIFT;
 	public static String DB_PASSWORD_OPENSHIFT;
 	static {
-		try {
-			Properties proproperties = new Properties();
-			proproperties.load(new FileInputStream("src/main/resources/database.properties"));
+		try{
+
+			ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+			InputStream input = classLoader.getResourceAsStream("database.properties");		
+			Properties properties = new Properties();
+			properties.load(input);
+			input.close();
 			
 			//LocalHost DB			
-			DB_LOCALHOST_URL = proproperties.getProperty("DB_LOCALHOST_URL");
-			DB_LOCALHOST_USERNAME = proproperties.getProperty("DB_LOCALHOST_USERNAME");
-			DB_LOCALHOST_PASSWORD = proproperties.getProperty("DB_LOCALHOST_PASSWORD");
+			DB_LOCALHOST_URL = properties.getProperty("DB_LOCALHOST_URL");
+			DB_LOCALHOST_USERNAME = properties.getProperty("DB_LOCALHOST_USERNAME");
+			DB_LOCALHOST_PASSWORD = properties.getProperty("DB_LOCALHOST_PASSWORD");
 			
 			//Jenkins DB
-			DB_USERNAME_JENKINS = proproperties.getProperty("DB_USERNAME_JENKINS");
-			DB_PASSWORD_JENKINS = proproperties.getProperty("DB_PASSWORD_JENKINS");
+			DB_USERNAME_JENKINS = properties.getProperty("DB_USERNAME_JENKINS");
+			DB_PASSWORD_JENKINS = properties.getProperty("DB_PASSWORD_JENKINS");
 		
 			//Openshift DB
-			DB_USERNAME_OPENSHIFT = proproperties.getProperty("DB_USERNAME_OPENSHIFT");
-			DB_PASSWORD_OPENSHIFT = proproperties.getProperty("DB_PASSWORD_OPENSHIFT");
+			DB_USERNAME_OPENSHIFT = properties.getProperty("DB_USERNAME_OPENSHIFT");
+			DB_PASSWORD_OPENSHIFT = properties.getProperty("DB_PASSWORD_OPENSHIFT");
+			
 			
 		} catch (IOException ex) {
 			Log4jWrapper.get().info("Properties file is not found...");
