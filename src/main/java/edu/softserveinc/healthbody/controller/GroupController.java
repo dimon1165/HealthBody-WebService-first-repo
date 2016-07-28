@@ -2,9 +2,8 @@ package edu.softserveinc.healthbody.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import edu.softserveinc.healthbody.annotation.Controller;
+import edu.softserveinc.healthbody.annotation.Param;
 import edu.softserveinc.healthbody.annotation.Request;
 import edu.softserveinc.healthbody.dto.GroupDTO;
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
@@ -16,10 +15,10 @@ import edu.softserveinc.healthbody.services.impl.GroupServiceImpl;
 public class GroupController {
 
 	@Request(url = "/allGroups")
-	public List<GroupDTO> getAllGroups(HttpServletRequest request) {
+	public List<GroupDTO> getAllGroups(@Param(name = "partNumber") int partNumber,
+			@Param(name = "partSize") int partSize) {
 		try {
-			return GroupServiceImpl.getInstance().getAll(ParamUtils.getPartNumber(request),
-					ParamUtils.getPartSize(request));
+			return GroupServiceImpl.getInstance().getAll(partNumber, partSize);
 		} catch (QueryNotFoundException | JDBCDriverException | DataBaseReadingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -28,10 +27,10 @@ public class GroupController {
 	}
 
 	@Request(url = "/groupDescr")
-	public String getDescription(HttpServletRequest request) {
+	public String getDescription(@Param(name = "groupName") String groupName) {
 		try {
 			return GroupServiceImpl.getInstance()
-					.getDescriptionOfGroup(GroupServiceImpl.getInstance().getGroup("Name group number 2"));
+					.getDescriptionOfGroup(GroupServiceImpl.getInstance().getGroup(groupName));
 		} catch (QueryNotFoundException | JDBCDriverException | DataBaseReadingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
