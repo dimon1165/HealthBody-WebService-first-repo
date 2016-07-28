@@ -204,12 +204,12 @@ abstract class AbstractDaoRead<TEntity> implements IBasicReadDao<TEntity> {
 	}
 
 	// methods try-with-resources
-	private PreparedStatement createPreparedStatementId(final String query, final String id)
-			throws SQLException, JDBCDriverException {
-		PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query);
-		pst.setString(1, id);
-		return pst;
-	}
+//	private PreparedStatement createPreparedStatementId(final String query, final String id)
+//			throws SQLException, JDBCDriverException {
+//		PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query);
+//		pst.setString(1, id);
+//		return pst;
+//	}
 
 	private PreparedStatement createPreparedStatement(final String query, final String fieldname, final String text)
 			throws SQLException, JDBCDriverException {
