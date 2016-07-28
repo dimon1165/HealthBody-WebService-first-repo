@@ -88,7 +88,7 @@ public final class UserGroupDao extends AbstractDao<UserGroup> {
 				throw new QueryNotFoundException(String.format(DaoConstants.QUERY_NOT_FOUND, DaoQueries.INSERT.name()));
 			}
 			try (PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query)) {
-				int i = 0;
+				int i = 1;
 				pst.setString(i++, UUID.randomUUID().toString());
 				pst.setString(i++, user.getId());
 				pst.setString(i++, group.getIdGroup());

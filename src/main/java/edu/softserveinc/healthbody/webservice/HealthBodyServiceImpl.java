@@ -30,7 +30,7 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		try {
 			UserProfileServiceImpl.getInstance().insert(userDTO);
 		} catch (SQLException | JDBCDriverException | TransactionException e) {
-			Log4jWrapper.get().error("create user failed" + e);
+			Log4jWrapper.get().error("create user failed. " + e);
 		}
 	}
 
@@ -39,7 +39,7 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		try {
 			return UserProfileServiceImpl.getInstance().get(login);
 		} catch (SQLException | JDBCDriverException | TransactionException e) {
-			Log4jWrapper.get().error("get user by login failed" + e);
+			Log4jWrapper.get().error("get user by login failed. " + e);
 		}
 		return null;
 	}

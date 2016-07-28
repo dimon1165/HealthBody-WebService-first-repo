@@ -3,9 +3,8 @@ package edu.softserveinc.healthbody.controller;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import edu.softserveinc.healthbody.annotation.Controller;
+import edu.softserveinc.healthbody.annotation.Param;
 import edu.softserveinc.healthbody.annotation.Request;
 import edu.softserveinc.healthbody.dto.UserDTO;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
@@ -18,10 +17,10 @@ import edu.softserveinc.healthbody.services.impl.UsersViewServiceImpl;
 public class UserController {
 
 	@Request(url = "/allUsers")
-	public List<UserDTO> getAllUsers(HttpServletRequest request) {
+	public List<UserDTO> getAllUsers(@Param(name = "partNumber") int partNumber,
+			@Param(name = "partSize") int partSize) {
 		try {
-			return new UsersViewServiceImpl().getAll(ParamUtils.getPartNumber(request),
-					ParamUtils.getPartSize(request));
+			return new UsersViewServiceImpl().getAll(partNumber, partSize);
 		} catch (JDBCDriverException | SQLException | TransactionException e) {
 			Log4jWrapper.get().error("Could't get all users");
 		}
@@ -29,10 +28,10 @@ public class UserController {
 	}
 
 	@Request(url = "/allInCompUsers")
-	public List<UserDTO> getAllImCompUsers(HttpServletRequest request) {
+	public List<UserDTO> getAllImCompUsers(@Param(name = "partNumber") int partNumber,
+			@Param(name = "partSize") int partSize) {
 		try {
-			return new UsersViewServiceImpl().getAllinCompetition(ParamUtils.getPartNumber(request),
-					ParamUtils.getPartSize(request));
+			return new UsersViewServiceImpl().getAllinCompetition(partNumber, partSize);
 		} catch (JDBCDriverException | SQLException | TransactionException e) {
 			Log4jWrapper.get().error("Could't get all users in competition");
 		}
@@ -40,10 +39,10 @@ public class UserController {
 	}
 
 	@Request(url = "/allUByAdmin")
-	public List<UserDTO> getAllByAdmin(HttpServletRequest request) {
+	public List<UserDTO> getAllByAdmin(@Param(name = "partNumber") int partNumber,
+			@Param(name = "partSize") int partSize) {
 		try {
-			return new UsersViewServiceImpl().getAllbyAdmin(ParamUtils.getPartNumber(request),
-					ParamUtils.getPartSize(request));
+			return new UsersViewServiceImpl().getAllbyAdmin(partNumber, partSize);
 		} catch (JDBCDriverException | SQLException | TransactionException e) {
 			Log4jWrapper.get().error("Could't get all users by admin role");
 		}
@@ -51,10 +50,10 @@ public class UserController {
 	}
 
 	@Request(url = "/allUInGroup")
-	public List<UserDTO> getAllinGroup(HttpServletRequest request) {
+	public List<UserDTO> getAllinGroup(@Param(name = "partNumber") int partNumber,
+			@Param(name = "partSize") int partSize) {
 		try {
-			return new UsersViewServiceImpl().getAllinGroup(ParamUtils.getPartNumber(request),
-					ParamUtils.getPartSize(request));
+			return new UsersViewServiceImpl().getAllinGroup(partNumber, partSize);
 		} catch (JDBCDriverException | SQLException | TransactionException e) {
 			Log4jWrapper.get().error("Could't get all users in group");
 		}
@@ -62,10 +61,10 @@ public class UserController {
 	}
 
 	@Request(url = "/UWithNoComp")
-	public List<UserDTO> getAllToAddInComp(HttpServletRequest request) {
+	public List<UserDTO> getAllToAddInComp(@Param(name = "partNumber") int partNumber,
+			@Param(name = "partSize") int partSize) {
 		try {
-			return new UsersViewServiceImpl().getAlltoAddInCompetition(ParamUtils.getPartNumber(request),
-					ParamUtils.getPartSize(request));
+			return new UsersViewServiceImpl().getAlltoAddInCompetition(partNumber, partSize);
 		} catch (JDBCDriverException | SQLException | TransactionException e) {
 			Log4jWrapper.get().error("Could't get all users in group");
 		}
@@ -73,9 +72,9 @@ public class UserController {
 	}
 
 	@Request(url = "/UByLogin")
-	public UserDTO getUserByLogin(HttpServletRequest request) {
+	public UserDTO getUserByLogin(@Param(name = "login") String login) {
 		try {
-			return UserProfileServiceImpl.getInstance().get(ParamUtils.getLogin(request));
+			return UserProfileServiceImpl.getInstance().get(login);
 		} catch (JDBCDriverException | SQLException | TransactionException e) {
 			Log4jWrapper.get().error("Could't get all users in group");
 		}
