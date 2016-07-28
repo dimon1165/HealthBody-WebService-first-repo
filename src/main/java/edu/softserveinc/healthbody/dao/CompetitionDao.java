@@ -72,7 +72,7 @@ public final class CompetitionDao extends AbstractDao<Competition> {
 			throw new QueryNotFoundException(String.format(DaoConstants.QUERY_NOT_FOUND, DaoQueries.INSERT.name()));
 		}
 		try (PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query)) {
-			int i = 0;
+			int i = 1;
 			pst.setString(i++, competition.getId());
 			pst.setString(i++, competition.getName());
 			pst.setString(i++, competition.getDescription());

@@ -18,6 +18,8 @@
 	<property name="basedir" value="." />
 	<property name="lib" value="${basedir}/lib" />
 	<property name="web.dir" value="src/main/webapp" />
+	<!-- Please сhoose dbproperties: local, openshift or jenkins -->
+	<property name="dbproperties" value="local" />
 
 	<!-- Defining classpaths                                                    -->
 
@@ -40,9 +42,61 @@
 		<delete dir="${build.dir}" />
 	</target>
 
+	<!-- Database properties target                                             -->
+
+	<target name="dblocal">
+		<condition property="mode.local">
+			<equals arg1="${dbproperties}" arg2="local" />
+		</condition>
+	</target>
+
+	<target name="get-local" depends="dblocal" description="Copy localhost db properties" if="mode.local">
+		<copy todir="${build.resourceDir.0}" overwrite="true" >
+			<file file="${basedir}/dbproperties/databaselocal.properties" />
+			<globmapper from="*" to="database.properties" />
+		</copy>
+		<copy todir="${basedir}" overwrite="true" >
+			<file file="${basedir}/dbproperties/testnglocal.xml" />
+			<globmapper from="*" to="testng.xml" />
+		</copy>
+	</target>
+
+	<target name="dbopen">
+		<condition property="mode.open">
+			<equals arg1="${dbproperties}" arg2="openshift" />
+		</condition>
+	</target>
+
+	<target name="get-open" depends="dbopen" description="Copy openshift db properties" if="mode.open">
+		<copy todir="${build.resourceDir.0}" overwrite="true" >
+			<file file="${basedir}/dbproperties/databaseopen.properties" />
+			<globmapper from="*" to="database.properties" />
+		</copy>
+		<copy todir="${basedir}" overwrite="true" >
+			<file file="${basedir}/dbproperties/testngopen.xml" />
+			<globmapper from="*" to="testng.xml" />
+		</copy>
+	</target>
+
+	<target name="dbjenkins">
+		<condition property="mode.jenkins">
+			<equals arg1="${dbproperties}" arg2="jenkins" />
+		</condition>
+	</target>
+
+	<target name="get-jenkins" depends="dbjenkins" description="Copy dbjenkins db properties" if="mode.jenkins">
+		<copy todir="${build.resourceDir.0}" overwrite="true" >
+			<file file="${basedir}/dbproperties\databasejenkins.properties" />
+			<globmapper from="*" to="database.properties" />
+		</copy>
+	</target>
+
+
 	<!-- Compilation target                                                     -->
 
-	<target name="compile" depends="get-deps, clean" description="Compile the code">
+	<target name="compile" depends="get-deps, clean, get-local, get-open, get-jenkins" description="Compile the code">
+		<echo>${myparam}</echo>
+		<echo message="${myparam}   I'm here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" />
 		<mkdir dir="${build.outputDir}" />
 		<mkdir dir="${build.dir}/lib" />
 		<javac destdir="${build.outputDir}" encoding="UTF-8" nowarn="false" debug="true" optimize="false" deprecation="true" target="1.7" verbose="false" fork="false" source="1.7" includeantruntime="false">
@@ -125,11 +179,6 @@
 			<equals arg1="${settings.offline}" arg2="true" />
 		</condition>
 	</target>
-	
-<!--	<target name="file-checks">
-	   <available file="${lib}/testng-6.9.10.jar"  property="testng-6.9.10.jar.found"/>
-	   <available file="${lib}/jcommander-1.48.jar" property="jcommander-1.48.jar.found"/>
-	</target> -->
 
 	<target name="get-deps" depends="test-offline" description="Download all dependencies" unless="mode.offline">
 		<mkdir dir="${lib}" />
@@ -183,7 +232,7 @@
 		<get src="https://repo.maven.apache.org/maven2/com/google/http-client/google-http-client-jackson2/1.19.0/google-http-client-jackson2-1.19.0.jar" dest="${lib}/google-http-client-jackson2-1.19.0.jar" usetimestamp="false" ignoreerrors="true" skipexisting="true" />
 		<get src="https://repo.maven.apache.org/maven2/com/fasterxml/jackson/core/jackson-core/2.1.3/jackson-core-2.1.3.jar" dest="${lib}/jackson-core-2.1.3.jar" usetimestamp="false" ignoreerrors="true" skipexisting="true" />
 		<get src="https://repo.maven.apache.org/maven2/com/google/guava/guava-jdk5/13.0/guava-jdk5-13.0.jar" dest="${lib}/guava-jdk5-13.0.jar" usetimestamp="false" ignoreerrors="true" skipexisting="true" />
-		<get src="http://central.maven.org/maven2/org/reflections/reflections/0.9.10/reflections-0.9.10.jar"  dest="${lib}/reflections-0.9.10.jar" usetimestamp="false" ignoreerrors="true" skipexisting="true" />
+		<get src="http://central.maven.org/maven2/org/reflections/reflections/0.9.10/reflections-0.9.10.jar" dest="${lib}/reflections-0.9.10.jar" usetimestamp="false" ignoreerrors="true" skipexisting="true" />
 	</target>
 
 	<target name="help">

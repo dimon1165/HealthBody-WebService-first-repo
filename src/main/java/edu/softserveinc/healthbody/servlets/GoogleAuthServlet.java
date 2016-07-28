@@ -10,6 +10,7 @@ import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -76,30 +77,22 @@ public class GoogleAuthServlet extends HttpServlet {
 			// get User Info
 			url = new URL("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + access_token);
 			urlConn = url.openConnection();
-			outputString = "";
-			reader = new BufferedReader(new InputStreamReader(urlConn.getInputStream(), "windows-1251"));
-			while ((line = reader.readLine()) != null)
-				outputString += line;
-			Log4jWrapper.get().info(outputString + rn);
-			byte[] utf8JsonString = outputString.getBytes();
-			String str = new String(utf8JsonString, StandardCharsets.UTF_8);
-			// Convert JSON response into Pojo class
-			GooglePojo data = new Gson().fromJson(str, GooglePojo.class);
+			GooglePojo data = new Gson().fromJson(new InputStreamReader(urlConn.getInputStream(), StandardCharsets.UTF_8), GooglePojo.class);
 			Log4jWrapper.get().info(data.toString() + rn);
 			writer.close();
 			reader.close();
 
 			// form UserDTO
 			String email = data.getEmail();
-			String login = email.substring(0, email.length() - 10).toString(); // minus"@gmail.com"
+			String login = email.substring(0, email.indexOf("@")).toString();
 			String firstname = data.getGiven_name();
 			String lastname = data.getFamily_name();
 			String photoURL = data.getPicture();
 			String fullgender = data.getGender();
 			String gender = getGoogleGender(fullgender);
 			List<GroupDTO> groups = new ArrayList<GroupDTO>();
-			groups.add(new GroupDTO("", "Name group number 1", "", "", ""));
-			UserDTO userDTO = new UserDTO("", login, null, firstname, lastname, email, "0", "0.0", gender, photoURL, "user",
+			groups.add(new GroupDTO(UUID.randomUUID().toString(), "Name group number 1", "0", "", ""));
+			UserDTO userDTO = new UserDTO(UUID.randomUUID().toString(), login, null, firstname, lastname, email, "0", "0.0", gender, photoURL, "user",
 					null, "0", groups, "false");
 			Log4jWrapper.get().info(userDTO.toString());
 

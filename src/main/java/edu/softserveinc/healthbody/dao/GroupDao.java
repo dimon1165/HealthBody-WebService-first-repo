@@ -76,7 +76,7 @@ public final class GroupDao extends AbstractDao<Group> {
 			throw new QueryNotFoundException(String.format(DaoConstants.QUERY_NOT_FOUND, DaoQueries.UPDATE.name()));
 		}
 		try (PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query)) {
-			int i = 0;
+			int i = 1;
 			pst.setString(i++, group.getId());
 			pst.setInt(i++, group.getCount());
 			pst.setString(i++, group.getDescription());
