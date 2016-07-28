@@ -51,11 +51,11 @@
 	</target>
 
 	<target name="get-local" depends="dblocal" description="Copy localhost db properties" if="mode.local">
-		<copy todir="${build.resourceDir.0}" overwrite="true" >
+		<copy todir="${build.resourceDir.0}" overwrite="true">
 			<file file="${basedir}/dbproperties/databaselocal.properties" />
 			<globmapper from="*" to="database.properties" />
 		</copy>
-		<copy todir="${basedir}" overwrite="true" >
+		<copy todir="${basedir}" overwrite="true">
 			<file file="${basedir}/dbproperties/testnglocal.xml" />
 			<globmapper from="*" to="testng.xml" />
 		</copy>
@@ -68,11 +68,11 @@
 	</target>
 
 	<target name="get-open" depends="dbopen" description="Copy openshift db properties" if="mode.open">
-		<copy todir="${build.resourceDir.0}" overwrite="true" >
+		<copy todir="${build.resourceDir.0}" overwrite="true">
 			<file file="${basedir}/dbproperties/databaseopen.properties" />
 			<globmapper from="*" to="database.properties" />
 		</copy>
-		<copy todir="${basedir}" overwrite="true" >
+		<copy todir="${basedir}" overwrite="true">
 			<file file="${basedir}/dbproperties/testngopen.xml" />
 			<globmapper from="*" to="testng.xml" />
 		</copy>
@@ -85,7 +85,7 @@
 	</target>
 
 	<target name="get-jenkins" depends="dbjenkins" description="Copy dbjenkins db properties" if="mode.jenkins">
-		<copy todir="${build.resourceDir.0}" overwrite="true" >
+		<copy todir="${build.resourceDir.0}" overwrite="true">
 			<file file="${basedir}/dbproperties\databasejenkins.properties" />
 			<globmapper from="*" to="database.properties" />
 		</copy>
@@ -232,7 +232,10 @@
 		<get src="https://repo.maven.apache.org/maven2/com/google/http-client/google-http-client-jackson2/1.19.0/google-http-client-jackson2-1.19.0.jar" dest="${lib}/google-http-client-jackson2-1.19.0.jar" usetimestamp="false" ignoreerrors="true" skipexisting="true" />
 		<get src="https://repo.maven.apache.org/maven2/com/fasterxml/jackson/core/jackson-core/2.1.3/jackson-core-2.1.3.jar" dest="${lib}/jackson-core-2.1.3.jar" usetimestamp="false" ignoreerrors="true" skipexisting="true" />
 		<get src="https://repo.maven.apache.org/maven2/com/google/guava/guava-jdk5/13.0/guava-jdk5-13.0.jar" dest="${lib}/guava-jdk5-13.0.jar" usetimestamp="false" ignoreerrors="true" skipexisting="true" />
-		<get src="http://central.maven.org/maven2/org/reflections/reflections/0.9.10/reflections-0.9.10.jar" dest="${lib}/reflections-0.9.10.jar" usetimestamp="false" ignoreerrors="true" skipexisting="true" />
+		<get src="https://repo.maven.apache.org/maven2/org/reflections/reflections/0.9.10/reflections-0.9.10.jar" dest="${lib}/reflections-0.9.10.jar" usetimestamp="false" ignoreerrors="true" skipexisting="true" />
+		<get src="https://repo.maven.apache.org/maven2/com/google/guava/guava/15.0/guava-15.0.jar" dest="${lib}/guava-15.0.jar" usetimestamp="false" ignoreerrors="true" skipexisting="true" />
+		<get src="https://repo.maven.apache.org/maven2/org/javassist/javassist/3.19.0-GA/javassist-3.19.0-GA.jar" dest="${lib}/javassist-3.19.0-GA.jar" usetimestamp="false" ignoreerrors="true" skipexisting="true" />
+		<get src="https://repo.maven.apache.org/maven2/com/google/code/findbugs/annotations/2.0.1/annotations-2.0.1.jar" dest="${lib}/annotations-2.0.1.jar" usetimestamp="false" ignoreerrors="true" skipexisting="true" />
 	</target>
 
 	<target name="help">
