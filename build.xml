@@ -95,6 +95,8 @@
 	<!-- Compilation target                                                     -->
 
 	<target name="compile" depends="get-deps, clean, get-local, get-open, get-jenkins" description="Compile the code">
+		<echo>${myparam}</echo>
+		<echo message="${myparam}   I'm here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" />
 		<mkdir dir="${build.outputDir}" />
 		<mkdir dir="${build.dir}/lib" />
 		<javac destdir="${build.outputDir}" encoding="UTF-8" nowarn="false" debug="true" optimize="false" deprecation="true" target="1.7" verbose="false" fork="false" source="1.7" includeantruntime="false">
