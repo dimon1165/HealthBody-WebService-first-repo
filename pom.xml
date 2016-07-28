@@ -12,6 +12,8 @@
 		<!-- - - - - - Encoding - - - - - -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.resources.plugin.version>2.7</maven.resources.plugin.version>
+		<!-- - - - - - Sonar - - - - - -->
+		<sonar.host.url> http://localhost:9000/ </sonar.host.url>
 		<!-- - - - - - Java - - - - - -->
 		<jdk.source.version.local>1.7</jdk.source.version.local>
 		<jdk.compiler.version.local>1.7</jdk.compiler.version.local>
