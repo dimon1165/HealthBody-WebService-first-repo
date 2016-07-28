@@ -51,26 +51,43 @@ public class ListenerServlet extends HttpServlet {
 				.get(path.toLowerCase());
 
 		try {
-			Method method = methodClassPair.getL();
-			List<Object> parameters = new ArrayList<>();
-			Class<?>[] types = method.getParameterTypes();
-			int i = 0;
-			for (Annotation[] annotations : method.getParameterAnnotations()) {
-
-				for (Annotation annotation : annotations) {
-					Param param = (Param) annotation;
-					parameters.add(RequestParamUtils.toObject(types[i], request.getParameter(param.name())));
-					i++;
-				}
-
-			}
-			wrightResponse(method.invoke(methodClassPair.getR().newInstance(), parameters.toArray()), response);
+			/*
+			 * Method method = methodClassPair.getL(); List<Object> parameters =
+			 * new ArrayList<>(); Class<?>[] types = method.getParameterTypes();
+			 * int i = 0; for (Annotation[] annotations :
+			 * method.getParameterAnnotations()) {
+			 * 
+			 * for (Annotation annotation : annotations) { Param param = (Param)
+			 * annotation; parameters.add(RequestParamUtils.toObject(types[i],
+			 * request.getParameter(param.name()))); i++; }
+			 * 
+			 * }
+			 */
+			List<Object> parameters = getParameters(methodClassPair, request);
+			wrightResponse(methodClassPair.getL().invoke(methodClassPair.getR().newInstance(), parameters.toArray()), response);
 			ParamUtils.getLogin(request);
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
 				| InstantiationException e) {
 			Log4jWrapper.get().error("Could't load data: " + e);
 		}
 
+	}
+
+	private List<Object> getParameters(Pair<Method, Class<?>> methodClassPair, HttpServletRequest request) {
+		Method method = methodClassPair.getL();
+		List<Object> parameters = new ArrayList<>();
+		Class<?>[] types = method.getParameterTypes();
+		int i = 0;
+		for (Annotation[] annotations : method.getParameterAnnotations()) {
+
+			for (Annotation annotation : annotations) {
+				Param param = (Param) annotation;
+				parameters.add(RequestParamUtils.toObject(types[i], request.getParameter(param.name())));
+				i++;
+			}
+
+		}
+		return parameters;
 	}
 
 	private void wrightResponse(Object object, HttpServletResponse response) throws IOException {
