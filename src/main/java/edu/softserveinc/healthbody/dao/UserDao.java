@@ -128,8 +128,7 @@ public final class UserDao extends AbstractDao<User> {
 			throw new QueryNotFoundException(String.format(DaoConstants.QUERY_NOT_FOUND, DaoQueries.UPDATE.name()));
 		}
 		try (PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query)) {
-			int i = 0;
-			pst.setString(i++, user.getId());
+			int i = 1;
 			pst.setString(i++, user.getPasswd());
 			pst.setString(i++, user.getFirsName());
 			pst.setString(i++, user.getLastName());
