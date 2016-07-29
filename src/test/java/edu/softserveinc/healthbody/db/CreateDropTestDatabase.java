@@ -79,6 +79,7 @@ public class CreateDropTestDatabase {
 			Log4jWrapper.get().error(failMessage + e);
 			fail(failMessage, e);
 		}
+	    DBPopulateManager.getInstance().populateRolesTable();
 		DBPopulateManager.getInstance().populateUsersTable();
 		DBPopulateManager.getInstance().populateGroupsTable();
 		DBPopulateManager.getInstance().populateUserGroupsTable();
@@ -87,7 +88,6 @@ public class CreateDropTestDatabase {
 	    DBPopulateManager.getInstance().populateCriteriaTable();
 	    DBPopulateManager.getInstance().populateGroupCompetitionsTable();
 	    DBPopulateManager.getInstance().populateMetaDataTable();
-	    DBPopulateManager.getInstance().populateRolesTable();
 	    DBPopulateManager.getInstance().populateUserCompetitionsTable();
 		Log4jWrapper.get().info("End of tables population");
 	}
