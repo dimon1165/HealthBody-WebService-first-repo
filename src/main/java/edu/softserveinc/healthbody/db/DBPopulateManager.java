@@ -24,7 +24,7 @@ public class DBPopulateManager {
 	private static final String[] GROUP_ID = new String[GROUPS];
 	private static final String[] COMPETITION_ID = new String[COMPETITIONS];
 	private static final String[] AWARD_ID = new String[AWARDS];
-	private static final String[] CRITERIA_ID = new String[CRITERIA];	
+	private static final String[] CRITERIA_ID = new String[CRITERIA];
 	private static String ROLE_USER_ID;
 	private static final int USERGROUPS = 15;
 	private static final int USERCOMPETITIONS = 50;

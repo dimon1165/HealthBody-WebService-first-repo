@@ -21,6 +21,7 @@ public class DatabaseCreatorWithMain {
 		for (String query : DBCreationManager.getInstance().getListOfQueries()) {
 			DBCreationManager.getInstance().createTable(st, query);
 		}
+		DBPopulateManager.getInstance().populateRolesTable();
 		DBPopulateManager.getInstance().populateUsersTable();
 		DBPopulateManager.getInstance().populateGroupsTable();
 		DBPopulateManager.getInstance().populateUserGroupsTable();
@@ -29,7 +30,6 @@ public class DatabaseCreatorWithMain {
 	    DBPopulateManager.getInstance().populateCriteriaTable();
 	    DBPopulateManager.getInstance().populateGroupCompetitionsTable();
 	    DBPopulateManager.getInstance().populateMetaDataTable();
-	    DBPopulateManager.getInstance().populateRolesTable();
 	    DBPopulateManager.getInstance().populateUserCompetitionsTable();
 	}
 }

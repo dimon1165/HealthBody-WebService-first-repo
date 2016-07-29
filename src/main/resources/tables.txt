@@ -1,3 +1,8 @@
+CREATE TABLE IF NOT EXISTS "roles"(
+id_role varchar(50) primary key,
+name varchar(50),
+description varchar(200));
+
 CREATE TABLE IF NOT EXISTS "users"(
 id_user varchar(50) primary key,
 login varchar(50),
@@ -13,12 +18,8 @@ avatar varchar(250),
 google_field varchar(150),
 id_role varchar(50),
 status varchar(50),
-isDisabled boolean);
-
-CREATE TABLE IF NOT EXISTS "roles"(
-id_role varchar(50) primary key,
-name varchar(50),
-description varchar(200));
+isDisabled boolean,
+FOREIGN KEY (id_role)  REFERENCES "roles" (id_role));
 
 CREATE TABLE IF NOT EXISTS "groups"(
 id_group varchar(50) primary key,
