@@ -20,9 +20,10 @@ public class CreateDropTestDatabase {
 	@Parameters("testDatabase")
 	public void createTestDatabase(@Optional("healthbodydbtest") String testDatabase) {
 		Log4jWrapper.get().info("Setting up database " + testDatabase + ".");
-		try (Connection con = ConnectionManager
+		try {
+			Connection con = ConnectionManager
 				.getInstance(DataSourceRepository.getInstance().getPostgresLocalHostNoDatabase()).getConnection();
-				Statement st = con.createStatement()) {
+				Statement st = con.createStatement();
 			if (!DBCreationManager.getInstance().dropDatabase(st, testDatabase)) {
 				String failMessage = "Database " + testDatabase + " does not exist.";
 				Log4jWrapper.get().info(failMessage);

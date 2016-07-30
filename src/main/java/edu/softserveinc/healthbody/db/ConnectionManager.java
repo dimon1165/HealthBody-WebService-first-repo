@@ -3,20 +3,22 @@ package edu.softserveinc.healthbody.db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 
 public class ConnectionManager {
 	private static final String FAILED_REGISTRATE_DRIVER = "Failed to Registrate JDBC Driver";
+	private static final int MAX_POOL_SIZE = 5;
 
 	private static volatile ConnectionManager instance;
 
 	private DataSource dataSource;
-	private final HashMap<Long, Connection> connections;
+	private final List<Connection> connections;
 
 	public ConnectionManager() {
-		this.connections = new HashMap<Long, Connection>();
+		this.connections = new ArrayList<Connection>();
 	}
 
 	public static ConnectionManager getInstance() throws JDBCDriverException {
@@ -59,7 +61,6 @@ public class ConnectionManager {
 		synchronized (ConnectionManager.class) {
 			this.dataSource = dataSource;
 			registerDriver();
-			closeAllConnections();
 		}
 	}
 
@@ -71,16 +72,36 @@ public class ConnectionManager {
 		}
 	}
 
-	private HashMap<Long, Connection> getAllConections() {
-		return this.connections;
+	private void addConnection(Connection connection) {
+		while(!checkIfConnectionPoolIsFull()) {
+		  connections.add(connection);
+		}
 	}
-
-	private void addConnection(final Connection connection) {
-		getAllConections().put(Thread.currentThread().getId(), connection);
+		 
+	private synchronized boolean checkIfConnectionPoolIsFull() {
+		if (connections.size() < MAX_POOL_SIZE) {
+			return false;
+		}
+		return true;
 	}
+	
+	private synchronized Connection getConnectionFromPool()
+	 {
+	  Connection connection = null;
+	  if(connections.size() > 0) {
+	   connection = connections.get(0);
+	   connections.remove(0);
+	   returnConnectionToPool(connection);
+	  }
+	  return connection;
+	 }
+	
+	private synchronized void returnConnectionToPool(Connection connection) {
+		  connections.add(connection);
+		 }
 
 	public final Connection getConnection() throws JDBCDriverException {
-		Connection connection = getAllConections().get(Thread.currentThread().getId());
+		Connection connection = getConnectionFromPool();
 		if (connection == null) {
 			try {
 				connection = DriverManager.getConnection(getDataSource().getConnectionUrl(), getDataSource().getUser(),
@@ -92,7 +113,7 @@ public class ConnectionManager {
 		}
 		return connection;
 	}
-
+		
 	public final void beginTransaction() throws SQLException, JDBCDriverException {
 		getConnection().setAutoCommit(false);
 	}
@@ -107,18 +128,4 @@ public class ConnectionManager {
 		getConnection().setAutoCommit(true);
 	}
 
-	public static void closeAllConnections() throws JDBCDriverException {
-		if (instance != null) {
-			for (Long key : instance.getAllConections().keySet()) {
-				if (instance.getAllConections().get(key) != null) {
-					try {
-						instance.getAllConections().get(key).close();
-					} catch (SQLException e) {
-						throw new JDBCDriverException(FAILED_REGISTRATE_DRIVER, e);
-					}
-					instance.getAllConections().put(key, null);
-				}
-			}
-		}
-	}
 }
