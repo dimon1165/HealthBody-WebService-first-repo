@@ -10,7 +10,7 @@ import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 
 public class ConnectionManager {
 	private static final String FAILED_REGISTRATE_DRIVER = "Failed to Registrate JDBC Driver";
-	private static final int MAX_POOL_SIZE = 5;
+	private static final int MAX_POOL_SIZE = 15;
 
 	private static volatile ConnectionManager instance;
 
