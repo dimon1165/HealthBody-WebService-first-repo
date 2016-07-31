@@ -89,6 +89,10 @@
 			<file file="${basedir}/dbproperties\databasejenkins.properties" />
 			<globmapper from="*" to="database.properties" />
 		</copy>
+		<copy todir="${basedir}" overwrite="true">
+			<file file="${basedir}/dbproperties/testngopen.xml" />
+			<globmapper from="*" to="testng.xml" />
+		</copy>
 	</target>
 
 
