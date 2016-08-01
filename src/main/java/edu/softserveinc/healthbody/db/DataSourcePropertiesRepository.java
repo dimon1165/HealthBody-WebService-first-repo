@@ -13,7 +13,7 @@ class DataSourcePropertiesRepository {
     private static volatile DataSourcePropertiesRepository instance;
     
     private static final String DATABASE_PROPERTIES_FILENAME = "database.properties";
-	private static final String DEFAULT_URL = "jdbc:postgresql://localhost:5432";
+	private static final String DEFAULT_URL = "jdbc:postgresql://localhost:5432/";
 	private static final String DEFAULT_USERNAME = "postgres";
 	private static final String DEFAULT_PASSWORD = "root";
 	private static final String DEFAULT_DATABASE = "healthbodydb";
