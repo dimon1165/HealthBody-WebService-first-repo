@@ -14,8 +14,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import edu.softserveinc.healthbody.constants.TestConstants;
-import edu.softserveinc.healthbody.db.CreateDropTestDatabase;
-import edu.softserveinc.healthbody.db.DBPopulateManager;
+import edu.softserveinc.healthbody.db.TestDatabaseManager;
 import edu.softserveinc.healthbody.dto.GroupDTO;
 import edu.softserveinc.healthbody.dto.UserDTO;
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
@@ -30,14 +29,14 @@ public class UserProfileServiceImplTest {
 	
 	@BeforeClass
 	public void populateTestData(){
-		new CreateDropTestDatabase().populateDBTables();
+		new TestDatabaseManager().repopulateTestDatabase();
 	}
 	
 	@AfterClass
-	public void CleanTableAfterTest() throws SQLException, JDBCDriverException{
-		DBPopulateManager.getInstance().deleteAllFromTables();
-		Log4jWrapper.get().info("Aftertest block Userviewserviceimpl worked");
+	public void cleanTestData() {
+		new TestDatabaseManager().cleanTestDatabaseTables();
 	}
+
 	@Test
 	public void testGetUserByLogin() {
 		UserDTO userDTO1;

@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
+import edu.softserveinc.healthbody.log.Log4jWrapper;
 
 public class ConnectionManager {
 	private static final String FAILED_REGISTRATE_DRIVER = "Failed to Registrate JDBC Driver";
@@ -61,6 +63,7 @@ public class ConnectionManager {
 		synchronized (ConnectionManager.class) {
 			this.dataSource = dataSource;
 			registerDriver();
+			closeAllConnections();
 		}
 	}
 
@@ -107,6 +110,7 @@ public class ConnectionManager {
 				connection = DriverManager.getConnection(getDataSource().getConnectionUrl(), getDataSource().getUser(),
 						getDataSource().getPasswrd());
 			} catch (SQLException e) {
+				Log4jWrapper.get().error("Error while getting connection.", e);
 				throw new JDBCDriverException(FAILED_REGISTRATE_DRIVER, e);
 			}
 			addConnection(connection);
@@ -128,4 +132,25 @@ public class ConnectionManager {
 		getConnection().setAutoCommit(true);
 	}
 
+	private List<Connection> getAllConections() {
+		return this.connections;
+	}
+
+	private void closeAllConnections() throws JDBCDriverException {
+		if (instance != null) {
+			for (Iterator<Connection> iterator = instance.getAllConections().iterator(); iterator.hasNext();) {
+			    Connection conn = iterator.next();
+// Let's hope it will close closed connection without exception :)			    
+//				if (conn != null && !conn.isClosed()) {
+				if (conn != null) {
+					try {
+						conn.close();
+					} catch (SQLException e) {
+						throw new JDBCDriverException(FAILED_REGISTRATE_DRIVER, e);
+					}
+					iterator.remove();
+				}
+			}
+		}
+}
 }

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,34 +31,24 @@ public class DatabaseCreationServlet extends HttpServlet {
 	protected final void doGet(final HttpServletRequest request, final HttpServletResponse response)
 			throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
-		Connection con;
+		Connection conn;
 		try {
-			con = ConnectionManager.getInstance(DataSourceRepository.getInstance()
-					.getPostgresDatabase()).getConnection();
+			conn = ConnectionManager.getInstance(DataSourceRepository.getInstance().getPostgresDatabase())
+					.getConnection();
 		} catch (JDBCDriverException e) {
 			e.printStackTrace(out);
 			out.flush();
 			return;
 		}
-		try (Statement st = con.createStatement()) {
-			for (String query : DBCreationManager.getInstance().getListOfQueries()) {
-				DBCreationManager.getInstance().createTable(st, query);
-			}
+		try {
+			DBCreationManager.getInstance().dropAllDatabaseTables(conn);
+			DBCreationManager.getInstance().createDatabaseTables(conn);
+			DBPopulateManager.getInstance().populateDatabaseTables(conn);
 		} catch (SQLException e) {
 			e.printStackTrace(out);
 			out.flush();
 			return;
 		}
-		DBPopulateManager.getInstance().populateUsersTable();
-		DBPopulateManager.getInstance().populateGroupsTable();
-		DBPopulateManager.getInstance().populateUserGroupsTable();
-		DBPopulateManager.getInstance().populateAwardsTable();
-		DBPopulateManager.getInstance().populateCompetitionsTable();
-		DBPopulateManager.getInstance().populateCriteriaTable();
-		DBPopulateManager.getInstance().populateGroupCompetitionsTable();
-		DBPopulateManager.getInstance().populateMetaDataTable();
-		DBPopulateManager.getInstance().populateRolesTable();
-		DBPopulateManager.getInstance().populateUserCompetitionsTable();
 
 		out.append("Database successfully created and populated at: ")
 				.append(request.getContextPath());

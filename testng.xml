@@ -4,7 +4,7 @@
 	<parameter name="testDatabase" value="healthbodydbtest" />
 	<test name="PrepareDatabase">
 		<classes>
-			<class name="edu.softserveinc.healthbody.db.CreateDatabaseTestOpenShift" />
+			<class name="edu.softserveinc.healthbody.db.TestDatabaseManager" /> 
 		</classes>
 	</test>
 	

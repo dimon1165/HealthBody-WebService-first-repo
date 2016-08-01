@@ -8,7 +8,6 @@ import java.util.Random;
 import java.util.UUID;
 
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant;
-import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 import edu.softserveinc.healthbody.log.Log4jWrapper;
 
 public class DBPopulateManager {
@@ -30,15 +29,8 @@ public class DBPopulateManager {
 	private static final int USERCOMPETITIONS = 50;
 	private static final int GROUPCOMPETITIONS = 8;
 	private static volatile DBPopulateManager instance = null;
-	private Connection con = null;
-	
 
 	private DBPopulateManager() {
-		try {
-			con = ConnectionManager.getInstance().getConnection();
-		} catch (JDBCDriverException e) {
-			Log4jWrapper.get().error("Error in DBPopulateManager constructor while getting connetion." + e);
-		}
 	}
 
 	public static DBPopulateManager getInstance() {
@@ -52,10 +44,26 @@ public class DBPopulateManager {
 		return instance;
 	}
 
-	public boolean populateUsersTable() {
+    
+    public boolean populateDatabaseTables(Connection conn) throws SQLException {
+    	boolean result = true;
+		result = result && getInstance().populateRolesTable(conn);
+		result = result && getInstance().populateUsersTable(conn);
+		result = result && getInstance().populateGroupsTable(conn);
+		result = result && getInstance().populateUserGroupsTable(conn);
+		result = result && getInstance().populateAwardsTable(conn);
+		result = result && getInstance().populateCompetitionsTable(conn);
+		result = result && getInstance().populateCriteriaTable(conn);
+		result = result && getInstance().populateGroupCompetitionsTable(conn);
+		result = result && getInstance().populateMetaDataTable(conn);
+		result = result && getInstance().populateUserCompetitionsTable(conn);
+    	return result;
+    }
+	
+	private boolean populateUsersTable(Connection conn) throws SQLException {
 		boolean successfulInsert = false;
 		String query = DaoStatementsConstant.UserDBQueries.INSERT.toString();
-		try (PreparedStatement pst = con.prepareStatement(query)) {
+		try (PreparedStatement pst = conn.prepareStatement(query)) {
 			for (int j = 0; j < USERS; j++) {	
 				USER_ID[j] = UUID.randomUUID().toString();
 				pst.setString(1, USER_ID[j]);				
@@ -79,15 +87,16 @@ public class DBPopulateManager {
 				}
 			}
 		} catch (SQLException e) {
-			Log4jWrapper.get().error("Error populating users table." + e);
+			Log4jWrapper.get().error("Error populating users table.", e);
+			throw e;
 		}
 		return successfulInsert;
 	}
 
-    public boolean populateGroupsTable() {
+	private boolean populateGroupsTable(Connection conn) throws SQLException {
 		boolean successfulInsert = false;
 		String query = DaoStatementsConstant.GroupDBQueries.INSERT.toString();
-		try (PreparedStatement pst = con.prepareStatement(query)) {
+		try (PreparedStatement pst = conn.prepareStatement(query)) {
 			for (int j = 0; j < GROUPS; j++){				
 				GROUP_ID[j] = UUID.randomUUID().toString();
 				pst.setString(1, GROUP_ID[j]);				
@@ -102,15 +111,16 @@ public class DBPopulateManager {
 				}
 			}
 		} catch (SQLException e) {
-			Log4jWrapper.get().error("Error populating groups table." + e);
+			Log4jWrapper.get().error("Error populating groups table.", e);
+			throw e;
 		}
 		return successfulInsert;
 	}
 
-    public boolean populateUserGroupsTable() {
+	private boolean populateUserGroupsTable(Connection conn) throws SQLException {
 		boolean successfulInsert = false;
 		String query = DaoStatementsConstant.UserGroupQueries.INSERT.toString();
-		try (PreparedStatement pst = con.prepareStatement(query)) {
+		try (PreparedStatement pst = conn.prepareStatement(query)) {
 			for (int j = 0; j < USERGROUPS; j++) {
 				pst.setString(1, UUID.randomUUID().toString());
 				pst.setString(2, USER_ID[(int)(Math.random() * USERS)]);
@@ -121,15 +131,16 @@ public class DBPopulateManager {
 				}
 			}
 		} catch (SQLException e) {
-			Log4jWrapper.get().error("Error populating usergroups table." + e);
+			Log4jWrapper.get().error("Error populating usergroups table.", e);
+			throw e;
 		}
 		return successfulInsert;
 	}
 
-    public boolean populateAwardsTable() {
+	private boolean populateAwardsTable(Connection conn) throws SQLException {
 		boolean successfulInsert = false;
 		String query = DaoStatementsConstant.AwardDBQueries.INSERT.toString();
-		try (PreparedStatement pst = con.prepareStatement(query)) {
+		try (PreparedStatement pst = conn.prepareStatement(query)) {
 			for (int j = 0; j < AWARDS; j++) {
 				AWARD_ID[j] = UUID.randomUUID().toString();
 				pst.setString(1, AWARD_ID[j]);		
@@ -140,15 +151,16 @@ public class DBPopulateManager {
 				}
 			}
 		} catch (SQLException e) {
-			Log4jWrapper.get().error("Error populating awards table." + e);
+			Log4jWrapper.get().error("Error populating awards table.", e);
+			throw e;
 		}
 		return successfulInsert;
 	}
 
-    public boolean populateCompetitionsTable() {
+	private boolean populateCompetitionsTable(Connection conn) throws SQLException {
 		boolean successfulInsert = false;
 		String query = DaoStatementsConstant.CompetitionDBQueries.INSERT.toString();
-		try (PreparedStatement pst = con.prepareStatement(query)) {
+		try (PreparedStatement pst = conn.prepareStatement(query)) {
 			for (int j = 0; j < COMPETITIONS; j++) {
 				COMPETITION_ID[j] = UUID.randomUUID().toString();
 				pst.setString(1, COMPETITION_ID[j]);	
@@ -166,15 +178,16 @@ public class DBPopulateManager {
 				}
 			}
 		} catch (SQLException e) {
-			Log4jWrapper.get().error("Error populating competitions table." + e);
+			Log4jWrapper.get().error("Error populating competitions table.", e);
+			throw e;
 		}
 		return successfulInsert;
 	}
 
-    public boolean populateCriteriaTable() {
+	private boolean populateCriteriaTable(Connection conn) throws SQLException {
 		boolean successfulInsert = false;
 		String query = DaoStatementsConstant.CriteriaDBQueries.INSERT.toString();
-		try (PreparedStatement pst = con.prepareStatement(query)) {
+		try (PreparedStatement pst = conn.prepareStatement(query)) {
 			for (int j = 0; j < CRITERIA; j++) {
 				CRITERIA_ID[j] = UUID.randomUUID().toString();
 				pst.setString(1, CRITERIA_ID[j]);
@@ -187,15 +200,16 @@ public class DBPopulateManager {
 				}
 			}
 		} catch (SQLException e) {
-			Log4jWrapper.get().error("Error populating criteria table." + e);
+			Log4jWrapper.get().error("Error populating criteria table.", e);
+			throw e;
 		}
 		return successfulInsert;
 	}
 
-    public boolean populateGroupCompetitionsTable() {
+	private boolean populateGroupCompetitionsTable(Connection conn) throws SQLException {
 		boolean successfulInsert = false;
 		String query = DaoStatementsConstant.GroupCompetitionsDBQueries.INSERT.toString();
-		try (PreparedStatement pst = con.prepareStatement(query)) {
+		try (PreparedStatement pst = conn.prepareStatement(query)) {
 			for (int j = 0; j < GROUPCOMPETITIONS; j++) {
 				pst.setString(1, UUID.randomUUID().toString());
 				pst.setString(2, GROUP_ID[(int)(Math.random() * GROUPS)]);
@@ -206,15 +220,16 @@ public class DBPopulateManager {
 				}
 			}
 		} catch (SQLException e) {
-			Log4jWrapper.get().error("Error populating groupcompetitions table." + e);
+			Log4jWrapper.get().error("Error populating groupcompetitions table.", e);
+			throw e;
 		}
 		return successfulInsert;
 	}
 
-    public boolean populateMetaDataTable() {
+	private boolean populateMetaDataTable(Connection conn) throws SQLException {
 		boolean successfulInsert = false;
 		String query = DaoStatementsConstant.MetaDataDBQueries.INSERT.toString();
-		try (PreparedStatement pst = con.prepareStatement(query)) {
+		try (PreparedStatement pst = conn.prepareStatement(query)) {
 			for (int j = 0; j < METADATA; j++) {
 				pst.setString(1, UUID.randomUUID().toString());
 				pst.setString(2, "meta data " + j);
@@ -224,15 +239,16 @@ public class DBPopulateManager {
 				}
 			}
 		} catch (SQLException e) {
-			Log4jWrapper.get().error("Error populating metadata table." + e);
+			Log4jWrapper.get().error("Error populating metadata table.", e);
+			throw e;
 		}
 		return successfulInsert;
 	}
 
-    public boolean populateRolesTable() {
+	private boolean populateRolesTable(Connection conn) throws SQLException {
 		boolean successfulInsert = false;
 		String query = DaoStatementsConstant.RoleDBQueries.INSERT.toString();
-		try (PreparedStatement pst = con.prepareStatement(query)) {
+		try (PreparedStatement pst = conn.prepareStatement(query)) {
 			for (int j = 0; j < ROLES; j++) {
 				if (j == 2){
 					ROLE_USER_ID = UUID.randomUUID().toString();
@@ -248,15 +264,16 @@ public class DBPopulateManager {
 				}
 			}
 		} catch (SQLException e) {
-			Log4jWrapper.get().error("Error populating roles table." + e);
+			Log4jWrapper.get().error("Error populating roles table.", e);
+			throw e;
 		}
 		return successfulInsert;
 	}
 
-    public boolean populateUserCompetitionsTable() {
+	private boolean populateUserCompetitionsTable(Connection conn) throws SQLException {
 		boolean successfulInsert = false;
 		String query = DaoStatementsConstant.UserCompetitionsDBQueries.INSERT.toString();
-		try (PreparedStatement pst = con.prepareStatement(query)) {
+		try (PreparedStatement pst = conn.prepareStatement(query)) {
 			for (int j = 0; j < USERCOMPETITIONS; j++) {
 				pst.setString(1, UUID.randomUUID().toString());
 				pst.setString(2, USER_ID[(int)(Math.random() * USERS)]);
@@ -270,23 +287,9 @@ public class DBPopulateManager {
 				}
 			}
 		} catch (SQLException e) {
-			Log4jWrapper.get().error("Error populating usercompetitions table." + e);
+			Log4jWrapper.get().error("Error populating usercompetitions table.", e);
+			throw e;
 		}
 		return successfulInsert;
-	}
-
-    public boolean deleteAllFromTables() throws SQLException, JDBCDriverException {
-		boolean result = false;
-		ConnectionManager.getInstance().beginTransaction();
-		String query = "drop TABLE if exists usergroups, groupcompetitions, usercompetitions, users, " 
-		+ "roles, groups, competitions, awards, criteria, metadata;";
-		try (PreparedStatement pst = con.prepareStatement(query)) {
-			result = pst.execute();
-			ConnectionManager.getInstance().commitTransaction();
-		} catch (SQLException e) {
-			ConnectionManager.getInstance().rollbackTransaction();
-			Log4jWrapper.get().error("Error trancating database tables." + e);
-		}
-		return result;
 	}
 }

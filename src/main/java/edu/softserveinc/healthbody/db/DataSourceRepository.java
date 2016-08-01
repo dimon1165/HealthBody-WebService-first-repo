@@ -28,6 +28,14 @@ public final class DataSourceRepository {
         		DataSourcePropertiesRepository.getInstance().getPassword());
     }
     
+    public DataSource getPostgresTestDatabase() throws JDBCDriverException {
+        return new DataSource(DriverRepository.getInstance().getPostgresDriver(),
+        		DataSourcePropertiesRepository.getInstance().getConnectionUrl()
+        		+ DataSourcePropertiesRepository.getInstance().getTestDatabase(),
+        		DataSourcePropertiesRepository.getInstance().getUsername(),
+        		DataSourcePropertiesRepository.getInstance().getPassword());
+    }
+
     public DataSource getPostgresNoDatabase() throws JDBCDriverException {
         return new DataSource(DriverRepository.getInstance().getPostgresDriver(),
         		DataSourcePropertiesRepository.getInstance().getConnectionUrl(),

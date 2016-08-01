@@ -44,6 +44,8 @@
 
 	<!-- Database properties target                                             -->
 
+	<!-- Using DataSourcePropertiesRepository instead -->
+	<!--
 	<target name="dblocal">
 		<condition property="mode.local">
 			<equals arg1="${dbproperties}" arg2="local" />
@@ -94,11 +96,12 @@
 			<globmapper from="*" to="testng.xml" />
 		</copy>
 	</target>
-
+	-->
 
 	<!-- Compilation target                                                     -->
 
-	<target name="compile" depends="get-deps, clean, get-local, get-open, get-jenkins" description="Compile the code">
+<!--	<target name="compile" depends="get-deps, clean, get-local, get-open, get-jenkins" description="Compile the code"> -->
+	<target name="compile" depends="get-deps, clean" description="Compile the code">
 		<echo>${myparam}</echo>
 		<echo message="${myparam}   I'm here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" />
 		<mkdir dir="${build.outputDir}" />

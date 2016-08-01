@@ -15,8 +15,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import edu.softserveinc.healthbody.constants.TestConstants;
-import edu.softserveinc.healthbody.db.CreateDropTestDatabase;
-import edu.softserveinc.healthbody.db.DBPopulateManager;
+import edu.softserveinc.healthbody.db.TestDatabaseManager;
 import edu.softserveinc.healthbody.dto.CompetitionDTO;
 import edu.softserveinc.healthbody.exceptions.IllegalAgrumentCheckedException;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
@@ -29,13 +28,12 @@ public class CompetitionsViewServiceImplTest {
 	
 	@BeforeClass
 	public void populateTestData(){
-		new CreateDropTestDatabase().populateDBTables();
+		new TestDatabaseManager().repopulateTestDatabase();
 	}
 	
 	@AfterClass
-	public void CleanTableAfterTest() throws SQLException, JDBCDriverException{
-		DBPopulateManager.getInstance().deleteAllFromTables();
-		Log4jWrapper.get().info("Aftertest block UserviewServiceimpl worked");
+	public void cleanTestData() {
+		new TestDatabaseManager().cleanTestDatabaseTables();
 	}
 	
 	@Test
