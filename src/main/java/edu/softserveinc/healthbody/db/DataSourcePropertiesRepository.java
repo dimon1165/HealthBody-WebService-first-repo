@@ -13,9 +13,9 @@ class DataSourcePropertiesRepository {
     private static volatile DataSourcePropertiesRepository instance;
     
     private static final String DATABASE_PROPERTIES_FILENAME = "database.properties";
-	private static final String DEFAULT_URL = "jdbc:postgresql://localhost:5432/";
-	private static final String DEFAULT_USERNAME = "postgres";
-	private static final String DEFAULT_PASSWORD = "root";
+	private static final String DEFAULT_URL = "jdbc:postgresql://127.10.182.2:5432/jenkins";
+	private static final String DEFAULT_USERNAME = "adminud8ggnm";
+	private static final String DEFAULT_PASSWORD = "6JxTBU-ab6KR";
 	private static final String DEFAULT_DATABASE = "healthbodydb";
 	private static final String DEFAULT_TEST_DATABASE = "healthbodydbtest";
 
