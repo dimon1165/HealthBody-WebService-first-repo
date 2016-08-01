@@ -1,7 +1,6 @@
 package edu.softserveinc.healthbody.groups;
 
-import static org.testng.AssertJUnit.assertEquals;
-import static org.testng.AssertJUnit.assertNotNull;
+import static org.testng.AssertJUnit.*;
 
 import java.sql.SQLException;
 import java.util.List;

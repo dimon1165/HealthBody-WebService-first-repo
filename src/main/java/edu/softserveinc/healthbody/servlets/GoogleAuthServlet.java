@@ -100,11 +100,11 @@ public class GoogleAuthServlet extends HttpServlet {
 				HealthBodyServiceImpl healthBodyServiceImpl = new HealthBodyServiceImpl();
 				if (healthBodyServiceImpl.getUserByLogin(login) == null) {
 					healthBodyServiceImpl.createUser(userDTO);
-					UserDTO ud = healthBodyServiceImpl.getUserByLogin(login);
+//					UserDTO ud = healthBodyServiceImpl.getUserByLogin(login);
 					out.append(login + ", wellcome! You've singed up HealthBody!" + rn);
 					out.flush();
 				} else {
-					UserDTO ud = healthBodyServiceImpl.getUserByLogin(login);
+//					UserDTO ud = healthBodyServiceImpl.getUserByLogin(login);
 					out.append(login + ", wellcome HealthBody!");
 					out.flush();
 				}

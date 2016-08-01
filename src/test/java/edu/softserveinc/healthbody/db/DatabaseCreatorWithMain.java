@@ -7,15 +7,15 @@ import java.sql.Statement;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 
 public class DatabaseCreatorWithMain {
-    private final static String DATABASE_NAME = "healthbodydb";
+    private final static String DATABASE_NAME = DataSourcePropertiesRepository.getInstance().getDatabase();
 
     public static void main(String[] args) throws JDBCDriverException, SQLException {
-		DataSource ds = DataSourceRepository.getInstance().getPostgresLocalHostNoDatabase();
+		DataSource ds = DataSourceRepository.getInstance().getPostgresNoDatabase();
 		Connection con = ConnectionManager.getInstance(ds).getConnection();
 		Statement st = con.createStatement();
 		DBCreationManager.getInstance().createDatabase(st, DATABASE_NAME);
 		st.close();
-		ds = DataSourceRepository.getInstance().getPostgresLocalHostByDatabaseName(DATABASE_NAME);
+		ds = DataSourceRepository.getInstance().getPostgresDatabase();
 		con = ConnectionManager.getInstance(ds).getConnection();
 		st = con.createStatement();
 		for (String query : DBCreationManager.getInstance().getListOfQueries()) {

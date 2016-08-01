@@ -35,7 +35,7 @@ public class DatabaseCreationServlet extends HttpServlet {
 		Connection con;
 		try {
 			con = ConnectionManager.getInstance(DataSourceRepository.getInstance()
-					.getPostgresOpenShift()).getConnection();
+					.getPostgresDatabase()).getConnection();
 		} catch (JDBCDriverException e) {
 			e.printStackTrace(out);
 			out.flush();
