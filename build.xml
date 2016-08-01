@@ -19,7 +19,7 @@
 	<property name="lib" value="${basedir}/lib" />
 	<property name="web.dir" value="src/main/webapp" />
 	<!-- Please сhoose dbproperties: local, openshift or jenkins -->
-	<property name="dbproperties" value="local" />
+	<property name="dbproperties" value="jenkins" />
 
 	<!-- Defining classpaths                                                    -->
 
@@ -88,6 +88,10 @@
 		<copy todir="${build.resourceDir.0}" overwrite="true">
 			<file file="${basedir}/dbproperties\databasejenkins.properties" />
 			<globmapper from="*" to="database.properties" />
+		</copy>
+		<copy todir="${basedir}" overwrite="true">
+			<file file="${basedir}/dbproperties/testngopen.xml" />
+			<globmapper from="*" to="testng.xml" />
 		</copy>
 	</target>
 

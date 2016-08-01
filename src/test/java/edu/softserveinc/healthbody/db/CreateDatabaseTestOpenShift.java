@@ -8,8 +8,6 @@ import java.sql.Statement;
 
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
 
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 import edu.softserveinc.healthbody.log.Log4jWrapper;
@@ -17,12 +15,12 @@ import edu.softserveinc.healthbody.log.Log4jWrapper;
 public class CreateDatabaseTestOpenShift extends CreateDropTestDatabase {
  	
  	@BeforeSuite
- 	@Parameters("testDatabase")
  	@Override
- 	public void createTestDatabase(@Optional("healthbodydbtest") String testDatabase) {
+ 	public void createTestDatabase() {
+ 		String testDatabase = DataSourcePropertiesRepository.getInstance().getTestDatabase();
  		Log4jWrapper.get().info("Setting up database " + testDatabase + ".");
 		try (Connection con = ConnectionManager
- 				.getInstance(DataSourceRepository.getInstance().getPostgresJenkins()).getConnection();
+ 				.getInstance(DataSourceRepository.getInstance().getPostgresDatabase()).getConnection();
  				Statement st = con.createStatement()) {
  			if (!DBCreationManager.getInstance().dropDatabase(st, testDatabase)) {
  				String failMessage = "Database " + testDatabase + " does not exist.";
@@ -44,7 +42,7 @@ public class CreateDatabaseTestOpenShift extends CreateDropTestDatabase {
  			fail(failMessage, e);
  		}
 		try {
-			ConnectionManager.getInstance(DataSourceRepository.getInstance().getPostgresJenkinsByDatabaseName(testDatabase)).getConnection();
+			ConnectionManager.getInstance(DataSourceRepository.getInstance().getPostgresDatabase()).getConnection();
 		} catch (JDBCDriverException e) {
 			String failMessage = "Couldn't get connection.";
 			Log4jWrapper.get().error(failMessage + e);
@@ -54,12 +52,12 @@ public class CreateDatabaseTestOpenShift extends CreateDropTestDatabase {
  	
  	
  	@AfterSuite
- 	@Parameters("testDatabase")
  	@Override
- 	public void dropTestDatabase(@Optional("healthbodydbtest") String testDatabase) {
+ 	public void dropTestDatabase() {
+ 		String testDatabase = DataSourcePropertiesRepository.getInstance().getTestDatabase();
  		Connection con = null;
  		try {
- 			con = ConnectionManager.getInstance(DataSourceRepository.getInstance().getPostgresJenkins())
+ 			con = ConnectionManager.getInstance(DataSourceRepository.getInstance().getPostgresDatabase())
 					.getConnection();
  		} catch (JDBCDriverException e) {
  			String failMessage = "Couldn't get connection.";
