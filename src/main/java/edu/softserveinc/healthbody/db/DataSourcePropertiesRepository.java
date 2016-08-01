@@ -43,7 +43,9 @@ class DataSourcePropertiesRepository {
     private void readProperties(){
     	InputStream in = null;
     	//Reading properties from catalina config folder
-    	Log4jWrapper.get().info("Catalina base: " + System.getProperty("catalina.base")); 
+    	Log4jWrapper.get().info("Catalina base: " + System.getProperty("catalina.base"));
+    	Log4jWrapper.get().info("JENKINS_HOME Property: " + System.getProperty("JENKINS_HOME"));
+    	Log4jWrapper.get().info("JENKINS_HOME Environment: " + System.getenv("JENKINS_HOME"));
     	try {
 			in = new FileInputStream(System.getProperty("catalina.base")
 					+ "/conf/"
@@ -73,11 +75,27 @@ class DataSourcePropertiesRepository {
 			database = properties.getProperty("database");
 			testDatabase = properties.getProperty("testdatabase");
     	}
-		connectionUrl = (connectionUrl == null) ? DEFAULT_URL : connectionUrl;
-		username = (username == null) ? DEFAULT_USERNAME : username;
-		password = (password == null) ? DEFAULT_PASSWORD : password;
-		database = (database == null) ? DEFAULT_DATABASE : database;
-		testDatabase = (testDatabase == null) ? DEFAULT_TEST_DATABASE : testDatabase;
+    	
+    	//Using default hardcoded properties in case some was not loaded from property file
+    	if (connectionUrl == null) {
+    		connectionUrl = DEFAULT_URL;
+    		Log4jWrapper.get().info("Using default connection URL: " + DEFAULT_URL);
+    	}
+		if (username == null) {
+			username = DEFAULT_USERNAME;
+    		Log4jWrapper.get().info("Using default username: " + DEFAULT_USERNAME);
+		}
+		if (password == null) {
+			password = DEFAULT_PASSWORD;
+    		Log4jWrapper.get().info("Using default password: " + DEFAULT_PASSWORD);
+		}
+		if (database == null) {
+			database = DEFAULT_DATABASE;
+		}
+		if (testDatabase == null) {
+			testDatabase = DEFAULT_TEST_DATABASE;
+    		Log4jWrapper.get().info("Using default test database: " + DEFAULT_TEST_DATABASE);
+		}
     }
     
 //	protected String getJdbcDriverName() {
