@@ -68,7 +68,7 @@ public class ListenerServlet extends HttpServlet {
 			ParamUtils.getLogin(request);
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
 				| InstantiationException e) {
-			Log4jWrapper.get().error("Could't load data: " + e);
+			Log4jWrapper.get().error("Could't load data: " , e);
 		}
 
 	}
