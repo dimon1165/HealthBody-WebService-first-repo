@@ -151,23 +151,23 @@ class DataSourcePropertiesRepository {
 		connectionUrl = (properties.getProperty("url") != null)
 				? properties.getProperty("url")
 				: DEFAULT_URL;
-		Log4jWrapper.get().debug("connectionUrl: " + connectionUrl);
+//		Log4jWrapper.get().debug("connectionUrl: " + connectionUrl);
 		username = (properties.getProperty("username") != null)
 				? properties.getProperty("username")
 				: DEFAULT_USERNAME;
-		Log4jWrapper.get().debug("username: " + username);
+//		Log4jWrapper.get().debug("username: " + username);
 		password = (properties.getProperty("password") != null)
 				? properties.getProperty("password")
 				: DEFAULT_PASSWORD;
-		Log4jWrapper.get().debug("password: " + password);
+//		Log4jWrapper.get().debug("password: " + password);
 		database = (properties.getProperty("database") != null)
 				? properties.getProperty("database")
 				: DEFAULT_DATABASE;
-		Log4jWrapper.get().debug("database: " + database);
+//		Log4jWrapper.get().debug("database: " + database);
 		testDatabase = (properties.getProperty("testdatabase") != null)
 				? properties.getProperty("testdatabase")
 				: DEFAULT_TEST_DATABASE;
-		Log4jWrapper.get().debug("testDatabase: " + testDatabase);
+//		Log4jWrapper.get().debug("testDatabase: " + testDatabase);
 	}
 	
 //	private void checkProperties() {
