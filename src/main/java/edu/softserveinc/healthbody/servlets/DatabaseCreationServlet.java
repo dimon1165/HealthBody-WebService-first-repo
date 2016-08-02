@@ -50,7 +50,7 @@ public class DatabaseCreationServlet extends HttpServlet {
 			return;
 		}
 
-		out.append("Database successfully created and populated at : ")
+		out.append("Database successfully created and populated at: ")
 				.append(request.getContextPath());
 		out.flush();
 	}
