@@ -241,7 +241,7 @@
 		<get src="https://repo.maven.apache.org/maven2/com/google/guava/guava-jdk5/13.0/guava-jdk5-13.0.jar" dest="${lib}/guava-jdk5-13.0.jar" usetimestamp="false" ignoreerrors="true" skipexisting="true" />
 		<get src="https://repo.maven.apache.org/maven2/org/reflections/reflections/0.9.10/reflections-0.9.10.jar" dest="${lib}/reflections-0.9.10.jar" usetimestamp="false" ignoreerrors="true" skipexisting="true" />
 		<get src="https://repo.maven.apache.org/maven2/com/google/guava/guava/15.0/guava-15.0.jar" dest="${lib}/guava-15.0.jar" usetimestamp="false" ignoreerrors="true" skipexisting="true" />
-		<get src="https://repo.maven.apache.org/maven2/org/javassist/javassist/3.19.0-GA/javassist-3.19.0-GA.jar" dest="${lib}/javassist-3.19.0-GA.jar" usetimestamp="false" ignoreerrors="true" skipexisting="true" />
+		<get src="https://repo.maven.apache.org/maven2/org/javassist/javassist/3.17.1-GA/javassist-3.17.1-GA.jar" dest="${lib}/javassist-3.17.1-GA.jar" usetimestamp="false" ignoreerrors="true" skipexisting="true" />
 		<get src="https://repo.maven.apache.org/maven2/com/google/code/findbugs/annotations/2.0.1/annotations-2.0.1.jar" dest="${lib}/annotations-2.0.1.jar" usetimestamp="false" ignoreerrors="true" skipexisting="true" />
 	</target>
 
