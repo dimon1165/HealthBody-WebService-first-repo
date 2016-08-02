@@ -226,7 +226,8 @@
 		<get src="https://repo.maven.apache.org/maven2/org/codehaus/woodstox/woodstox-core-asl/4.1.2/woodstox-core-asl-4.1.2.jar" dest="${lib}/woodstox-core-asl-4.1.2.jar" usetimestamp="false" ignoreerrors="true" skipexisting="true" />
 		<get src="https://repo.maven.apache.org/maven2/org/codehaus/woodstox/stax2-api/3.1.1/stax2-api-3.1.1.jar" dest="${lib}/stax2-api-3.1.1.jar" usetimestamp="false" ignoreerrors="true" skipexisting="true" />
 		<get src="https://repo.maven.apache.org/maven2/com/sun/org/apache/xml/internal/resolver/20050927/resolver-20050927.jar" dest="${lib}/resolver-20050927.jar" usetimestamp="false" ignoreerrors="true" skipexisting="true" />
-		<get src="https://repo.maven.apache.org/maven2/javax/servlet/javax.servlet-api/3.0.1/javax.servlet-api-3.0.1.jar" dest="${lib}/javax.servlet-api-3.0.1.jar" usetimestamp="false" ignoreerrors="true" skipexisting="true" />
+		<!-- Provided by application server -->
+		<!--		<get src="https://repo.maven.apache.org/maven2/javax/servlet/javax.servlet-api/3.0.1/javax.servlet-api-3.0.1.jar" dest="${lib}/javax.servlet-api-3.0.1.jar" usetimestamp="false" ignoreerrors="true" skipexisting="true" /> -->
 		<get src="https://repo.maven.apache.org/maven2/jstl/jstl/1.2/jstl-1.2.jar" dest="${lib}/jstl-1.2.jar" usetimestamp="false" ignoreerrors="true" skipexisting="true" />
 		<get src="https://repo.maven.apache.org/maven2/com/google/code/gson/gson/2.7/gson-2.7.jar" dest="${lib}/gson-2.7.jar" usetimestamp="false" ignoreerrors="true" skipexisting="true" />
 		<get src="https://repo.maven.apache.org/maven2/com/google/api-client/google-api-client/1.19.1/google-api-client-1.19.1.jar" dest="${lib}/google-api-client-1.19.1.jar" usetimestamp="false" ignoreerrors="true" skipexisting="true" />
