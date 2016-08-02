@@ -99,7 +99,8 @@ class DataSourcePropertiesRepository {
 		Log4jWrapper.get().info("JENKINS_HOME Environment: " + jenkinsHome);
 		if (jenkinsHome != null) {
 			try {
-				in = new FileInputStream(System.getenv("JENKINS_HOME") + DATABASE_PROPERTIES_FILENAME);
+				Log4jWrapper.get().info("Jenkins file path: " + jenkinsHome + "/" + DATABASE_PROPERTIES_FILENAME);
+				in = new FileInputStream(jenkinsHome + "/" + DATABASE_PROPERTIES_FILENAME);
 				Log4jWrapper.get().info("Using " + DATABASE_PROPERTIES_FILENAME + " from Jenkins home folder.");
 			} catch (FileNotFoundException e) {
 				Log4jWrapper.get()
