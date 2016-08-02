@@ -143,8 +143,6 @@ public class ConnectionManager {
 		if (instance != null) {
 			for (Iterator<Connection> iterator = instance.getAllConections().iterator(); iterator.hasNext();) {
 			    Connection conn = iterator.next();
-// Let's hope it will close closed connection without exception :)			    
-//				if (conn != null && !conn.isClosed()) {
 				if (conn != null) {
 					try {
 						conn.close();
