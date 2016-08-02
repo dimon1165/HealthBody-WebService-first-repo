@@ -1,5 +1,6 @@
 package edu.softserveinc.healthbody.controller;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import edu.softserveinc.healthbody.annotation.Controller;
@@ -9,6 +10,7 @@ import edu.softserveinc.healthbody.dto.GroupDTO;
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 import edu.softserveinc.healthbody.exceptions.QueryNotFoundException;
+import edu.softserveinc.healthbody.exceptions.TransactionException;
 import edu.softserveinc.healthbody.services.impl.GroupServiceImpl;
 
 @Controller
@@ -19,10 +21,11 @@ public class GroupController {
 			@Param(name = "partSize") int partSize) {
 		try {
 			return GroupServiceImpl.getInstance().getAll(partNumber, partSize);
-		} catch (QueryNotFoundException | JDBCDriverException | DataBaseReadingException e) {
+		} catch (QueryNotFoundException | JDBCDriverException | DataBaseReadingException | SQLException 
+				| TransactionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} 
 		return null;
 	}
 
@@ -31,7 +34,8 @@ public class GroupController {
 		try {
 			return GroupServiceImpl.getInstance()
 					.getDescriptionOfGroup(GroupServiceImpl.getInstance().getGroup(groupName));
-		} catch (QueryNotFoundException | JDBCDriverException | DataBaseReadingException e) {
+		} catch (QueryNotFoundException | JDBCDriverException | DataBaseReadingException | SQLException | 
+				TransactionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

@@ -19,7 +19,7 @@ public class ConnectionManager {
 	private DataSource dataSource;
 	private final List<Connection> connections;
 
-	public ConnectionManager() {
+	private ConnectionManager() {
 		this.connections = new ArrayList<Connection>();
 	}
 

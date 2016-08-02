@@ -34,7 +34,7 @@ public class GroupServiceImplTest {
 	
 	@Test
 	public void testGetAll() throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException,
-			EmptyResultSetException, CloseStatementException {
+			EmptyResultSetException, CloseStatementException, SQLException, TransactionException {
 		GroupServiceImpl groupService = GroupServiceImpl.getInstance();
 		int partNumber = 1;
 		int partSize = 2;
@@ -50,7 +50,7 @@ public class GroupServiceImplTest {
 
 	 @Test
 	 public void testGetDescriptionOfGroup() throws QueryNotFoundException,
-	 JDBCDriverException, DataBaseReadingException, CloseStatementException {
+	 JDBCDriverException, DataBaseReadingException, CloseStatementException, SQLException, TransactionException {
 	 GroupDTO groupDTO = GroupServiceImpl.getInstance().getGroup("Name group number 2");
 	 String actual = groupDTO.getDescriptions();
 	 String expected = "Description of group 2";

@@ -37,20 +37,34 @@ public final class GroupServiceImpl implements IGroupService {
 	}	
 
 	@Override
-	public List<GroupDTO> getAll(final int partNumber, final int partSize)
-			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
+	public List<GroupDTO> getAll(final int partNumber, final int partSize) throws QueryNotFoundException, 
+			JDBCDriverException, DataBaseReadingException, SQLException, TransactionException {
 		List<GroupDTO> resultGroup = new ArrayList<GroupDTO>();
-		for (Group group : GroupDao.getInstance().getAll(partNumber, partSize)){
-			resultGroup.add(new GroupDTO(group.getIdGroup(), group.getName(), group.getCount().toString(), group.getDescription(),
-					group.getScoreGroup()));
-		}		
+		ConnectionManager.getInstance().beginTransaction();
+		try {
+			for (Group group : GroupDao.getInstance().getAll(partNumber, partSize)){
+				resultGroup.add(new GroupDTO(group.getIdGroup(), group.getName(), group.getCount().toString(), group.getDescription(),
+						group.getScoreGroup()));
+			}
+		} catch (QueryNotFoundException | DataBaseReadingException e) {
+			ConnectionManager.getInstance().rollbackTransaction();
+			throw new TransactionException(ServiceConstants.TRANSACTION_ERROR, e);
+		}
+		ConnectionManager.getInstance().commitTransaction();
 		return resultGroup;	
 	}
 	
 	@Override
-	public GroupDTO getGroup(String name)
-			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
-		 Group group = GroupDao.getInstance().getGroupByName(name);
+	public GroupDTO getGroup(String name) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, SQLException, TransactionException {
+		Group group;
+		ConnectionManager.getInstance().beginTransaction();
+		try { 
+			group = GroupDao.getInstance().getGroupByName(name);
+		} catch (QueryNotFoundException | DataBaseReadingException e) {
+			ConnectionManager.getInstance().rollbackTransaction();
+			throw new TransactionException(ServiceConstants.TRANSACTION_ERROR, e);
+		}
+		ConnectionManager.getInstance().commitTransaction();
 		 return new GroupDTO(group.getIdGroup(), group.getName(), String.valueOf(group.getCount()), group.getDescription(), group.getScoreGroup());
 	}	
 	

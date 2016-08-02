@@ -103,7 +103,12 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 	@Override
 	public final List<GroupDTO> getAllGroups(final int partNumber, final int partSize) {
 		try {
-			return GroupServiceImpl.getInstance().getAll(partNumber, partSize);
+			try {
+				return GroupServiceImpl.getInstance().getAll(partNumber, partSize);
+			} catch (SQLException | TransactionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} catch (QueryNotFoundException | JDBCDriverException | DataBaseReadingException e) {
 			Log4jWrapper.get().error("get all groups failed" + e);
 		}
@@ -113,7 +118,12 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 	@Override
 	public final GroupDTO getGroupByName(final String name) {
 		try {
-			return GroupServiceImpl.getInstance().getGroup(name);
+			try {
+				return GroupServiceImpl.getInstance().getGroup(name);
+			} catch (SQLException | TransactionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} catch (QueryNotFoundException | JDBCDriverException | DataBaseReadingException e) {
 			Log4jWrapper.get().error("get group by name failed" + e);
 		}
@@ -122,9 +132,14 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 
 	@Override
 	public final String getDescriptionOfGroup(final String name) {
-		GroupDTO groupDTO;
+		GroupDTO groupDTO = null;
 		try {
-			groupDTO = GroupServiceImpl.getInstance().getGroup(name);
+			try {
+				groupDTO = GroupServiceImpl.getInstance().getGroup(name);
+			} catch (SQLException | TransactionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return  GroupServiceImpl.getInstance().getDescriptionOfGroup(groupDTO);
 		} catch (QueryNotFoundException | JDBCDriverException | DataBaseReadingException e) {
 			Log4jWrapper.get().error("get description of group" + e);

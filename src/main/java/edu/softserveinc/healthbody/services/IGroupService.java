@@ -12,13 +12,13 @@ public interface IGroupService extends IBaseFilterService<GroupDTO> {
 	
 	String getDescriptionOfGroup(GroupDTO groupDTO);
 
-	GroupDTO getGroup(String name)
-			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException;
+	GroupDTO getGroup(String name) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, 
+		SQLException, TransactionException;
 
-	List<GroupDTO> getAll(int partNumber, int partSize)
-			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException;
+	List<GroupDTO> getAll(int partNumber, int partSize) throws QueryNotFoundException, JDBCDriverException, 
+		DataBaseReadingException, SQLException, TransactionException;
 	
-	void update(GroupDTO groupDTO) 
-			throws JDBCDriverException, SQLException, TransactionException, QueryNotFoundException, DataBaseReadingException;
+	void update(GroupDTO groupDTO) throws JDBCDriverException, SQLException, TransactionException, QueryNotFoundException, 
+		DataBaseReadingException;
 
 }
