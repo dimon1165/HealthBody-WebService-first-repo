@@ -19,7 +19,7 @@
 	<property name="lib" value="${basedir}/lib" />
 	<property name="web.dir" value="src/main/webapp" />
 	<!-- Please сhoose dbproperties: local, openshift or jenkins -->
-	<property name="dbproperties" value="jenkins" />
+<!--	<property name="dbproperties" value="jenkins" /> -->
 
 	<!-- Defining classpaths                                                    -->
 
