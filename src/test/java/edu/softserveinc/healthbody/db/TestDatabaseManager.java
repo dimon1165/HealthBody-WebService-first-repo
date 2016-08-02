@@ -43,6 +43,10 @@ public class TestDatabaseManager {
 	
 	private void createTestDatabaseIfNotExists() {
 		String testDatabase = DataSourcePropertiesRepository.getInstance().getTestDatabase();
+		if ("jenkins".equals(testDatabase)){
+			Log4jWrapper.get().info("Skipping database creation at jenkins server.");
+			return;
+		}
 		Log4jWrapper.get().info("Start checking database " + testDatabase + ".");
 		try {
 			Connection conn = ConnectionManager.getInstance(DataSourceRepository.getInstance().getPostgresNoDatabase()).getConnection();

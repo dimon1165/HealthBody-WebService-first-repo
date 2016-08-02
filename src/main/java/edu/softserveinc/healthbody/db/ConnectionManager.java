@@ -110,9 +110,9 @@ public class ConnectionManager {
 				connection = DriverManager.getConnection(getDataSource().getConnectionUrl(), getDataSource().getUser(),
 						getDataSource().getPasswrd());
 			} catch (SQLException e) {
-				Log4jWrapper.get().error("url" + getDataSource().getConnectionUrl());
-				Log4jWrapper.get().error("user" + getDataSource().getUser());
-				Log4jWrapper.get().error("password" + getDataSource().getPasswrd());
+				Log4jWrapper.get().error("url: " + getDataSource().getConnectionUrl());
+				Log4jWrapper.get().error("user: " + getDataSource().getUser());
+				Log4jWrapper.get().error("password: " + getDataSource().getPasswrd());
 				Log4jWrapper.get().error("Error while getting connection.", e);
 				throw new JDBCDriverException(FAILED_REGISTRATE_DRIVER, e);
 			}
