@@ -19,7 +19,7 @@ public interface HealthBodyService {
 	UserDTO getUserByLogin(String login);
 	
 	@WebMethod
-	void updateUser(String login, String password, String age, String weight);
+	void updateUser(UserDTO userDTO);
 	
 	@WebMethod
 	void lockUser(String login, boolean isDisabled);
