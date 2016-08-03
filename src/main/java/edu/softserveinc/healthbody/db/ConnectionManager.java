@@ -12,15 +12,17 @@ import edu.softserveinc.healthbody.log.Log4jWrapper;
 
 public class ConnectionManager {
 	private static final String FAILED_REGISTRATE_DRIVER = "Failed to Registrate JDBC Driver";
-	private static final int MAX_POOL_SIZE = 15;
+	private static final String ERROR_CONNECTION = "Error while getting connection";	
+	private static final int MAX_POOL_SIZE = 5;
 
 	private static volatile ConnectionManager instance;
 
 	private DataSource dataSource;
 	private final List<Connection> connections;
+	private Connection con = null;
 
 	private ConnectionManager() {
-		this.connections = new ArrayList<Connection>();
+		this.connections = new ArrayList<>();
 	}
 
 	public static ConnectionManager getInstance() throws JDBCDriverException {
@@ -75,64 +77,61 @@ public class ConnectionManager {
 		}
 	}
 
-	private void addConnection(Connection connection) {
-		while(!checkIfConnectionPoolIsFull()) {
-		  connections.add(connection);
+	private void populateConnectionPool() {
+		while(connections.size() < MAX_POOL_SIZE) {		  
+			connections.add(createNewConnection());		
 		}
-	}
-		 
-	private synchronized boolean checkIfConnectionPoolIsFull() {
-		if (connections.size() < MAX_POOL_SIZE) {
-			return false;
-		}
-		return true;
 	}
 	
-	private synchronized Connection getConnectionFromPool()
-	 {
-	  Connection connection = null;
-	  if(connections.size() > 0) {
-	   connection = connections.get(0);
-	   connections.remove(0);
-	   returnConnectionToPool(connection);
-	  }
+	private synchronized Connection getConnectionFromPool() {
+	  Connection connection;
+	  if(connections.isEmpty()) {
+		  populateConnectionPool();
+	  } 
+	  int lastElement = connections.size() - 1;
+	  connection = connections.get(lastElement);
+	  connections.remove(lastElement);	 
 	  return connection;
-	 }
+	}
 	
-	private synchronized void returnConnectionToPool(Connection connection) {
-		  connections.add(connection);
-		 }
-
-	public final Connection getConnection() throws JDBCDriverException {
-		Connection connection = getConnectionFromPool();
-		if (connection == null) {
-			try {
-				connection = DriverManager.getConnection(getDataSource().getConnectionUrl(), getDataSource().getUser(),
-						getDataSource().getPasswrd());
-			} catch (SQLException e) {
-//				Log4jWrapper.get().debug("url: " + getDataSource().getConnectionUrl());
-//				Log4jWrapper.get().debug("user: " + getDataSource().getUser());
-//				Log4jWrapper.get().debug("password: " + getDataSource().getPasswrd());
-				Log4jWrapper.get().error("Error while getting connection.", e);
-				throw new JDBCDriverException(FAILED_REGISTRATE_DRIVER, e);
-			}
-			addConnection(connection);
+	public synchronized Connection getConnection() {
+		return getConnectionFromPool();
+	}
+	
+	private synchronized void returnConnectionToPool() {
+		if ((con != null) && (connections.size() < MAX_POOL_SIZE)){
+			connections.add(con);
 		}
+		con = null;
+	}
+
+	private final Connection createNewConnection() {
+		Connection connection = null;		
+		try {
+			connection = DriverManager.getConnection(getDataSource().getConnectionUrl(), getDataSource().getUser(),
+					getDataSource().getPasswrd());
+		} catch (SQLException e) {
+			Log4jWrapper.get().error(ERROR_CONNECTION, e);
+			Log4jWrapper.get().error(FAILED_REGISTRATE_DRIVER, e);
+		}		
 		return connection;
 	}
 		
 	public final void beginTransaction() throws SQLException, JDBCDriverException {
-		getConnection().setAutoCommit(false);
+		con = getConnection();
+		con.setAutoCommit(false);
 	}
 
 	public final void commitTransaction() throws SQLException, JDBCDriverException {
-		getConnection().commit();
-		getConnection().setAutoCommit(true);
+		con.commit();
+		con.setAutoCommit(true);
+		returnConnectionToPool();
 	}
 
 	public final void rollbackTransaction() throws SQLException, JDBCDriverException {
-		getConnection().rollback();
-		getConnection().setAutoCommit(true);
+		con.rollback();
+		con.setAutoCommit(true);
+		returnConnectionToPool();
 	}
 
 	private List<Connection> getAllConections() {
@@ -153,5 +152,5 @@ public class ConnectionManager {
 				}
 			}
 		}
-}
+	}
 }
