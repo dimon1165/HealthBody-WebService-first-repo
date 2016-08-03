@@ -102,7 +102,7 @@ public class ConnectionManager {
 		if ((con != null) && (connections.size() < MAX_POOL_SIZE)){
 			connections.add(con);
 		}
-		con = null;
+		closeConnection(con);
 	}
 
 	private final Connection createNewConnection() {
@@ -136,6 +136,15 @@ public class ConnectionManager {
 
 	private List<Connection> getAllConections() {
 		return this.connections;
+	}
+	
+	private void closeConnection(Connection connection) {
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			Log4jWrapper.get().error(FAILED_REGISTRATE_DRIVER, e);
+		}
+		con = null;
 	}
 
 	private void closeAllConnections() throws JDBCDriverException {
