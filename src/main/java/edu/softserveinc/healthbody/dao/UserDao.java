@@ -129,12 +129,16 @@ public final class UserDao extends AbstractDao<User> {
 		}
 		try (PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query)) {
 			int i = 1;
+			pst.setString(i++, user.getLogin());
 			pst.setString(i++, user.getPasswd());
 			pst.setString(i++, user.getFirsName());
 			pst.setString(i++, user.getLastName());
-			pst.setString(i++, user.getGender());
-			pst.setDouble(i++, user.getWeight());
+			pst.setString(i++, user.getMail());
 			pst.setInt(i++, user.getAge());
+			pst.setDouble(i++, user.getWeight());
+			pst.setString(i++, user.getGender());
+			pst.setString(i++, user.getHealth());
+			pst.setString(i++, user.getAvatar());			
 			pst.setString(i++, user.getLogin());
 			result = pst.execute();
 		} catch (SQLException e) {

@@ -45,12 +45,8 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 	}
 
 	@Override
-	public final void updateUser(final String login, final String password, final String age, final String weight) {
+	public final void updateUser(final UserDTO userDTO) {
 		try {
-			UserDTO userDTO = UserProfileServiceImpl.getInstance().get(login);
-			userDTO.setPassword(password);
-			userDTO.setAge(age);
-			userDTO.setWeight(weight);
 			UserProfileServiceImpl.getInstance().update(userDTO);
 		} catch (SQLException | JDBCDriverException | TransactionException e) {
 			Log4jWrapper.get().error("update user failed" + e);
