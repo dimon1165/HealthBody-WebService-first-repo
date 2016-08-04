@@ -151,12 +151,16 @@ public final class UserProfileServiceImpl implements IBaseService<UserDTO> {
 			try {
 				ConnectionManager.getInstance().beginTransaction();
 				Role role = RoleDao.getInstance().getByFieldName(userDTO.getRoleName());
-				UserDao.getInstance().updateUser(new User(userDTO.getIdUser(), userDTO.getLogin(), userDTO.getPassword(),
+				User user = new User(userDTO.getIdUser(), userDTO.getLogin(), userDTO.getPassword(),
 						userDTO.getFirstname(), userDTO.getLastname(), userDTO.getEmail(),
 						Integer.parseInt(userDTO.getAge()), Double.parseDouble(userDTO.getWeight()),
 						userDTO.getGender(), userDTO.getHealth(), userDTO.getPhotoURL(),
 						userDTO.getGoogleApi(), role.getIdRole(), userDTO.getStatus(),
-						Boolean.parseBoolean(userDTO.getIsDisabled())));
+						Boolean.parseBoolean(userDTO.getIsDisabled()));
+				for (GroupDTO group : userDTO.getGroups()) {
+					UserGroupDao.getInstance().createUserGroup(user, GroupDao.getInstance().getGroupByName(group.getName()));
+				}
+				UserDao.getInstance().updateUser(user);
 			} catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException e) {
 				ConnectionManager.getInstance().rollbackTransaction();
 				throw new TransactionException(ServiceConstants.TRANSACTION_ERROR, e);
