@@ -7,9 +7,11 @@ import java.util.Map;
 
 import edu.softserveinc.healthbody.constants.ServiceConstants;
 import edu.softserveinc.healthbody.dao.GroupDao;
+import edu.softserveinc.healthbody.dao.GroupUserViewDao;
 import edu.softserveinc.healthbody.db.ConnectionManager;
 import edu.softserveinc.healthbody.dto.GroupDTO;
 import edu.softserveinc.healthbody.entity.Group;
+import edu.softserveinc.healthbody.entity.GroupUserView;
 import edu.softserveinc.healthbody.exceptions.CloseStatementException;
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
 import edu.softserveinc.healthbody.exceptions.EmptyResultSetException;
@@ -44,7 +46,7 @@ public final class GroupServiceImpl implements IGroupService {
 		try {
 			for (Group group : GroupDao.getInstance().getAll(partNumber, partSize)){
 				resultGroup.add(new GroupDTO(group.getIdGroup(), group.getName(), group.getCount().toString(), group.getDescription(),
-						group.getScoreGroup()));
+						group.getScoreGroup(),null,null,null,null));
 			}
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
 			ConnectionManager.getInstance().rollbackTransaction();
@@ -65,7 +67,7 @@ public final class GroupServiceImpl implements IGroupService {
 			throw new TransactionException(ServiceConstants.TRANSACTION_ERROR, e);
 		}
 		ConnectionManager.getInstance().commitTransaction();
-		 return new GroupDTO(group.getIdGroup(), group.getName(), String.valueOf(group.getCount()), group.getDescription(), group.getScoreGroup());
+		 return new GroupDTO(group.getIdGroup(), group.getName(), String.valueOf(group.getCount()), group.getDescription(), group.getScoreGroup(),null,null,null,null);
 	}	
 	
 	@Override
@@ -93,6 +95,25 @@ public final class GroupServiceImpl implements IGroupService {
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, EmptyResultSetException,
 			CloseStatementException, SQLException, TransactionException {
 		return null;
+	}
+
+	@Override
+	public List<GroupDTO> getAllGroupsParticipants(int partNumber, int partSize) throws QueryNotFoundException,
+			JDBCDriverException, DataBaseReadingException, SQLException, TransactionException {
+		List<GroupDTO> resultGroupParticipants = new ArrayList<GroupDTO>();
+		ConnectionManager.getInstance().beginTransaction();
+		try {
+			for (GroupUserView groupUsers : GroupUserViewDao.getInstance().getAllGroupsParticiapnts(partNumber, partSize)){
+				resultGroupParticipants.add(new GroupDTO(null, groupUsers.getName(), groupUsers.getCount().toString(), groupUsers.getDescription(), 
+														 groupUsers.getScoreGroup(), groupUsers.getStatus(), groupUsers.getFirstname().split(";"),
+														 groupUsers.getFirstname().split(";"), groupUsers.getLastname().split(";")));
+			}
+		} catch (QueryNotFoundException | DataBaseReadingException e) {
+			ConnectionManager.getInstance().rollbackTransaction();
+			throw new TransactionException(ServiceConstants.TRANSACTION_ERROR, e);
+		}
+		ConnectionManager.getInstance().commitTransaction();
+		return resultGroupParticipants;
 	}
 
 }

@@ -91,7 +91,7 @@ public class GoogleAuthServlet extends HttpServlet {
 			String fullgender = data.getGender();
 			String gender = getGoogleGender(fullgender);
 			List<GroupDTO> groups = new ArrayList<GroupDTO>();
-			groups.add(new GroupDTO(UUID.randomUUID().toString(), "Name group number 1", "0", "", ""));
+			groups.add(new GroupDTO(UUID.randomUUID().toString(), "Name group number 1", "0", "", "","",null,null,null));
 			UserDTO userDTO = new UserDTO(UUID.randomUUID().toString(), login, null, firstname, lastname, email, "0", "0.0", gender, photoURL, "user",
 					null, "0", groups, "false");
 			Log4jWrapper.get().info(userDTO.toString());

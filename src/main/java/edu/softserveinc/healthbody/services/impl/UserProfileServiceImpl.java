@@ -97,7 +97,7 @@ public final class UserProfileServiceImpl implements IBaseService<UserDTO> {
 					ugs = UserGroupDao.getInstance().getUGbyId(user.getId());
 					for (UserGroup ug : ugs) {
 						group = GroupDao.getInstance().getById(ug.getIdGroup());
-						groups.add(new GroupDTO(group.getId(), group.getName(), group.getCount().toString(), group.getDescription(), group.getScoreGroup()));
+						groups.add(new GroupDTO(group.getId(), group.getName(), group.getCount().toString(), group.getDescription(), group.getScoreGroup(),null,null,null,null));
 					}
 				}
 			 } catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException | CloseStatementException | EmptyResultSetException e) {
@@ -127,7 +127,7 @@ public final class UserProfileServiceImpl implements IBaseService<UserDTO> {
 			 ugs = UserGroupDao.getInstance().getUGbyId(user.getId());
 			 for (UserGroup ug : ugs) {
 				 group = GroupDao.getInstance().getById(ug.getIdGroup());
-				 groups.add(new GroupDTO("", group.getName(), "", "", ""));
+				 groups.add(new GroupDTO("", group.getName(), "", "", "","",null,null,null));
 			}
 		} catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException e) {
 			ConnectionManager.getInstance().rollbackTransaction();
