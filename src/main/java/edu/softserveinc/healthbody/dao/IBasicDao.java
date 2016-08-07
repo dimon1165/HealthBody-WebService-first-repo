@@ -21,12 +21,6 @@ public interface IBasicDao<TEntity> extends IBasicReadDao<TEntity> {
 		DELETE_BY_FIELD;
 	}
 	
-	boolean insert(TEntity entity)
-			throws JDBCDriverException, QueryNotFoundException, DataBaseReadingException;
-	
-	boolean updateByField(String fieldName, String text, String fieldCondition, String textCondition)
-			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException;
-	
 	boolean deleteById(String id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException;
 	
 	boolean deleteByField(String textCondition)

@@ -2,10 +2,9 @@ package edu.softserveinc.healthbody.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
+import edu.softserveinc.healthbody.constants.Constant.UserCard;
 import edu.softserveinc.healthbody.constants.DaoConstants;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.UserDBQueries;
 import edu.softserveinc.healthbody.db.ConnectionManager;
@@ -41,49 +40,24 @@ public final class UserDao extends AbstractDao<User> {
 	}
 
 	@Override
-	protected String[] getFields(final User entity) {
-		List<String> fields = new ArrayList<>();
-		fields.add(entity.getIdUser().toString());
-		fields.add(entity.getLogin());
-		fields.add(entity.getPasswd());
-		fields.add(entity.getFirsName());
-		fields.add(entity.getLastName());
-		fields.add(entity.getMail());
-		fields.add(entity.getAge().toString());
-		fields.add(entity.getWeight().toString());
-		fields.add(entity.getGender());
-		fields.add(entity.getHealth());
-		fields.add(entity.getAvatar());
-		fields.add(entity.getGoogleApi());
-		fields.add(entity.getIdRole().toString());
-		fields.add(entity.getStatus());
-		return (String[]) fields.toArray();
-	}
-
-	@Override
 	protected User createInstance(final String[] args) {
-		return new User(args[0] == null ? UUID.randomUUID().toString() : args[0], 
-				args[1] == null ? new String() : args[1],
-				args[2] == null ? new String() : args[2], 
-				args[3] == null ? new String() : args[3],
-				args[4] == null ? new String() : args[4], 
-				args[5] == null ? new String() : args[5],
-				Integer.parseInt(args[6] == null ? "0" : args[6]), 
-				Double.parseDouble(args[7] == null ? "0" : args[7]),
-				args[8] == null ? new String() : args[8],
-				args[9] == null ? new String() : args[9],
-				args[10] == null ? new String() : args[10],
-				args[11] == null ? new String() : args[11], 
-				args[12] == null ? UUID.randomUUID().toString() : args[12],
-				args[13] == null ? "0" : args[13],
-				Boolean.parseBoolean(args[14] == null ? "false" : args[14]));
+		return new User(args[UserCard.ID] == null ? UUID.randomUUID().toString() : args[UserCard.ID], 
+				args[UserCard.LOGIN] == null ? new String() : args[UserCard.LOGIN],
+				args[UserCard.PASSWORD] == null ? new String() : args[UserCard.PASSWORD], 
+				args[UserCard.FIRSTNAME] == null ? new String() : args[UserCard.FIRSTNAME],
+				args[UserCard.LASTNAME] == null ? new String() : args[UserCard.LASTNAME], 
+				args[UserCard.MAIL] == null ? new String() : args[UserCard.MAIL],
+				Integer.parseInt(args[UserCard.AGE] == null ? "0" : args[UserCard.AGE]), 
+				Double.parseDouble(args[UserCard.WEIGHT] == null ? "0" : args[UserCard.WEIGHT]),
+				args[UserCard.GENDER] == null ? new String() : args[UserCard.GENDER],
+				args[UserCard.HEALTH] == null ? new String() : args[UserCard.HEALTH],
+				args[UserCard.AVATAR] == null ? new String() : args[UserCard.AVATAR],
+				args[UserCard.GOOGLEAPI] == null ? new String() : args[UserCard.GOOGLEAPI], 
+				args[UserCard.IDROLE] == null ? UUID.randomUUID().toString() : args[UserCard.IDROLE],
+				args[UserCard.STATUS] == null ? "0" : args[UserCard.STATUS],
+				Boolean.parseBoolean(args[UserCard.ISDISABLED] == null ? "false" : args[UserCard.ISDISABLED]));
 	}
 
-	public User getUserByLogin(final String login)
-			throws JDBCDriverException, DataBaseReadingException, QueryNotFoundException {
-		return getByField(login, login).get(0);
-	}
-	
 	public User getUserById(final String id) 
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, CloseStatementException {
 		return getById(id);

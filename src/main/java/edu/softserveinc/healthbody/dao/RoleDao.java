@@ -1,9 +1,9 @@
 package edu.softserveinc.healthbody.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import edu.softserveinc.healthbody.constants.Constant.RoleCard;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.RoleDBQueries;
 import edu.softserveinc.healthbody.entity.Role;
 import edu.softserveinc.healthbody.exceptions.CloseStatementException;
@@ -37,25 +37,11 @@ public final class RoleDao extends AbstractDao<Role> {
 	}
 
 	@Override
-	protected String[] getFields(final Role entity) {
-		List<String> fields = new ArrayList<>();
-		fields.add(entity.getIdRole());
-		fields.add(entity.getName());
-		fields.add(entity.getDescription());
-		return (String[]) fields.toArray();
-	}
-
-	@Override
 	public Role createInstance(final String[] args) {
 		return new Role(
-				args[0] == null ? UUID.randomUUID().toString() : args[0],
-				args[1] == null ? new String() : args[1],
-				args[2] == null ? new String() : args[2]);
-	}
-	
-	public boolean createRole(final Role role)
-			throws JDBCDriverException, QueryNotFoundException, DataBaseReadingException {
-		return insert(role);
+				args[RoleCard.ID] == null ? UUID.randomUUID().toString() : args[RoleCard.ID],
+				args[RoleCard.NAME] == null ? new String() : args[RoleCard.NAME],
+				args[RoleCard.DESCRIPTION] == null ? new String() : args[RoleCard.DESCRIPTION]);
 	}
 	
 	public boolean deleteRole(final Role role)

@@ -1,14 +1,13 @@
 package edu.softserveinc.healthbody.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import edu.softserveinc.healthbody.constants.Constant.GroupCompetitionsCard;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.GroupCompetitionsDBQueries;
 import edu.softserveinc.healthbody.entity.GroupCompetitions;
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
-import edu.softserveinc.healthbody.exceptions.QueryNotFoundException;
 
 public final class GroupCompetitionsDao extends AbstractDao<GroupCompetitions> {
 	
@@ -39,41 +38,11 @@ public final class GroupCompetitionsDao extends AbstractDao<GroupCompetitions> {
 	@Override
 	public GroupCompetitions createInstance(final String[] args) {
 		return new GroupCompetitions(
-				args[0] == null ? UUID.randomUUID().toString() : args[0], 
-				args[1] == null ? UUID.randomUUID().toString() : args[1],
-				args[2] == null ? UUID.randomUUID().toString() : args[2]);
-
+				args[GroupCompetitionsCard.ID] == null ? UUID.randomUUID().toString() : args[GroupCompetitionsCard.ID], 
+				args[GroupCompetitionsCard.IDGROUP] == null ? UUID.randomUUID().toString() : args[GroupCompetitionsCard.IDGROUP],
+				args[GroupCompetitionsCard.IDCOMPETITION] == null ? UUID.randomUUID().toString() : args[GroupCompetitionsCard.IDCOMPETITION]);
 	}
-	
-	@Override
-	protected String[] getFields(final GroupCompetitions entity) {
-		List<String> fields = new ArrayList<>();
-		fields.add(entity.getIdGroupCompetitions());
-		fields.add(entity.getIdGroup());
-		fields.add(entity.getIdCompetition());
-		return (String[]) fields.toArray();
-	}
-
-	public boolean createGroupCompetitions(final GroupCompetitions groupCompetitions)
-			throws JDBCDriverException, QueryNotFoundException, DataBaseReadingException {
-		return insert(groupCompetitions);
-	}
-	
-	public boolean editGroupCompetitions(final GroupCompetitions groupCompetitions,
-			final String idGroupCompetitions, final String idGroup, final String idCompetition)
-					throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException{
-		String[] fields = getFields(groupCompetitions);	
-		boolean result = false;
-		updateByField(fields[0], idGroupCompetitions, fields[1], idGroup);
-		updateByField(fields[0], idGroupCompetitions, fields[2], idCompetition);
-		if (fields[3] != null) {
-			result = false;
-		} else if (fields[1] == idGroup && fields[2] == idCompetition) {
-			result = true;			
-		}
-		return result;
-	}
-	
+		
 	public List<GroupCompetitions> view() throws JDBCDriverException, DataBaseReadingException {
 		return getAll();
 	}

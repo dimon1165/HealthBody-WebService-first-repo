@@ -13,7 +13,7 @@ import edu.softserveinc.healthbody.log.Log4jWrapper;
 public class ConnectionManager {
 	private static final String FAILED_REGISTRATE_DRIVER = "Failed to Registrate JDBC Driver";
 	private static final String ERROR_CONNECTION = "Error while getting connection";	
-	private static final int MAX_POOL_SIZE = 5;
+	private static final int MAX_POOL_SIZE = 15;
 
 	private static volatile ConnectionManager instance;
 
@@ -102,7 +102,6 @@ public class ConnectionManager {
 		if ((con != null) && (connections.size() < MAX_POOL_SIZE)){
 			connections.add(con);
 		}
-		closeConnection(con);
 	}
 
 	private final Connection createNewConnection() {
@@ -138,15 +137,6 @@ public class ConnectionManager {
 		return this.connections;
 	}
 	
-	private void closeConnection(Connection connection) {
-		try {
-			connection.close();
-		} catch (SQLException e) {
-			Log4jWrapper.get().error(FAILED_REGISTRATE_DRIVER, e);
-		}
-		con = null;
-	}
-
 	private void closeAllConnections() throws JDBCDriverException {
 		if (instance != null) {
 			for (Iterator<Connection> iterator = instance.getAllConections().iterator(); iterator.hasNext();) {
