@@ -46,9 +46,9 @@ public class DaoStatementsConstant {
 		GET_BY_FIELD_NAME(DaoQueries.GET_BY_FIELD_NAME, "SELECT id_group, name, count, description, scoreGroup, status FROM groups WHERE name = ?;"),
 		GET_ALL(DaoQueries.GET_ALL, "SELECT id_group, name, count, description, scoreGroup, status FROM groups;"),
 		GET_ALL_GROUPS_PARTICIPANTS(DaoQueries.GET_ALL_GROUPS_PARTICIPANTS, "SELECT groups.id_group, groups.name, groups.count, groups.description, groups.scoregroup, groups.status, "
-				+ "array_to_string(array_agg(login) ,'; ') AS users_in_groups, "
-				+ "array_to_string(array_agg(firstname) ,'; ') AS users_firstnames_in_groups, "
-				+ "array_to_string(array_agg(Lastname ) ,'; ') AS users_lastnames_in_groups "
+				+ "array_to_string(array_agg(login) ,' ') AS users_in_groups, "
+				+ "array_to_string(array_agg(firstname) ,' ') AS users_firstnames_in_groups, "
+				+ "array_to_string(array_agg(Lastname ) ,' ') AS users_lastnames_in_groups "
 				+ "FROM (SELECT DISTINCT groups.id_group, groups.name, groups.count, groups.description, groups.scoregroup, groups.status, users.login, users.firstname, users.lastname "
 				+ "FROM groups JOIN usergroups ON usergroups.id_group=groups.id_group JOIN users ON users.id_user = usergroups.id_user ORDER BY groups.id_group) AS groups "
 				+ "GROUP BY groups.id_group, groups.name, groups.count, groups.description, groups.scoregroup, groups.status;"),
