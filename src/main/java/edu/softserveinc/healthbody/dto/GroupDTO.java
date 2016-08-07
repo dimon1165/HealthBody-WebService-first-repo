@@ -8,14 +8,14 @@ public class GroupDTO {
 	private String descriptions;
 	private String scoreGroup;
 	private String status;
-	private String users;
-	private String firstname;
-	private String lastname;
+	private String[] users;
+	private String[] firstname;
+	private String[] lastname;
 	// private String status;
 
 	public GroupDTO() {}
 	public GroupDTO(String idGroup, String name, String count, String descriptions, String scoreGroup, String status,
-			String users, String firstname, String lastname) {
+			String[] users, String[] firstname, String[] lastname) {
 		super();
 		this.idGroup = idGroup;
 		this.name = name;
@@ -45,13 +45,13 @@ public class GroupDTO {
 	public String getStatus() {
 		return status;
 	}
-	public String getUsers() {
+	public String[] getUsers() {
 		return users;
 	}
-	public String getFirstname() {
+	public String[] getFirstname() {
 		return firstname;
 	}
-	public String getLastname() {
+	public String[] getLastname() {
 		return lastname;
 	}
 	public void setIdGroup(String idGroup) {
@@ -72,13 +72,13 @@ public class GroupDTO {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public void setUsers(String users) {
+	public void setUsers(String[] users) {
 		this.users = users;
 	}
-	public void setFirstname(String firstname) {
+	public void setFirstname(String[] firstname) {
 		this.firstname = firstname;
 	}
-	public void setLastname(String lastname) {
+	public void setLastname(String[] lastname) {
 		this.lastname = lastname;
 	}
 
