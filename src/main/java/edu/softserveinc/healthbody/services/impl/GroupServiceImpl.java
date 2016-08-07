@@ -104,8 +104,7 @@ public final class GroupServiceImpl implements IGroupService {
 		ConnectionManager.getInstance().beginTransaction();
 		try {
 			for (GroupUserView groupUsers : GroupUserViewDao.getInstance().getAllGroupsParticiapnts(partNumber, partSize)){
-				resultGroupParticipants.add(new GroupDTO(null, groupUsers.getName(), groupUsers.getCount().toString(), groupUsers.getDescription(), 
-														 groupUsers.getScoreGroup(), groupUsers.getStatus(), groupUsers.getUsers().split(";"),
+				resultGroupParticipants.add(new GroupDTO(null, groupUsers.getName(), null, null, null, groupUsers.getStatus(), groupUsers.getUsers().split(";"),
 														 groupUsers.getFirstname().split(";"), groupUsers.getLastname().split(";")));
 			}
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
