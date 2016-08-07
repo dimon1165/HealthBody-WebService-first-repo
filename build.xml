@@ -18,8 +18,6 @@
 	<property name="basedir" value="." />
 	<property name="lib" value="${basedir}/lib" />
 	<property name="web.dir" value="src/main/webapp" />
-	<!-- Please сhoose dbproperties: local, openshift or jenkins -->
-<!--	<property name="dbproperties" value="jenkins" /> -->
 
 	<!-- Defining classpaths                                                    -->
 
@@ -42,65 +40,8 @@
 		<delete dir="${build.dir}" />
 	</target>
 
-	<!-- Database properties target                                             -->
-
-	<!-- Using DataSourcePropertiesRepository instead -->
-	<!--
-	<target name="dblocal">
-		<condition property="mode.local">
-			<equals arg1="${dbproperties}" arg2="local" />
-		</condition>
-	</target>
-
-	<target name="get-local" depends="dblocal" description="Copy localhost db properties" if="mode.local">
-		<copy todir="${build.resourceDir.0}" overwrite="true">
-			<file file="${basedir}/dbproperties/databaselocal.properties" />
-			<globmapper from="*" to="database.properties" />
-		</copy>
-		<copy todir="${basedir}" overwrite="true">
-			<file file="${basedir}/dbproperties/testnglocal.xml" />
-			<globmapper from="*" to="testng.xml" />
-		</copy>
-	</target>
-
-	<target name="dbopen">
-		<condition property="mode.open">
-			<equals arg1="${dbproperties}" arg2="openshift" />
-		</condition>
-	</target>
-
-	<target name="get-open" depends="dbopen" description="Copy openshift db properties" if="mode.open">
-		<copy todir="${build.resourceDir.0}" overwrite="true">
-			<file file="${basedir}/dbproperties/databaseopen.properties" />
-			<globmapper from="*" to="database.properties" />
-		</copy>
-		<copy todir="${basedir}" overwrite="true">
-			<file file="${basedir}/dbproperties/testngopen.xml" />
-			<globmapper from="*" to="testng.xml" />
-		</copy>
-	</target>
-
-	<target name="dbjenkins">
-		<condition property="mode.jenkins">
-			<equals arg1="${dbproperties}" arg2="jenkins" />
-		</condition>
-	</target>
-
-	<target name="get-jenkins" depends="dbjenkins" description="Copy dbjenkins db properties" if="mode.jenkins">
-		<copy todir="${build.resourceDir.0}" overwrite="true">
-			<file file="${basedir}/dbproperties\databasejenkins.properties" />
-			<globmapper from="*" to="database.properties" />
-		</copy>
-		<copy todir="${basedir}" overwrite="true">
-			<file file="${basedir}/dbproperties/testngopen.xml" />
-			<globmapper from="*" to="testng.xml" />
-		</copy>
-	</target>
-	-->
-
 	<!-- Compilation target                                                     -->
 
-<!--	<target name="compile" depends="get-deps, clean, get-local, get-open, get-jenkins" description="Compile the code"> -->
 	<target name="compile" depends="get-deps, clean" description="Compile the code">
 		<echo>${myparam}</echo>
 		<echo message="${myparam}   I'm here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" />
@@ -121,6 +62,7 @@
 	</target>
 
 	<!-- Test-compilation target                                                -->
+	
 	<target name="compile-tests" depends="compile" description="Compile the test code">
 		<mkdir dir="${build.testOutputDir}" />
 		<javac destdir="${build.testOutputDir}" encoding="UTF-8" nowarn="false" debug="true" optimize="false" deprecation="true" target="1.7" verbose="false" fork="false" source="1.7" includeantruntime="false">
