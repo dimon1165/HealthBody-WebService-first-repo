@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import edu.softserveinc.healthbody.constants.Constant.GroupUserViewCard;
 import edu.softserveinc.healthbody.constants.DaoConstants;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.GroupDBQueries;
 import edu.softserveinc.healthbody.db.ConnectionManager;
@@ -44,35 +45,19 @@ public class GroupUserViewDao extends AbstractDao<GroupUserView> {
 
 	@Override
 	public GroupUserView createInstance(final String[] args) {
-		return new GroupUserView(args[0] == null ? UUID.randomUUID().toString() : args[0], 
-				args[1] == null ? new String() : args[1],
-				Integer.parseInt(args[2] == null ? "0" : args[2]), 
-				args[3] == null ? new String() : args[3],
-				args[4] == null ? new String() : args[4],
-				args[5] == null ? new String() : args[5],		
-				args[6] == null ? new String() : args[6],
-				args[7] == null ? new String() : args[7],
-				args[8] == null ? new String() : args[8]);
+		return new GroupUserView(args[GroupUserViewCard.ID] == null ? UUID.randomUUID().toString() : args[GroupUserViewCard.ID], 
+				args[GroupUserViewCard.NAME] == null ? new String() : args[GroupUserViewCard.NAME],
+				Integer.parseInt(args[GroupUserViewCard.COUNT] == null ? "0" : args[GroupUserViewCard.COUNT]), 
+				args[GroupUserViewCard.DESCRIPTION] == null ? new String() : args[GroupUserViewCard.DESCRIPTION],
+				args[GroupUserViewCard.SCOREGROUP] == null ? new String() : args[GroupUserViewCard.SCOREGROUP],
+				args[GroupUserViewCard.STATUS] == null ? new String() : args[GroupUserViewCard.STATUS],		
+				args[GroupUserViewCard.USERS] == null ? new String() : args[GroupUserViewCard.USERS],
+				args[GroupUserViewCard.FIRSTNAME] == null ? new String() : args[GroupUserViewCard.FIRSTNAME],
+				args[GroupUserViewCard.LASTNAME] == null ? new String() : args[GroupUserViewCard.LASTNAME]);
 		
 	}
 	
-
-	@Override
-	protected String[] getFields(final GroupUserView entity) {
-		List<String> fields = new ArrayList<>();
-		fields.add(entity.getIdGroup());
-		fields.add(entity.getName());
-		fields.add(entity.getCount().toString());
-		fields.add(entity.getDescription());
-		fields.add(entity.getScoreGroup());
-		fields.add(entity.getStatus());
-		fields.add(entity.getUsers());
-		fields.add(entity.getFirstname());
-		fields.add(entity.getLastname());
-		return (String[]) fields.toArray();
-	}
-	
-public List<GroupUserView> getAllGroupsParticiapnts(final int partNumber, final int partSize) 
+	public List<GroupUserView> getAllGroupsParticiapnts(final int partNumber, final int partSize) 
 			throws QueryNotFoundException, JDBCDriverException,	DataBaseReadingException {
 		List<GroupUserView> result = new ArrayList<>();
 		String query = sqlQueries.get(DaoQueries.GET_ALL_GROUPS_PARTICIPANTS).toString();

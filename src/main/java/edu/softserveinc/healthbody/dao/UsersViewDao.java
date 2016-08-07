@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import edu.softserveinc.healthbody.constants.Constant.UsersViewCard;
 import edu.softserveinc.healthbody.constants.DaoConstants;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.UsersViewQueries;
 import edu.softserveinc.healthbody.db.ConnectionManager;
@@ -43,35 +44,21 @@ public final class UsersViewDao extends AbstractDaoRead<UsersView> {
 
 	@Override
 	protected UsersView createInstance(final String[] args) {
-		return new UsersView(args[0] == null ? UUID.randomUUID().toString() : args[0],
-							 args[1] == null ? new String() : args[1], args[2] == null ? new String() : args[2],
-							 args[3] == null ? new String() : args[3], args[4] == null ? new String() : args[4],
-							 args[5] == null ? new String() : args[5], Integer.parseInt(args[6] == null ? "0" : args[6]),
-							 Double.parseDouble(args[7] == null ? "0" : args[7]), args[8] == null ? new String() : args[8],
-							 args[9] == null ? new String() : args[9], args[10] == null ? new String() : args[10],
-							 args[11] == null ? new String() : args[11], args[12] == null ? "0" : args[12],
-							 args[13] == null ? "0" : args[13], Integer.parseInt(args[14] == null ? "0" : args[14]));
-	}
-
-	@Override
-	protected String[] getFields(final UsersView entity) {
-		List<String> fields = new ArrayList<>();
-		fields.add(entity.getIdUser());
-		fields.add(entity.getFirsName());
-		fields.add(entity.getLastName());
-		fields.add(entity.getLogin());
-		fields.add(entity.getPasswd());
-		fields.add(entity.getMail());
-		fields.add(entity.getAge().toString());
-		fields.add(entity.getWeight().toString());
-		fields.add(entity.getGender());
-		fields.add(entity.getAvatar());
-		fields.add(entity.getRoleName());
-		fields.add(entity.getHealth());
-		fields.add(entity.getGoogleApi());
-		fields.add(entity.getStatus());
-		fields.add(entity.getScore().toString());
-		return (String[]) fields.toArray();
+		return new UsersView(args[UsersViewCard.ID] == null ? UUID.randomUUID().toString() : args[UsersViewCard.ID],
+							 args[UsersViewCard.FIRSTNAME] == null ? new String() : args[UsersViewCard.FIRSTNAME],
+							 args[UsersViewCard.LASTNAME] == null ? new String() : args[UsersViewCard.LASTNAME],
+							 args[UsersViewCard.LOGIN] == null ? new String() : args[UsersViewCard.LOGIN],
+							 args[UsersViewCard.PASSWORD] == null ? new String() : args[UsersViewCard.PASSWORD],
+							 args[UsersViewCard.MAIL] == null ? new String() : args[UsersViewCard.MAIL],
+							 Integer.parseInt(args[UsersViewCard.AGE] == null ? "0" : args[UsersViewCard.AGE]),
+							 Double.parseDouble(args[UsersViewCard.WEIGHT] == null ? "0" : args[UsersViewCard.WEIGHT]),
+							 args[UsersViewCard.GENDER] == null ? new String() : args[UsersViewCard.GENDER],
+							 args[UsersViewCard.AVATAR] == null ? new String() : args[UsersViewCard.AVATAR],
+							 args[UsersViewCard.ROLENAME] == null ? new String() : args[UsersViewCard.ROLENAME],
+							 args[UsersViewCard.HEALTH] == null ? new String() : args[UsersViewCard.HEALTH],
+							 args[UsersViewCard.GOOGLEAPI] == null ? "0" : args[UsersViewCard.GOOGLEAPI],
+							 args[UsersViewCard.STATUS] == null ? "0" : args[UsersViewCard.STATUS],
+							 Integer.parseInt(args[UsersViewCard.SCORE] == null ? "0" : args[UsersViewCard.SCORE]));
 	}
 
 	public List<UsersView> getAllUsersView(final int partNumber, final int partSize)

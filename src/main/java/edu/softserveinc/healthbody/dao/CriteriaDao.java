@@ -1,9 +1,9 @@
 package edu.softserveinc.healthbody.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import edu.softserveinc.healthbody.constants.Constant.CriteriaCard;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.CriteriaDBQueries;
 import edu.softserveinc.healthbody.entity.Criteria;
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
@@ -39,40 +39,12 @@ public final class CriteriaDao extends AbstractDao<Criteria> {
 	@Override
 	public Criteria createInstance(final String[] args) {
 		return new Criteria(
-				args[0] == null ? UUID.randomUUID().toString() : args[0],
-				args[1] == null ? new String() : args[1],
-				Double.parseDouble(args[2] == null ? "0" : args[2]),
-				args[3] == null ? new String() : args[3]);
+				args[CriteriaCard.ID] == null ? UUID.randomUUID().toString() : args[CriteriaCard.ID],
+				args[CriteriaCard.NAME] == null ? new String() : args[CriteriaCard.NAME],
+				Double.parseDouble(args[CriteriaCard.METRICS] == null ? "0" : args[CriteriaCard.METRICS]),
+				args[CriteriaCard.GETGOOGLE] == null ? new String() : args[CriteriaCard.METRICS]);
 	}
 
-	@Override
-	protected String[] getFields(final Criteria entity) {
-		List<String> fields = new ArrayList<>();
-		fields.add(entity.getIdCriteria());
-		fields.add(entity.getName());
-		fields.add(entity.getMetrics().toString());
-		fields.add(entity.getGetGoogle());
-		return (String[]) fields.toArray();
-	}
-	
-	public boolean createCriteria(final Criteria criteria)
-			throws JDBCDriverException, QueryNotFoundException, DataBaseReadingException {
-		return insert(criteria);
-	}
-	
-	public boolean editCriteria(final Criteria criteria, final String idCriteria, final String name, final String metrics,
-			final String getGoogle) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
-		String[] fields = getFields(criteria);	
-		boolean result = false;
-		updateByField(fields[0], idCriteria, fields[1], name);
-		updateByField(fields[0], idCriteria, fields[2], metrics);
-		updateByField(fields[0], idCriteria, fields[3], getGoogle);
-		if (fields[1] == name && fields[2] == metrics && fields[3] == getGoogle){
-			result = true;			
-		}
-		return result;
-	}
-	
 	public boolean deleteCriteria(final Criteria criteria) 
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		return delete(criteria);

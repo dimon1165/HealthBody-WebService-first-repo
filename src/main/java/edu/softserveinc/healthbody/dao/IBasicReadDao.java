@@ -14,15 +14,9 @@ public interface IBasicReadDao<TEntity> {
 	TEntity getById(String id) 
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, CloseStatementException;
 
-	List<TEntity> getByField(String fieldname, String text) 
-			throws JDBCDriverException, DataBaseReadingException, QueryNotFoundException;
-
 	List<TEntity> getAll() throws JDBCDriverException, DataBaseReadingException;
 	
 
 	List<TEntity> getFilterRange(int partNumber, int partSize, Map<String, String> filters) 
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, EmptyResultSetException, CloseStatementException;
-
-	boolean deleteById(String id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException;
-
 }
