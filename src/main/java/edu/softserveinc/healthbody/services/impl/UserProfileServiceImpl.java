@@ -157,6 +157,7 @@ public final class UserProfileServiceImpl implements IBaseService<UserDTO> {
 						userDTO.getGender(), userDTO.getHealth(), userDTO.getPhotoURL(),
 						userDTO.getGoogleApi(), role.getIdRole(), userDTO.getStatus(),
 						Boolean.parseBoolean(userDTO.getIsDisabled()));
+				UserGroupDao.getInstance().deleteById(user.getId());
 				for (GroupDTO group : userDTO.getGroups()) {
 					UserGroupDao.getInstance().createUserGroup(user, GroupDao.getInstance().getGroupByName(group.getName()));
 				}
