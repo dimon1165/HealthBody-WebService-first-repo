@@ -1,5 +1,6 @@
 package edu.softserveinc.healthbody.services.impl;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,7 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 	public List<CompetitionDTO> getAll(final int partNumber, final int partSize)
 			throws JDBCDriverException, SQLException, TransactionException {
 		List<CompetitionDTO> competitionDTO = new ArrayList<>();
-		ConnectionManager.getInstance().beginTransaction();
+		Connection con = ConnectionManager.getInstance().beginTransaction();
 		try {
 			for (CompetitionsView competitionsView : CompetitionsViewDao.getInstance().getAllCompetitionsView(partNumber,
 					partSize)) {
@@ -49,10 +50,10 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 						new ArrayList<String>()));
 			}
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
-			ConnectionManager.getInstance().rollbackTransaction();
+			ConnectionManager.getInstance().rollbackTransaction(con);
 			throw new TransactionException(ServiceConstants.TRANSACTION_ERROR, e);
 		}
-		ConnectionManager.getInstance().commitTransaction();
+		ConnectionManager.getInstance().commitTransaction(con);
 		return competitionDTO;
 	}
 
@@ -60,7 +61,7 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 	public List<CompetitionDTO> getAllActive(final int partNumber, final int partSize)
 			throws JDBCDriverException, SQLException, TransactionException {
 		List<CompetitionDTO> competitionDTO = new ArrayList<>();
-		ConnectionManager.getInstance().beginTransaction();
+		Connection con = ConnectionManager.getInstance().beginTransaction();
 		try {
 			for (CompetitionsView competitionsView : CompetitionsViewDao.getInstance().getActiveCompetitionsView(partNumber,
 					partSize)) {
@@ -70,10 +71,10 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 						new ArrayList<String>()));
 			}
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
-			ConnectionManager.getInstance().rollbackTransaction();
+			ConnectionManager.getInstance().rollbackTransaction(con);
 			throw new TransactionException(ServiceConstants.TRANSACTION_ERROR, e);
 		}
-		ConnectionManager.getInstance().commitTransaction();
+		ConnectionManager.getInstance().commitTransaction(con);
 		return competitionDTO;
 	}
 
@@ -86,7 +87,7 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 			throw new IllegalAgrumentCheckedException(errorStr);
 		}
 		List<CompetitionDTO> competitionDTO = new ArrayList<>();
-		ConnectionManager.getInstance().beginTransaction();
+		Connection con = ConnectionManager.getInstance().beginTransaction();
 		try {
 			for (CompetitionsView competitionsView : CompetitionsViewDao.getInstance().getCompetitionsByUserView(partNumber,
 					partSize, login)) {
@@ -96,10 +97,10 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 						new ArrayList<String>()));
 			}
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
-			ConnectionManager.getInstance().rollbackTransaction();
+			ConnectionManager.getInstance().rollbackTransaction(con);
 			throw new TransactionException(ServiceConstants.TRANSACTION_ERROR, e);
 		}
-		ConnectionManager.getInstance().commitTransaction();
+		ConnectionManager.getInstance().commitTransaction(con);
 		return competitionDTO;
 	}
 
@@ -112,7 +113,7 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 			throw new IllegalAgrumentCheckedException(errorStr);
 		}
 		List<CompetitionDTO> competitionDTO = new ArrayList<>();
-		ConnectionManager.getInstance().beginTransaction();
+		Connection con = ConnectionManager.getInstance().beginTransaction();
 		try {
 			for (CompetitionsView competitionsView : CompetitionsViewDao.getInstance().getActiveCompetitionsByUserView(partNumber,
 					partSize, login)) {
@@ -122,10 +123,10 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 						new ArrayList<String>()));
 			}
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
-			ConnectionManager.getInstance().rollbackTransaction();
+			ConnectionManager.getInstance().rollbackTransaction(con);
 			throw new TransactionException(ServiceConstants.TRANSACTION_ERROR, e);
 		}
-		ConnectionManager.getInstance().commitTransaction();
+		ConnectionManager.getInstance().commitTransaction(con);
 		return competitionDTO;
 	}
 }

@@ -1,5 +1,6 @@
 package edu.softserveinc.healthbody.dao;
 
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -74,12 +75,12 @@ public final class CompetitionDao extends AbstractDao<Competition> {
 		return result;
 	}
 	
-	public List<Competition> view() throws JDBCDriverException, DataBaseReadingException {
-		return getAll();
+	public List<Competition> view(final Connection con) throws JDBCDriverException, DataBaseReadingException {
+		return getAll(con);
 	}
 
 	@Override
-	public boolean deleteById(String id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
+	public boolean deleteById(final Connection con, String id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		return false;
 	}
 

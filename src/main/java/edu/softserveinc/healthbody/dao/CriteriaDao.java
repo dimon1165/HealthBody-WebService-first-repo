@@ -1,5 +1,6 @@
 package edu.softserveinc.healthbody.dao;
 
+import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
 
@@ -45,13 +46,13 @@ public final class CriteriaDao extends AbstractDao<Criteria> {
 				args[CriteriaCard.GETGOOGLE] == null ? new String() : args[CriteriaCard.METRICS]);
 	}
 
-	public boolean deleteCriteria(final Criteria criteria) 
+	public boolean deleteCriteria(final Connection con, final Criteria criteria) 
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
-		return delete(criteria);
+		return delete(con, criteria);
 	}
 	
-	public List<Criteria> view() throws JDBCDriverException, DataBaseReadingException {
-		return getAll();
+	public List<Criteria> view(final Connection con) throws JDBCDriverException, DataBaseReadingException {
+		return getAll(con);
 	}
 	
 

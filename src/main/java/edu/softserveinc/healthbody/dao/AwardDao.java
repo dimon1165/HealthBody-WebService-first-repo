@@ -1,5 +1,6 @@
 package edu.softserveinc.healthbody.dao;
 
+import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,13 +43,13 @@ public final class AwardDao extends AbstractDao<Award> {
 				args[AwardCard.NAME] == null ? new String() : args[AwardCard.NAME]);
 	}
 
-	public boolean deleteAward(final Award award)
+	public boolean deleteAward(final Connection con, final Award award)
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
-		return delete(award);
+		return delete(con, award);
 	}
 
-	public List<Award> view() throws JDBCDriverException, DataBaseReadingException {
-		return getAll();
+	public List<Award> view(final Connection con) throws JDBCDriverException, DataBaseReadingException {
+		return getAll(con);
 	}
 
 }
