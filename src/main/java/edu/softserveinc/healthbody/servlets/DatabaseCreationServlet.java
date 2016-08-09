@@ -1,7 +1,6 @@
 package edu.softserveinc.healthbody.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -16,6 +15,7 @@ import edu.softserveinc.healthbody.db.DBCreationManager;
 import edu.softserveinc.healthbody.db.DBPopulateManager;
 import edu.softserveinc.healthbody.db.DataSourceRepository;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
+import edu.softserveinc.healthbody.log.Log4jWrapper;
 
 /**
  * Servlet implementation class DatabaseCreationServlet.
@@ -30,14 +30,12 @@ public class DatabaseCreationServlet extends HttpServlet {
 	@Override
 	protected final void doGet(final HttpServletRequest request, final HttpServletResponse response)
 			throws ServletException, IOException {
-		PrintWriter out = response.getWriter();
 		Connection conn;
 		try {
 			conn = ConnectionManager.getInstance(DataSourceRepository.getInstance().getPostgresDatabase())
 					.getConnection();
 		} catch (JDBCDriverException e) {
-			e.printStackTrace(out);
-			out.flush();
+			Log4jWrapper.get().error("JDBC Driver Exception ", e);
 			return;
 		}
 		try {
@@ -45,14 +43,12 @@ public class DatabaseCreationServlet extends HttpServlet {
 			DBCreationManager.getInstance().createDatabaseTables(conn);
 			DBPopulateManager.getInstance().populateDatabaseTables(conn);
 		} catch (SQLException e) {
-			e.printStackTrace(out);
-			out.flush();
+			Log4jWrapper.get().error("SQL Exception ", e);
 			return;
 		}
-
-		out.append("Database successfully created and populated at: ")
-				.append(request.getContextPath());
-		out.flush();
+		
+		Log4jWrapper.get().info("Database successfully created and populated at: " + request.getContextPath());
+	
 	}
 
 }

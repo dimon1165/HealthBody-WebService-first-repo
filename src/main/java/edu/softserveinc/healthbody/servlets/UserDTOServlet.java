@@ -16,6 +16,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.namespace.QName;
 
 import edu.softserveinc.healthbody.dto.UserDTO;
+import edu.softserveinc.healthbody.log.Log4jWrapper;
 import edu.softserveinc.healthbody.webservice.HealthBodyServiceImpl;
 
 @WebServlet("/UserDTOServlet")
@@ -58,9 +59,9 @@ public class UserDTOServlet extends HttpServlet {
 		         JAXBContext context = JAXBContext.newInstance(UserDTO.class);
 		         context.createMarshaller().setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 		         context.createMarshaller().marshal(jaxbElement, file);
-		         System.out.println(writer.toString());
+		         Log4jWrapper.get().info(writer.toString());
 		      } catch (JAXBException e) {			
-		         e.printStackTrace(); 
+		    	 Log4jWrapper.get().error("JAXB Exception ", e);
 		      } 
 		} else {
 			getServletContext().getRequestDispatcher("/WEB-INF/views/UserDTOViewInit.jsp").forward(request, response);

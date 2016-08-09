@@ -31,6 +31,7 @@ public final class Log4jWrapper implements ILogger {
 		logger.debug(message);
 	}
 
+	// The insertScreenShot method allow to add logger message with screenshot file destination
 	@Override
 	public void insertScreenShot(final String fileNamePath) {
 		logger.error(PICTURE_PATH + fileNamePath);
