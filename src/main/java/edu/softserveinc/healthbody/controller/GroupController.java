@@ -41,4 +41,17 @@ public class GroupController {
 		}
 		return null;
 	}
+	
+	@Request(url = "/allGroupsParticipants")
+	public List<GroupDTO> getAllGroupsParticipants(@Param(name = "partNumber") int partNumber,
+			@Param(name = "partSize") int partSize) {
+		try {
+			return GroupServiceImpl.getInstance().getAllGroupsParticipants(partNumber, partSize);
+		} catch (QueryNotFoundException | JDBCDriverException | DataBaseReadingException | SQLException 
+				| TransactionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		return null;
+	}
 }

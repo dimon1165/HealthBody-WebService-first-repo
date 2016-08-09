@@ -59,5 +59,8 @@ public interface HealthBodyService {
 	
 	@WebMethod
 	void createCompetition(CompetitionDTO competitionDTO);
+	
+	@WebMethod
+	List<GroupDTO> getAllGroupsParticipants(int partNumber, int partSize);
 
 }

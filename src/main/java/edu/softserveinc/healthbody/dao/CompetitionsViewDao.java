@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import edu.softserveinc.healthbody.constants.Constant.CompetitionsViewCard;
 import edu.softserveinc.healthbody.constants.DaoConstants;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.CompetitionsViewQueries;
 import edu.softserveinc.healthbody.db.ConnectionManager;
@@ -45,24 +46,12 @@ public class CompetitionsViewDao extends AbstractDao<CompetitionsView> {
 
 	@Override
 	public CompetitionsView createInstance(final String[] args) {
-		return new CompetitionsView(args[0] == null ? UUID.randomUUID().toString() : args[0], 
-				args[1] == null ? "0" : args[1],
-				args[2] == null ? "0" : args[2], 
-				args[3] == null ? "0" : args[3], 
-				args[4] == null ? "0" : args[4],
-				Integer.parseInt(args[5] == null ? "0" : args[5]));
-	}
-
-	@Override
-	protected String[] getFields(final CompetitionsView entity) {
-		List<String> fields = new ArrayList<>();
-		fields.add(entity.getIdCompetition());
-		fields.add(entity.getName());
-		fields.add(entity.getDescription());
-		fields.add(entity.getStart());
-		fields.add(entity.getFinish());
-		fields.add(entity.getUsersCount().toString());
-		return (String[]) fields.toArray();
+		return new CompetitionsView(args[CompetitionsViewCard.ID] == null ? UUID.randomUUID().toString() : args[CompetitionsViewCard.ID], 
+				args[CompetitionsViewCard.NAME] == null ? "0" : args[CompetitionsViewCard.NAME],
+				args[CompetitionsViewCard.DESCRIPTION] == null ? "0" : args[CompetitionsViewCard.DESCRIPTION], 
+				args[CompetitionsViewCard.START] == null ? "0" : args[CompetitionsViewCard.START], 
+				args[CompetitionsViewCard.FINISH] == null ? "0" : args[CompetitionsViewCard.FINISH],
+				Integer.parseInt(args[CompetitionsViewCard.USERSCOUNT] == null ? "0" : args[CompetitionsViewCard.USERSCOUNT]));
 	}
 
 	public List<CompetitionsView> getActiveCompetitionsView(final int partNumber, final int partSize) 

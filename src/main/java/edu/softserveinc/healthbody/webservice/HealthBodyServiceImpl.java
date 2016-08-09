@@ -214,4 +214,19 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 			Log4jWrapper.get().error("create competition failed" + e);
 		}
 	}
+
+	@Override
+	public List<GroupDTO> getAllGroupsParticipants(int partNumber, int partSize) {
+		try {
+			try {
+				return GroupServiceImpl.getInstance().getAllGroupsParticipants(partNumber, partSize);
+			} catch (SQLException | TransactionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (QueryNotFoundException | JDBCDriverException | DataBaseReadingException e) {
+			Log4jWrapper.get().error("get all groups participants failed" + e);
+		}
+		return null;
+	}
 }

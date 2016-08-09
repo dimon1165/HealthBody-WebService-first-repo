@@ -18,6 +18,9 @@ public interface IGroupService extends IBaseFilterService<GroupDTO> {
 	List<GroupDTO> getAll(int partNumber, int partSize) throws QueryNotFoundException, JDBCDriverException, 
 		DataBaseReadingException, SQLException, TransactionException;
 	
+	List<GroupDTO> getAllGroupsParticipants(int partNumber, int partSize) throws QueryNotFoundException, JDBCDriverException, 
+	DataBaseReadingException, SQLException, TransactionException;
+	
 	void update(GroupDTO groupDTO) throws JDBCDriverException, SQLException, TransactionException, QueryNotFoundException, 
 		DataBaseReadingException;
 

@@ -3,10 +3,10 @@ package edu.softserveinc.healthbody.dao;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import edu.softserveinc.healthbody.constants.Constant.CompetitionCard;
 import edu.softserveinc.healthbody.constants.DaoConstants;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.CompetitionDBQueries;
 import edu.softserveinc.healthbody.db.ConnectionManager;
@@ -44,24 +44,12 @@ public final class CompetitionDao extends AbstractDao<Competition> {
 	@Override
 	public Competition createInstance(String[] args) {
 		return new Competition(
-			args[0] == null ? UUID.randomUUID().toString() : args[0],
-			args[1] == null ? new String() : args[1],
-			args[2] == null ? new String() : args[2],
-			Date.valueOf(args[3] == null ? new Date(System.currentTimeMillis()).toString() : args[3]),
-			Date.valueOf(args[4] == null ? new Date(System.currentTimeMillis()).toString() : args[4]),
-			args[5] == null ? UUID.randomUUID().toString() : args[5]);
-	}
-	
-	@Override
-	protected String[] getFields(final Competition entity) {
-		List<String> fields = new ArrayList<>();
-		fields.add(entity.getIdCompetition());
-		fields.add(entity.getName());
-		fields.add(entity.getDescription());
-		fields.add(entity.getStart().toString());
-		fields.add(entity.getFinish().toString());
-		fields.add(entity.getIdCriteria().toString());
-		return (String[]) fields.toArray();
+			args[CompetitionCard.ID] == null ? UUID.randomUUID().toString() : args[CompetitionCard.ID],
+			args[CompetitionCard.NAME] == null ? new String() : args[CompetitionCard.NAME],
+			args[CompetitionCard.DESCRIPTION] == null ? new String() : args[CompetitionCard.DESCRIPTION],
+			Date.valueOf(args[CompetitionCard.START] == null ? new Date(System.currentTimeMillis()).toString() : args[CompetitionCard.START]),
+			Date.valueOf(args[CompetitionCard.FINISH] == null ? new Date(System.currentTimeMillis()).toString() : args[CompetitionCard.FINISH]),
+			args[CompetitionCard.IDCRITERIA] == null ? UUID.randomUUID().toString() : args[CompetitionCard.IDCRITERIA]);
 	}
 	
 	public boolean createCompetition(final Competition competition)
@@ -82,26 +70,6 @@ public final class CompetitionDao extends AbstractDao<Competition> {
 			result = pst.execute();
 		} catch (SQLException e) {
 			throw new DataBaseReadingException(DaoConstants.DATABASE_READING_ERROR, e);
-		}
-		return result;
-	}
-	
-	public boolean editCompetition(final Competition competition, final String idCompetition,
-			final String name, final String description, final String start,
-			final String finish, final String idCriteria)
-					throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
-		String[] fields = getFields(competition);	
-		boolean result = false;
-		int i = 1;
-		updateByField(fields[0], idCompetition, fields[i++], name);
-		updateByField(fields[0], idCompetition, fields[i++], description);
-		updateByField(fields[0], idCompetition, fields[i++], start);
-		updateByField(fields[0], idCompetition, fields[i++], finish);
-		updateByField(fields[0], idCompetition, fields[i++], idCriteria);
-		if (fields[3] != null) {
-			result = false;
-		} else if (fields[1] == name && fields[2] == description && fields[3] == start && fields[4] == finish && fields[5] == idCriteria){
-			result = true;			
 		}
 		return result;
 	}

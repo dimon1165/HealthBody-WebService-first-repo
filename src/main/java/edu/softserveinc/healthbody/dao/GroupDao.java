@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import edu.softserveinc.healthbody.constants.Constant.GroupCard;
 import edu.softserveinc.healthbody.constants.DaoConstants;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.GroupDBQueries;
 import edu.softserveinc.healthbody.db.ConnectionManager;
@@ -43,29 +44,12 @@ public final class GroupDao extends AbstractDao<Group> {
 
 	@Override
 	public Group createInstance(final String[] args) {
-		return new Group(args[0] == null ? UUID.randomUUID().toString() : args[0], 
-				args[1] == null ? new String() : args[1],
-				Integer.parseInt(args[2] == null ? "0" : args[2]), 
-				args[3] == null ? new String() : args[3],
-				args[4] == null ? new String() : args[4], 
-				args[5] == null ? new String() : args[5]);
-	}
-
-	@Override
-	protected String[] getFields(final Group entity) {
-		List<String> fields = new ArrayList<>();
-		fields.add(entity.getIdGroup());
-		fields.add(entity.getName());
-		fields.add(entity.getCount().toString());
-		fields.add(entity.getDescription());
-		fields.add(entity.getScoreGroup());
-		fields.add(entity.getStatus());
-		return (String[]) fields.toArray();
-	}
-
-	public boolean createGroup(final Group group)
-			throws JDBCDriverException, QueryNotFoundException, DataBaseReadingException {
-		return insert(group);
+		return new Group(args[GroupCard.ID] == null ? UUID.randomUUID().toString() : args[GroupCard.ID], 
+				args[GroupCard.NAME] == null ? new String() : args[GroupCard.NAME],
+				Integer.parseInt(args[GroupCard.COUNT] == null ? "0" : args[GroupCard.COUNT]), 
+				args[GroupCard.DESCRIPTION] == null ? new String() : args[GroupCard.DESCRIPTION],
+				args[GroupCard.SCOREGROUP] == null ? new String() : args[GroupCard.SCOREGROUP], 
+				args[GroupCard.STATUS] == null ? new String() : args[GroupCard.STATUS]);
 	}
 
 	public boolean editGroup(final Group group)

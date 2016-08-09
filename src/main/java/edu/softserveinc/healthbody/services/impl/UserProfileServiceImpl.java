@@ -97,7 +97,7 @@ public final class UserProfileServiceImpl implements IBaseService<UserDTO> {
 					ugs = UserGroupDao.getInstance().getUGbyId(user.getId());
 					for (UserGroup ug : ugs) {
 						group = GroupDao.getInstance().getById(ug.getIdGroup());
-						groups.add(new GroupDTO(group.getId(), group.getName(), group.getCount().toString(), group.getDescription(), group.getScoreGroup()));
+						groups.add(new GroupDTO(group.getId(), group.getName(), group.getCount().toString(), group.getDescription(), group.getScoreGroup(),null,null,null,null));
 					}
 				}
 			 } catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException | CloseStatementException | EmptyResultSetException e) {
@@ -127,7 +127,7 @@ public final class UserProfileServiceImpl implements IBaseService<UserDTO> {
 			 ugs = UserGroupDao.getInstance().getUGbyId(user.getId());
 			 for (UserGroup ug : ugs) {
 				 group = GroupDao.getInstance().getById(ug.getIdGroup());
-				 groups.add(new GroupDTO("", group.getName(), "", "", ""));
+				 groups.add(new GroupDTO("", group.getName(), "", "", "","",null,null,null));
 			}
 		} catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException e) {
 			ConnectionManager.getInstance().rollbackTransaction();
@@ -151,12 +151,17 @@ public final class UserProfileServiceImpl implements IBaseService<UserDTO> {
 			try {
 				ConnectionManager.getInstance().beginTransaction();
 				Role role = RoleDao.getInstance().getByFieldName(userDTO.getRoleName());
-				UserDao.getInstance().updateUser(new User(userDTO.getIdUser(), userDTO.getLogin(), userDTO.getPassword(),
+				User user = new User(userDTO.getIdUser(), userDTO.getLogin(), userDTO.getPassword(),
 						userDTO.getFirstname(), userDTO.getLastname(), userDTO.getEmail(),
 						Integer.parseInt(userDTO.getAge()), Double.parseDouble(userDTO.getWeight()),
 						userDTO.getGender(), userDTO.getHealth(), userDTO.getPhotoURL(),
 						userDTO.getGoogleApi(), role.getIdRole(), userDTO.getStatus(),
-						Boolean.parseBoolean(userDTO.getIsDisabled())));
+						Boolean.parseBoolean(userDTO.getIsDisabled()));
+				UserGroupDao.getInstance().deleteById(user.getId());
+				for (GroupDTO group : userDTO.getGroups()) {
+					UserGroupDao.getInstance().createUserGroup(user, GroupDao.getInstance().getGroupByName(group.getName()));
+				}
+				UserDao.getInstance().updateUser(user);
 			} catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException e) {
 				ConnectionManager.getInstance().rollbackTransaction();
 				throw new TransactionException(ServiceConstants.TRANSACTION_ERROR, e);
