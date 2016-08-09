@@ -51,20 +51,8 @@ public class ListenerServlet extends HttpServlet {
 				.get(path.toLowerCase());
 
 		try {
-			/*
-			 * Method method = methodClassPair.getL(); List<Object> parameters =
-			 * new ArrayList<>(); Class<?>[] types = method.getParameterTypes();
-			 * int i = 0; for (Annotation[] annotations :
-			 * method.getParameterAnnotations()) {
-			 * 
-			 * for (Annotation annotation : annotations) { Param param = (Param)
-			 * annotation; parameters.add(RequestParamUtils.toObject(types[i],
-			 * request.getParameter(param.name()))); i++; }
-			 * 
-			 * }
-			 */
 			List<Object> parameters = getParameters(methodClassPair, request);
-			wrightResponse(methodClassPair.getL().invoke(methodClassPair.getR().newInstance(), parameters.toArray()), response);
+			wrightResponse(methodClassPair.getLeftObject().invoke(methodClassPair.getRightObject().newInstance(), parameters.toArray()), response);
 			ParamUtils.getLogin(request);
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
 				| InstantiationException e) {
@@ -74,7 +62,7 @@ public class ListenerServlet extends HttpServlet {
 	}
 
 	private List<Object> getParameters(Pair<Method, Class<?>> methodClassPair, HttpServletRequest request) {
-		Method method = methodClassPair.getL();
+		Method method = methodClassPair.getLeftObject();
 		List<Object> parameters = new ArrayList<>();
 		Class<?>[] types = method.getParameterTypes();
 		int i = 0;
@@ -95,15 +83,5 @@ public class ListenerServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		out.print(gson.toJson(object));
 		out.flush();
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 }

@@ -1,27 +1,27 @@
 package edu.softserveinc.healthbody.controller;
 
-public class Pair<L, R> {
-	private L l;
-	private R r;
+public class Pair<LEFT, RIGHT> {
+	private LEFT leftObject;
+	private RIGHT rightObject;
 
-	public Pair(L l, R r) {
-		this.l = l;
-		this.r = r;
+	public Pair(LEFT leftObject, RIGHT rightObject) {
+		this.leftObject= leftObject;
+		this.rightObject = rightObject;
 	}
 
-	public L getL() {
-		return l;
+	public LEFT getLeftObject() {
+		return leftObject;
 	}
 
-	public R getR() {
-		return r;
+	public RIGHT getRightObject() {
+		return rightObject;
 	}
 
-	public void setL(L l) {
-		this.l = l;
+	public void setLeftObject(LEFT leftObject) {
+		this.leftObject = leftObject;
 	}
 
-	public void setR(R r) {
-		this.r = r;
+	public void setRightObject(RIGHT rightObject) {
+		this.rightObject = rightObject;
 	}
 }

@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.softserveinc.healthbody.constants.ServiceConstants;
+import edu.softserveinc.healthbody.constants.ErrorConstants;
 import edu.softserveinc.healthbody.dao.CompetitionsViewDao;
 import edu.softserveinc.healthbody.db.ConnectionManager;
 import edu.softserveinc.healthbody.dto.CompetitionDTO;
@@ -50,7 +50,7 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 			}
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
 			ConnectionManager.getInstance().rollbackTransaction();
-			throw new TransactionException(ServiceConstants.TRANSACTION_ERROR, e);
+			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
 		}
 		ConnectionManager.getInstance().commitTransaction();
 		return competitionDTO;
@@ -71,7 +71,7 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 			}
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
 			ConnectionManager.getInstance().rollbackTransaction();
-			throw new TransactionException(ServiceConstants.TRANSACTION_ERROR, e);
+			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
 		}
 		ConnectionManager.getInstance().commitTransaction();
 		return competitionDTO;
@@ -97,7 +97,7 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 			}
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
 			ConnectionManager.getInstance().rollbackTransaction();
-			throw new TransactionException(ServiceConstants.TRANSACTION_ERROR, e);
+			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
 		}
 		ConnectionManager.getInstance().commitTransaction();
 		return competitionDTO;
@@ -123,7 +123,7 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 			}
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
 			ConnectionManager.getInstance().rollbackTransaction();
-			throw new TransactionException(ServiceConstants.TRANSACTION_ERROR, e);
+			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
 		}
 		ConnectionManager.getInstance().commitTransaction();
 		return competitionDTO;

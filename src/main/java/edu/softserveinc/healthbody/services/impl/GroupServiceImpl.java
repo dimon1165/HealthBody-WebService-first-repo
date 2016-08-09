@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import edu.softserveinc.healthbody.constants.ServiceConstants;
+import edu.softserveinc.healthbody.constants.ErrorConstants;
 import edu.softserveinc.healthbody.dao.GroupDao;
 import edu.softserveinc.healthbody.dao.GroupUserViewDao;
 import edu.softserveinc.healthbody.db.ConnectionManager;
@@ -50,7 +50,7 @@ public final class GroupServiceImpl implements IGroupService {
 			}
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
 			ConnectionManager.getInstance().rollbackTransaction();
-			throw new TransactionException(ServiceConstants.TRANSACTION_ERROR, e);
+			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
 		}
 		ConnectionManager.getInstance().commitTransaction();
 		return resultGroup;	
@@ -64,7 +64,7 @@ public final class GroupServiceImpl implements IGroupService {
 			group = GroupDao.getInstance().getGroupByName(name);
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
 			ConnectionManager.getInstance().rollbackTransaction();
-			throw new TransactionException(ServiceConstants.TRANSACTION_ERROR, e);
+			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
 		}
 		ConnectionManager.getInstance().commitTransaction();
 		 return new GroupDTO(group.getIdGroup(), group.getName(), String.valueOf(group.getCount()), group.getDescription(), group.getScoreGroup(),null,null,null,null);
@@ -84,7 +84,7 @@ public final class GroupServiceImpl implements IGroupService {
 					groupDTO.getDescriptions(), groupDTO.getScoreGroup(), group.getStatus()));
 		} catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException e) {
 			ConnectionManager.getInstance().rollbackTransaction();
-			throw new TransactionException(ServiceConstants.TRANSACTION_ERROR, e);			
+			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);			
 		}
 		ConnectionManager.getInstance().commitTransaction();
 	}
@@ -109,7 +109,7 @@ public final class GroupServiceImpl implements IGroupService {
 			}
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
 			ConnectionManager.getInstance().rollbackTransaction();
-			throw new TransactionException(ServiceConstants.TRANSACTION_ERROR, e);
+			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
 		}
 		ConnectionManager.getInstance().commitTransaction();
 		return resultGroupParticipants;

@@ -4,8 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.UUID;
 
-import edu.softserveinc.healthbody.constants.Constant.UserCard;
-import edu.softserveinc.healthbody.constants.DaoConstants;
+import edu.softserveinc.healthbody.constants.Constants.UserCard;
+import edu.softserveinc.healthbody.constants.ErrorConstants;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.UserDBQueries;
 import edu.softserveinc.healthbody.db.ConnectionManager;
 import edu.softserveinc.healthbody.entity.User;
@@ -68,7 +68,7 @@ public final class UserDao extends AbstractDao<User> {
 		boolean result = false;
 		String query = sqlQueries.get(DaoQueries.INSERT).toString();
 		if (query == null) {
-			throw new QueryNotFoundException(String.format(DaoConstants.QUERY_NOT_FOUND, DaoQueries.INSERT.name()));
+			throw new QueryNotFoundException(String.format(ErrorConstants.QUERY_NOT_FOUND, DaoQueries.INSERT.name()));
 		}
 		try (PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query)) {
 			int i = 1;
@@ -89,7 +89,7 @@ public final class UserDao extends AbstractDao<User> {
 			pst.setBoolean(i++, user.getIsDisabled());
 			result = pst.execute();
 		} catch (SQLException e) {
-			throw new DataBaseReadingException(DaoConstants.DATABASE_READING_ERROR, e);
+			throw new DataBaseReadingException(ErrorConstants.DATABASE_READING_ERROR, e);
 		}
 		return result;
 	}
@@ -99,7 +99,7 @@ public final class UserDao extends AbstractDao<User> {
 		boolean result = false;
 		String query = sqlQueries.get(DaoQueries.UPDATE).toString();
 		if (query == null) {
-			throw new QueryNotFoundException(String.format(DaoConstants.QUERY_NOT_FOUND, DaoQueries.UPDATE.name()));
+			throw new QueryNotFoundException(String.format(ErrorConstants.QUERY_NOT_FOUND, DaoQueries.UPDATE.name()));
 		}
 		try (PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query)) {
 			int i = 1;
@@ -116,7 +116,7 @@ public final class UserDao extends AbstractDao<User> {
 			pst.setString(i++, user.getLogin());
 			result = pst.execute();
 		} catch (SQLException e) {
-			throw new DataBaseReadingException(DaoConstants.DATABASE_READING_ERROR, e);
+			throw new DataBaseReadingException(ErrorConstants.DATABASE_READING_ERROR, e);
 		}
 		return result;
 	}
@@ -131,14 +131,14 @@ public final class UserDao extends AbstractDao<User> {
 		boolean result = false;
 		String query = sqlQueries.get(DaoQueries.ISDISABLED).toString();
 		if (query == null) {
-			throw new QueryNotFoundException(String.format(DaoConstants.QUERY_NOT_FOUND, DaoQueries.ISDISABLED.name()));
+			throw new QueryNotFoundException(String.format(ErrorConstants.QUERY_NOT_FOUND, DaoQueries.ISDISABLED.name()));
 		}
 		try (PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query)) {
 			pst.setBoolean(1, isDisabled);
 			pst.setString(2, login);
 			result = pst.execute();
 		} catch (SQLException e) {
-			throw new DataBaseReadingException(DaoConstants.DATABASE_READING_ERROR, e);
+			throw new DataBaseReadingException(ErrorConstants.DATABASE_READING_ERROR, e);
 		}
 		return result;
 	}

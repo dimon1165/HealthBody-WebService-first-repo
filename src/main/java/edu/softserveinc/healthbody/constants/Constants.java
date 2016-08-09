@@ -1,7 +1,7 @@
 package edu.softserveinc.healthbody.constants;
 
 //for method createInstance
-public class Constant {
+public class Constants {
 	
 	public static class UserCard {
 		public static final int ID = 0;

@@ -3,7 +3,7 @@ package edu.softserveinc.healthbody.dao;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import edu.softserveinc.healthbody.constants.DaoConstants;
+import edu.softserveinc.healthbody.constants.ErrorConstants;
 import edu.softserveinc.healthbody.db.ConnectionManager;
 import edu.softserveinc.healthbody.entity.IEntity;
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
@@ -22,13 +22,13 @@ abstract class AbstractDao<TEntity extends IEntity> extends AbstractDaoRead<TEnt
 		boolean result = false;
 		String query = sqlQueries.get(DaoQueries.DELETE_BY_ID).toString();
 		if (query == null) {
-			throw new QueryNotFoundException(String.format(DaoConstants.QUERY_NOT_FOUND, DaoQueries.DELETE_BY_ID.name()));
+			throw new QueryNotFoundException(String.format(ErrorConstants.QUERY_NOT_FOUND, DaoQueries.DELETE_BY_ID.name()));
 		}
 		try (PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query)) {
 			pst.setString(1, id);
 			result = pst.execute();
 		} catch (SQLException e) {
-			throw new DataBaseReadingException(DaoConstants.DATABASE_READING_ERROR, e);
+			throw new DataBaseReadingException(ErrorConstants.DATABASE_READING_ERROR, e);
 		}
 		return result;
 	}
@@ -40,13 +40,13 @@ abstract class AbstractDao<TEntity extends IEntity> extends AbstractDaoRead<TEnt
 		boolean result = false;
 		String query = sqlQueries.get(DaoQueries.DELETE_BY_FIELD).toString();
 		if (query == null) {
-			throw new QueryNotFoundException(String.format(DaoConstants.QUERY_NOT_FOUND, DaoQueries.DELETE_BY_FIELD.name()));
+			throw new QueryNotFoundException(String.format(ErrorConstants.QUERY_NOT_FOUND, DaoQueries.DELETE_BY_FIELD.name()));
 		}
 		try (PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query)) {
 			pst.setString(1, textCondition);
 			result = pst.execute();
 		} catch (SQLException e) {
-			throw new DataBaseReadingException(DaoConstants.DATABASE_READING_ERROR, e);
+			throw new DataBaseReadingException(ErrorConstants.DATABASE_READING_ERROR, e);
 		}
 		return result;
 	}

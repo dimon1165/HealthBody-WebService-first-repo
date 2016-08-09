@@ -3,7 +3,7 @@ package edu.softserveinc.healthbody.dao;
 import java.util.List;
 import java.util.UUID;
 
-import edu.softserveinc.healthbody.constants.Constant.RoleCard;
+import edu.softserveinc.healthbody.constants.Constants.RoleCard;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.RoleDBQueries;
 import edu.softserveinc.healthbody.entity.Role;
 import edu.softserveinc.healthbody.exceptions.CloseStatementException;

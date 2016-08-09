@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import edu.softserveinc.healthbody.constants.Constant.GroupUserViewCard;
-import edu.softserveinc.healthbody.constants.DaoConstants;
+import edu.softserveinc.healthbody.constants.Constants.GroupUserViewCard;
+import edu.softserveinc.healthbody.constants.ErrorConstants;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.GroupDBQueries;
 import edu.softserveinc.healthbody.db.ConnectionManager;
 import edu.softserveinc.healthbody.entity.GroupUserView;
@@ -62,7 +62,7 @@ public class GroupUserViewDao extends AbstractDao<GroupUserView> {
 		List<GroupUserView> result = new ArrayList<>();
 		String query = sqlQueries.get(DaoQueries.GET_ALL_GROUPS_PARTICIPANTS).toString();
 		if (query == null) {
-			throw new QueryNotFoundException(String.format(DaoConstants.QUERY_NOT_FOUND, GroupDBQueries.GET_ALL_GROUPS_PARTICIPANTS.name()));
+			throw new QueryNotFoundException(String.format(ErrorConstants.QUERY_NOT_FOUND, GroupDBQueries.GET_ALL_GROUPS_PARTICIPANTS.name()));
 		}
 		if ((partNumber >= 0) && (partSize > 0)) {
 			query = query.substring(0, query.lastIndexOf(";")) + SQL_LIMIT;
@@ -74,7 +74,7 @@ public class GroupUserViewDao extends AbstractDao<GroupUserView> {
 				result.add(createInstance(getQueryResultArr(queryResult, resultSet)));
 			}
 		} catch (SQLException e) {
-			throw new DataBaseReadingException(DaoConstants.DATABASE_READING_ERROR, e);
+			throw new DataBaseReadingException(ErrorConstants.DATABASE_READING_ERROR, e);
 		}
 		return result;
 	}

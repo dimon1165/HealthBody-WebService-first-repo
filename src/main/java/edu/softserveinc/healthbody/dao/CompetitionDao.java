@@ -6,8 +6,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-import edu.softserveinc.healthbody.constants.Constant.CompetitionCard;
-import edu.softserveinc.healthbody.constants.DaoConstants;
+import edu.softserveinc.healthbody.constants.Constants.CompetitionCard;
+import edu.softserveinc.healthbody.constants.ErrorConstants;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.CompetitionDBQueries;
 import edu.softserveinc.healthbody.db.ConnectionManager;
 import edu.softserveinc.healthbody.entity.Competition;
@@ -57,7 +57,7 @@ public final class CompetitionDao extends AbstractDao<Competition> {
 		boolean result = false;
 		String query = sqlQueries.get(DaoQueries.INSERT).toString();
 		if (query == null) {
-			throw new QueryNotFoundException(String.format(DaoConstants.QUERY_NOT_FOUND, DaoQueries.INSERT.name()));
+			throw new QueryNotFoundException(String.format(ErrorConstants.QUERY_NOT_FOUND, DaoQueries.INSERT.name()));
 		}
 		try (PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query)) {
 			int i = 1;
@@ -69,7 +69,7 @@ public final class CompetitionDao extends AbstractDao<Competition> {
 			pst.setString(i++, competition.getIdCriteria());
 			result = pst.execute();
 		} catch (SQLException e) {
-			throw new DataBaseReadingException(DaoConstants.DATABASE_READING_ERROR, e);
+			throw new DataBaseReadingException(ErrorConstants.DATABASE_READING_ERROR, e);
 		}
 		return result;
 	}

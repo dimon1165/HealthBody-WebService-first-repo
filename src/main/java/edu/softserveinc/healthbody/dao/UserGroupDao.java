@@ -5,8 +5,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-import edu.softserveinc.healthbody.constants.Constant.UserGroupCard;
-import edu.softserveinc.healthbody.constants.DaoConstants;
+import edu.softserveinc.healthbody.constants.Constants.UserGroupCard;
+import edu.softserveinc.healthbody.constants.ErrorConstants;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.UserGroupQueries;
 import edu.softserveinc.healthbody.db.ConnectionManager;
 import edu.softserveinc.healthbody.entity.Group;
@@ -62,7 +62,7 @@ public final class UserGroupDao extends AbstractDao<UserGroup> {
 		boolean result = false;
 		String query = sqlQueries.get(DaoQueries.INSERT).toString();
 			if (query == null) {
-				throw new QueryNotFoundException(String.format(DaoConstants.QUERY_NOT_FOUND, DaoQueries.INSERT.name()));
+				throw new QueryNotFoundException(String.format(ErrorConstants.QUERY_NOT_FOUND, DaoQueries.INSERT.name()));
 			}
 			try (PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query)) {
 				int i = 1;
@@ -72,7 +72,7 @@ public final class UserGroupDao extends AbstractDao<UserGroup> {
 					
 				result = pst.execute();
 			} catch (SQLException e) {
-					throw new DataBaseReadingException(DaoConstants.DATABASE_READING_ERROR, e);
+					throw new DataBaseReadingException(ErrorConstants.DATABASE_READING_ERROR, e);
 			}
 		return result;
 	}

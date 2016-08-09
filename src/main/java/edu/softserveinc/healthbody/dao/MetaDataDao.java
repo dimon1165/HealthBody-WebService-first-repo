@@ -2,7 +2,7 @@ package edu.softserveinc.healthbody.dao;
 
 import java.util.UUID;
 
-import edu.softserveinc.healthbody.constants.Constant.MetaDataCard;
+import edu.softserveinc.healthbody.constants.Constants.MetaDataCard;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.MetaDataDBQueries;
 import edu.softserveinc.healthbody.entity.MetaData;
 
