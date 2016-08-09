@@ -13,7 +13,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.resources.plugin.version>2.7</maven.resources.plugin.version>
 		<!-- - - - - - Sonar - - - - - -->
-		<sonar.host.url> http://localhost:9000/ </sonar.host.url>
+		<!--  <sonar.host.url> http://localhost:9000/ </sonar.host.url>-->
 		<!-- - - - - - Java - - - - - -->
 		<jdk.source.version.local>1.7</jdk.source.version.local>
 		<jdk.compiler.version.local>1.7</jdk.compiler.version.local>
@@ -151,11 +151,11 @@
 					<warName>HealthBody-WebService</warName>
 				</configuration>
 			</plugin>
-			<plugin>
+			<!-- <plugin>
 	            <groupId>org.codehaus.mojo</groupId>
 	            <artifactId>sonar-maven-plugin</artifactId>
 	            <version>2.4</version>
-        	</plugin>
+        	</plugin> -->
 			<!--formatter -->
 			<!-- <plugin> <groupId>com.googlecode.maven-java-formatter-plugin</groupId> 
 				<artifactId>maven-java-formatter-plugin</artifactId> <version>0.4</version> 
