@@ -151,11 +151,11 @@
 					<warName>HealthBody-WebService</warName>
 				</configuration>
 			</plugin>
-			<!-- <plugin>
+			<plugin>
 	            <groupId>org.codehaus.mojo</groupId>
 	            <artifactId>sonar-maven-plugin</artifactId>
 	            <version>2.2</version>
-        	</plugin> -->
+        	</plugin>
 			<!--formatter -->
 			<!-- <plugin> <groupId>com.googlecode.maven-java-formatter-plugin</groupId> 
 				<artifactId>maven-java-formatter-plugin</artifactId> <version>0.4</version> 
