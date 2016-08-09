@@ -16,8 +16,8 @@ import edu.softserveinc.healthbody.services.impl.CompetitionsViewServiceImpl;
 @Controller
 public class CompetitionController {
 
-	@Request(url = "/allComp")
-	public List<CompetitionDTO> getAllComp(@Param(name = "partNumber") int partNumber,
+	@Request(url = "/Competitions")
+	public List<CompetitionDTO> getAllCompetitions(@Param(name = "partNumber") int partNumber,
 			@Param(name = "partSize") int partSize) {
 		try {
 			return CompetitionsViewServiceImpl.getInstance().getAll(partNumber, partSize);
@@ -29,20 +29,19 @@ public class CompetitionController {
 
 	}
 
-	@Request(url = "/allUComp")
-	public List<CompetitionDTO> getAllUserComp(@Param(name = "partNumber") int partNumber,
+	@Request(url = "/UserCompetitions")
+	public List<CompetitionDTO> getAllUserCompetitions(@Param(name = "partNumber") int partNumber,
 			@Param(name = "partSize") int partSize, @Param(name = "login") String login) {
 		try {
 			return CompetitionsViewServiceImpl.getInstance().getAllByUser(partNumber, partSize, login);
 		} catch (IllegalAgrumentCheckedException | SQLException | JDBCDriverException | TransactionException e) {
 			Log4jWrapper.get().error("Could't get all users compettitions");
-			e.printStackTrace();
 		}
 		return null;
 	}
 
-	@Request(url = "/activeComp")
-	public List<CompetitionDTO> getActiveComp(@Param(name = "partNumber") int partNumber,
+	@Request(url = "/activeCompetitions")
+	public List<CompetitionDTO> getActiveCompetitions(@Param(name = "partNumber") int partNumber,
 			@Param(name = "partSize") int partSize) {
 		try {
 			return CompetitionsViewServiceImpl.getInstance().getAllActive(partNumber, partSize);
@@ -52,8 +51,8 @@ public class CompetitionController {
 		return null;
 	}
 
-	@Request(url = "/activeUComp")
-	public List<CompetitionDTO> getUserActiveComp(@Param(name = "partNumber") int partNumber,
+	@Request(url = "/activeUserCompetitions")
+	public List<CompetitionDTO> getUserActiveCompetitions(@Param(name = "partNumber") int partNumber,
 			@Param(name = "partSize") int partSize, @Param(name = "login") String login) {
 		try {
 			return CompetitionsViewServiceImpl.getInstance().getAllActiveByUser(partNumber, partSize, login);

@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
 
-import edu.softserveinc.healthbody.constants.Constant.GroupCompetitionsCard;
+import edu.softserveinc.healthbody.constants.Constants.GroupCompetitionsCard;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.GroupCompetitionsDBQueries;
 import edu.softserveinc.healthbody.entity.GroupCompetitions;
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;

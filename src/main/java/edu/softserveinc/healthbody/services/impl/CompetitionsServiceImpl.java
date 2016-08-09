@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
 
-import edu.softserveinc.healthbody.constants.ServiceConstants;
+import edu.softserveinc.healthbody.constants.ErrorConstants;
 import edu.softserveinc.healthbody.dao.CompetitionDao;
 import edu.softserveinc.healthbody.dao.CriteriaDao;
 import edu.softserveinc.healthbody.db.ConnectionManager;
@@ -32,7 +32,7 @@ public class CompetitionsServiceImpl implements ICompetitionsService {
 					idCriteria));			
 		} catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException e) {
 			ConnectionManager.getInstance().rollbackTransaction(con);
-			throw new TransactionException(ServiceConstants.TRANSACTION_ERROR, e);
+			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
 		}
 		ConnectionManager.getInstance().commitTransaction(con);
 	}

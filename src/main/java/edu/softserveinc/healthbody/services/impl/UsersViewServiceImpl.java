@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.softserveinc.healthbody.constants.ServiceConstants;
+import edu.softserveinc.healthbody.constants.ErrorConstants;
 import edu.softserveinc.healthbody.dao.UsersViewDao;
 import edu.softserveinc.healthbody.db.ConnectionManager;
 import edu.softserveinc.healthbody.dto.UserDTO;
@@ -37,7 +37,7 @@ public class UsersViewServiceImpl implements IUsersViewService {
 			}
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
 			ConnectionManager.getInstance().rollbackTransaction(con);
-			throw new TransactionException(ServiceConstants.TRANSACTION_ERROR, e);
+			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
 		}
 		ConnectionManager.getInstance().commitTransaction(con);
 		return userDTO;
@@ -71,7 +71,7 @@ public class UsersViewServiceImpl implements IUsersViewService {
 				}
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
 			ConnectionManager.getInstance().rollbackTransaction(con);
-			throw new TransactionException(ServiceConstants.TRANSACTION_ERROR, e);
+			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
 		}
 		ConnectionManager.getInstance().commitTransaction(con);		
 		return userDTO;
@@ -105,7 +105,7 @@ public class UsersViewServiceImpl implements IUsersViewService {
 				}
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
 			ConnectionManager.getInstance().rollbackTransaction(con);
-			throw new TransactionException(ServiceConstants.TRANSACTION_ERROR, e);
+			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
 		}
 		ConnectionManager.getInstance().commitTransaction(con);	
 		return userDTO;

@@ -30,7 +30,7 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		try {
 			UserProfileServiceImpl.getInstance().insert(userDTO);
 		} catch (SQLException | JDBCDriverException | TransactionException e) {
-			Log4jWrapper.get().error("create user failed. " + e);
+			Log4jWrapper.get().error("create user failed. ", e);
 		}
 	}
 
@@ -39,7 +39,7 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		try {
 			return UserProfileServiceImpl.getInstance().get(login);
 		} catch (SQLException | JDBCDriverException | TransactionException e) {
-			Log4jWrapper.get().error("get user by login failed. " + e);
+			Log4jWrapper.get().error("get user by login failed. ", e);
 		}
 		return null;
 	}
@@ -49,7 +49,7 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		try {
 			UserProfileServiceImpl.getInstance().update(userDTO);
 		} catch (SQLException | JDBCDriverException | TransactionException e) {
-			Log4jWrapper.get().error("update user failed" + e);
+			Log4jWrapper.get().error("update user failed ", e);
 		}
 	}
 
@@ -59,7 +59,7 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 			UserDTO userDTO = UserProfileServiceImpl.getInstance().get(login);
 			UserProfileServiceImpl.getInstance().lock(userDTO, isDisabled);
 		} catch (SQLException | JDBCDriverException | TransactionException e) {
-			Log4jWrapper.get().error("lock user failed" + e);
+			Log4jWrapper.get().error("lock user failed ", e);
 		}
 	}
 
@@ -69,7 +69,7 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		try {
 			return user.getAll(partNumber, partSize);
 		} catch (JDBCDriverException | SQLException | TransactionException e) {
-			Log4jWrapper.get().error("get all users failed" + e);
+			Log4jWrapper.get().error("get all users failed ", e);
 		}
 		return null;
 	}
@@ -80,7 +80,7 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		try {
 			return user.getAlltoAddInCompetition(partNumber, partSize);
 		} catch (JDBCDriverException | SQLException | TransactionException e) {
-			Log4jWrapper.get().error("get all users to add in competition failed" + e);
+			Log4jWrapper.get().error("get all users to add in competition failed ", e);
 		}
 		return null;
 	}
@@ -91,7 +91,7 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		try {
 			return user.getAllinCompetition(partNumber, partSize);
 		} catch (JDBCDriverException | SQLException | TransactionException e) {
-			Log4jWrapper.get().error("get all users in competition failed" + e);
+			Log4jWrapper.get().error("get all users in competition failed ", e);
 		}
 		return null;
 	}
@@ -102,11 +102,10 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 			try {
 				return GroupServiceImpl.getInstance().getAll(partNumber, partSize);
 			} catch (SQLException | TransactionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Log4jWrapper.get().error("get all groups failed ", e);
 			}
 		} catch (QueryNotFoundException | JDBCDriverException | DataBaseReadingException e) {
-			Log4jWrapper.get().error("get all groups failed" + e);
+			Log4jWrapper.get().error("get all groups failed ", e);
 		}
 		return null;
 	}
@@ -117,11 +116,10 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 			try {
 				return GroupServiceImpl.getInstance().getGroup(name);
 			} catch (SQLException | TransactionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Log4jWrapper.get().error("get group by name failed ", e);
 			}
 		} catch (QueryNotFoundException | JDBCDriverException | DataBaseReadingException e) {
-			Log4jWrapper.get().error("get group by name failed" + e);
+			Log4jWrapper.get().error("get group by name failed ", e);
 		}
 		return null;
 	}
@@ -133,12 +131,11 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 			try {
 				groupDTO = GroupServiceImpl.getInstance().getGroup(name);
 			} catch (SQLException | TransactionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Log4jWrapper.get().error("get description of group ", e);
 			}
 			return  GroupServiceImpl.getInstance().getDescriptionOfGroup(groupDTO);
 		} catch (QueryNotFoundException | JDBCDriverException | DataBaseReadingException e) {
-			Log4jWrapper.get().error("get description of group" + e);
+			Log4jWrapper.get().error("get description of group ", e);
 		}
 		return null;
 	}
@@ -153,7 +150,7 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 			GroupServiceImpl.getInstance().update(groupDTO);
 		} catch (SQLException | JDBCDriverException | DataBaseReadingException 
 				| QueryNotFoundException | TransactionException e) {
-			Log4jWrapper.get().error("update group failed" + e);
+			Log4jWrapper.get().error("update group failed ", e);
 		}
 	}
 
@@ -162,7 +159,7 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		try {
 			return CompetitionsViewServiceImpl.getInstance().getAll(partNumber, partSize);
 		} catch (JDBCDriverException | SQLException | TransactionException e) {
-			Log4jWrapper.get().error("get all competitions failed" + e);
+			Log4jWrapper.get().error("get all competitions failed ", e);
 		}
 		return null;
 	}
@@ -172,7 +169,7 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		try {
 			return CompetitionsViewServiceImpl.getInstance().getAllActive(partNumber, partSize);
 		} catch (JDBCDriverException | SQLException | TransactionException e) {
-			Log4jWrapper.get().error("get all active competitions failed" + e);
+			Log4jWrapper.get().error("get all active competitions failed ", e);
 		}
 		return null;
 	}
@@ -183,7 +180,7 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		try {
 			return CompetitionsViewServiceImpl.getInstance().getAllByUser(partNumber, partSize, login);
 		} catch (IllegalAgrumentCheckedException | SQLException | JDBCDriverException | TransactionException e) {
-			Log4jWrapper.get().error("get all competitions by user failed" + e);
+			Log4jWrapper.get().error("get all competitions by user failed ", e);
 		}
 		return null;
 	}
@@ -194,7 +191,7 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		try {
 			return CompetitionsViewServiceImpl.getInstance().getAllActiveByUser(partNumber, partSize, login);
 		} catch (IllegalAgrumentCheckedException | SQLException | JDBCDriverException | TransactionException e) {
-			Log4jWrapper.get().error("get all active competitions by user failed" + e);
+			Log4jWrapper.get().error("get all active competitions by user failed ", e);
 		}
 		return null;
 	}
@@ -207,11 +204,10 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 				competition.insert(competitionDTO);
 			} catch (DataBaseReadingException | QueryNotFoundException | EmptyResultSetException
 					| CloseStatementException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Log4jWrapper.get().error("create competition failed ", e);
 			}
 		} catch (SQLException | JDBCDriverException | TransactionException e) {
-			Log4jWrapper.get().error("create competition failed" + e);
+			Log4jWrapper.get().error("create competition failed ", e);
 		}
 	}
 
@@ -221,11 +217,10 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 			try {
 				return GroupServiceImpl.getInstance().getAllGroupsParticipants(partNumber, partSize);
 			} catch (SQLException | TransactionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Log4jWrapper.get().error("get all groups participants failed ", e);
 			}
 		} catch (QueryNotFoundException | JDBCDriverException | DataBaseReadingException e) {
-			Log4jWrapper.get().error("get all groups participants failed" + e);
+			Log4jWrapper.get().error("get all groups participants failed ", e);
 		}
 		return null;
 	}

@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import edu.softserveinc.healthbody.constants.Constant.CompetitionsViewCard;
-import edu.softserveinc.healthbody.constants.DaoConstants;
+import edu.softserveinc.healthbody.constants.Constants.CompetitionsViewCard;
+import edu.softserveinc.healthbody.constants.ErrorConstants;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.CompetitionsViewQueries;
 import edu.softserveinc.healthbody.db.ConnectionManager;
 import edu.softserveinc.healthbody.entity.CompetitionsView;
@@ -60,7 +60,7 @@ public class CompetitionsViewDao extends AbstractDao<CompetitionsView> {
 		String query = sqlQueries.get(CompetitionsViewQueries.GET_ALL_ACTIVE).toString();
 		if (query == null) {
 			throw new QueryNotFoundException(
-					String.format(DaoConstants.QUERY_NOT_FOUND, CompetitionsViewQueries.GET_ALL_ACTIVE.name()));
+					String.format(ErrorConstants.QUERY_NOT_FOUND, CompetitionsViewQueries.GET_ALL_ACTIVE.name()));
 		}
 		if ((partNumber >= 0) && (partSize > 0)) {
 			query = query.substring(0, query.lastIndexOf(";")) + SQL_LIMIT;
@@ -72,7 +72,7 @@ public class CompetitionsViewDao extends AbstractDao<CompetitionsView> {
 				result.add(createInstance(getQueryResultArr(queryResult, resultSet)));
 			}
 		} catch (SQLException e) {
-			throw new DataBaseReadingException(DaoConstants.DATABASE_READING_ERROR, e);
+			throw new DataBaseReadingException(ErrorConstants.DATABASE_READING_ERROR, e);
 		}
 		return result;
 	}
@@ -88,7 +88,7 @@ public class CompetitionsViewDao extends AbstractDao<CompetitionsView> {
 		String query = sqlQueries.get(CompetitionsViewQueries.GET_ALL_ACTIVE_BY_USER).toString();
 		if (query == null) {
 			throw new QueryNotFoundException(
-					String.format(DaoConstants.QUERY_NOT_FOUND, CompetitionsViewQueries.GET_ALL_ACTIVE_BY_USER.name()));
+					String.format(ErrorConstants.QUERY_NOT_FOUND, CompetitionsViewQueries.GET_ALL_ACTIVE_BY_USER.name()));
 		}
 		if ((partNumber >= 0) && (partSize > 0)) {
 			query = query.substring(0, query.lastIndexOf(";")) + SQL_LIMIT;
@@ -100,7 +100,7 @@ public class CompetitionsViewDao extends AbstractDao<CompetitionsView> {
 				result.add(createInstance(getQueryResultArr(queryResult, resultSet)));
 			}
 		} catch (SQLException e) {
-			throw new DataBaseReadingException(DaoConstants.DATABASE_READING_ERROR, e);
+			throw new DataBaseReadingException(ErrorConstants.DATABASE_READING_ERROR, e);
 		}
 		return result;
 	}
@@ -110,7 +110,7 @@ public class CompetitionsViewDao extends AbstractDao<CompetitionsView> {
 		List<CompetitionsView> result = new ArrayList<>();
 		String query = sqlQueries.get(CompetitionsViewQueries.GET_ALL).toString();
 		if (query == null) {
-			throw new QueryNotFoundException(String.format(DaoConstants.QUERY_NOT_FOUND, CompetitionsViewQueries.GET_ALL.name()));
+			throw new QueryNotFoundException(String.format(ErrorConstants.QUERY_NOT_FOUND, CompetitionsViewQueries.GET_ALL.name()));
 		}
 		if ((partNumber >= 0) && (partSize > 0)) {
 			query = query.substring(0, query.lastIndexOf(";")) + SQL_LIMIT;
@@ -122,7 +122,7 @@ public class CompetitionsViewDao extends AbstractDao<CompetitionsView> {
 				result.add(createInstance(getQueryResultArr(queryResult, resultSet)));
 			}
 		} catch (SQLException e) {
-			throw new DataBaseReadingException(DaoConstants.DATABASE_READING_ERROR, e);
+			throw new DataBaseReadingException(ErrorConstants.DATABASE_READING_ERROR, e);
 		}
 		return result;
 	}
@@ -138,7 +138,7 @@ public class CompetitionsViewDao extends AbstractDao<CompetitionsView> {
 		String query = sqlQueries.get(CompetitionsViewQueries.GET_ALL_BY_USER).toString();
 		if (query == null) {
 			throw new QueryNotFoundException(
-					String.format(DaoConstants.QUERY_NOT_FOUND, CompetitionsViewQueries.GET_ALL_BY_USER.name()));
+					String.format(ErrorConstants.QUERY_NOT_FOUND, CompetitionsViewQueries.GET_ALL_BY_USER.name()));
 		}
 		if ((partNumber >= 0) && (partSize > 0)) {
 			query = query.substring(0, query.lastIndexOf(";")) + SQL_LIMIT;
@@ -150,7 +150,7 @@ public class CompetitionsViewDao extends AbstractDao<CompetitionsView> {
 				result.add(createInstance(getQueryResultArr(queryResult, resultSet)));
 			}
 		} catch (SQLException e) {
-			throw new DataBaseReadingException(DaoConstants.DATABASE_READING_ERROR, e);
+			throw new DataBaseReadingException(ErrorConstants.DATABASE_READING_ERROR, e);
 		}
 		return result;
 	}

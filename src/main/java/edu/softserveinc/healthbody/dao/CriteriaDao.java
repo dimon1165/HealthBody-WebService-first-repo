@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
 
-import edu.softserveinc.healthbody.constants.Constant.CriteriaCard;
+import edu.softserveinc.healthbody.constants.Constants.CriteriaCard;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.CriteriaDBQueries;
 import edu.softserveinc.healthbody.entity.Criteria;
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;

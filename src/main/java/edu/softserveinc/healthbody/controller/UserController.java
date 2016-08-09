@@ -16,7 +16,7 @@ import edu.softserveinc.healthbody.services.impl.UsersViewServiceImpl;
 @Controller
 public class UserController {
 
-	@Request(url = "/allUsers")
+	@Request(url = "/Users")
 	public List<UserDTO> getAllUsers(@Param(name = "partNumber") int partNumber,
 			@Param(name = "partSize") int partSize) {
 		try {
@@ -27,8 +27,8 @@ public class UserController {
 		return null;
 	}
 
-	@Request(url = "/allInCompUsers")
-	public List<UserDTO> getAllImCompUsers(@Param(name = "partNumber") int partNumber,
+	@Request(url = "/UsersInCompetition")
+	public List<UserDTO> getAllUsersInCompetition(@Param(name = "partNumber") int partNumber,
 			@Param(name = "partSize") int partSize) {
 		try {
 			return new UsersViewServiceImpl().getAllinCompetition(partNumber, partSize);
@@ -38,8 +38,8 @@ public class UserController {
 		return null;
 	}
 
-	@Request(url = "/allUByAdmin")
-	public List<UserDTO> getAllByAdmin(@Param(name = "partNumber") int partNumber,
+	@Request(url = "/UsersByAdmin")
+	public List<UserDTO> getAllUsersByAdmin(@Param(name = "partNumber") int partNumber,
 			@Param(name = "partSize") int partSize) {
 		try {
 			return new UsersViewServiceImpl().getAllbyAdmin(partNumber, partSize);
@@ -49,8 +49,8 @@ public class UserController {
 		return null;
 	}
 
-	@Request(url = "/allUInGroup")
-	public List<UserDTO> getAllinGroup(@Param(name = "partNumber") int partNumber,
+	@Request(url = "/UsersInGroup")
+	public List<UserDTO> getAllUsersinGroup(@Param(name = "partNumber") int partNumber,
 			@Param(name = "partSize") int partSize) {
 		try {
 			return new UsersViewServiceImpl().getAllinGroup(partNumber, partSize);
@@ -60,8 +60,8 @@ public class UserController {
 		return null;
 	}
 
-	@Request(url = "/UWithNoComp")
-	public List<UserDTO> getAllToAddInComp(@Param(name = "partNumber") int partNumber,
+	@Request(url = "/UsersWithNoCompetition")
+	public List<UserDTO> getUsersToAddInCompetition(@Param(name = "partNumber") int partNumber,
 			@Param(name = "partSize") int partSize) {
 		try {
 			return new UsersViewServiceImpl().getAlltoAddInCompetition(partNumber, partSize);
@@ -71,7 +71,7 @@ public class UserController {
 		return null;
 	}
 
-	@Request(url = "/UByLogin")
+	@Request(url = "/UserByLogin")
 	public UserDTO getUserByLogin(@Param(name = "login") String login) {
 		try {
 			return UserProfileServiceImpl.getInstance().get(login);

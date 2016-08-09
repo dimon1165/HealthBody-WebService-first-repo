@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
 
-import edu.softserveinc.healthbody.constants.Constant.UserCompetitionsCard;
+import edu.softserveinc.healthbody.constants.Constants.UserCompetitionsCard;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.UserCompetitionsDBQueries;
 import edu.softserveinc.healthbody.entity.UserCompetitions;
 import edu.softserveinc.healthbody.exceptions.CloseStatementException;
