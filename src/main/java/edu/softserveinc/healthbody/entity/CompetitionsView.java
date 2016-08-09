@@ -1,7 +1,17 @@
 package edu.softserveinc.healthbody.entity;
 
+	/**
+	 * Class  edu.softserveinc.healthbody.entity.CompetiotionsView is POJO. 
+	 * Called by:
+	 * edu.softserveinc.healthbody.dao.CompetitionDao
+	 * Return info about Start, finish dates, users count in competitions
+	 * and info about competitions.
+	 *  
+	 * @version 9 August 2016 	
+	 * 
+	 * */
 public class CompetitionsView implements IEntity {
-
+	
 	private String idCompetition;
 	private String name;
 	private String description;
@@ -9,6 +19,10 @@ public class CompetitionsView implements IEntity {
 	private String finish;
 	private Integer usersCount;
 
+	
+	 /**
+     *  Constructor of edu.softserveinc.healthbody.entity.CompetitionsView  
+     */
 	public CompetitionsView(final String idCompetition, final String name, final String description, final String start,
 			final String finish, final Integer usersCount) {
 		this.idCompetition = idCompetition;
@@ -19,7 +33,9 @@ public class CompetitionsView implements IEntity {
 		this.usersCount = usersCount;
 	}
 	
-	// Setters
+	 /**
+     * Setters  
+     */
 	public final void setIdCompetitions(final String idCompetition) {
 		this.idCompetition = idCompetition;
 	}
@@ -44,7 +60,9 @@ public class CompetitionsView implements IEntity {
 		this.usersCount = usersCount;
 	}
 
-	// Getters	
+	 /**
+     * Getters  
+     */
 	public final String getId() {
 		return getIdCompetition();
 	}

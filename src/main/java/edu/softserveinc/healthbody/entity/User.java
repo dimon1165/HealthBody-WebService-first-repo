@@ -1,5 +1,15 @@
 package edu.softserveinc.healthbody.entity;
 
+	/**
+	 * Class  edu.softserveinc.healthbody.entity.User is POJO.
+	 * Called by: 
+	 * edu.softserveinc.healthbody.dao.UserDao - create instance,
+	 * edu.softserveinc.healthbody.services.impl.UserProfileServiceImpl
+	 * Return info about users 
+	 * 
+	 * @version 9 August 2016 	
+	 * 
+	 * */
 public class User implements IEntity {
 	
 	private String idUser;
@@ -18,6 +28,10 @@ public class User implements IEntity {
 	private String status;
 	private boolean isDisabled;
 	
+	
+	 /**
+     *  Constructor of edu.softserveinc.healthbody.entity.User  
+     */
 	public User(final String idUser, final String login, final String passwd, final String firsName, final String lastName, 
 			final String mail, final Integer age, final Double weight, final String gender, final String health,
 			final String avatar, final String googleApi, final String idRole, final String status, final boolean isDisabled) {
@@ -43,7 +57,9 @@ public class User implements IEntity {
 		return idUser;
 	}
 
-	// Setters
+	 /**
+     * Setters  
+     */
 	public final void setIdUser(final String idUser) {
 		this.idUser = idUser;
 	}
@@ -104,7 +120,9 @@ public class User implements IEntity {
 		this.isDisabled = isDisabled;
 	}
 	
-	// Getters
+	 /**
+     * Getters  
+     */
 	public final String getIdUser() {
 		return idUser;
 	}
