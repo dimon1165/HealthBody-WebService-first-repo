@@ -1,7 +1,14 @@
 package edu.softserveinc.healthbody.dto;
 
 import java.util.List;
-
+	
+	/**
+	 * Class  edu.softserveinc.healthbody.dto.UserDTO is POJO.
+	 * 
+	 * 
+	 * @version 9 August 2016 	
+	 * 
+	 * */
 public class UserDTO {
 
 	private String idUser;
@@ -22,8 +29,14 @@ public class UserDTO {
 	private List<GroupDTO> groups;
 	private String isDisabled;
 
+	/**
+    *  Default constructor of edu.softserveinc.healthbody.dto.UserDTO   
+    */
 	public UserDTO() { }
 	
+	/**
+	 *  Constructor of edu.softserveinc.healthbody.dto.RoleDTO   
+	 */
 	public UserDTO(final String idUser, final String login, final String password, final String firstname, 
 			final String lastname, final String email, final String age, final String weight, final String gender, 
 			final String photoURL, final String roleName, final String status, final String score, 
@@ -44,7 +57,9 @@ public class UserDTO {
 		this.groups = groups;
 	}
 	
-	// Getters
+	/**
+	 * Getters   
+	 */
 	public final String getIdUser() {
 		return idUser;
 	}
@@ -108,7 +123,9 @@ public class UserDTO {
 		return isDisabled;
 	}
 
-	// Setters
+	/**
+	 * Setters   
+	 */
 	public final void setIdUser(final String idUser) {
 		this.idUser = idUser;
 	}

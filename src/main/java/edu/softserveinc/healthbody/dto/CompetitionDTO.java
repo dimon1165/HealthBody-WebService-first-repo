@@ -1,7 +1,15 @@
 package edu.softserveinc.healthbody.dto;
 
 import java.util.List;
-
+	
+	/**
+	 * Class  edu.softserveinc.healthbody.dto.CompetitionDTO is POJO.
+	 * Used by edu.softserveinc.healthbody.services.impl.CompetitionsViewServiceImpl
+	 * to transfer data about competitions.
+	 * 
+	 * @version 9 August 2016 	
+	 * 
+	 * */
 public class CompetitionDTO {
 
 	private String idCompetition;
@@ -14,8 +22,14 @@ public class CompetitionDTO {
 	private List<String> groups;
 	private List<String> logins;
 
+	 /**
+     *  Default constructor of edu.softserveinc.healthbody.dto.CompetitionDTO   
+     */
 	public CompetitionDTO() { }
 	
+	 /**
+     *  Constructor of edu.softserveinc.healthbody.dto.CompetitionDTO   
+     */
 	public CompetitionDTO(final String idCompetition, final String name, final String count, final String startDate,
 			final String finishDate, final String description, final String nameCriteria, final List<String> groups, 
 			final List<String> logins) {
@@ -30,7 +44,9 @@ public class CompetitionDTO {
 		this.logins = logins;
 	}
 	
-	// Getters
+	 /**
+     * Getters   
+     */
 	public String getIdCompetition(){
 		return idCompetition;
 	}
@@ -67,7 +83,9 @@ public class CompetitionDTO {
 		return nameCriteria;
 	}
 
-	// Setters
+	 /**
+     * Setters   
+     */
 	public final void setIdCompetition(final String idCompetition) {
 		this.idCompetition = idCompetition;
 	}	

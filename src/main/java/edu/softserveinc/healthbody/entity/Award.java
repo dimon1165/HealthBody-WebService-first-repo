@@ -4,7 +4,7 @@ package edu.softserveinc.healthbody.entity;
 	 * Class  edu.softserveinc.healthbody.entity.Award is POJO.
 	 * Called by edu.softserveinc.healthbody.entity.AwardDao
 	 * which nobody use then
-	 * FOR THE MOMENT NOT IN USE. 
+	 * 
 	 * Return info about Awards
 	 * 
 	 * @version 9 August 2016 	
