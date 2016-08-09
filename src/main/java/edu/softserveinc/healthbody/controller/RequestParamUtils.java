@@ -1,7 +1,6 @@
 package edu.softserveinc.healthbody.controller;
 
 public class RequestParamUtils {
-
 	
 	public static Object toObject(Class<?> clazz, String value) {
 		if (Boolean.class == clazz)
@@ -30,7 +29,6 @@ public class RequestParamUtils {
 	}
 
 	public static boolean isIntegerParam(String param) {
-
 		return param.matches("^-?\\d+$");
 
 	}

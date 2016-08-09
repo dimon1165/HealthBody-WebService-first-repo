@@ -38,11 +38,9 @@ public class MethodMapUtil {
 						new Pair<Method, Class<?>>(method, annotatedClass));
 			}
 		}
-
 	}
 
 	public Map<String, Pair<Method, Class<?>>> getMethodsClasUrlMapping() {
 		return methodsClasUrlMapping;
 	}
-
 }

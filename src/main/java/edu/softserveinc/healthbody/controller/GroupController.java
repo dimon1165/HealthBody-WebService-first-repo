@@ -11,46 +11,44 @@ import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 import edu.softserveinc.healthbody.exceptions.QueryNotFoundException;
 import edu.softserveinc.healthbody.exceptions.TransactionException;
+import edu.softserveinc.healthbody.log.Log4jWrapper;
 import edu.softserveinc.healthbody.services.impl.GroupServiceImpl;
 
 @Controller
 public class GroupController {
 
-	@Request(url = "/allGroups")
+	@Request(url = "/Groups")
 	public List<GroupDTO> getAllGroups(@Param(name = "partNumber") int partNumber,
 			@Param(name = "partSize") int partSize) {
 		try {
 			return GroupServiceImpl.getInstance().getAll(partNumber, partSize);
 		} catch (QueryNotFoundException | JDBCDriverException | DataBaseReadingException | SQLException 
 				| TransactionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log4jWrapper.get().error("Could't get all groups");
 		} 
 		return null;
 	}
 
-	@Request(url = "/groupDescr")
-	public String getDescription(@Param(name = "groupName") String groupName) {
+	@Request(url = "/groupDescription")
+	public String getDescriptionOfGroup(@Param(name = "groupName") String groupName) {
 		try {
 			return GroupServiceImpl.getInstance()
 					.getDescriptionOfGroup(GroupServiceImpl.getInstance().getGroup(groupName));
 		} catch (QueryNotFoundException | JDBCDriverException | DataBaseReadingException | SQLException | 
 				TransactionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log4jWrapper.get().error("Could't get description of group");
 		}
 		return null;
 	}
 	
-	@Request(url = "/allGroupsParticipants")
+	@Request(url = "/GroupsParticipants")
 	public List<GroupDTO> getAllGroupsParticipants(@Param(name = "partNumber") int partNumber,
 			@Param(name = "partSize") int partSize) {
 		try {
 			return GroupServiceImpl.getInstance().getAllGroupsParticipants(partNumber, partSize);
 		} catch (QueryNotFoundException | JDBCDriverException | DataBaseReadingException | SQLException 
 				| TransactionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log4jWrapper.get().error("Could't get group's participants");
 		} 
 		return null;
 	}
