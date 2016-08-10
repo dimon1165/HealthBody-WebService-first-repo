@@ -90,7 +90,7 @@ public final class UserProfileServiceImpl implements IBaseService<UserDTO> {
 			try {
 				user = UserDao.getInstance().getUserByLoginName(name);
 				if (user == null) {
-//					Log4jWrapper.get().error("User " + name + " doesn't exist");
+					Log4jWrapper.get().error("User " + name + " doesn't exist");
 					return null;
 				} else {
 					role = RoleDao.getInstance().getRoleById(user.getIdRole());
@@ -107,7 +107,7 @@ public final class UserProfileServiceImpl implements IBaseService<UserDTO> {
 			ConnectionManager.getInstance().commitTransaction();
 		return new UserDTO(user.getId(), user.getLogin(), user.getPasswd(), user.getFirsName(), user.getLastName(), user.getMail(),
 				user.getAge().toString(), user.getWeight().toString(), user.getGender(), user.getAvatar(),
-				role.getName(), user.getStatus(), "", groups, String.valueOf(user.getIsDisabled()));
+				role.getName(), user.getStatus(), "", user.getHealth(), groups, String.valueOf(user.getIsDisabled()));
 		}
 	}
 	
@@ -137,7 +137,7 @@ public final class UserProfileServiceImpl implements IBaseService<UserDTO> {
 		
 		return new UserDTO(user.getId(), user.getLogin(), user.getPasswd(), user.getFirsName(), user.getLastName(), user.getMail(),
 				user.getAge().toString(), user.getWeight().toString(), user.getGender(), user.getAvatar(),
-				role.getName(), user.getStatus(), "", groups, String.valueOf(user.getIsDisabled()));
+				role.getName(), user.getStatus(), "", user.getHealth(), groups, String.valueOf(user.getIsDisabled()));
 	}
 
 	//Update user

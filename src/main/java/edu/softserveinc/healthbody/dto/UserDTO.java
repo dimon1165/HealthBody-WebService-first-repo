@@ -26,7 +26,7 @@ public class UserDTO {
 	
 	public UserDTO(final String idUser, final String login, final String password, final String firstname, 
 			final String lastname, final String email, final String age, final String weight, final String gender, 
-			final String photoURL, final String roleName, final String status, final String score, 
+			final String photoURL, final String roleName, final String status, final String score, final String health,
 			final List<GroupDTO> groups, final String isDisabled) {
 		this.idUser = idUser;
 		this.firstname = firstname;
@@ -41,6 +41,7 @@ public class UserDTO {
 		this.roleName = roleName;
 		this.status = status;
 		this.score = score;
+		this.health = health;
 		this.groups = groups;
 	}
 	

@@ -138,7 +138,7 @@ public class UserProfileServiceImplTest {
 		List<GroupDTO> groups = new ArrayList<GroupDTO>();
 	 	try {
 	 		groups.add(GroupServiceImpl.getInstance().getGroup("Name group number 1"));
-	 		UserDTO userDTO3 = new UserDTO(UUID.randomUUID().toString(), "President", "password", "Bill", "Klinton", "SomeMail75@gmail.com", "67", "80.5","m", "photourl", "user", "active", "1000", groups, "false");
+	 		UserDTO userDTO3 = new UserDTO(UUID.randomUUID().toString(), "President", "password", "Bill", "Klinton", "SomeMail75@gmail.com", "67", "80.5","m", "photourl", "user", "active", "1000", "well", groups, "false");
 			UserProfileServiceImpl.getInstance().insert(userDTO3);
 		 	UserDTO userDTO4 = UserProfileServiceImpl.getInstance().get("President");
 		 	assertNotNull(userDTO4);
