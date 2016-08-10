@@ -19,6 +19,7 @@ public class ConnectionManager {
 
 	private DataSource dataSource;
 	private final List<Connection> connections;
+	private Connection testConnection = null;
 
 	private ConnectionManager() {
 		this.connections = new ArrayList<>();
@@ -83,18 +84,30 @@ public class ConnectionManager {
 	}
 	
 	private synchronized Connection getConnectionFromPool() {
-	  Connection connection;
 	  if(connections.isEmpty()) {
 		  populateConnectionPool();
 	  } 
 	  int lastElement = connections.size() - 1;
-	  connection = connections.get(lastElement);
+	  Connection connection = connections.get(lastElement);
 	  connections.remove(lastElement);	 
 	  return connection;
 	}
 	
 	public synchronized Connection getConnection() {
 		return getConnectionFromPool();
+	}
+	
+	public Connection getConnectionForTest() {
+		if (testConnection == null){	
+			try {
+				testConnection = DriverManager.getConnection(getDataSource().getConnectionUrl(), getDataSource().getUser(),
+						getDataSource().getPasswrd());
+			} catch (SQLException e) {
+				Log4jWrapper.get().error(ERROR_CONNECTION, e);
+				Log4jWrapper.get().error(FAILED_REGISTRATE_DRIVER, e);
+			}					
+		} 
+		return testConnection;
 	}
 	
 	private synchronized void returnConnectionToPool(Connection con) {
@@ -162,4 +175,5 @@ public class ConnectionManager {
 			}
 		}
 	}
+
 }
