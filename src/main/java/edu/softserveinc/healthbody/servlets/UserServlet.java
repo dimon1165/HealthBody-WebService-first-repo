@@ -45,10 +45,10 @@ public class UserServlet extends HttpServlet {
 		/** Get  User's login as parameter from jsp*/
 		String userLogin = request.getParameter("login");
 		
-		/** Check if request info not null*/
+		/** Check if requested info from jsp is not null*/
 		if (userLogin != null) {
 			try{
-				/** Get UserDTO*/
+				/** Get User by his login*/
 				UserDTO userDTO = UserProfileServiceImpl.getInstance().get(userLogin);
 					
 					/** Check if user with such login exist's*/
@@ -67,7 +67,6 @@ public class UserServlet extends HttpServlet {
 						    			    
 						    /** Converting JAXBElement containing userDTO to xml format*/
 						    context.createMarshaller().marshal(jaxbElement, writer);
-					
 						    
 						    /** Print xml representation of userDTO object into console*/
 					 	    Log4jWrapper.get().info(writer.toString());
@@ -83,7 +82,7 @@ public class UserServlet extends HttpServlet {
 						}
 		}
 		
-		/** If request info null */
+		/** If requested info is null */
 	    else {
 			getServletContext().getRequestDispatcher(USER_VIEW_LOGIN_PAGE).forward(request, response);
 		}	
