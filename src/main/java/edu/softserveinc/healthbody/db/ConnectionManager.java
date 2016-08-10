@@ -78,7 +78,7 @@ public class ConnectionManager {
 	}
 
 	private void populateConnectionPool() {
-		while(connections.size() < MAX_POOL_SIZE) {		  
+		if(connections.size() < MAX_POOL_SIZE) {		  
 			connections.add(createNewConnection());		
 		}
 	}
@@ -97,23 +97,23 @@ public class ConnectionManager {
 		return getConnectionFromPool();
 	}
 	
-	public Connection getConnectionForTest() {
-		if (testConnection == null){	
-			try {
-				DataSource dataSource = DataSourceRepository.getInstance().getPostgresTestDatabase();
-				testConnection = DriverManager.getConnection(dataSource.getConnectionUrl(), 
-						dataSource.getUser(), dataSource.getPasswrd());
-			} catch (SQLException | JDBCDriverException e) {
-				Log4jWrapper.get().error(ERROR_CONNECTION, e);
-			}					
+	public synchronized void setUpConnectionForTest(Connection con) {
+		if (testConnection == null){			
+				testConnection = con;								
 		} 
+	}
+	
+	public synchronized Connection getConnectionForTest() {
+		if (testConnection == null){	
+			testConnection = getConnectionFromPool();
+		}
 		return testConnection;
 	}
 	
-	public void closeTestConnection() {
-		if (testConnection != null){
+	public synchronized void closeTestConnection(Connection con) {
+		if (con != null){
 			try {
-				testConnection.close();
+				con.close();
 			} catch (SQLException e) {
 				Log4jWrapper.get().error(FAILED_REGISTRATE_DRIVER, e);
 			}

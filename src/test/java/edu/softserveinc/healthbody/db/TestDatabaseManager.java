@@ -16,8 +16,10 @@ public class TestDatabaseManager {
 	@BeforeSuite
 	public void prepareTestDatabaseBeforeSuite(){
 		createTestDatabaseIfNotExists();
+		setupTestDatabaseConnection();
 		dropTestDatabaseTables();
 		createTestDatabaseTables();
+		populateTestDatabaseTables();
 	}
 	
 	@AfterSuite
@@ -53,6 +55,17 @@ public class TestDatabaseManager {
 		}
 		Log4jWrapper.get().info("Checking database " + testDatabase + " ends successfully.");
 	}
+	
+	private void setupTestDatabaseConnection(){
+		try {
+			Connection con = ConnectionManager.getInstance(DataSourceRepository.getInstance().getPostgresTestDatabase()).getConnection();
+			ConnectionManager.getInstance().setUpConnectionForTest(con);
+		} catch (JDBCDriverException e) {
+			String failMessage = "Couldn't get connection.";
+			Log4jWrapper.get().error(failMessage, e);
+			fail(failMessage, e);
+		}
+}
 	
 	private void dropTestDatabaseTables(){
 		Log4jWrapper.get().info("Start dropping tables in database.");
@@ -109,7 +122,8 @@ public class TestDatabaseManager {
 	private void closeConnection() {
 		Log4jWrapper.get().info("Clossing connection to test database.");
 		try {
-			ConnectionManager.getInstance().closeTestConnection();
+			Connection con = ConnectionManager.getInstance().getConnectionForTest();
+			ConnectionManager.getInstance().closeTestConnection(con);
 		} catch (JDBCDriverException e) {
 			String failMessage = "Error while clossing connection to test database.";
 			Log4jWrapper.get().error(failMessage, e);
