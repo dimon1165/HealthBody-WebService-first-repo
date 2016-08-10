@@ -42,8 +42,8 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 		List<CompetitionDTO> competitionDTO = new ArrayList<>();
 		Connection con = ConnectionManager.getInstance().beginTransaction();
 		try {
-			for (CompetitionsView competitionsView : CompetitionsViewDao.getInstance().getAllCompetitionsView(partNumber,
-					partSize)) {
+			for (CompetitionsView competitionsView : CompetitionsViewDao.getInstance()
+					.getAllCompetitionsView(partNumber, partSize)) {
 				competitionDTO.add(new CompetitionDTO(competitionsView.getIdCompetition(), competitionsView.getName(),
 						competitionsView.getUsersCount().toString(), competitionsView.getStart(),
 						competitionsView.getFinish(), competitionsView.getDescription(), null, new ArrayList<String>(),
@@ -63,8 +63,8 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 		List<CompetitionDTO> competitionDTO = new ArrayList<>();
 		Connection con = ConnectionManager.getInstance().beginTransaction();
 		try {
-			for (CompetitionsView competitionsView : CompetitionsViewDao.getInstance().getActiveCompetitionsView(partNumber,
-					partSize)) {
+			for (CompetitionsView competitionsView : CompetitionsViewDao.getInstance()
+					.getActiveCompetitionsView(partNumber, partSize)) {
 				competitionDTO.add(new CompetitionDTO(competitionsView.getIdCompetition(), competitionsView.getName(),
 						competitionsView.getUsersCount().toString(), competitionsView.getStart(),
 						competitionsView.getFinish(), competitionsView.getDescription(), null, new ArrayList<String>(),
@@ -89,8 +89,8 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 		List<CompetitionDTO> competitionDTO = new ArrayList<>();
 		Connection con = ConnectionManager.getInstance().beginTransaction();
 		try {
-			for (CompetitionsView competitionsView : CompetitionsViewDao.getInstance().getCompetitionsByUserView(partNumber,
-					partSize, login)) {
+			for (CompetitionsView competitionsView : CompetitionsViewDao.getInstance()
+					.getCompetitionsByUserView(partNumber, partSize, login)) {
 				competitionDTO.add(new CompetitionDTO(competitionsView.getIdCompetition(), competitionsView.getName(),
 						competitionsView.getUsersCount().toString(), competitionsView.getStart(),
 						competitionsView.getFinish(), competitionsView.getDescription(), null, new ArrayList<String>(),
@@ -115,8 +115,8 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 		List<CompetitionDTO> competitionDTO = new ArrayList<>();
 		Connection con = ConnectionManager.getInstance().beginTransaction();
 		try {
-			for (CompetitionsView competitionsView : CompetitionsViewDao.getInstance().getActiveCompetitionsByUserView(partNumber,
-					partSize, login)) {
+			for (CompetitionsView competitionsView : CompetitionsViewDao.getInstance()
+					.getActiveCompetitionsByUserView(partNumber, partSize, login)) {
 				competitionDTO.add(new CompetitionDTO(competitionsView.getIdCompetition(), competitionsView.getName(),
 						competitionsView.getUsersCount().toString(), competitionsView.getStart(),
 						competitionsView.getFinish(), competitionsView.getDescription(), null, new ArrayList<String>(),
@@ -128,5 +128,26 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 		}
 		ConnectionManager.getInstance().commitTransaction(con);
 		return competitionDTO;
+	}
+
+	@Override
+	public CompetitionDTO getCompetition(String name) throws JDBCDriverException, SQLException, TransactionException {
+		CompetitionsView competitionview;
+		Connection con = ConnectionManager.getInstance().beginTransaction();
+		try {
+			competitionview = CompetitionsViewDao.getInstance().getCompetitionViewByName(con, name);
+		} catch (QueryNotFoundException | DataBaseReadingException e) {
+			ConnectionManager.getInstance().rollbackTransaction(con);
+			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
+		}
+		ConnectionManager.getInstance().commitTransaction(con);
+		return new CompetitionDTO(competitionview.getIdCompetition(), competitionview.getName(),
+				String.valueOf(competitionview.getUsersCount()), competitionview.getStart(),
+				competitionview.getFinish(), competitionview.getDescription(), null, null, null);
+	}
+
+	@Override
+	public String getDescriptionOfCompetition(final CompetitionDTO competitionDTO) {
+		return competitionDTO.getDescription();
 	}
 }

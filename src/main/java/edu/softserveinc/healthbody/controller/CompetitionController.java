@@ -61,4 +61,15 @@ public class CompetitionController {
 		}
 		return null;
 	}
+
+	@Request(url = "/competitionDescription")
+	public String getDescriptionOfCompetition(@Param(name = "competitionName") String competitionName) {
+		try {
+			return CompetitionsViewServiceImpl.getInstance().getDescriptionOfCompetition(
+					CompetitionsViewServiceImpl.getInstance().getCompetition(competitionName));
+		} catch (JDBCDriverException | SQLException | TransactionException e) {
+			Log4jWrapper.get().error("Could't get description of competition");
+		}
+		return null;
+	}
 }
