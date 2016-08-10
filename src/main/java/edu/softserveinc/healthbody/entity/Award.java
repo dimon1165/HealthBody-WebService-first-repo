@@ -1,10 +1,26 @@
 package edu.softserveinc.healthbody.entity;
 
+	/**
+	 * Class  edu.softserveinc.healthbody.entity.Award is POJO.
+	 * Called by edu.softserveinc.healthbody.entity.AwardDao
+	 * which nobody use then
+	 * 
+	 * Return info about Awards
+	 * 
+	 * @version 9 August 2016 	
+	 * 
+	 * */
 public class Award implements IEntity {
-
-	private String idAward;
-	private String name;
 	
+	/** Award id  is primary key*/
+	private String idAward;
+	
+	/** Name of Award */
+	private String name;
+
+	 /**
+     *  Constructor of edu.softserveinc.healthbody.entity.Award   
+     */
 	public Award(final String idAward, final String name) {
 		this.idAward = idAward;
 		this.name = name;
@@ -15,7 +31,9 @@ public class Award implements IEntity {
 		return getIdAward();
 	}
 	
-	// Getters
+	 /**
+     *  Getters 
+     */	
 	public final String getIdAward() {
 		return idAward;
 	}
@@ -23,7 +41,9 @@ public class Award implements IEntity {
 		return name;
 	}
 	
-	// Setters
+	 /**
+     * Setters  
+     */
 	public final void setIdAward(final String idAward) {
 		this.idAward = idAward;
 	}

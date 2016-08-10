@@ -2,6 +2,12 @@ package edu.softserveinc.healthbody.dto;
 
 import java.util.List;
 
+	/**
+	 * Class  edu.softserveinc.healthbody.dto.CriteriaDTO is POJO.
+	 * 
+	 * @version 9 August 2016 	
+	 * 
+	 * */
 public class CriteriaDTO {
 
 	private String idCriteria;
@@ -10,8 +16,14 @@ public class CriteriaDTO {
 	private String getGoogle;
 	private List<CompetitionDTO> competitions;
 	
+	 /**
+     *  Default constructor of edu.softserveinc.healthbody.dto.CriteriaDTO   
+     */
 	public CriteriaDTO() { }
 	
+	 /**
+     *  Constructor of edu.softserveinc.healthbody.dto.CriteriaDTO   
+     */
 	public CriteriaDTO(final String idCriteria, final String name, final String metrics, final String getGoogle, 
 			final List<CompetitionDTO> competitions) {
 		this.idCriteria = idCriteria;
@@ -21,6 +33,9 @@ public class CriteriaDTO {
 		this.competitions = competitions;
 	}
 
+	 /**
+     * Getters   
+     */
 	public final String getIdCriteria() {
 		return idCriteria;
 	}

@@ -1,12 +1,32 @@
 package edu.softserveinc.healthbody.entity;
 
+	/**
+	 * Class  edu.softserveinc.healthbody.entity.Criteria is POJO. 
+	 * Called by:edu.softserveinc.healthbody.dao.CriteriaDAO
+	 * The purpose is get info about criteria of groups competitions
+	 * Return info about Criteria
+	 *  
+	 * @version 9 August 2016 	
+	 * 
+	 * */
 public class Criteria implements IEntity {
 	
 	private String idCriteria;
+	
+	/** Name of criteria */
 	private String name;
+	
+	/** Metrics on which we are going to judge winner*/
 	private Double metrics;
+	
+	/** Metrics on which we are going to judge winner
+	 * Not in use for the moment 
+	 * Intended to be data from Google*/
 	private String getGoogle;
 	
+	 /**
+     *  Constructor of edu.softserveinc.healthbody.entity.Criteria
+     */
 	public Criteria (final String idCriteria, final String name, final Double metrics,
 			final String getGoogle) {
 		this.idCriteria = idCriteria;
@@ -15,7 +35,9 @@ public class Criteria implements IEntity {
 		this.getGoogle = getGoogle;
 	}
 
-	// Setters	
+	 /**
+     * Setters  
+     */
 	public final void setIdCriteria(final String idCriteria) {
 		this.idCriteria = idCriteria;
 	}
@@ -32,7 +54,9 @@ public class Criteria implements IEntity {
 		this.getGoogle = getGoogle;
 	}
 	
-	// Getters	
+	 /**
+     * Getters  
+     */
 	public final String getId() {
 		return getIdCriteria();
 	}

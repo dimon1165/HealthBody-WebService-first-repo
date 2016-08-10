@@ -4,9 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>UserDTO View</title>
+<title>User View</title>
 </head>
 <body>
-	<h1>${data}</h1>
+	<h5>${data}</h5>
+	
 </body>
 </html>

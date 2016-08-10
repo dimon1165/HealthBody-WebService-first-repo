@@ -1,5 +1,14 @@
 package edu.softserveinc.healthbody.entity;
 
+	/**
+	 * Class  edu.softserveinc.healthbody.entity.UserCompetitions is POJO.
+	 * Called by: 
+	 * edu.softserveinc.healthbody.dao.UserCompetitionsDao - create instance
+	 * Return info about all users in particular competition
+	 *
+	 * @version 9 August 2016 	
+	 * 
+	 * */
 public class UserCompetitions implements IEntity {
 	
 	private String idUserCompetition;
@@ -9,6 +18,9 @@ public class UserCompetitions implements IEntity {
 	private String idAwards;
 	private String timeReceived;
 	
+	 /**
+     *  Constructor of edu.softserveinc.healthbody.entity.UserCompetitions  
+     */
 	public UserCompetitions(final String idUserCompetition, final String idUser, final String idCompetition, 
 			final Integer userScore, final String idAwards, final String timeReceived) {		
 		this.idUserCompetition = idUserCompetition;
@@ -19,7 +31,9 @@ public class UserCompetitions implements IEntity {
 		this.timeReceived = timeReceived;
 	}
 
-	// Setters
+	 /**
+     * Setters  
+     */
 	public void setIdUserCompetition(final String idUserCompetition) {
 		this.idUserCompetition = idUserCompetition;
 	}
@@ -44,7 +58,9 @@ public class UserCompetitions implements IEntity {
 		this.timeReceived = timeReceived;
 	}	
 	
-	// Getters
+	 /**
+     * Getters  
+     */
 	public final String getIdUserCompetition() {
 		return idUserCompetition;
 	}

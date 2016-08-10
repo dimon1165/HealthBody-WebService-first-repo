@@ -5,10 +5,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>UserDTO Initial View</title>
+<title>User View Initial</title>
 </head> 
 <body>
-	<form name="UserLogin" method="get" action="UserDTOServlet">
+	<form name="UserLogin" method="get" action="UserServlet">
 		<table>
 			<tr>
 			<td>User Login</td>

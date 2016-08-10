@@ -1,18 +1,33 @@
 package edu.softserveinc.healthbody.entity;
 
+	/**
+	 * Class  edu.softserveinc.healthbody.entity.Role is POJO.
+	 * Called by: 
+	 * edu.softserveinc.healthbody.dao.RoleDao - create instance
+	 * Return info about present roles of users 
+	 * 
+	 * @version 9 August 2016 	
+	 * 
+	 * */
+
 public class Role implements IEntity {
 
 	private String idRole;
 	private String name;
 	private String description;
 	
+	 /**
+     *  Constructor of edu.softserveinc.healthbody.entity.Role  
+     */
 	public Role(final String idRole, String name, final String description) {
 		this.idRole = idRole;
 		this.name = name;
 		this.description = description;
 	}
 	
-	// Getters
+	 /**
+     * Getters  
+     */
 	public final String getIdRole() {
 		return idRole;
 	}
@@ -23,7 +38,9 @@ public class Role implements IEntity {
 		return description;
 	}
 
-	// Setters
+	 /**
+     * Setters  
+     */
 	public final void setIdRole(final String idRole) {
 		this.idRole = idRole;
 	}
