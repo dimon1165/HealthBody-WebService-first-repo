@@ -17,14 +17,14 @@ public class TestDatabaseManager {
 	public void prepareTestDatabaseBeforeSuite(){
 		createTestDatabaseIfNotExists();
 		setupTestDatabaseConnection();
-		dropTestDatabaseTables();
+//		dropTestDatabaseTables();
 		createTestDatabaseTables();
 		populateTestDatabaseTables();
 	}
 	
 	@AfterSuite
 	public void cleanTestDatabaseAfterSuite() {
-		dropTestDatabaseTables();
+//		dropTestDatabaseTables();
 		closeConnection();
 	}
 	
