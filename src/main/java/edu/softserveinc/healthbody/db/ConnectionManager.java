@@ -110,6 +110,10 @@ public class ConnectionManager {
 		return testConnection;
 	}
 	
+	public void closeTestConnection() {
+		closeConnection(testConnection);
+	}
+	
 	private synchronized void returnConnectionToPool(Connection con) {
 		if ((con != null) && (connections.size() < MAX_POOL_SIZE)){
 			connections.add(con);

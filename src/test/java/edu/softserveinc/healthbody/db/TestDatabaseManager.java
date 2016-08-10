@@ -24,6 +24,7 @@ public class TestDatabaseManager {
 	@AfterSuite
 	public void cleanTestDatabaseAfterSuite() {
 		dropTestDatabaseTables();
+		closeConnection();
 	}
 	
 	public void repopulateTestDatabase() {
@@ -43,7 +44,7 @@ public class TestDatabaseManager {
 	
 	private void createTestDatabaseIfNotExists() {
 		String testDatabase = DataSourcePropertiesRepository.getInstance().getTestDatabase();
-		Log4jWrapper.get().info("Test dadtabase: " + testDatabase);
+		Log4jWrapper.get().info("Test database: " + testDatabase);
 		if ("jenkins".equals(testDatabase)){
 			Log4jWrapper.get().info("Skipping database creation at jenkins server.");
 			return;
@@ -114,5 +115,16 @@ public class TestDatabaseManager {
 			fail(failMessage, e);
 		}
 		Log4jWrapper.get().info("Cleaning tables in database ends successfully.");
+	}
+	
+	private void closeConnection() {
+		Log4jWrapper.get().info("Clossing connection to test database.");
+		try {
+			ConnectionManager.getInstance().closeTestConnection();
+		} catch (JDBCDriverException e) {
+			String failMessage = "Error while clossing connection to test database.";
+			Log4jWrapper.get().error(failMessage, e);
+			fail(failMessage, e);
+		}
 	}
 }
