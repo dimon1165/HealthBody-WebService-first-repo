@@ -37,15 +37,15 @@ public final class DBCreationManager {
 	/**
 	 * Drops database if it exists.
 	 * 
-	 * @param conn {@link Connection} to database
+	 * @param con {@link Connection} to database
 	 * @param databaseName {@link String} name for database
 	 * @return
 	 * @throws SQLException
 	 */
-	public boolean dropDatabaseIfExists(final Connection conn, final String databaseName) throws SQLException {
+	public boolean dropDatabaseIfExists(final Connection con, final String databaseName) throws SQLException {
 		boolean result = false;
-		if (databaseExists(conn, databaseName)){
-			result = dropDatabase(conn, databaseName);
+		if (databaseExists(con, databaseName)){
+			result = dropDatabase(con, databaseName);
 			Log4jWrapper.get().info("Database - " + databaseName + " was deleted.");
 		} else {
 			Log4jWrapper.get().info("Database - " + databaseName + " does not exist.");
@@ -55,35 +55,35 @@ public final class DBCreationManager {
 	
 	/**
 	 * Kills all active connections to database and drops it.
-	 * @param conn
+	 * @param con
 	 * @param databaseName
 	 * @return
 	 * @throws SQLException
 	 */
-	private boolean dropDatabase(Connection conn, String databaseName) throws SQLException {
+	private boolean dropDatabase(Connection con, String databaseName) throws SQLException {
 		String terminateActiveDatabaseConnectionsQuery = 
 				"SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity"
 				+ " WHERE pg_stat_activity.datname = \'" + databaseName + "\'"
 				+ " AND pid <> pg_backend_pid();";
 		String dropDatabaseQuery = "DROP DATABASE " + databaseName + ";";
-		try (Statement statement = conn.createStatement()){
+		try (Statement statement = con.createStatement()){
 			return statement.execute(terminateActiveDatabaseConnectionsQuery + dropDatabaseQuery);
 		}
 	}
 
 	/**
 	 * Creates database with if it does not exist.
-	 * @param conn {@link Connection} to database
+	 * @param con {@link Connection} to database
 	 * @param databaseName {@link String} name for database
 	 * @return <code>true</code> if database was created and <code>false</code> if database already exists.
 	 * @throws SQLException if one was thrown while executing {@link Statement statements}
 	 */
-	public boolean createDatabaseIfNotExists(final Connection conn, final String databaseName) throws SQLException {
+	public boolean createDatabaseIfNotExists(final Connection con, final String databaseName) throws SQLException {
 		boolean result = false;
-		try (Statement statement = conn.createStatement()){
-			if (!databaseExists(conn, databaseName)) {
+		try (Statement statement = con.createStatement()){
+			if (!databaseExists(con, databaseName)) {
 				Log4jWrapper.get().info("Creating database " + databaseName);
-				result = createDatabase(conn, databaseName);
+				result = createDatabase(con, databaseName);
 				Log4jWrapper.get().info("Database " + databaseName + " was created.");
 			} else {
 				Log4jWrapper.get().info("Database - " + databaseName + " exists.");
@@ -99,8 +99,8 @@ public final class DBCreationManager {
 	 * @return <code>true</code> if database exists and <code>false</code> if database does not exist.
 	 * @throws SQLException
 	 */
-	public boolean databaseExists(Connection conn, String databaseName) throws SQLException {
-		try (Statement statement = conn.createStatement()) {
+	public boolean databaseExists(Connection con, String databaseName) throws SQLException {
+		try (Statement statement = con.createStatement()) {
 			statement.execute("select datname from pg_catalog.pg_database where datname = \'" + databaseName + "\';");
 			return statement.getResultSet().next();
 		}
@@ -108,23 +108,23 @@ public final class DBCreationManager {
 	
 	/**
 	 * Creates database with specified name
-	 * @param conn
+	 * @param con
 	 * @param databaseName
 	 * @return
 	 * @throws SQLException
 	 */
-	private boolean createDatabase(Connection conn, String databaseName) throws SQLException {
-		try (Statement statement = conn.createStatement()){
+	private boolean createDatabase(Connection con, String databaseName) throws SQLException {
+		try (Statement statement = con.createStatement()){
 			return statement.execute("CREATE DATABASE " + databaseName);
 		}
 	}
 
 
-    public boolean dropAllDatabaseTables(Connection conn) throws SQLException {
+    public boolean dropAllDatabaseTables(Connection con) throws SQLException {
 		boolean result = false;
 		String query = "drop TABLE if exists usercompetitions, usergroups, groupcompetitions, roles, " 
 				+ "users, groups, competitions, awards, criteria, metadata CASCADE;";
-		try (PreparedStatement pst = conn.prepareStatement(query)) {
+		try (PreparedStatement pst = con.prepareStatement(query)) {
 			result = pst.execute();
 		} catch (SQLException e) {
 			Log4jWrapper.get().error("Error while dropping database tables.", e);
@@ -133,7 +133,7 @@ public final class DBCreationManager {
 		return result;
 	}
 
-    public boolean deleteAllDatabaseData(Connection conn) throws SQLException {
+    public boolean deleteAllDatabaseData(Connection con) throws SQLException {
 		boolean result = false;
 		String[] tableNames = {"usergroups", "groupcompetitions", "usercompetitions", "users",
 				"roles", "groups", "competitions", "awards", "criteria", "metadata"};
@@ -142,7 +142,7 @@ public final class DBCreationManager {
 			sb.append("delete from ").append(tableName).append(";");
 		}
 		String query = sb.toString();
-		try (PreparedStatement pst = conn.prepareStatement(query)) {
+		try (PreparedStatement pst = con.prepareStatement(query)) {
 			result = pst.execute();
 		} catch (SQLException e) {
 			Log4jWrapper.get().error("Error while deleting data from database.", e);
@@ -151,10 +151,10 @@ public final class DBCreationManager {
 		return result;
 	}
     
-    public boolean createDatabaseTables(Connection conn) throws SQLException{
+    public boolean createDatabaseTables(Connection con) throws SQLException{
     	boolean result = true;
 		for (String query : getInstance().getListOfQueries()) {
-			result = result && getInstance().createTable(conn, query);
+			result = result && getInstance().createTable(con, query);
 		}
 		return result;
     }
@@ -175,8 +175,8 @@ public final class DBCreationManager {
 		return queries;
 	}
 
-	private boolean createTable(Connection conn, final String tableQuery) throws SQLException {
-		try (Statement statement = conn.createStatement()){
+	private boolean createTable(Connection con, final String tableQuery) throws SQLException {
+		try (Statement statement = con.createStatement()){
 			statement.executeUpdate(tableQuery);
 			return true;// .execute(tableQuery);
 		} catch (SQLException e){
