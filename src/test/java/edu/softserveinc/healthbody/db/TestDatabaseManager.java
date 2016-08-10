@@ -12,6 +12,8 @@ import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 import edu.softserveinc.healthbody.log.Log4jWrapper;
 
 public class TestDatabaseManager {
+	
+	private String nameTestDatabase;
 
 	@BeforeSuite
 	public void prepareTestDatabaseBeforeSuite(){
@@ -24,6 +26,7 @@ public class TestDatabaseManager {
 	@AfterSuite
 	public void cleanTestDatabaseAfterSuite() {
 		dropTestDatabaseTables();
+		dropTestDatabase();
 		closeConnection();
 	}
 	
@@ -44,6 +47,7 @@ public class TestDatabaseManager {
 	
 	private void createTestDatabaseIfNotExists() {
 		String testDatabase = DataSourcePropertiesRepository.getInstance().getTestDatabase();
+		nameTestDatabase = testDatabase;
 		Log4jWrapper.get().info("Test database: " + testDatabase);
 		if ("jenkins".equals(testDatabase)){
 			Log4jWrapper.get().info("Skipping database creation at jenkins server.");
@@ -72,6 +76,19 @@ public class TestDatabaseManager {
 			DBCreationManager.getInstance().dropAllDatabaseTables(con);
 		} catch (SQLException | JDBCDriverException e) {
 			String failMessage = "Error while dropping tables in database.";
+			Log4jWrapper.get().error(failMessage, e);
+			fail(failMessage, e);
+		}		
+		Log4jWrapper.get().info("Dropping tables in database ends successfully.");
+	}
+	
+	private void dropTestDatabase(){
+		Log4jWrapper.get().info("Start deleting test database - " + nameTestDatabase);
+		try {
+			Connection con = ConnectionManager.getInstance().getConnectionForTest();
+			DBCreationManager.getInstance().dropDatabaseIfExists(con, nameTestDatabase);
+		} catch (SQLException | JDBCDriverException e) {
+			String failMessage = "Error while deleting test database.";
 			Log4jWrapper.get().error(failMessage, e);
 			fail(failMessage, e);
 		}		
