@@ -2,6 +2,17 @@ package edu.softserveinc.healthbody.entity;
 
 import java.sql.Date;
 
+	/**
+	 * Class  edu.softserveinc.healthbody.entity.Competiotions is POJO. 
+	 * Called by: 
+	 * edu.softserveinc.healthbody.dao.CompetitionDao - create instance
+	 * edu.softserveinc.healthbody.services.impl.CompetitionsServiceImpl - fill DTO's
+	 * 
+	 * Return info about Competitions.
+	 *  
+	 * @version 9 August 2016 	
+	 * 
+	 * */
 public class Competition implements IEntity {
 
 	private String idCompetition;
@@ -11,6 +22,9 @@ public class Competition implements IEntity {
 	private Date finish;
 	private String idCriteria;
 
+	 /**
+     *  Constructor of edu.softserveinc.healthbody.entity.Competitions   
+     */
 	public Competition(final String idCompetition, final String name, final String description, final Date start, 
 			final Date finish, final String idCriteria) {
 		this.idCompetition = idCompetition;
@@ -21,7 +35,9 @@ public class Competition implements IEntity {
 		this.idCriteria = idCriteria;
 	}
 	
-	// Setters
+	 /**
+     *  Setters   
+     */
 	public final void setIdCompetitions(final String idCompetition) {
 		this.idCompetition = idCompetition;
 	}
@@ -46,7 +62,9 @@ public class Competition implements IEntity {
 		this.idCriteria = idCriteria;
 	}
 
-	// Getters	
+	 /**
+     *  Getters
+     */	
 	public final String getId() {
 		return getIdCompetition();
 	}

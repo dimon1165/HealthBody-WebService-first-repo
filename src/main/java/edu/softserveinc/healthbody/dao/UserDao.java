@@ -1,5 +1,6 @@
 package edu.softserveinc.healthbody.dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.UUID;
@@ -7,7 +8,6 @@ import java.util.UUID;
 import edu.softserveinc.healthbody.constants.Constants.UserCard;
 import edu.softserveinc.healthbody.constants.ErrorConstants;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.UserDBQueries;
-import edu.softserveinc.healthbody.db.ConnectionManager;
 import edu.softserveinc.healthbody.entity.User;
 import edu.softserveinc.healthbody.exceptions.CloseStatementException;
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
@@ -58,19 +58,19 @@ public final class UserDao extends AbstractDao<User> {
 				Boolean.parseBoolean(args[UserCard.ISDISABLED] == null ? "false" : args[UserCard.ISDISABLED]));
 	}
 
-	public User getUserById(final String id) 
+	public User getUserById(final Connection con, final String id) 
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, CloseStatementException {
-		return getById(id);
+		return getById(con, id);
 	}
 
-	public boolean createUser(final User user)
+	public boolean createUser(final Connection con, final User user)
 			throws JDBCDriverException, QueryNotFoundException, DataBaseReadingException {
 		boolean result = false;
 		String query = sqlQueries.get(DaoQueries.INSERT).toString();
 		if (query == null) {
 			throw new QueryNotFoundException(String.format(ErrorConstants.QUERY_NOT_FOUND, DaoQueries.INSERT.name()));
 		}
-		try (PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query)) {
+		try (PreparedStatement pst = con.prepareStatement(query)) {
 			int i = 1;
 			pst.setString(i++, user.getId());
 			pst.setString(i++, user.getLogin());
@@ -94,14 +94,14 @@ public final class UserDao extends AbstractDao<User> {
 		return result;
 	}
 
-	public boolean updateUser(final User user) 
+	public boolean updateUser(final Connection con, final User user) 
 			throws DataBaseReadingException, JDBCDriverException, QueryNotFoundException {
 		boolean result = false;
 		String query = sqlQueries.get(DaoQueries.UPDATE).toString();
 		if (query == null) {
 			throw new QueryNotFoundException(String.format(ErrorConstants.QUERY_NOT_FOUND, DaoQueries.UPDATE.name()));
 		}
-		try (PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query)) {
+		try (PreparedStatement pst = con.prepareStatement(query)) {
 			int i = 1;
 			pst.setString(i++, user.getLogin());
 			pst.setString(i++, user.getPasswd());
@@ -121,19 +121,19 @@ public final class UserDao extends AbstractDao<User> {
 		return result;
 	}
 
-	public User getUserByLoginName(final String login)
+	public User getUserByLoginName(final Connection con, final String login)
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
-		return getByFieldName(login);
+		return getByFieldName(con, login);
 	}
 
-	public boolean lockUser(final boolean isDisabled, final String login)
+	public boolean lockUser(final Connection con, final boolean isDisabled, final String login)
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		boolean result = false;
 		String query = sqlQueries.get(DaoQueries.ISDISABLED).toString();
 		if (query == null) {
 			throw new QueryNotFoundException(String.format(ErrorConstants.QUERY_NOT_FOUND, DaoQueries.ISDISABLED.name()));
 		}
-		try (PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query)) {
+		try (PreparedStatement pst = con.prepareStatement(query)) {
 			pst.setBoolean(1, isDisabled);
 			pst.setString(2, login);
 			result = pst.execute();
@@ -143,8 +143,8 @@ public final class UserDao extends AbstractDao<User> {
 		return result;
 	}
 	
-	public boolean deleteUserForTests(final String id) 
+	public boolean deleteUserForTests(final Connection con, final String id) 
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
-		return deleteById(id);
+		return deleteById(con, id);
 	}
 }

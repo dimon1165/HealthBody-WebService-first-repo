@@ -1,5 +1,6 @@
 package edu.softserveinc.healthbody.dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -8,7 +9,6 @@ import java.util.UUID;
 import edu.softserveinc.healthbody.constants.Constants.UserGroupCard;
 import edu.softserveinc.healthbody.constants.ErrorConstants;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.UserGroupQueries;
-import edu.softserveinc.healthbody.db.ConnectionManager;
 import edu.softserveinc.healthbody.entity.Group;
 import edu.softserveinc.healthbody.entity.User;
 import edu.softserveinc.healthbody.entity.UserGroup;
@@ -51,25 +51,24 @@ public final class UserGroupDao extends AbstractDao<UserGroup> {
 							 args[UserGroupCard.IDGROUP] == null ? UUID.randomUUID().toString() : args[UserGroupCard.IDGROUP]);
 	}
 
-	public List<UserGroup> getUGbyId(final String id) 
+	public List<UserGroup> getUGbyId(final Connection con, final String id) 
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, 
 			CloseStatementException, EmptyResultSetException {
-		return getAllbyId(id);
+		return getAllbyId(con, id);
 	}
 	
-	public boolean createUserGroup (final User user, final Group group)
+	public boolean createUserGroup (final Connection con, final User user, final Group group)
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		boolean result = false;
 		String query = sqlQueries.get(DaoQueries.INSERT).toString();
 			if (query == null) {
 				throw new QueryNotFoundException(String.format(ErrorConstants.QUERY_NOT_FOUND, DaoQueries.INSERT.name()));
 			}
-			try (PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query)) {
+			try (PreparedStatement pst = con.prepareStatement(query)) {
 				int i = 1;
 				pst.setString(i++, UUID.randomUUID().toString());
 				pst.setString(i++, user.getId());
-				pst.setString(i++, group.getIdGroup());
-					
+				pst.setString(i++, group.getIdGroup());					
 				result = pst.execute();
 			} catch (SQLException e) {
 					throw new DataBaseReadingException(ErrorConstants.DATABASE_READING_ERROR, e);
@@ -77,8 +76,8 @@ public final class UserGroupDao extends AbstractDao<UserGroup> {
 		return result;
 	}
 	
-	public boolean deleteByUserId (final String id) 
+	public boolean deleteByUserId (final Connection con, final String id) 
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
-		return deleteById(id);
+		return deleteById(con, id);
 	}
 }

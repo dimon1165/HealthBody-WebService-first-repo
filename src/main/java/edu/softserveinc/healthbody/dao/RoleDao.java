@@ -1,5 +1,6 @@
 package edu.softserveinc.healthbody.dao;
 
+import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
 
@@ -44,23 +45,23 @@ public final class RoleDao extends AbstractDao<Role> {
 				args[RoleCard.DESCRIPTION] == null ? new String() : args[RoleCard.DESCRIPTION]);
 	}
 	
-	public boolean deleteRole(final Role role)
+	public boolean deleteRole(final Connection con, final Role role)
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
-		return delete(role);
+		return delete(con, role);
 	}
 	
-	public List<Role> view() throws JDBCDriverException, DataBaseReadingException {
-		return getAll();
+	public List<Role> view(final Connection con) throws JDBCDriverException, DataBaseReadingException {
+		return getAll(con);
 	}
 	
-	public Role getRoleById(final String id) 
+	public Role getRoleById(final Connection con, final String id) 
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, CloseStatementException {
-		return getById(id);
+		return getById(con, id);
 	}
 	
-	public Role getRoleByName(final String name)
+	public Role getRoleByName(final Connection con, final String name)
 			throws JDBCDriverException, DataBaseReadingException, QueryNotFoundException {
-		return getByFieldName(name);
+		return getByFieldName(con, name);
 	}
 
 }

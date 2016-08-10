@@ -1,5 +1,6 @@
 package edu.softserveinc.healthbody.services.impl;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class UsersViewServiceImpl implements IUsersViewService {
 	public final List<UserDTO> getAll(final int partNumber, final int partSize)
 			throws JDBCDriverException, SQLException, TransactionException {
 		List<UserDTO> userDTO = new ArrayList<>();
-		ConnectionManager.getInstance().beginTransaction();
+		Connection con = ConnectionManager.getInstance().beginTransaction();
 		try {
 			for (UsersView usersView : UsersViewDao.getInstance().getAllUsersView(partNumber, partSize)) {
 				userDTO.add(new UserDTO(usersView.getId(), usersView.getFirsName(), usersView.getLastName(), 
@@ -35,10 +36,10 @@ public class UsersViewServiceImpl implements IUsersViewService {
 						usersView.getRoleName(), usersView.getStatus(), usersView.getScore().toString(), null, null, null));
 			}
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
-			ConnectionManager.getInstance().rollbackTransaction();
+			ConnectionManager.getInstance().rollbackTransaction(con);
 			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
 		}
-		ConnectionManager.getInstance().commitTransaction();
+		ConnectionManager.getInstance().commitTransaction(con);
 		return userDTO;
 	}
 
@@ -61,7 +62,7 @@ public class UsersViewServiceImpl implements IUsersViewService {
 	public final List<UserDTO> getAlltoAddInCompetition(final int partNumber, final int partSize)
 			throws JDBCDriverException, SQLException, TransactionException {
 		List<UserDTO> userDTO = new ArrayList<>();
-		ConnectionManager.getInstance().beginTransaction();
+		Connection con = ConnectionManager.getInstance().beginTransaction();
 		try {
 				for (UsersView usersView : UsersViewDao.getInstance().getAllUsersView(partNumber, partSize)) {
 					userDTO.add(new UserDTO(usersView.getId(), usersView.getFirsName(), usersView.getLastName(), null, null, null,
@@ -69,10 +70,10 @@ public class UsersViewServiceImpl implements IUsersViewService {
 							usersView.getAvatar(), null, null, usersView.getScore().toString(), null, null, null));
 				}
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
-			ConnectionManager.getInstance().rollbackTransaction();
+			ConnectionManager.getInstance().rollbackTransaction(con);
 			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
 		}
-		ConnectionManager.getInstance().commitTransaction();		
+		ConnectionManager.getInstance().commitTransaction(con);		
 		return userDTO;
 	}
 
@@ -95,7 +96,7 @@ public class UsersViewServiceImpl implements IUsersViewService {
 	public final List<UserDTO> getAllinCompetition(final int partNumber, final int partSize)
 			throws JDBCDriverException, SQLException, TransactionException {
 		List<UserDTO> userDTO = new ArrayList<>();
-		ConnectionManager.getInstance().beginTransaction();
+		Connection con = ConnectionManager.getInstance().beginTransaction();
 		try {
 				for (UsersView usersView : UsersViewDao.getInstance().getAllUsersView(partNumber, partSize)) {
 					userDTO.add(new UserDTO(usersView.getId(), usersView.getFirsName(), usersView.getLastName(), null, null, null,
@@ -103,10 +104,10 @@ public class UsersViewServiceImpl implements IUsersViewService {
 							usersView.getAvatar(), null, null, usersView.getScore().toString(), null, null, null));
 				}
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
-			ConnectionManager.getInstance().rollbackTransaction();
+			ConnectionManager.getInstance().rollbackTransaction(con);
 			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
 		}
-		ConnectionManager.getInstance().commitTransaction();	
+		ConnectionManager.getInstance().commitTransaction(con);	
 		return userDTO;
 	}
 }

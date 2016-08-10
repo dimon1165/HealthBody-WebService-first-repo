@@ -19,7 +19,7 @@ public class ConnectionManager {
 
 	private DataSource dataSource;
 	private final List<Connection> connections;
-	private Connection con = null;
+	private Connection testConnection = null;
 
 	private ConnectionManager() {
 		this.connections = new ArrayList<>();
@@ -84,12 +84,11 @@ public class ConnectionManager {
 	}
 	
 	private synchronized Connection getConnectionFromPool() {
-	  Connection connection;
 	  if(connections.isEmpty()) {
 		  populateConnectionPool();
 	  } 
 	  int lastElement = connections.size() - 1;
-	  connection = connections.get(lastElement);
+	  Connection connection = connections.get(lastElement);
 	  connections.remove(lastElement);	 
 	  return connection;
 	}
@@ -98,10 +97,44 @@ public class ConnectionManager {
 		return getConnectionFromPool();
 	}
 	
-	private synchronized void returnConnectionToPool() {
+	public Connection getConnectionForTest() {
+		if (testConnection == null){	
+			try {
+				DataSource dataSource = DataSourceRepository.getInstance().getPostgresTestDatabase();
+				testConnection = DriverManager.getConnection(dataSource.getConnectionUrl(), 
+						dataSource.getUser(), dataSource.getPasswrd());
+			} catch (SQLException | JDBCDriverException e) {
+				Log4jWrapper.get().error(ERROR_CONNECTION, e);
+			}					
+		} 
+		return testConnection;
+	}
+	
+	public void closeTestConnection() {
+		if (testConnection != null){
+			try {
+				testConnection.close();
+			} catch (SQLException e) {
+				Log4jWrapper.get().error(FAILED_REGISTRATE_DRIVER, e);
+			}
+			testConnection = null;
+		}
+	}
+	
+	private synchronized void returnConnectionToPool(Connection con) {
 		if ((con != null) && (connections.size() < MAX_POOL_SIZE)){
 			connections.add(con);
+		} else {
+			closeConnection(con);
 		}
+	}
+
+	private void closeConnection(Connection con) {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				Log4jWrapper.get().error(FAILED_REGISTRATE_DRIVER, e);
+			}
 	}
 
 	private final Connection createNewConnection() {
@@ -111,26 +144,26 @@ public class ConnectionManager {
 					getDataSource().getPasswrd());
 		} catch (SQLException e) {
 			Log4jWrapper.get().error(ERROR_CONNECTION, e);
-			Log4jWrapper.get().error(FAILED_REGISTRATE_DRIVER, e);
 		}		
 		return connection;
 	}
 		
-	public final void beginTransaction() throws SQLException, JDBCDriverException {
-		con = getConnection();
+	public final Connection beginTransaction() throws SQLException, JDBCDriverException {
+		Connection con = getConnection();
 		con.setAutoCommit(false);
+		return con;
 	}
 
-	public final void commitTransaction() throws SQLException, JDBCDriverException {
+	public final void commitTransaction(Connection con) throws SQLException, JDBCDriverException {
 		con.commit();
 		con.setAutoCommit(true);
-		returnConnectionToPool();
+		returnConnectionToPool(con);
 	}
 
-	public final void rollbackTransaction() throws SQLException, JDBCDriverException {
+	public final void rollbackTransaction(Connection con) throws SQLException, JDBCDriverException {
 		con.rollback();
 		con.setAutoCommit(true);
-		returnConnectionToPool();
+		returnConnectionToPool(con);
 	}
 
 	private List<Connection> getAllConections() {
@@ -152,4 +185,5 @@ public class ConnectionManager {
 			}
 		}
 	}
+
 }

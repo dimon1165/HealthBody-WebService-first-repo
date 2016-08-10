@@ -1,10 +1,23 @@
 package edu.softserveinc.healthbody.entity;
 
+	/**
+	 * Class  edu.softserveinc.healthbody.entity.MetaData is POJO.
+	 * Called by: 
+	 * edu.softserveinc.healthbody.dao.MetaDataDao - create instance
+	 * Return info about synchronization with database. 
+	 * 
+	 * 
+	 * @version 9 August 2016 	
+	 * 
+	 * */
 public class MetaData implements IEntity {
 
 	private String idMetaData;
 	private String lastSynch;
 
+	 /**
+     *  Constructor of edu.softserveinc.healthbody.entity.MetaData  
+     */
 	public MetaData(final String idMetaData, final String lastSynch) {
 		this.idMetaData = idMetaData;
 		this.lastSynch = lastSynch;
@@ -15,7 +28,9 @@ public class MetaData implements IEntity {
 		return getIdMetaData();
 	}
 
-	// Getters
+	 /**
+     * Getters  
+     */
 	public final String getIdMetaData() {
 		return idMetaData;
 	}
@@ -24,7 +39,9 @@ public class MetaData implements IEntity {
 		return lastSynch;
 	}
 
-	// Setters
+	 /**
+     * Setters  
+     */
 	public final void setIdMetaData(final String idMetaData) {
 		this.idMetaData = idMetaData;
 	}

@@ -1,7 +1,6 @@
 package edu.softserveinc.healthbody.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -16,43 +15,44 @@ import edu.softserveinc.healthbody.db.DBCreationManager;
 import edu.softserveinc.healthbody.db.DBPopulateManager;
 import edu.softserveinc.healthbody.db.DataSourceRepository;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
+import edu.softserveinc.healthbody.log.Log4jWrapper;
 
 /**
  * Servlet implementation class DatabaseCreationServlet.
+ * Purpose creating DB in Jenkins(Postges Database).
  */
 @WebServlet("/PleaseCreateDatabase")
 public class DatabaseCreationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Default constructor of DatabaseCreationServlet
+	 */
 	public DatabaseCreationServlet() {
 	}
 
 	@Override
 	protected final void doGet(final HttpServletRequest request, final HttpServletResponse response)
 			throws ServletException, IOException {
-		PrintWriter out = response.getWriter();
-		Connection conn;
+		Connection connection;
 		try {
-			conn = ConnectionManager.getInstance(DataSourceRepository.getInstance().getPostgresDatabase())
+			connection = ConnectionManager.getInstance(DataSourceRepository.getInstance().getPostgresDatabase())
 					.getConnection();
 		} catch (JDBCDriverException e) {
-			e.printStackTrace(out);
-			out.flush();
+			Log4jWrapper.get().error("JDBC Driver Exception ", e);
 			return;
 		}
 		try {
-			DBCreationManager.getInstance().dropAllDatabaseTables(conn);
-			DBCreationManager.getInstance().createDatabaseTables(conn);
-			DBPopulateManager.getInstance().populateDatabaseTables(conn);
+			DBCreationManager.getInstance().dropAllDatabaseTables(connection);
+			DBCreationManager.getInstance().createDatabaseTables(connection);
+			DBPopulateManager.getInstance().populateDatabaseTables(connection);
 		} catch (SQLException e) {
-			e.printStackTrace(out);
-			out.flush();
+			Log4jWrapper.get().error("SQL Exception ", e);
 			return;
 		}
-
-		out.append("Database successfully created and populated at: ")
-				.append(request.getContextPath());
-		out.flush();
+		
+		Log4jWrapper.get().info("Database successfully created and populated at: " + request.getContextPath());
+	
 	}
 
 }

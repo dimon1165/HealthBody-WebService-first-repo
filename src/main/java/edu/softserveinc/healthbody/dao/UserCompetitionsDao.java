@@ -1,5 +1,6 @@
 package edu.softserveinc.healthbody.dao;
 
+import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
 
@@ -49,17 +50,17 @@ public final class UserCompetitionsDao extends AbstractDao<UserCompetitions> {
 				args[UserCompetitionsCard.TIMERECEIVED] == null ? new String() : args[UserCompetitionsCard.TIMERECEIVED]);
 	}
 
-	public List<UserCompetitions> viewAll() 
+	public List<UserCompetitions> viewAll(final Connection con) 
 			throws JDBCDriverException, DataBaseReadingException, EmptyResultSetException, CloseStatementException {		
-		return getAll();
+		return getAll(con);
 	}
 	
-	public List<UserCompetitions> getUCbyId(final String id) 
+	public List<UserCompetitions> getUCbyId(final Connection con, final String id) 
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, CloseStatementException, EmptyResultSetException {		
-		return getAllbyId(id);
+		return getAllbyId(con, id);
 	}
 
-	public boolean deleteByUserId(final String id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
-		return deleteById(id);
+	public boolean deleteByUserId(final Connection con, final String id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
+		return deleteById(con, id);
 	}
 }

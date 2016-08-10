@@ -1,5 +1,6 @@
 package edu.softserveinc.healthbody.dao;
 
+import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
 
@@ -43,8 +44,8 @@ public final class GroupCompetitionsDao extends AbstractDao<GroupCompetitions> {
 				args[GroupCompetitionsCard.IDCOMPETITION] == null ? UUID.randomUUID().toString() : args[GroupCompetitionsCard.IDCOMPETITION]);
 	}
 		
-	public List<GroupCompetitions> view() throws JDBCDriverException, DataBaseReadingException {
-		return getAll();
+	public List<GroupCompetitions> view(final Connection con) throws JDBCDriverException, DataBaseReadingException {
+		return getAll(con);
 	}
 
 }

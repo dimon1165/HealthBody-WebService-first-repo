@@ -1,5 +1,7 @@
 package edu.softserveinc.healthbody.dao;
 
+import java.sql.Connection;
+
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 import edu.softserveinc.healthbody.exceptions.QueryNotFoundException;
@@ -21,8 +23,8 @@ public interface IBasicDao<TEntity> extends IBasicReadDao<TEntity> {
 		DELETE_BY_FIELD;
 	}
 	
-	boolean deleteById(String id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException;
+	boolean deleteById(final Connection con, String id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException;
 	
-	boolean deleteByField(String textCondition)
+	boolean deleteByField(final Connection con, String textCondition)
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException;
 }

@@ -1,5 +1,6 @@
 package edu.softserveinc.healthbody.dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -73,9 +74,9 @@ public final class GroupDao extends AbstractDao<Group> {
 		return result;
 	}
 
-	public boolean deleteGroup(final Group group)
+	public boolean deleteGroup(final Connection con, final Group group)
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
-		return delete(group);
+		return delete(con, group);
 	}
 
 	public List<Group> getAll(final int partNumber, final int partSize) 
@@ -100,9 +101,9 @@ public final class GroupDao extends AbstractDao<Group> {
 		return result;
 	}
 
-	public Group getGroupByName(String name)
+	public Group getGroupByName(final Connection con, final String name)
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
-		return getByFieldName(name);
+		return getByFieldName(con, name);
 	}
 	
 	//methods for try-with-resources

@@ -1,5 +1,15 @@
 package edu.softserveinc.healthbody.entity;
-
+	
+	/**
+	 * Class  edu.softserveinc.healthbody.entity.Group is POJO.
+	 * Called by: 
+	 * edu.softserveinc.healthbody.dao.GroupDao - create instance
+	 * edu.softserveinc.healthbody.services.impl.GroupServiceImpl - fill DTO's
+	 * Return info about group
+	 * 
+	 * @version 9 August 2016 	
+	 * 
+	 * */
 public class Group implements IEntity {
 
 	private String idGroup;
@@ -8,7 +18,10 @@ public class Group implements IEntity {
 	private String description;
 	private String scoreGroup;
 	private String status;
-
+	
+	 /**
+     *  Constructor of edu.softserveinc.healthbody.entity.Group  
+     */
 	public Group(final String idGroup, final String name, final Integer count, final String description, 
 			final String scoreGroup, final String status) {
 		this.idGroup = idGroup;
@@ -24,7 +37,9 @@ public class Group implements IEntity {
 		return getIdGroup();
 	}
 	
-	// Getters
+	 /**
+     * Getters  
+     */
 	public final String getIdGroup() {
 		return idGroup;
 	}
@@ -44,7 +59,9 @@ public class Group implements IEntity {
 		return status;
 	}	
 	
-	// Setters
+	 /**
+     * Setters  
+     */
 	public final void setIdGroup(final String idGroup) {
 		this.idGroup = idGroup;
 	}

@@ -1,5 +1,6 @@
 package edu.softserveinc.healthbody.services.impl;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,31 +43,31 @@ public final class GroupServiceImpl implements IGroupService {
 	public List<GroupDTO> getAll(final int partNumber, final int partSize) throws QueryNotFoundException, 
 			JDBCDriverException, DataBaseReadingException, SQLException, TransactionException {
 		List<GroupDTO> resultGroup = new ArrayList<GroupDTO>();
-		ConnectionManager.getInstance().beginTransaction();
+		Connection con = ConnectionManager.getInstance().beginTransaction();
 		try {
 			for (Group group : GroupDao.getInstance().getAll(partNumber, partSize)){
 				resultGroup.add(new GroupDTO(group.getIdGroup(), group.getName(), group.getCount().toString(), group.getDescription(),
 						group.getScoreGroup(),null,null,null,null));
 			}
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
-			ConnectionManager.getInstance().rollbackTransaction();
+			ConnectionManager.getInstance().rollbackTransaction(con);
 			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
 		}
-		ConnectionManager.getInstance().commitTransaction();
+		ConnectionManager.getInstance().commitTransaction(con);
 		return resultGroup;	
 	}
 	
 	@Override
 	public GroupDTO getGroup(String name) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, SQLException, TransactionException {
 		Group group;
-		ConnectionManager.getInstance().beginTransaction();
+		Connection con = ConnectionManager.getInstance().beginTransaction();
 		try { 
-			group = GroupDao.getInstance().getGroupByName(name);
+			group = GroupDao.getInstance().getGroupByName(con, name);
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
-			ConnectionManager.getInstance().rollbackTransaction();
+			ConnectionManager.getInstance().rollbackTransaction(con);
 			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
 		}
-		ConnectionManager.getInstance().commitTransaction();
+		ConnectionManager.getInstance().commitTransaction(con);
 		 return new GroupDTO(group.getIdGroup(), group.getName(), String.valueOf(group.getCount()), group.getDescription(), group.getScoreGroup(),null,null,null,null);
 	}	
 	
@@ -77,16 +78,16 @@ public final class GroupServiceImpl implements IGroupService {
 	
 	@Override
 	public void update(GroupDTO groupDTO) throws SQLException, JDBCDriverException, TransactionException, QueryNotFoundException, DataBaseReadingException {
-		ConnectionManager.getInstance().beginTransaction();
-		Group group = GroupDao.getInstance().getByFieldName(groupDTO.getName());
+		Connection con = ConnectionManager.getInstance().beginTransaction();
+		Group group = GroupDao.getInstance().getByFieldName(con, groupDTO.getName());
 		try {	
 			GroupDao.getInstance().editGroup(new Group(groupDTO.getIdGroup(), groupDTO.getName(), Integer.parseInt(groupDTO.getCount()), 
 					groupDTO.getDescriptions(), groupDTO.getScoreGroup(), group.getStatus()));
 		} catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException e) {
-			ConnectionManager.getInstance().rollbackTransaction();
+			ConnectionManager.getInstance().rollbackTransaction(con);
 			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);			
 		}
-		ConnectionManager.getInstance().commitTransaction();
+		ConnectionManager.getInstance().commitTransaction(con);
 	}
 	
 
@@ -101,17 +102,17 @@ public final class GroupServiceImpl implements IGroupService {
 	public List<GroupDTO> getAllGroupsParticipants(int partNumber, int partSize) throws QueryNotFoundException,
 			JDBCDriverException, DataBaseReadingException, SQLException, TransactionException {
 		List<GroupDTO> resultGroupParticipants = new ArrayList<GroupDTO>();
-		ConnectionManager.getInstance().beginTransaction();
+		Connection con = ConnectionManager.getInstance().beginTransaction();
 		try {
 			for (GroupUserView groupUsers : GroupUserViewDao.getInstance().getAllGroupsParticiapnts(partNumber, partSize)){
 				resultGroupParticipants.add(new GroupDTO(null, groupUsers.getName(), null, null, null, groupUsers.getStatus(), groupUsers.getUsers().split(";"),
 														 groupUsers.getFirstname().split(";"), groupUsers.getLastname().split(";")));
 			}
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
-			ConnectionManager.getInstance().rollbackTransaction();
+			ConnectionManager.getInstance().rollbackTransaction(con);
 			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
 		}
-		ConnectionManager.getInstance().commitTransaction();
+		ConnectionManager.getInstance().commitTransaction(con);
 		return resultGroupParticipants;
 	}
 

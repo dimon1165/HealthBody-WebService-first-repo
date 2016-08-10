@@ -1,5 +1,14 @@
 package edu.softserveinc.healthbody.entity;
 
+	/**
+	 * Class  edu.softserveinc.healthbody.entity.GroupUserView is POJO.
+	 * Called by: 
+	 * edu.softserveinc.healthbody.dao.GroupUserViewDao - create instance
+	 * Return info about all users in particular group
+	 * 
+	 * @version 9 August 2016 	
+	 * 
+	 * */
 public class GroupUserView implements IEntity {
 	
 	private String  idGroup;
@@ -12,8 +21,11 @@ public class GroupUserView implements IEntity {
 	private String  firstname;
 	private String  lastname;
 	
-	public GroupUserView(String idGroup, String name, Integer count, String description, String scoreGroup,
-			String status, String users, String firstname, String lastname) {
+	 /**
+     *  Constructor of edu.softserveinc.healthbody.entity.GroupUsersView  
+     */
+	public GroupUserView(final String idGroup, final String name, final Integer count, final String description, final String scoreGroup,
+			final String status,  final String users, final String firstname, final String lastname) {
 		super();
 		this.idGroup = idGroup;
 		this.name = name;
@@ -26,7 +38,9 @@ public class GroupUserView implements IEntity {
 		this.lastname = lastname;
 	}
 
-//	Getters
+	 /**
+     * Getters  
+     */
 	
 	public String getIdGroup() {
 		return idGroup;
@@ -64,7 +78,9 @@ public class GroupUserView implements IEntity {
 		return lastname;
 	}
 
-//Setters
+	 /**
+     * Setters  
+     */
 	public void setIdGroup(String idGroup) {
 		this.idGroup = idGroup;
 	}

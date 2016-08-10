@@ -1,5 +1,15 @@
 package edu.softserveinc.healthbody.dto;
 
+	/**
+	 * Class  edu.softserveinc.healthbody.dto.GroupDTO is POJO.
+	 * Used by: 
+	 * edu.softserveinc.healthbody.services.impl.UserProfileServiceImpl
+	 * edu.softserveinc.healthbody.services.impl.GroupServiceImpl
+	 * to transfer data about groups, users, users in groups.
+	 *  
+	 * @version 9 August 2016 	
+	 * 
+	 * */
 public class GroupDTO {
 
 	private String idGroup;
@@ -13,7 +23,14 @@ public class GroupDTO {
 	private String[] lastname;
 	// private String status;
 
+	 /**
+     *  Default constructor of edu.softserveinc.healthbody.dto.GroupDTO   
+     */
 	public GroupDTO() {}
+	
+	 /**
+     *  Constructor of edu.softserveinc.healthbody.dto.GroupDTO   
+     */
 	public GroupDTO(String idGroup, String name, String count, String descriptions, String scoreGroup, String status,
 			String[] users, String[] firstname, String[] lastname) {
 		super();
@@ -27,6 +44,10 @@ public class GroupDTO {
 		this.firstname = firstname;
 		this.lastname = lastname;
 	}
+	
+	 /**
+     * Getters   
+     */
 	public String getIdGroup() {
 		return idGroup;
 	}
@@ -54,6 +75,10 @@ public class GroupDTO {
 	public String[] getLastname() {
 		return lastname;
 	}
+	
+	 /**
+     * Setters   
+     */
 	public void setIdGroup(String idGroup) {
 		this.idGroup = idGroup;
 	}

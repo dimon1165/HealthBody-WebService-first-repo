@@ -1,5 +1,14 @@
 package edu.softserveinc.healthbody.entity;
 
+	/**
+	 * Class  edu.softserveinc.healthbody.entity.UserView is POJO.
+	 * Called by:
+	 * edu.softserveinc.healthbody.dao.UsersViewDao - create instance
+	 * Return info about users 
+	 * 
+	 * @version 9 August 2016 	
+	 * 
+	 * */
 public class UsersView implements IEntity {
 	
 	private String idUser;
@@ -18,6 +27,9 @@ public class UsersView implements IEntity {
 	private String status;
 	private Integer score;
 	
+	 /**
+     *  Constructor of edu.softserveinc.healthbody.entity.UserView  
+     */
 	public UsersView(final String idUser, final String firsName, final String lastName, final String login, 
 			final String passwd, final String mail, final Integer age, final Double weight, final String gender, 
 			final String avatar, final String roleName, final String health, final String googleApi, final String status, 
@@ -39,7 +51,9 @@ public class UsersView implements IEntity {
 		this.score = score;
 	}
 	
-	// Setters
+	 /**
+     * Setters  
+     */
 	public final void setIdUser(final String idUser) {
 		this.idUser = idUser;
 	}
@@ -100,7 +114,9 @@ public class UsersView implements IEntity {
 		this.score = score;
 	}
 	
-	// Getters	
+	 /**
+     * Getters  
+     */
 	public final String getIdUser() {
 		return idUser;
 	}
