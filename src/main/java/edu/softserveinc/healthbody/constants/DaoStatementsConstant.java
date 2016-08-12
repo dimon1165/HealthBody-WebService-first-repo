@@ -314,8 +314,8 @@ public class DaoStatementsConstant {
 	}
     
     public enum UsersViewQueries {
- 		GET_ALL("SELECT users.id_user, users.login, users.password, users.firstname, users.lastname, users.\"e-mail\", users.age, "
- 				+ "users.weight, users.gender, users.health, users.avatar, users.google_field, roles.name, users.status, SUM(usercompetitions.user_score)"
+ 		GET_ALL("SELECT users.id_user, users.firstname, users.lastname, users.login, users.password, users.\"e-mail\", users.age, "
+ 				+ "users.weight, users.gender, users.avatar, roles.name, users.health, users.google_field, users.status, SUM(usercompetitions.user_score)"
  				+ " FROM users"
  				+ " JOIN roles ON users.id_role = roles.id_role"
  				+ " LEFT OUTER JOIN usercompetitions ON users.id_user = usercompetitions.id_user"
