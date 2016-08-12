@@ -8,6 +8,6 @@
 </head>
 <body>
 	<h2>User with such login does not exist.</h2>
-	<h2>Please, enter correct login <a href="http://localhost:8080/HealthBody-WebService/UserServlet">Back to main</a>.</h2>
+	<h2>Please, enter correct login <a href="/HealthBody-WebService/UserServlet">Back to main</a>.</h2>
 </body>
 </html>
