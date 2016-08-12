@@ -65,9 +65,10 @@ public class UsersViewServiceImpl implements IUsersViewService {
 		Connection con = ConnectionManager.getInstance().beginTransaction();
 		try {
 				for (UsersView usersView : UsersViewDao.getInstance().getAllUsersView(partNumber, partSize)) {
-					userDTO.add(new UserDTO(usersView.getId(), usersView.getFirsName(), usersView.getLastName(), null, null, null,
-							usersView.getAge().toString(), usersView.getWeight().toString(), null,
-							usersView.getAvatar(), null, null, usersView.getScore().toString(), null, null, null));
+					userDTO.add(new UserDTO(usersView.getId(), usersView.getLogin(), usersView.getPasswd(),
+							usersView.getFirsName(), usersView.getLastName(), usersView.getMail(), usersView.getAge().toString(),
+							usersView.getWeight().toString(), usersView.getGender(), usersView.getAvatar(),
+							usersView.getRoleName(), usersView.getStatus(), usersView.getScore().toString(), usersView.getHealth(), null, null));
 				}
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
 			ConnectionManager.getInstance().rollbackTransaction(con);
@@ -99,9 +100,10 @@ public class UsersViewServiceImpl implements IUsersViewService {
 		Connection con = ConnectionManager.getInstance().beginTransaction();
 		try {
 				for (UsersView usersView : UsersViewDao.getInstance().getAllUsersView(partNumber, partSize)) {
-					userDTO.add(new UserDTO(usersView.getId(), usersView.getFirsName(), usersView.getLastName(), null, null, null,
-							usersView.getAge().toString(), usersView.getWeight().toString(), null,
-							usersView.getAvatar(), null, null, usersView.getScore().toString(), null, null, null));
+					userDTO.add(new UserDTO(usersView.getId(), usersView.getLogin(), usersView.getPasswd(),
+							usersView.getFirsName(), usersView.getLastName(), usersView.getMail(), usersView.getAge().toString(),
+							usersView.getWeight().toString(), usersView.getGender(), usersView.getAvatar(),
+							usersView.getRoleName(), usersView.getStatus(), usersView.getScore().toString(), usersView.getHealth(), null, null));
 				}
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
 			ConnectionManager.getInstance().rollbackTransaction(con);
