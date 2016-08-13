@@ -75,6 +75,33 @@ public final class CompetitionDao extends AbstractDao<Competition> {
 		return result;
 	}
 	
+	public boolean editCompetition(final Competition competition)
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
+		boolean result = false;
+		String query = sqlQueries.get(DaoQueries.UPDATE).toString();
+		if (query == null) {
+			throw new QueryNotFoundException(String.format(ErrorConstants.QUERY_NOT_FOUND, DaoQueries.UPDATE.name()));
+		}
+		try (PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query)) {
+			int i = 1;
+			pst.setString(i++, competition.getId());
+			pst.setString(i++, competition.getName());
+			pst.setString(i++, competition.getDescription());
+			pst.setDate(i++, competition.getStart());
+			pst.setDate(i++, competition.getFinish());
+			pst.setString(i++, competition.getIdCriteria());
+			result = pst.execute();
+		} catch (SQLException e) {
+			throw new DataBaseReadingException(ErrorConstants.DATABASE_READING_ERROR, e);
+		}
+		return result;
+	}
+	
+	public Competition getCompetitionByName(final Connection con, final String name)
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
+		return getByFieldName(con, name);
+	}
+	
 	public List<Competition> view(final Connection con) throws JDBCDriverException, DataBaseReadingException {
 		return getAll(con);
 	}

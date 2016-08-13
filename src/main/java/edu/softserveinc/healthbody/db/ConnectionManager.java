@@ -121,8 +121,8 @@ public class ConnectionManager {
 		}
 	}
 	
-	private synchronized void returnConnectionToPool(Connection con) {
-		if ((con != null) && (connections.size() < MAX_POOL_SIZE)){
+	private synchronized void returnConnectionToPool(Connection con) throws SQLException {
+		if ((con != null) && (!con.isClosed()) && (connections.size() < MAX_POOL_SIZE)){
 			connections.add(con);
 		} else {
 			closeConnection(con);

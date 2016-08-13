@@ -224,4 +224,16 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		}
 		return null;
 	}
+
+	@Override
+	public boolean addUserInCompetition(String nameCompetition, String nameUser) {
+		boolean result = false;
+		CompetitionsServiceImpl competition = new CompetitionsServiceImpl();
+		try {
+			result = competition.addUserInCompetition(nameCompetition, nameUser);
+		} catch (SQLException | JDBCDriverException | TransactionException e){
+			Log4jWrapper.get().error("Add user " +nameUser+ " to competition " +nameCompetition+ " failed ", e);
+		}
+		return result;
+	}
 }

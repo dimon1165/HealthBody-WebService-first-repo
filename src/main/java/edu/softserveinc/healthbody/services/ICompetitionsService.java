@@ -20,5 +20,7 @@ public interface ICompetitionsService extends IBaseService<CompetitionDTO> {
 	void update(CompetitionDTO competitionDTO) throws SQLException, JDBCDriverException, TransactionException;
 
 	void delete(CompetitionDTO competitionDTO);
+	
+	boolean addUserInCompetition(String nameCompetition, String nameUser) throws SQLException, JDBCDriverException, TransactionException;
 
 }
