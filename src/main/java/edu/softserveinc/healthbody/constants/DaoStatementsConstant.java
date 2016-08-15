@@ -261,6 +261,12 @@ public class DaoStatementsConstant {
 	}
     
     public enum CompetitionsViewQueries {
+    	GET_BY_FIELD_NAME("SELECT competitions.id_competition, competitions.name, competitions.description, competitions.start, competitions.finish, COUNT(usercompetitions.id_user)"
+    			+ " FROM competitions"
+    			+ " LEFT OUTER JOIN usercompetitions ON competitions.id_competition = usercompetitions.id_competition"
+    			+ " WHERE competitions.name = ?"
+    			+ " GROUP BY competitions.id_competition, competitions.name, competitions.start, competitions.finish"
+    			+ ";"),
 		GET_ALL_ACTIVE("SELECT competitions.id_competition, competitions.name, competitions.description, competitions.start, competitions.finish, COUNT(usercompetitions.id_user)"
 				+ " FROM competitions"
 				+ " LEFT OUTER JOIN usercompetitions ON competitions.id_competition = usercompetitions.id_competition"
@@ -337,7 +343,6 @@ public class DaoStatementsConstant {
  			return query;
  		}
  	}
-    
-    
+     
 }
  
