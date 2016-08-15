@@ -47,6 +47,7 @@ public class CompetitionsServiceImpl implements ICompetitionsService {
 		boolean result = false;		
 		CompetitionDTO competitionDTO = get(nameCompetition);
 		int count = Integer.parseInt(competitionDTO.getCount());
+		count++;
 		competitionDTO.setCount(String.valueOf(count));
 		List<String> logins = competitionDTO.getLogins();
 		logins.add(nameUser);

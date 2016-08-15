@@ -1,6 +1,5 @@
 package edu.softserveinc.healthbody.webservice;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.jws.WebMethod;
@@ -9,8 +8,6 @@ import javax.jws.WebService;
 import edu.softserveinc.healthbody.dto.CompetitionDTO;
 import edu.softserveinc.healthbody.dto.GroupDTO;
 import edu.softserveinc.healthbody.dto.UserDTO;
-import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
-import edu.softserveinc.healthbody.exceptions.TransactionException;
 
 @WebService
 public interface HealthBodyService {
