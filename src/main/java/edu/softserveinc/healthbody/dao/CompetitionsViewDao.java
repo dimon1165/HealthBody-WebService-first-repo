@@ -162,7 +162,22 @@ public class CompetitionsViewDao extends AbstractDao<CompetitionsView> {
 
 	public CompetitionsView getCompetitionViewByName(final Connection con, final String name)
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
-		return getByFieldName(con, name);
+		CompetitionsView result = null;
+		String query = sqlQueries.get(CompetitionsViewQueries.GET_BY_FIELD_NAME).toString();
+		if (query == null) {
+			throw new QueryNotFoundException(
+					String.format(ErrorConstants.QUERY_NOT_FOUND, CompetitionsViewQueries.GET_BY_FIELD_NAME.name()));
+		}
+		try (PreparedStatement pst = createPreparedStatementGet(con, query, name);
+				ResultSet resultSet = pst.executeQuery()) {
+			String[] queryResult = new String[resultSet.getMetaData().getColumnCount()];
+			while (resultSet.next()) {
+				result = createInstance(getQueryResultArr(queryResult, resultSet));
+			}
+		} catch (SQLException e) {
+			throw new DataBaseReadingException(ErrorConstants.DATABASE_READING_ERROR, e);
+		}
+		return result;
 	}
 
 	// methods for try-with-resources
@@ -185,6 +200,13 @@ public class CompetitionsViewDao extends AbstractDao<CompetitionsView> {
 			pst.setInt(i++, (partNumber - 1) * partSize);
 			pst.setInt(i++, partSize);
 		}
+		return pst;
+	}
+	
+	private PreparedStatement createPreparedStatementGet(final Connection con, final String query, final String name)
+			throws SQLException, JDBCDriverException {
+		PreparedStatement pst = con.prepareStatement(query);
+		pst.setString(1, name);
 		return pst;
 	}
 }

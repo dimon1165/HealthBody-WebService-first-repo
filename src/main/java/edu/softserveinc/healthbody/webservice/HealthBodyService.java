@@ -43,6 +43,12 @@ public interface HealthBodyService {
 	String getDescriptionOfGroup(String name);
 	
 	@WebMethod
+	CompetitionDTO getCompetitionViewByName(String name);
+	
+	@WebMethod
+	String getDescriptionOfCompetition(String name);
+	
+	@WebMethod
 	void updateGroup(String name, String count, String description, String score);
 	
 	@WebMethod

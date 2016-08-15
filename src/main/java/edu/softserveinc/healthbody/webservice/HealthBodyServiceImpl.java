@@ -236,4 +236,34 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		}
 		return result;
 	}
+	
+	@Override
+	public final CompetitionDTO getCompetitionViewByName(String name) {
+		try {
+			try {
+				return CompetitionsViewServiceImpl.getInstance().getCompetition(name);
+			} catch (SQLException | TransactionException e) {
+				Log4jWrapper.get().error("get competition by name failed ", e);
+			}
+		} catch (JDBCDriverException e) {
+			Log4jWrapper.get().error("get competition by name failed ", e);
+		}
+		return null;
+	}
+
+	@Override
+	public final String getDescriptionOfCompetition(String name) {
+		CompetitionDTO competitionDTO = null;
+		try {
+			try {
+				competitionDTO = CompetitionsViewServiceImpl.getInstance().getCompetition(name);
+			} catch (SQLException | TransactionException e) {
+				Log4jWrapper.get().error("get description of competition ", e);
+			}
+			return  CompetitionsViewServiceImpl.getInstance().getDescriptionOfCompetition(competitionDTO);
+		} catch (JDBCDriverException e) {
+			Log4jWrapper.get().error("get description of competition ", e);
+		}
+		return null;
+	}
 }
