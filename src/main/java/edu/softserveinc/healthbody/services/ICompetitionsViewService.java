@@ -25,4 +25,7 @@ public interface ICompetitionsViewService {
 			throws IllegalAgrumentCheckedException, SQLException, JDBCDriverException, TransactionException;
 
 	CompetitionDTO getCompetition(String name) throws JDBCDriverException, SQLException, TransactionException;
+
+	boolean addUserInCompetition(String nameCompetition, String nameUser)
+			throws SQLException, JDBCDriverException, TransactionException;
 }

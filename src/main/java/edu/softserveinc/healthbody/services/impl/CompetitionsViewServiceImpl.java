@@ -7,9 +7,12 @@ import java.util.List;
 
 import edu.softserveinc.healthbody.constants.ErrorConstants;
 import edu.softserveinc.healthbody.dao.CompetitionsViewDao;
+import edu.softserveinc.healthbody.dao.UserCompetitionsDao;
+import edu.softserveinc.healthbody.dao.UserDao;
 import edu.softserveinc.healthbody.db.ConnectionManager;
 import edu.softserveinc.healthbody.dto.CompetitionDTO;
 import edu.softserveinc.healthbody.entity.CompetitionsView;
+import edu.softserveinc.healthbody.entity.User;
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
 import edu.softserveinc.healthbody.exceptions.IllegalAgrumentCheckedException;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
@@ -144,6 +147,24 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 		return new CompetitionDTO(competitionview.getIdCompetition(), competitionview.getName(),
 				String.valueOf(competitionview.getUsersCount()), competitionview.getStart(),
 				competitionview.getFinish(), competitionview.getDescription(), null, null, null);
+	}
+	
+	@Override
+	public boolean addUserInCompetition(String nameCompetition, String nameUser) throws SQLException, JDBCDriverException, TransactionException {
+		boolean result = false;
+		Connection con = ConnectionManager.getInstance().beginTransaction();
+		try {
+		CompetitionsView competitionview = CompetitionsViewDao.getInstance().getCompetitionViewByName(con, nameCompetition);
+		User user = UserDao.getInstance().getUserByLoginName(con, nameUser);
+//		String[] str = {UUID.randomUUID().toString(), user.getIdUser().toString(), competitionview.getIdCompetition().toString(), "0", null, null};
+		UserCompetitionsDao.getInstance().createUserCompetition(con, user, competitionview);
+		} catch (QueryNotFoundException | DataBaseReadingException e) {
+			ConnectionManager.getInstance().rollbackTransaction(con);
+			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
+		}
+		ConnectionManager.getInstance().commitTransaction(con);		
+		result = true; 		
+		return result;
 	}
 
 	@Override

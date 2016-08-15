@@ -1,11 +1,16 @@
 package edu.softserveinc.healthbody.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
 import edu.softserveinc.healthbody.constants.Constants.UserCompetitionsCard;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.UserCompetitionsDBQueries;
+import edu.softserveinc.healthbody.constants.ErrorConstants;
+import edu.softserveinc.healthbody.entity.CompetitionsView;
+import edu.softserveinc.healthbody.entity.User;
 import edu.softserveinc.healthbody.entity.UserCompetitions;
 import edu.softserveinc.healthbody.exceptions.CloseStatementException;
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
@@ -48,6 +53,28 @@ public final class UserCompetitionsDao extends AbstractDao<UserCompetitions> {
 				Integer.parseInt(args[UserCompetitionsCard.USERSCORE] == null ? "0" : args[UserCompetitionsCard.USERSCORE]),
 				args[UserCompetitionsCard.IDAWARD] == null ? UUID.randomUUID().toString() : args[UserCompetitionsCard.IDAWARD],
 				args[UserCompetitionsCard.TIMERECEIVED] == null ? new String() : args[UserCompetitionsCard.TIMERECEIVED]);
+	}
+	
+	public boolean createUserCompetition (final Connection con, final User user, final CompetitionsView competitionview)
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
+		boolean result = false;
+		String query = sqlQueries.get(DaoQueries.INSERT).toString();
+			if (query == null) {
+				throw new QueryNotFoundException(String.format(ErrorConstants.QUERY_NOT_FOUND, DaoQueries.INSERT.name()));
+			}
+			try (PreparedStatement pst = con.prepareStatement(query)) {
+				int i = 1;
+				pst.setString(i++, UUID.randomUUID().toString());
+				pst.setString(i++, user.getId().toString());
+				pst.setString(i++, competitionview.getIdCompetition().toString());
+				pst.setInt(i++, 0);
+				pst.setString(i++, null);
+				pst.setString(i++, null);
+				result = pst.execute();
+			} catch (SQLException e) {
+					throw new DataBaseReadingException(ErrorConstants.DATABASE_READING_ERROR, e);
+			}
+		return result;
 	}
 
 	public List<UserCompetitions> viewAll(final Connection con) 
