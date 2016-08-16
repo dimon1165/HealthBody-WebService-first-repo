@@ -51,7 +51,7 @@ public final class UserGroupDao extends AbstractDao<UserGroup> {
 							 args[UserGroupCard.IDGROUP] == null ? UUID.randomUUID().toString() : args[UserGroupCard.IDGROUP]);
 	}
 
-	public List<UserGroup> getUGbyId(final Connection con, final String id) 
+	public List<UserGroup> getUserGroupbyId(final Connection con, final String id) 
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, 
 			CloseStatementException, EmptyResultSetException {
 		return getAllbyId(con, id);

@@ -84,7 +84,7 @@ public final class UserProfileServiceImpl implements IBaseService<UserDTO> {
 			User user = null;
 			Role role = null;
 			Group group = null;
-			List<UserGroup> ugs = new ArrayList<UserGroup>();
+			List<UserGroup> userGroup = new ArrayList<UserGroup>();
 			List<GroupDTO> groups = new ArrayList<GroupDTO>();
 		
 			Connection con = ConnectionManager.getInstance().beginTransaction();
@@ -95,9 +95,9 @@ public final class UserProfileServiceImpl implements IBaseService<UserDTO> {
 					return null;
 				} else {
 					role = RoleDao.getInstance().getRoleById(con, user.getIdRole());
-					ugs = UserGroupDao.getInstance().getUGbyId(con, user.getId());
-					for (UserGroup ug : ugs) {
-						group = GroupDao.getInstance().getById(con, ug.getIdGroup());
+					userGroup = UserGroupDao.getInstance().getUserGroupbyId(con, user.getId());
+					for (UserGroup usergroup : userGroup) {
+						group = GroupDao.getInstance().getById(con, usergroup.getIdGroup());
 						groups.add(new GroupDTO(group.getId(), group.getName(), group.getCount().toString(), group.getDescription(), group.getScoreGroup(),null,null,null,null));
 					}
 				}
@@ -118,17 +118,17 @@ public final class UserProfileServiceImpl implements IBaseService<UserDTO> {
 		User user = null;
 		Role role = null;
 		Group group = null;
-		List<UserGroup> ugs = new ArrayList<UserGroup>();
+		List<UserGroup> userGroup = new ArrayList<UserGroup>();
 		List<GroupDTO> groups = new ArrayList<GroupDTO>();
 		
 		Connection con = ConnectionManager.getInstance().beginTransaction();
 		try {
 			 user = UserDao.getInstance().getUserById(con, id);
 			 role = RoleDao.getInstance().getRoleById(con, user.getIdRole());
-			 ugs = UserGroupDao.getInstance().getUGbyId(con, user.getId());
-			 for (UserGroup ug : ugs) {
-				 group = GroupDao.getInstance().getById(con, ug.getIdGroup());
-				 groups.add(new GroupDTO("", group.getName(), "", "", "","",null,null,null));
+			 userGroup = UserGroupDao.getInstance().getUserGroupbyId(con, user.getId());
+			 for (UserGroup usergroup : userGroup) {
+				 group = GroupDao.getInstance().getById(con, usergroup.getIdGroup());
+				 groups.add(new GroupDTO(group.getId(), group.getName(), group.getCount().toString(), group.getDescription(), group.getScoreGroup(),null,null,null,null));
 			}
 		} catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException e) {
 			ConnectionManager.getInstance().rollbackTransaction(con);
