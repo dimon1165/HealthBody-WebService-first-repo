@@ -2,34 +2,35 @@ package edu.softserveinc.healthbody.dto;
 
 import java.util.List;
 
-	/**
-	 * Class  edu.softserveinc.healthbody.dto.UserCompetitionsDTO is POJO.
-	 * Used by: 
-	 * edu.softserveinc.healthbody.services.impl.UserProfileServiceImpl
-	 * edu.softserveinc.healthbody.services.impl.GroupServiceImpl
-	 * to transfer data about groups, users, users in groups.
-	 *  
-	 * @version 9 August 2016 	
-	 * 
-	 * */
+/**
+ * Class edu.softserveinc.healthbody.dto.UserCompetitionsDTO is POJO. Used by:
+ * edu.softserveinc.healthbody.services.impl.UserProfileServiceImpl
+ * edu.softserveinc.healthbody.services.impl.GroupServiceImpl to transfer data
+ * about groups, users, users in groups.
+ * 
+ * @version 9 August 2016
+ * 
+ */
 public class UserCompetitionsDTO {
-	
+
 	private String idUserCompetition;
 	private String login;
 	private List<String> competitions;
 	private String userScore;
 	private String awardsName;
 	private String timeReceivedAward;
-	
+
 	/**
-	 *  Default constructor of edu.softserveinc.healthbody.dto.UserCompetitionsDTO   
+	 * Default constructor of
+	 * edu.softserveinc.healthbody.dto.UserCompetitionsDTO
 	 */
-	public UserCompetitionsDTO() { }
-	
+	public UserCompetitionsDTO() {
+	}
+
 	/**
-	 *  Constructor of edu.softserveinc.healthbody.dto.UserCompetitionsDTO   
+	 * Constructor of edu.softserveinc.healthbody.dto.UserCompetitionsDTO
 	 */
-	public UserCompetitionsDTO(final String idUserCompetition, final String login, final List<String> competitions, 
+	public UserCompetitionsDTO(final String idUserCompetition, final String login, final List<String> competitions,
 			final String userScore, final String awardsName, final String timeReceivedAward) {
 		this.idUserCompetition = idUserCompetition;
 		this.login = login;
@@ -40,29 +41,58 @@ public class UserCompetitionsDTO {
 	}
 
 	/**
-	 * Getters   
+	 * Getters
 	 */
-	public final String getIdUserCompetition() {
+
+	public String getIdUserCompetition() {
 		return idUserCompetition;
 	}
-	
-	public final String getLogin() {
+
+	public String getLogin() {
 		return login;
 	}
 
-	public final List<String> getCompetitions() {
+	public List<String> getCompetitions() {
 		return competitions;
 	}
 
-	public final String getUserScore() {
+	public String getUserScore() {
 		return userScore;
 	}
 
-	public final String getAwardsName() {
+	public String getAwardsName() {
 		return awardsName;
 	}
 
-	public final String getTimeReceivedAward() {
+	public String getTimeReceivedAward() {
 		return timeReceivedAward;
+	}
+
+	/**
+	 * Setters
+	 */
+
+	public void setIdUserCompetition(String idUserCompetition) {
+		this.idUserCompetition = idUserCompetition;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public void setCompetitions(List<String> competitions) {
+		this.competitions = competitions;
+	}
+
+	public void setUserScore(String userScore) {
+		this.userScore = userScore;
+	}
+
+	public void setAwardsName(String awardsName) {
+		this.awardsName = awardsName;
+	}
+
+	public void setTimeReceivedAward(String timeReceivedAward) {
+		this.timeReceivedAward = timeReceivedAward;
 	}
 }

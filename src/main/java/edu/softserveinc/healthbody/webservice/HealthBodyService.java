@@ -7,6 +7,7 @@ import javax.jws.WebService;
 
 import edu.softserveinc.healthbody.dto.CompetitionDTO;
 import edu.softserveinc.healthbody.dto.GroupDTO;
+import edu.softserveinc.healthbody.dto.UserCompetitionsDTO;
 import edu.softserveinc.healthbody.dto.UserDTO;
 
 @WebService
@@ -74,5 +75,8 @@ public interface HealthBodyService {
 	
 	@WebMethod
 	List<GroupDTO> getAllGroupsParticipants(int partNumber, int partSize);
+	
+	@WebMethod
+	UserCompetitionsDTO getUserCompetition(String nameCompetition, String nameUser);
 
 }

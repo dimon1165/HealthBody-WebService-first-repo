@@ -82,7 +82,7 @@ public final class UserCompetitionsDao extends AbstractDao<UserCompetitions> {
 		return getAll(con);
 	}
 	
-	public List<UserCompetitions> getUCbyId(final Connection con, final String id) 
+	public List<UserCompetitions> getUserCompetitionsByUserId(final Connection con, final String id) 
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, CloseStatementException, EmptyResultSetException {		
 		return getAllbyId(con, id);
 	}

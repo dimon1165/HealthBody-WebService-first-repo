@@ -7,6 +7,7 @@ import javax.jws.WebService;
 
 import edu.softserveinc.healthbody.dto.CompetitionDTO;
 import edu.softserveinc.healthbody.dto.GroupDTO;
+import edu.softserveinc.healthbody.dto.UserCompetitionsDTO;
 import edu.softserveinc.healthbody.dto.UserDTO;
 import edu.softserveinc.healthbody.exceptions.CloseStatementException;
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
@@ -277,6 +278,20 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		}
 		return result;
 	}
+
+	@Override
+	public UserCompetitionsDTO getUserCompetition(String nameCompetition, String nameUser) {
+			try {
+				try {
+					return CompetitionsViewServiceImpl.getInstance().getUserCompetition(nameCompetition, nameUser);
+				} catch (SQLException | TransactionException e) {
+					Log4jWrapper.get().error("get UserCompetitionsDTO failed ", e);
+				}
+			} catch (JDBCDriverException e) {
+				Log4jWrapper.get().error("get UserCompetitionsDTO failed ", e);
+			}
+			return null;
+		}
 
 	
 }

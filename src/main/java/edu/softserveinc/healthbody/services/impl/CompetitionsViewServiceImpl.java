@@ -11,9 +11,13 @@ import edu.softserveinc.healthbody.dao.UserCompetitionsDao;
 import edu.softserveinc.healthbody.dao.UserDao;
 import edu.softserveinc.healthbody.db.ConnectionManager;
 import edu.softserveinc.healthbody.dto.CompetitionDTO;
+import edu.softserveinc.healthbody.dto.UserCompetitionsDTO;
 import edu.softserveinc.healthbody.entity.CompetitionsView;
 import edu.softserveinc.healthbody.entity.User;
+import edu.softserveinc.healthbody.entity.UserCompetitions;
+import edu.softserveinc.healthbody.exceptions.CloseStatementException;
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
+import edu.softserveinc.healthbody.exceptions.EmptyResultSetException;
 import edu.softserveinc.healthbody.exceptions.IllegalAgrumentCheckedException;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 import edu.softserveinc.healthbody.exceptions.QueryNotFoundException;
@@ -148,23 +152,48 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 				String.valueOf(competitionview.getUsersCount()), competitionview.getStart(),
 				competitionview.getFinish(), competitionview.getDescription(), null, null, null);
 	}
-	
+
 	@Override
-	public boolean addUserInCompetition(String nameCompetition, String nameUser) throws SQLException, JDBCDriverException, TransactionException {
+	public boolean addUserInCompetition(String nameCompetition, String nameUser)
+			throws SQLException, JDBCDriverException, TransactionException {
 		boolean result = false;
 		Connection con = ConnectionManager.getInstance().beginTransaction();
 		try {
-		CompetitionsView competitionview = CompetitionsViewDao.getInstance().getCompetitionViewByName(con, nameCompetition);
-		User user = UserDao.getInstance().getUserByLoginName(con, nameUser);
-//		String[] str = {UUID.randomUUID().toString(), user.getIdUser().toString(), competitionview.getIdCompetition().toString(), "0", null, null};
-		UserCompetitionsDao.getInstance().createUserCompetition(con, user, competitionview);
+			CompetitionsView competitionview = CompetitionsViewDao.getInstance().getCompetitionViewByName(con,
+					nameCompetition);
+			User user = UserDao.getInstance().getUserByLoginName(con, nameUser);
+			UserCompetitionsDao.getInstance().createUserCompetition(con, user, competitionview);
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
 			ConnectionManager.getInstance().rollbackTransaction(con);
 			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
 		}
-		ConnectionManager.getInstance().commitTransaction(con);		
-		result = true; 		
+		ConnectionManager.getInstance().commitTransaction(con);
+		result = true;
 		return result;
+	}
+
+	@Override
+	public UserCompetitionsDTO getUserCompetition(String nameCompetition, String nameUser)
+			throws SQLException, JDBCDriverException, TransactionException {
+		Connection con = ConnectionManager.getInstance().beginTransaction();
+		try {
+			CompetitionsView competitionview = CompetitionsViewDao.getInstance().getCompetitionViewByName(con,
+					nameCompetition);
+			User user = UserDao.getInstance().getUserByLoginName(con, nameUser);
+			List<UserCompetitions> list = UserCompetitionsDao.getInstance().getAllbyId(con, user.getIdUser());
+			for (UserCompetitions usercompetition : list) {
+				if (usercompetition.getIdCompetition().equals(competitionview.getIdCompetition())) {
+					return new UserCompetitionsDTO(usercompetition.getIdUserCompetition(), nameUser, null, 
+							usercompetition.getUserScore().toString(), usercompetition.getIdAwards(), usercompetition.getTimeReceived());
+				}
+			}
+		} catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException | CloseStatementException
+				| EmptyResultSetException e) {
+			ConnectionManager.getInstance().rollbackTransaction(con);
+			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
+		}
+		ConnectionManager.getInstance().commitTransaction(con);
+		return null;
 	}
 
 	@Override
