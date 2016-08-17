@@ -32,4 +32,7 @@ public interface ICompetitionsViewService {
 
 	UserCompetitionsDTO getUserCompetition(String nameCompetition, String nameUser)
 			throws SQLException, JDBCDriverException, TransactionException;
+
+	void deleteUserCompetition(String nameCompetition, String nameUser)
+			throws SQLException, JDBCDriverException, TransactionException;
 }

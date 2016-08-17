@@ -293,6 +293,16 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 			return null;
 		}
 
+	@Override
+	public void deleteUserCompetition(String nameCompetition, String nameUser) {
+		try {
+			CompetitionsViewServiceImpl.getInstance().deleteUserCompetition(nameCompetition, nameUser);
+		} catch (SQLException | JDBCDriverException | TransactionException e) {
+			Log4jWrapper.get().error("delete user competition failed ", e);
+		}
+		
+	}
+
 	
 }
 

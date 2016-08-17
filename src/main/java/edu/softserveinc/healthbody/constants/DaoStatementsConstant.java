@@ -216,7 +216,8 @@ public class DaoStatementsConstant {
 		INSERT(DaoQueries.INSERT, "INSERT INTO usercompetitions (id_user_competition, id_user, id_competition, user_score, id_award, time_received) VALUES (?, ?, ?, ?, ?, ?);"),
 		GET_BY_ID(DaoQueries.GET_BY_ID,	"SELECT id_user_competition, id_user, id_competition, user_score, id_award, time_received FROM usercompetitions WHERE id_user = ?;"),
 		GET_ALL(DaoQueries.GET_ALL,	"SELECT id_user_competition, id_user, id_competition, user_score, id_award, time_received FROM usercompetitions;"),
-		DELETE_BY_ID(DaoQueries.DELETE_BY_ID, "DELETE FROM usercompetitions WHERE id_user = ?;");
+		DELETE_BY_ID(DaoQueries.DELETE_BY_ID, "DELETE FROM usercompetitions WHERE id_user = ?;"),
+		DELETE_BY_ID_USER_COMPETITION(DaoQueries.DELETE_BY_ID_USER_COMPETITION, "DELETE FROM usercompetitions WHERE id_user_competition = ?;");
 		private DaoQueries daoQuery;
 		private String query;
 

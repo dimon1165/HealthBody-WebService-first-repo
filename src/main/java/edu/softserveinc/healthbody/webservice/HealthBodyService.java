@@ -78,5 +78,8 @@ public interface HealthBodyService {
 	
 	@WebMethod
 	UserCompetitionsDTO getUserCompetition(String nameCompetition, String nameUser);
+	
+	@WebMethod
+	void deleteUserCompetition(String nameCompetition, String nameUser);
 
 }

@@ -195,6 +195,28 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 		ConnectionManager.getInstance().commitTransaction(con);
 		return null;
 	}
+	
+	@Override
+	public void deleteUserCompetition(String nameCompetition, String nameUser)
+			throws SQLException, JDBCDriverException, TransactionException {
+		Connection con = ConnectionManager.getInstance().beginTransaction();
+		try {
+			CompetitionsView competitionview = CompetitionsViewDao.getInstance().getCompetitionViewByName(con,
+					nameCompetition);
+			User user = UserDao.getInstance().getUserByLoginName(con, nameUser);
+			List<UserCompetitions> list = UserCompetitionsDao.getInstance().getAllbyId(con, user.getIdUser());
+			for (UserCompetitions usercompetition : list) {
+				if (usercompetition.getIdCompetition().equals(competitionview.getIdCompetition())) {
+					UserCompetitionsDao.getInstance().deleteByUserCompetitionId(con, usercompetition.getIdUserCompetition());
+				}
+			}
+		} catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException | CloseStatementException
+				| EmptyResultSetException e) {
+			ConnectionManager.getInstance().rollbackTransaction(con);
+			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
+		}
+		ConnectionManager.getInstance().commitTransaction(con);
+	}
 
 	@Override
 	public String getDescriptionOfCompetition(final CompetitionDTO competitionDTO) {

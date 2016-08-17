@@ -90,4 +90,20 @@ public final class UserCompetitionsDao extends AbstractDao<UserCompetitions> {
 	public boolean deleteByUserId(final Connection con, final String id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		return deleteById(con, id);
 	}
+
+	public boolean deleteByUserCompetitionId(Connection con, String id)
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
+		boolean result = false;
+		String query = sqlQueries.get(DaoQueries.DELETE_BY_ID_USER_COMPETITION).toString();
+		if (query == null) {
+			throw new QueryNotFoundException(String.format(ErrorConstants.QUERY_NOT_FOUND, DaoQueries.DELETE_BY_ID_USER_COMPETITION.name()));
+		}
+		try (PreparedStatement pst = con.prepareStatement(query)) {
+			pst.setString(1, id);
+			result = pst.execute();
+		} catch (SQLException e) {
+			throw new DataBaseReadingException(ErrorConstants.DATABASE_READING_ERROR, e);
+		}
+		return result;
+	}
 }
