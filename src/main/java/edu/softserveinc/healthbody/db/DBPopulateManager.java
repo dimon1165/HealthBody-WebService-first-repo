@@ -25,6 +25,7 @@ public class DBPopulateManager {
 	private static final String[] AWARD_ID = new String[AWARDS];
 	private static final String[] CRITERIA_ID = new String[CRITERIA];
 	private static String ROLE_USER_ID;
+	private static String ROLE_ADMIN_ID;
 	private static final int USERGROUPS = 15;
 	private static final int USERCOMPETITIONS = 50;
 	private static final int GROUPCOMPETITIONS = 8;
@@ -78,7 +79,11 @@ public class DBPopulateManager {
 				pst.setString(10, "health " + j);
 				pst.setString(11, "urlavatar " + j);
 				pst.setString(12, "googleApi " + j);
-				pst.setString(13, ROLE_USER_ID);
+				if(j == USERS - 1) {
+					pst.setString(13, ROLE_ADMIN_ID);
+				} else {
+					pst.setString(13, ROLE_USER_ID);
+				}
 				pst.setString(14, "active " + j);
 				pst.setBoolean(15, false);
 				successfulInsert = (pst.executeUpdate() > 0) ? true : false;
@@ -253,6 +258,9 @@ public class DBPopulateManager {
 				if (j == 2){
 					ROLE_USER_ID = UUID.randomUUID().toString();
 					pst.setString(1, ROLE_USER_ID);
+				} else if (j == 0){
+					ROLE_ADMIN_ID = UUID.randomUUID().toString();
+					pst.setString(1, ROLE_ADMIN_ID);
 				} else {
 					pst.setString(1, UUID.randomUUID().toString());					
 				}
