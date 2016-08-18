@@ -67,9 +67,17 @@ public class DBPopulateManager {
 		try (PreparedStatement pst = conn.prepareStatement(query)) {
 			for (int j = 0; j < USERS; j++) {	
 				USER_ID[j] = UUID.randomUUID().toString();
-				pst.setString(1, USER_ID[j]);				
-				pst.setString(2, "Login " + j);
-				pst.setString(3, "password " + j);
+				pst.setString(1, USER_ID[j]);
+				if(j == USERS - 1) {
+					pst.setString(2, "admin");
+				} else {
+					pst.setString(2, "Login " + j);
+				}
+				if(j == USERS - 1) {
+					pst.setString(3, "admin");
+				} else {
+					pst.setString(3, "password " + j);
+				}
 				pst.setString(4, "Name of " + j + " user");
 				pst.setString(5, "LastName of " + j + " user");
 				pst.setString(6, "SomeMail" + j + "@gmail.com");
