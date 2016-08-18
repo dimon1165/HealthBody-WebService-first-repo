@@ -62,7 +62,7 @@ public final class GroupDao extends AbstractDao<Group> {
 		}
 		try (PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query)) {
 			int i = 1;
-			pst.setString(i++, group.getId());
+			/*pst.setString(i++, group.getId());*/
 			pst.setInt(i++, group.getCount());
 			pst.setString(i++, group.getDescription());
 			pst.setString(i++, group.getScoreGroup());

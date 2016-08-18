@@ -142,12 +142,8 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 	}
 
 	@Override
-	public final void updateGroup(final String name, final String count, final String description, final String score) {
+	public final void updateGroup(final GroupDTO groupDTO) {
 		try {
-			GroupDTO groupDTO = GroupServiceImpl.getInstance().getGroup(name);
-			groupDTO.setCount(count);
-			groupDTO.setDescriptions(description);
-			groupDTO.setScoreGroup(score);
 			GroupServiceImpl.getInstance().update(groupDTO);
 		} catch (SQLException | JDBCDriverException | DataBaseReadingException 
 				| QueryNotFoundException | TransactionException e) {

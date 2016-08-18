@@ -50,7 +50,7 @@ public interface HealthBodyService {
 	String getDescriptionOfCompetition(String name);
 	
 	@WebMethod
-	void updateGroup(String name, String count, String description, String score);
+	void updateGroup(GroupDTO groupDTO);
 	
 	@WebMethod
 	List<CompetitionDTO> getAllCompetitions(int partNumber, int partSize);
