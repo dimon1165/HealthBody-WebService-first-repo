@@ -28,4 +28,7 @@ public interface ICompetitionsViewService {
 
 	boolean addUserInCompetition(String nameCompetition, String nameUser)
 			throws SQLException, JDBCDriverException, TransactionException;
+	
+	boolean removeUserFromCompetition(String nameCompetition, String nameUser)
+			throws SQLException, JDBCDriverException, TransactionException;
 }

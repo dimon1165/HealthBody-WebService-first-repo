@@ -90,4 +90,31 @@ public final class UserCompetitionsDao extends AbstractDao<UserCompetitions> {
 	public boolean deleteByUserId(final Connection con, final String id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		return deleteById(con, id);
 	}
+
+	public boolean deleteUserFromCompetition(Connection con, String userId, String competitionId) throws DataBaseReadingException, QueryNotFoundException, JDBCDriverException, EmptyResultSetException, CloseStatementException {
+		boolean result = false;
+		String query = sqlQueries.get(DaoQueries.DELETE_USER_FROM_COMPETITION).toString();
+			if (query == null) {
+				throw new QueryNotFoundException(String.format(ErrorConstants.QUERY_NOT_FOUND, DaoQueries.INSERT.name()));
+			}
+			UserCompetitions userCompetition = getUserCompetitionByIds(con, userId, competitionId);
+			try (PreparedStatement pst = con.prepareStatement(query)) {
+				pst.setString(1, userCompetition.getId());				
+				result = pst.execute();
+			} catch (SQLException e) {
+					throw new DataBaseReadingException(ErrorConstants.DATABASE_READING_ERROR, e);
+			}
+		return result;		
+	}
+	
+	public UserCompetitions getUserCompetitionByIds(Connection con, String userId, String competitionId) throws JDBCDriverException, DataBaseReadingException, EmptyResultSetException, CloseStatementException{
+		UserCompetitions userCompetition = null;
+		List<UserCompetitions> userCompetitions = viewAll(con);
+		for (UserCompetitions userComp:userCompetitions){
+			if (userComp.getIdUser().equals(userId) && userComp.getIdCompetition().equals(competitionId)){
+				userCompetition = userComp;
+			}
+		}
+		return userCompetition;
+	}
 }

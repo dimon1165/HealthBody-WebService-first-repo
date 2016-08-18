@@ -73,6 +73,9 @@ public interface HealthBodyService {
 	boolean addUserInCompetitionView(String nameCompetition, String nameUser);
 	
 	@WebMethod
+	boolean removeUserFromCompetition(String nameCompetition, String nameUser);
+	
+	@WebMethod
 	List<GroupDTO> getAllGroupsParticipants(int partNumber, int partSize);
 
 }

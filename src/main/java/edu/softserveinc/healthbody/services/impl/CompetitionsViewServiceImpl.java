@@ -13,7 +13,9 @@ import edu.softserveinc.healthbody.db.ConnectionManager;
 import edu.softserveinc.healthbody.dto.CompetitionDTO;
 import edu.softserveinc.healthbody.entity.CompetitionsView;
 import edu.softserveinc.healthbody.entity.User;
+import edu.softserveinc.healthbody.exceptions.CloseStatementException;
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
+import edu.softserveinc.healthbody.exceptions.EmptyResultSetException;
 import edu.softserveinc.healthbody.exceptions.IllegalAgrumentCheckedException;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 import edu.softserveinc.healthbody.exceptions.QueryNotFoundException;
@@ -156,7 +158,6 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 		try {
 		CompetitionsView competitionview = CompetitionsViewDao.getInstance().getCompetitionViewByName(con, nameCompetition);
 		User user = UserDao.getInstance().getUserByLoginName(con, nameUser);
-//		String[] str = {UUID.randomUUID().toString(), user.getIdUser().toString(), competitionview.getIdCompetition().toString(), "0", null, null};
 		UserCompetitionsDao.getInstance().createUserCompetition(con, user, competitionview);
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
 			ConnectionManager.getInstance().rollbackTransaction(con);
@@ -168,7 +169,25 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 	}
 
 	@Override
+	public boolean removeUserFromCompetition(String nameCompetition, String nameUser)
+			throws SQLException, JDBCDriverException, TransactionException {
+		boolean result = false;
+		Connection con = ConnectionManager.getInstance().beginTransaction();
+		try {
+		CompetitionsView competitionview = CompetitionsViewDao.getInstance().getCompetitionViewByName(con, nameCompetition);
+		User user = UserDao.getInstance().getUserByLoginName(con, nameUser);	
+			result = UserCompetitionsDao.getInstance().deleteUserFromCompetition(con, user.getId(), competitionview.getId());	
+		} catch (QueryNotFoundException | DataBaseReadingException | EmptyResultSetException | CloseStatementException e) {
+			ConnectionManager.getInstance().rollbackTransaction(con);
+			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
+		}
+		ConnectionManager.getInstance().commitTransaction(con);				
+		return result;
+	}
+	
+	@Override
 	public String getDescriptionOfCompetition(final CompetitionDTO competitionDTO) {
 		return competitionDTO.getDescription();
 	}
+
 }

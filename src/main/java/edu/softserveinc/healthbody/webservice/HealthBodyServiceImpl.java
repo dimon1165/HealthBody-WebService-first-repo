@@ -278,6 +278,17 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		return result;
 	}
 
+	@Override
+	public boolean removeUserFromCompetition(String nameCompetition, String nameUser) {
+		boolean result = false;
+		try {
+			result = CompetitionsViewServiceImpl.getInstance().removeUserFromCompetition(nameCompetition, nameUser);
+		} catch (SQLException | JDBCDriverException | TransactionException e){
+			Log4jWrapper.get().error("Delete user " +nameUser+ " from competition " +nameCompetition+ " failed ", e);
+		}
+		return result;
+	}
+
 	
 }
 
