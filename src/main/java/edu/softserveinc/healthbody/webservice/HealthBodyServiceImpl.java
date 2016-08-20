@@ -124,6 +124,19 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		}
 		return null;
 	}
+	@Override
+	public GroupDTO getGroupById(String id) {
+		try {
+			try {
+				return GroupServiceImpl.getInstance().getGroupById(id);
+			} catch (SQLException | TransactionException e) {
+				Log4jWrapper.get().error("get group by id failed ", e);
+			}
+		} catch (QueryNotFoundException | JDBCDriverException | DataBaseReadingException e) {
+			Log4jWrapper.get().error("get group by id failed ", e);
+		}
+		return null;
+	}
 
 	@Override
 	public final String getDescriptionOfGroup(final String name) {

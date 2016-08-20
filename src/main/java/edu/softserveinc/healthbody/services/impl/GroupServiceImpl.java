@@ -70,6 +70,20 @@ public final class GroupServiceImpl implements IGroupService {
 		ConnectionManager.getInstance().commitTransaction(con);
 		 return new GroupDTO(group.getIdGroup(), group.getName(), String.valueOf(group.getCount()), group.getDescription(), group.getScoreGroup(),null,null,null,null);
 	}	
+	@Override
+	public GroupDTO getGroupById(String id) throws QueryNotFoundException, JDBCDriverException,
+			DataBaseReadingException, SQLException, TransactionException {
+		Group group;
+		Connection con = ConnectionManager.getInstance().beginTransaction();
+		try { 
+			group = GroupDao.getInstance().getGroupById(con, id);
+		} catch (QueryNotFoundException | DataBaseReadingException e) {
+			ConnectionManager.getInstance().rollbackTransaction(con);
+			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
+		}
+		ConnectionManager.getInstance().commitTransaction(con);
+		 return new GroupDTO(group.getIdGroup(), group.getName(), String.valueOf(group.getCount()), group.getDescription(), group.getScoreGroup(),null,null,null,null);	
+	}
 	
 	@Override
 	public String getDescriptionOfGroup(final GroupDTO groupDTO) {
@@ -79,7 +93,7 @@ public final class GroupServiceImpl implements IGroupService {
 	@Override
 	public void update(GroupDTO groupDTO) throws SQLException, JDBCDriverException, TransactionException, QueryNotFoundException, DataBaseReadingException {
 		Connection con = ConnectionManager.getInstance().beginTransaction();
-		Group group = GroupDao.getInstance().getByFieldName(con, groupDTO.getName());
+		Group group = GroupDao.getInstance().getById(con, groupDTO.getIdGroup());
 		try {	
 			GroupDao.getInstance().editGroup(new Group(groupDTO.getIdGroup(), groupDTO.getName(), Integer.parseInt(groupDTO.getCount()), 
 					groupDTO.getDescriptions(), groupDTO.getScoreGroup(), group.getStatus()));
@@ -105,7 +119,7 @@ public final class GroupServiceImpl implements IGroupService {
 		Connection con = ConnectionManager.getInstance().beginTransaction();
 		try {
 			for (GroupUserView groupUsers : GroupUserViewDao.getInstance().getAllGroupsParticiapnts(partNumber, partSize)){
-				resultGroupParticipants.add(new GroupDTO(null, groupUsers.getName(), null, null, null, groupUsers.getStatus(), groupUsers.getUsers().split(";"),
+				resultGroupParticipants.add(new GroupDTO(groupUsers.getIdGroup(), groupUsers.getName(), null, null, null, groupUsers.getStatus(), groupUsers.getUsers().split(";"),
 														 groupUsers.getFirstname().split(";"), groupUsers.getLastname().split(";")));
 			}
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
