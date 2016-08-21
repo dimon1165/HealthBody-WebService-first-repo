@@ -61,11 +61,11 @@ public final class GroupDao extends AbstractDao<Group> {
 		}
 		try (PreparedStatement pst = connection.prepareStatement(query)) {
 			int i = 1;
-			pst.setString(i++, group.getId());
+			pst.setString(i++, group.getName());
 			pst.setInt(i++, group.getCount());
 			pst.setString(i++, group.getDescription());
 			pst.setString(i++, group.getScoreGroup());
-			pst.setString(i++, group.getName());
+			pst.setString(i++, group.getId());
 			result = pst.execute();
 		} catch (SQLException e) {
 			throw new DataBaseReadingException(ErrorConstants.DATABASE_READING_ERROR, e);
@@ -105,6 +105,10 @@ public final class GroupDao extends AbstractDao<Group> {
 		return getByFieldName(connection, name);
 	}
 	
+	public Group getGroupById(final Connection connection, final String id)
+		throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
+		return getById(connection, id);
+	}
 	//methods for try-with-resources
 	private PreparedStatement createPreparedStatement(final Connection connection, final String query, final int partNumber, final int partSize) 
 			throws SQLException, JDBCDriverException {

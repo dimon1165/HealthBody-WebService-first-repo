@@ -31,10 +31,9 @@ public class CompetitionsServiceImpl implements ICompetitionsService {
 			EmptyResultSetException, TransactionException, CloseStatementException {
 		Connection connection = ConnectionManager.getInstance().beginTransaction();
 		try {
-			String idCriteria = CriteriaDao.getInstance().getByFieldName(connection, competitionDTO.getNameCriteria()).getIdCriteria();
 			CompetitionDao.getInstance().createCompetition(connection, new Competition(competitionDTO.getIdCompetition(), competitionDTO.getName(),
 					competitionDTO.getDescription(), Date.valueOf(competitionDTO.getStartDate()), Date.valueOf(competitionDTO.getFinishDate()), 
-					idCriteria));			
+					null));			
 		} catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException e) {
 			ConnectionManager.getInstance().rollbackTransaction(connection);
 			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
@@ -43,7 +42,7 @@ public class CompetitionsServiceImpl implements ICompetitionsService {
 	}
 	
 	@Override
-	public boolean addUserInCompetition(String nameCompetition, String nameUser) throws SQLException, JDBCDriverException, TransactionException {
+	public boolean addUserInCompetition(String nameCompetition, String nameUser) throws SQLException, JDBCDriverException, TransactionException, DataBaseReadingException, QueryNotFoundException, EmptyResultSetException, CloseStatementException {
 		boolean result = false;		
 		CompetitionDTO competitionDTO = get(nameCompetition);
 		int count = Integer.parseInt(competitionDTO.getCount());
@@ -58,7 +57,7 @@ public class CompetitionsServiceImpl implements ICompetitionsService {
 	}
 	
 	@Override
-	public final CompetitionDTO get(final String name)
+	public CompetitionDTO get(String name)
 			throws SQLException, JDBCDriverException, TransactionException {
 		Connection connection = ConnectionManager.getInstance().beginTransaction();
 		Competition competition;
@@ -92,7 +91,7 @@ public class CompetitionsServiceImpl implements ICompetitionsService {
 		try {	
 			CompetitionDao.getInstance().editCompetition(connection, new Competition(competitionDTO.getIdCompetition(), competitionDTO.getName(),
 					competitionDTO.getDescription(), Date.valueOf(competitionDTO.getStartDate()), Date.valueOf(competitionDTO.getFinishDate()), 
-					competitionDTO.getNameCriteria()));
+					null));
 		} catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException e) {
 			ConnectionManager.getInstance().rollbackTransaction(connection);
 			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);			

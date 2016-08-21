@@ -9,19 +9,22 @@ import edu.softserveinc.healthbody.exceptions.QueryNotFoundException;
 import edu.softserveinc.healthbody.exceptions.TransactionException;
 
 public interface IGroupService extends IBaseFilterService<GroupDTO> {
-	
+
 	String getDescriptionOfGroup(GroupDTO groupDTO);
 
-	GroupDTO getGroup(String name) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, 
-		SQLException, TransactionException;
+	GroupDTO getGroup(String name) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException,
+			SQLException, TransactionException;
 
-	List<GroupDTO> getAll(int partNumber, int partSize) throws QueryNotFoundException, JDBCDriverException, 
-		DataBaseReadingException, SQLException, TransactionException;
-	
-	List<GroupDTO> getAllGroupsParticipants(int partNumber, int partSize) throws QueryNotFoundException, JDBCDriverException, 
-	DataBaseReadingException, SQLException, TransactionException;
-	
-	void update(GroupDTO groupDTO) throws JDBCDriverException, SQLException, TransactionException, QueryNotFoundException, 
-		DataBaseReadingException;
+	GroupDTO getGroupById(String name) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException,
+			SQLException, TransactionException;
+
+	List<GroupDTO> getAll(int partNumber, int partSize) throws QueryNotFoundException, JDBCDriverException,
+			DataBaseReadingException, SQLException, TransactionException;
+
+	List<GroupDTO> getAllGroupsParticipants(int partNumber, int partSize) throws QueryNotFoundException,
+			JDBCDriverException, DataBaseReadingException, SQLException, TransactionException;
+
+	void update(GroupDTO groupDTO) throws JDBCDriverException, SQLException, TransactionException,
+			QueryNotFoundException, DataBaseReadingException;
 
 }

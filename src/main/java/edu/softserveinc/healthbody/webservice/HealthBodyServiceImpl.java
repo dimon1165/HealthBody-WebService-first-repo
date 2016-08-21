@@ -124,6 +124,19 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		}
 		return null;
 	}
+	@Override
+	public GroupDTO getGroupById(String id) {
+		try {
+			try {
+				return GroupServiceImpl.getInstance().getGroupById(id);
+			} catch (SQLException | TransactionException e) {
+				Log4jWrapper.get().error("get group by id failed ", e);
+			}
+		} catch (QueryNotFoundException | JDBCDriverException | DataBaseReadingException e) {
+			Log4jWrapper.get().error("get group by id failed ", e);
+		}
+		return null;
+	}
 
 	@Override
 	public final String getDescriptionOfGroup(final String name) {
@@ -142,12 +155,8 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 	}
 
 	@Override
-	public final void updateGroup(final String name, final String count, final String description, final String score) {
+	public final void updateGroup(final GroupDTO groupDTO) {
 		try {
-			GroupDTO groupDTO = GroupServiceImpl.getInstance().getGroup(name);
-			groupDTO.setCount(count);
-			groupDTO.setDescriptions(description);
-			groupDTO.setScoreGroup(score);
 			GroupServiceImpl.getInstance().update(groupDTO);
 		} catch (SQLException | JDBCDriverException | DataBaseReadingException 
 				| QueryNotFoundException | TransactionException e) {
@@ -225,18 +234,6 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		}
 		return null;
 	}
-
-	@Override
-	public boolean addUserInCompetition(String nameCompetition, String nameUser) {
-		boolean result = false;
-		CompetitionsServiceImpl competition = new CompetitionsServiceImpl();
-		try {
-			result = competition.addUserInCompetition(nameCompetition, nameUser);
-		} catch (SQLException | JDBCDriverException | TransactionException e){
-			Log4jWrapper.get().error("Add user " +nameUser+ " to competition " +nameCompetition+ " failed ", e);
-		}
-		return result;
-	}
 	
 	@Override
 	public final CompetitionDTO getCompetitionViewByName(String name) {
@@ -313,6 +310,5 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		
 	}
 
-	
 }
 

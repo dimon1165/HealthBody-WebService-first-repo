@@ -11,8 +11,6 @@ import edu.softserveinc.healthbody.exceptions.TransactionException;
 
 public interface ICompetitionsViewService {
 
-	String getDescriptionOfCompetition(CompetitionDTO competitionDTO);
-
 	List<CompetitionDTO> getAll(int partNumber, int partSize)
 			throws JDBCDriverException, SQLException, TransactionException;
 
@@ -30,13 +28,13 @@ public interface ICompetitionsViewService {
 	boolean addUserInCompetition(String nameCompetition, String nameUser)
 			throws SQLException, JDBCDriverException, TransactionException;
 
-	
 	boolean removeUserFromCompetition(String nameCompetition, String nameUser) throws SQLException, JDBCDriverException, TransactionException;
-
 
 	UserCompetitionsDTO getUserCompetition(String nameCompetition, String nameUser)
 			throws SQLException, JDBCDriverException, TransactionException;
 
 	void deleteUserCompetition(String nameCompetition, String nameUser)
 			throws SQLException, JDBCDriverException, TransactionException;
+
+	String getDescriptionOfCompetition(CompetitionDTO competitionDTO);
 }

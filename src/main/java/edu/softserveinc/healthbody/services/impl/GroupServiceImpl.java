@@ -70,6 +70,20 @@ public final class GroupServiceImpl implements IGroupService {
 		ConnectionManager.getInstance().commitTransaction(connection);
 		 return new GroupDTO(group.getIdGroup(), group.getName(), String.valueOf(group.getCount()), group.getDescription(), group.getScoreGroup(),null,null,null,null);
 	}	
+	@Override
+	public GroupDTO getGroupById(String id) throws QueryNotFoundException, JDBCDriverException,
+			DataBaseReadingException, SQLException, TransactionException {
+		Group group;
+		Connection connection = ConnectionManager.getInstance().beginTransaction();
+		try { 
+			group = GroupDao.getInstance().getGroupById(connection, id);
+		} catch (QueryNotFoundException | DataBaseReadingException e) {
+			ConnectionManager.getInstance().rollbackTransaction(connection);
+			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
+		}
+		ConnectionManager.getInstance().commitTransaction(connection);
+		 return new GroupDTO(group.getIdGroup(), group.getName(), String.valueOf(group.getCount()), group.getDescription(), group.getScoreGroup(),null,null,null,null);	
+	}
 	
 	@Override
 	public String getDescriptionOfGroup(final GroupDTO groupDTO) {
@@ -105,7 +119,7 @@ public final class GroupServiceImpl implements IGroupService {
 		Connection connection = ConnectionManager.getInstance().beginTransaction();
 		try {
 			for (GroupUserView groupUsers : GroupUserViewDao.getInstance().getAllGroupsParticiapnts(connection, partNumber, partSize)){
-				resultGroupParticipants.add(new GroupDTO(null, groupUsers.getName(), null, null, null, groupUsers.getStatus(), groupUsers.getUsers().split(";"),
+				resultGroupParticipants.add(new GroupDTO(groupUsers.getIdGroup(), groupUsers.getName(), null, null, null, groupUsers.getStatus(), groupUsers.getUsers().split(";"),
 														 groupUsers.getFirstname().split(";"), groupUsers.getLastname().split(";")));
 			}
 		} catch (QueryNotFoundException | DataBaseReadingException e) {

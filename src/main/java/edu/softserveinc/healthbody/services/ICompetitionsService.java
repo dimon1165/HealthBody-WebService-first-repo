@@ -17,10 +17,10 @@ public interface ICompetitionsService extends IBaseService<CompetitionDTO> {
 
 	CompetitionDTO get(String name) throws SQLException, JDBCDriverException, TransactionException;
 
-	void update(CompetitionDTO competitionDTO) throws SQLException, JDBCDriverException, TransactionException;
+	void update(CompetitionDTO competitionDTO) throws SQLException, JDBCDriverException, TransactionException, DataBaseReadingException, QueryNotFoundException, EmptyResultSetException, CloseStatementException;
 
 	void delete(CompetitionDTO competitionDTO);
 	
-	boolean addUserInCompetition(String nameCompetition, String nameUser) throws SQLException, JDBCDriverException, TransactionException;
+	boolean addUserInCompetition(String nameCompetition, String nameUser) throws SQLException, JDBCDriverException, TransactionException, DataBaseReadingException, QueryNotFoundException, EmptyResultSetException, CloseStatementException;
 
 }

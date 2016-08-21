@@ -45,7 +45,7 @@ abstract class AbstractDaoRead<TEntity> implements IBasicReadDao<TEntity> {
 	}
 
 	public TEntity getById(final Connection connection, final String id)
-			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, CloseStatementException {
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		TEntity entity = null;
 		String query = sqlQueries.get(DaoQueries.GET_BY_ID).toString();
 		if (query == null) {
