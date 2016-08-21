@@ -236,9 +236,4 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 		ConnectionManager.getInstance().commitTransaction(connection);
 	}
 	
-	@Override
-	public String getDescriptionOfCompetition(final CompetitionDTO competitionDTO) {
-		return competitionDTO.getDescription();
-	}
-	
 }

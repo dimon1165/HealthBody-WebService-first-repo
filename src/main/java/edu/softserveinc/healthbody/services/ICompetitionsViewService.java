@@ -36,5 +36,4 @@ public interface ICompetitionsViewService {
 	void deleteUserCompetition(String nameCompetition, String nameUser)
 			throws SQLException, JDBCDriverException, TransactionException;
 
-	String getDescriptionOfCompetition(CompetitionDTO competitionDTO);
 }
