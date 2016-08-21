@@ -220,6 +220,21 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 			Log4jWrapper.get().error("create competition failed ", e);
 		}
 	}
+	
+	@Override
+	public final void updateCompetition(final CompetitionDTO competitionDTO) {
+		CompetitionsServiceImpl competition = new CompetitionsServiceImpl();
+		try {
+			try {
+				competition.update(competitionDTO);
+			} catch (DataBaseReadingException | QueryNotFoundException | EmptyResultSetException
+					| CloseStatementException e) {
+				Log4jWrapper.get().error("update competition failed ", e);
+			}
+		} catch (SQLException | JDBCDriverException | TransactionException e) {
+			Log4jWrapper.get().error("update competition failed ", e);
+		}
+	}
 
 	@Override
 	public List<GroupDTO> getAllGroupsParticipants(int partNumber, int partSize) {
@@ -240,7 +255,12 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		boolean result = false;
 		CompetitionsServiceImpl competition = new CompetitionsServiceImpl();
 		try {
-			result = competition.addUserInCompetition(nameCompetition, nameUser);
+			try {
+				result = competition.addUserInCompetition(nameCompetition, nameUser);
+			} catch (DataBaseReadingException | QueryNotFoundException | EmptyResultSetException
+					| CloseStatementException e) {
+				Log4jWrapper.get().error("Add user " +nameUser+ " to competition " +nameCompetition+ " failed ", e);
+			}
 		} catch (SQLException | JDBCDriverException | TransactionException e){
 			Log4jWrapper.get().error("Add user " +nameUser+ " to competition " +nameCompetition+ " failed ", e);
 		}
@@ -257,22 +277,6 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 			}
 		} catch (JDBCDriverException e) {
 			Log4jWrapper.get().error("get competition by name failed ", e);
-		}
-		return null;
-	}
-
-	@Override
-	public final String getDescriptionOfCompetition(String name) {
-		CompetitionDTO competitionDTO = null;
-		try {
-			try {
-				competitionDTO = CompetitionsViewServiceImpl.getInstance().getCompetition(name);
-			} catch (SQLException | TransactionException e) {
-				Log4jWrapper.get().error("get description of competition ", e);
-			}
-			return  CompetitionsViewServiceImpl.getInstance().getDescriptionOfCompetition(competitionDTO);
-		} catch (JDBCDriverException e) {
-			Log4jWrapper.get().error("get description of competition ", e);
 		}
 		return null;
 	}
@@ -319,9 +323,7 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		} catch (SQLException | JDBCDriverException | TransactionException e) {
 			Log4jWrapper.get().error("delete user competition failed ", e);
 		}
-		
 	}
 
-	
 }
 

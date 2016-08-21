@@ -16,7 +16,7 @@ public interface IBaseService<TBaseDTO> {
 
 	TBaseDTO get(String name) throws SQLException, JDBCDriverException, TransactionException;
 
-	void update(TBaseDTO baseDTO) throws SQLException, JDBCDriverException, TransactionException;
+	void update(TBaseDTO baseDTO) throws SQLException, JDBCDriverException, TransactionException, DataBaseReadingException, QueryNotFoundException, EmptyResultSetException, CloseStatementException;
 	
 	// use just for test
 	void test_delete(TBaseDTO baseDTO) throws SQLException, JDBCDriverException, TransactionException;

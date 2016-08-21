@@ -95,10 +95,11 @@ public class DaoStatementsConstant {
 
 	public static enum CompetitionDBQueries {
 		INSERT(DaoQueries.INSERT, "INSERT INTO competitions (id_competition, name, description, start, finish, id_criteria) VALUES (?, ?, ?, ?, ?, ?);"),
-		GET_BY_ID(DaoQueries.GET_BY_ID,	"SELECT id_competition, name, description, start_date, finish_date, id_criteria FROM competitions WHERE id_competition = ?;"),
-		GET_ALL(DaoQueries.GET_ALL,	"SELECT id_competition, name, description, start_date, finish_date, id_criteria FROM competitions;"),
+		GET_BY_ID(DaoQueries.GET_BY_ID,	"SELECT id_competition, name, description, start, finish, id_criteria FROM competitions WHERE id_competition = ?;"),
+		GET_ALL(DaoQueries.GET_ALL,	"SELECT id_competition, name, description, start, finish, id_criteria FROM competitions;"),
 		DELETE_BY_ID(DaoQueries.DELETE_BY_ID, "DELETE FROM competitions WHERE id_competition = ?;"),
-		DELETE_BY_FIELD(DaoQueries.DELETE_BY_FIELD, "DELETE FROM competitions WHERE name = ?;");
+		DELETE_BY_FIELD(DaoQueries.DELETE_BY_FIELD, "DELETE FROM competitions WHERE name = ?;"),
+		UPDATE(DaoQueries.UPDATE, "UPDATE competitions SET description = ?, start = ?, finish = ?, id_criteria = ? WHERE name = ?;");
 		private DaoQueries daoQuery;
 		private String query;
 

@@ -50,9 +50,6 @@ public interface HealthBodyService {
 	CompetitionDTO getCompetitionViewByName(String name);
 
 	@WebMethod
-	String getDescriptionOfCompetition(String name);
-
-	@WebMethod
 	void updateGroup(GroupDTO groupDTO);
 
 	@WebMethod
@@ -69,6 +66,9 @@ public interface HealthBodyService {
 
 	@WebMethod
 	void createCompetition(CompetitionDTO competitionDTO);
+	
+	@WebMethod
+	void updateCompetition(CompetitionDTO competitionDTO);
 
 	@WebMethod
 	boolean addUserInCompetition(String nameCompetition, String nameUser);
