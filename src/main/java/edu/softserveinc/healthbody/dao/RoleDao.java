@@ -45,23 +45,23 @@ public final class RoleDao extends AbstractDao<Role> {
 				args[RoleCard.DESCRIPTION] == null ? new String() : args[RoleCard.DESCRIPTION]);
 	}
 	
-	public boolean deleteRole(final Connection con, final Role role)
+	public boolean deleteRole(final Connection connection, final Role role)
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
-		return delete(con, role);
+		return delete(connection, role);
 	}
 	
-	public List<Role> view(final Connection con) throws JDBCDriverException, DataBaseReadingException {
-		return getAll(con);
+	public List<Role> view(final Connection connection) throws JDBCDriverException, DataBaseReadingException {
+		return getAll(connection);
 	}
 	
-	public Role getRoleById(final Connection con, final String id) 
+	public Role getRoleById(final Connection connection, final String id) 
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, CloseStatementException {
-		return getById(con, id);
+		return getById(connection, id);
 	}
 	
-	public Role getRoleByName(final Connection con, final String name)
+	public Role getRoleByName(final Connection connection, final String name)
 			throws JDBCDriverException, DataBaseReadingException, QueryNotFoundException {
-		return getByFieldName(con, name);
+		return getByFieldName(connection, name);
 	}
 
 }

@@ -160,7 +160,7 @@ public class CompetitionsViewDao extends AbstractDao<CompetitionsView> {
 		return result;
 	}
 
-	public CompetitionsView getCompetitionViewByName(final Connection con, final String name)
+	public CompetitionsView getCompetitionViewByName(final Connection connection, final String name)
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		CompetitionsView result = null;
 		String query = sqlQueries.get(CompetitionsViewQueries.GET_BY_FIELD_NAME).toString();
@@ -168,7 +168,7 @@ public class CompetitionsViewDao extends AbstractDao<CompetitionsView> {
 			throw new QueryNotFoundException(
 					String.format(ErrorConstants.QUERY_NOT_FOUND, CompetitionsViewQueries.GET_BY_FIELD_NAME.name()));
 		}
-		try (PreparedStatement pst = createPreparedStatementGet(con, query, name);
+		try (PreparedStatement pst = createPreparedStatementGet(connection, query, name);
 				ResultSet resultSet = pst.executeQuery()) {
 			String[] queryResult = new String[resultSet.getMetaData().getColumnCount()];
 			while (resultSet.next()) {
@@ -203,9 +203,9 @@ public class CompetitionsViewDao extends AbstractDao<CompetitionsView> {
 		return pst;
 	}
 	
-	private PreparedStatement createPreparedStatementGet(final Connection con, final String query, final String name)
+	private PreparedStatement createPreparedStatementGet(final Connection connection, final String query, final String name)
 			throws SQLException, JDBCDriverException {
-		PreparedStatement pst = con.prepareStatement(query);
+		PreparedStatement pst = connection.prepareStatement(query);
 		pst.setString(1, name);
 		return pst;
 	}

@@ -43,13 +43,13 @@ public final class AwardDao extends AbstractDao<Award> {
 				args[AwardCard.NAME] == null ? new String() : args[AwardCard.NAME]);
 	}
 
-	public boolean deleteAward(final Connection con, final Award award)
+	public boolean deleteAward(final Connection connection, final Award award)
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
-		return delete(con, award);
+		return delete(connection, award);
 	}
 
-	public List<Award> view(final Connection con) throws JDBCDriverException, DataBaseReadingException {
-		return getAll(con);
+	public List<Award> view(final Connection connection) throws JDBCDriverException, DataBaseReadingException {
+		return getAll(connection);
 	}
 
 }

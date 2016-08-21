@@ -1,5 +1,6 @@
 package edu.softserveinc.healthbody.dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,7 +11,6 @@ import java.util.UUID;
 import edu.softserveinc.healthbody.constants.Constants.GroupUserViewCard;
 import edu.softserveinc.healthbody.constants.ErrorConstants;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.GroupDBQueries;
-import edu.softserveinc.healthbody.db.ConnectionManager;
 import edu.softserveinc.healthbody.entity.GroupUserView;
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
@@ -57,7 +57,7 @@ public class GroupUserViewDao extends AbstractDao<GroupUserView> {
 		
 	}
 	
-	public List<GroupUserView> getAllGroupsParticiapnts(final int partNumber, final int partSize) 
+	public List<GroupUserView> getAllGroupsParticiapnts(final Connection connection, final int partNumber, final int partSize) 
 			throws QueryNotFoundException, JDBCDriverException,	DataBaseReadingException {
 		List<GroupUserView> result = new ArrayList<>();
 		String query = sqlQueries.get(DaoQueries.GET_ALL_GROUPS_PARTICIPANTS).toString();
@@ -67,7 +67,7 @@ public class GroupUserViewDao extends AbstractDao<GroupUserView> {
 		if ((partNumber >= 0) && (partSize > 0)) {
 			query = query.substring(0, query.lastIndexOf(";")) + SQL_LIMIT;
 		}
-		try (PreparedStatement pst = createPreparedStatement(query, partNumber, partSize);
+		try (PreparedStatement pst = createPreparedStatement(connection, query, partNumber, partSize);
 			ResultSet resultSet = pst.executeQuery()) {
 			String[] queryResult = new String[resultSet.getMetaData().getColumnCount()];
 			while (resultSet.next()) {
@@ -79,9 +79,9 @@ public class GroupUserViewDao extends AbstractDao<GroupUserView> {
 		return result;
 	}
 
-	private PreparedStatement createPreparedStatement(final String query, final int partNumber, final int partSize)
+	private PreparedStatement createPreparedStatement(final Connection connection, final String query, final int partNumber, final int partSize)
 			throws SQLException, JDBCDriverException {
-		PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query);
+		PreparedStatement pst = connection.prepareStatement(query);
 		if ((partNumber >= 0) && (partSize > 0)) {
 			pst.setInt(1, (partNumber - 1) * partSize);
 			pst.setInt(2, partSize);

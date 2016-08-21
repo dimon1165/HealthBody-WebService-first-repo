@@ -12,13 +12,13 @@ import edu.softserveinc.healthbody.exceptions.QueryNotFoundException;
 public interface IBasicReadDao<TEntity> {
 	
 
-	TEntity getById(Connection con, String id) 
+	TEntity getById(Connection connection, String id) 
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, CloseStatementException;
 
-	List<TEntity> getAll(Connection con) throws JDBCDriverException, DataBaseReadingException;
+	List<TEntity> getAll(Connection connection) throws JDBCDriverException, DataBaseReadingException;
 	
 
-	List<TEntity> getFilterRange(Connection con, int partNumber, int partSize, Map<String, String> filters) 
+	List<TEntity> getFilterRange(Connection connection, int partNumber, int partSize, Map<String, String> filters) 
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, EmptyResultSetException, CloseStatementException;
 
 }

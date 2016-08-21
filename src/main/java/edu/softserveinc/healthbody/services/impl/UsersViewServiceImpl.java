@@ -27,19 +27,19 @@ public class UsersViewServiceImpl implements IUsersViewService {
 	public final List<UserDTO> getAll(final int partNumber, final int partSize)
 			throws JDBCDriverException, SQLException, TransactionException {
 		List<UserDTO> userDTO = new ArrayList<>();
-		Connection con = ConnectionManager.getInstance().beginTransaction();
+		Connection connection = ConnectionManager.getInstance().beginTransaction();
 		try {
-			for (UsersView usersView : UsersViewDao.getInstance().getAllUsersView(partNumber, partSize)) {
+			for (UsersView usersView : UsersViewDao.getInstance().getAllUsersView(connection, partNumber, partSize)) {
 				userDTO.add(new UserDTO(usersView.getId(), usersView.getLogin(), usersView.getPasswd(),
 						usersView.getFirsName(), usersView.getLastName(), usersView.getMail(), usersView.getAge().toString(),
 						usersView.getWeight().toString(), usersView.getGender(), usersView.getAvatar(),
 						usersView.getRoleName(), usersView.getStatus(), usersView.getScore().toString(), usersView.getHealth(), null, null));
 			}
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
-			ConnectionManager.getInstance().rollbackTransaction(con);
+			ConnectionManager.getInstance().rollbackTransaction(connection);
 			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
 		}
-		ConnectionManager.getInstance().commitTransaction(con);
+		ConnectionManager.getInstance().commitTransaction(connection);
 		return userDTO;
 	}
 
@@ -62,19 +62,19 @@ public class UsersViewServiceImpl implements IUsersViewService {
 	public final List<UserDTO> getAlltoAddInCompetition(final int partNumber, final int partSize)
 			throws JDBCDriverException, SQLException, TransactionException {
 		List<UserDTO> userDTO = new ArrayList<>();
-		Connection con = ConnectionManager.getInstance().beginTransaction();
+		Connection connection = ConnectionManager.getInstance().beginTransaction();
 		try {
-				for (UsersView usersView : UsersViewDao.getInstance().getAllUsersView(partNumber, partSize)) {
+				for (UsersView usersView : UsersViewDao.getInstance().getAllUsersView(connection, partNumber, partSize)) {
 					userDTO.add(new UserDTO(usersView.getId(), usersView.getLogin(), usersView.getPasswd(),
 							usersView.getFirsName(), usersView.getLastName(), usersView.getMail(), usersView.getAge().toString(),
 							usersView.getWeight().toString(), usersView.getGender(), usersView.getAvatar(),
 							usersView.getRoleName(), usersView.getStatus(), usersView.getScore().toString(), usersView.getHealth(), null, null));
 				}
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
-			ConnectionManager.getInstance().rollbackTransaction(con);
+			ConnectionManager.getInstance().rollbackTransaction(connection);
 			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
 		}
-		ConnectionManager.getInstance().commitTransaction(con);		
+		ConnectionManager.getInstance().commitTransaction(connection);		
 		return userDTO;
 	}
 
@@ -97,19 +97,19 @@ public class UsersViewServiceImpl implements IUsersViewService {
 	public final List<UserDTO> getAllinCompetition(final int partNumber, final int partSize)
 			throws JDBCDriverException, SQLException, TransactionException {
 		List<UserDTO> userDTO = new ArrayList<>();
-		Connection con = ConnectionManager.getInstance().beginTransaction();
+		Connection connection = ConnectionManager.getInstance().beginTransaction();
 		try {
-				for (UsersView usersView : UsersViewDao.getInstance().getAllUsersView(partNumber, partSize)) {
+				for (UsersView usersView : UsersViewDao.getInstance().getAllUsersView(connection, partNumber, partSize)) {
 					userDTO.add(new UserDTO(usersView.getId(), usersView.getLogin(), usersView.getPasswd(),
 							usersView.getFirsName(), usersView.getLastName(), usersView.getMail(), usersView.getAge().toString(),
 							usersView.getWeight().toString(), usersView.getGender(), usersView.getAvatar(),
 							usersView.getRoleName(), usersView.getStatus(), usersView.getScore().toString(), usersView.getHealth(), null, null));
 				}
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
-			ConnectionManager.getInstance().rollbackTransaction(con);
+			ConnectionManager.getInstance().rollbackTransaction(connection);
 			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
 		}
-		ConnectionManager.getInstance().commitTransaction(con);	
+		ConnectionManager.getInstance().commitTransaction(connection);	
 		return userDTO;
 	}
 }

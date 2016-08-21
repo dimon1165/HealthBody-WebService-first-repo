@@ -45,25 +45,25 @@ public class DBPopulateManager {
 	}
 
     
-    public boolean populateDatabaseTables(Connection conn) throws SQLException {
+    public boolean populateDatabaseTables(Connection connection) throws SQLException {
     	boolean result = true;
-		result = result && getInstance().populateRolesTable(conn);
-		result = result && getInstance().populateUsersTable(conn);
-		result = result && getInstance().populateGroupsTable(conn);
-		result = result && getInstance().populateUserGroupsTable(conn);
-		result = result && getInstance().populateAwardsTable(conn);
-		result = result && getInstance().populateCompetitionsTable(conn);
-		result = result && getInstance().populateCriteriaTable(conn);
-		result = result && getInstance().populateGroupCompetitionsTable(conn);
-		result = result && getInstance().populateMetaDataTable(conn);
-		result = result && getInstance().populateUserCompetitionsTable(conn);
+		result = result && getInstance().populateRolesTable(connection);
+		result = result && getInstance().populateUsersTable(connection);
+		result = result && getInstance().populateGroupsTable(connection);
+		result = result && getInstance().populateUserGroupsTable(connection);
+		result = result && getInstance().populateAwardsTable(connection);
+		result = result && getInstance().populateCompetitionsTable(connection);
+		result = result && getInstance().populateCriteriaTable(connection);
+		result = result && getInstance().populateGroupCompetitionsTable(connection);
+		result = result && getInstance().populateMetaDataTable(connection);
+		result = result && getInstance().populateUserCompetitionsTable(connection);
     	return result;
     }
 	
-	private boolean populateUsersTable(Connection conn) throws SQLException {
+	private boolean populateUsersTable(Connection connection) throws SQLException {
 		boolean successfulInsert = false;
 		String query = DaoStatementsConstant.UserDBQueries.INSERT.toString();
-		try (PreparedStatement pst = conn.prepareStatement(query)) {
+		try (PreparedStatement pst = connection.prepareStatement(query)) {
 			for (int j = 0; j < USERS; j++) {	
 				USER_ID[j] = UUID.randomUUID().toString();
 				pst.setString(1, USER_ID[j]);				
@@ -93,10 +93,10 @@ public class DBPopulateManager {
 		return successfulInsert;
 	}
 
-	private boolean populateGroupsTable(Connection conn) throws SQLException {
+	private boolean populateGroupsTable(Connection connection) throws SQLException {
 		boolean successfulInsert = false;
 		String query = DaoStatementsConstant.GroupDBQueries.INSERT.toString();
-		try (PreparedStatement pst = conn.prepareStatement(query)) {
+		try (PreparedStatement pst = connection.prepareStatement(query)) {
 			for (int j = 0; j < GROUPS; j++){				
 				GROUP_ID[j] = UUID.randomUUID().toString();
 				pst.setString(1, GROUP_ID[j]);				
@@ -117,10 +117,10 @@ public class DBPopulateManager {
 		return successfulInsert;
 	}
 
-	private boolean populateUserGroupsTable(Connection conn) throws SQLException {
+	private boolean populateUserGroupsTable(Connection connection) throws SQLException {
 		boolean successfulInsert = false;
 		String query = DaoStatementsConstant.UserGroupQueries.INSERT.toString();
-		try (PreparedStatement pst = conn.prepareStatement(query)) {
+		try (PreparedStatement pst = connection.prepareStatement(query)) {
 			for (int j = 0; j < USERGROUPS; j++) {
 				pst.setString(1, UUID.randomUUID().toString());
 				pst.setString(2, USER_ID[(int)(Math.random() * USERS)]);
@@ -137,10 +137,10 @@ public class DBPopulateManager {
 		return successfulInsert;
 	}
 
-	private boolean populateAwardsTable(Connection conn) throws SQLException {
+	private boolean populateAwardsTable(Connection connection) throws SQLException {
 		boolean successfulInsert = false;
 		String query = DaoStatementsConstant.AwardDBQueries.INSERT.toString();
-		try (PreparedStatement pst = conn.prepareStatement(query)) {
+		try (PreparedStatement pst = connection.prepareStatement(query)) {
 			for (int j = 0; j < AWARDS; j++) {
 				AWARD_ID[j] = UUID.randomUUID().toString();
 				pst.setString(1, AWARD_ID[j]);		
@@ -157,10 +157,10 @@ public class DBPopulateManager {
 		return successfulInsert;
 	}
 
-	private boolean populateCompetitionsTable(Connection conn) throws SQLException {
+	private boolean populateCompetitionsTable(Connection connection) throws SQLException {
 		boolean successfulInsert = false;
 		String query = DaoStatementsConstant.CompetitionDBQueries.INSERT.toString();
-		try (PreparedStatement pst = conn.prepareStatement(query)) {
+		try (PreparedStatement pst = connection.prepareStatement(query)) {
 			for (int j = 0; j < COMPETITIONS; j++) {
 				COMPETITION_ID[j] = UUID.randomUUID().toString();
 				pst.setString(1, COMPETITION_ID[j]);	
@@ -184,10 +184,10 @@ public class DBPopulateManager {
 		return successfulInsert;
 	}
 
-	private boolean populateCriteriaTable(Connection conn) throws SQLException {
+	private boolean populateCriteriaTable(Connection connection) throws SQLException {
 		boolean successfulInsert = false;
 		String query = DaoStatementsConstant.CriteriaDBQueries.INSERT.toString();
-		try (PreparedStatement pst = conn.prepareStatement(query)) {
+		try (PreparedStatement pst = connection.prepareStatement(query)) {
 			for (int j = 0; j < CRITERIA; j++) {
 				CRITERIA_ID[j] = UUID.randomUUID().toString();
 				pst.setString(1, CRITERIA_ID[j]);
@@ -206,10 +206,10 @@ public class DBPopulateManager {
 		return successfulInsert;
 	}
 
-	private boolean populateGroupCompetitionsTable(Connection conn) throws SQLException {
+	private boolean populateGroupCompetitionsTable(Connection connection) throws SQLException {
 		boolean successfulInsert = false;
 		String query = DaoStatementsConstant.GroupCompetitionsDBQueries.INSERT.toString();
-		try (PreparedStatement pst = conn.prepareStatement(query)) {
+		try (PreparedStatement pst = connection.prepareStatement(query)) {
 			for (int j = 0; j < GROUPCOMPETITIONS; j++) {
 				pst.setString(1, UUID.randomUUID().toString());
 				pst.setString(2, GROUP_ID[(int)(Math.random() * GROUPS)]);
@@ -226,10 +226,10 @@ public class DBPopulateManager {
 		return successfulInsert;
 	}
 
-	private boolean populateMetaDataTable(Connection conn) throws SQLException {
+	private boolean populateMetaDataTable(Connection connection) throws SQLException {
 		boolean successfulInsert = false;
 		String query = DaoStatementsConstant.MetaDataDBQueries.INSERT.toString();
-		try (PreparedStatement pst = conn.prepareStatement(query)) {
+		try (PreparedStatement pst = connection.prepareStatement(query)) {
 			for (int j = 0; j < METADATA; j++) {
 				pst.setString(1, UUID.randomUUID().toString());
 				pst.setString(2, "meta data " + j);
@@ -245,10 +245,10 @@ public class DBPopulateManager {
 		return successfulInsert;
 	}
 
-	private boolean populateRolesTable(Connection conn) throws SQLException {
+	private boolean populateRolesTable(Connection connection) throws SQLException {
 		boolean successfulInsert = false;
 		String query = DaoStatementsConstant.RoleDBQueries.INSERT.toString();
-		try (PreparedStatement pst = conn.prepareStatement(query)) {
+		try (PreparedStatement pst = connection.prepareStatement(query)) {
 			for (int j = 0; j < ROLES; j++) {
 				if (j == 2){
 					ROLE_USER_ID = UUID.randomUUID().toString();
@@ -270,10 +270,10 @@ public class DBPopulateManager {
 		return successfulInsert;
 	}
 
-	private boolean populateUserCompetitionsTable(Connection conn) throws SQLException {
+	private boolean populateUserCompetitionsTable(Connection connection) throws SQLException {
 		boolean successfulInsert = false;
 		String query = DaoStatementsConstant.UserCompetitionsDBQueries.INSERT.toString();
-		try (PreparedStatement pst = conn.prepareStatement(query)) {
+		try (PreparedStatement pst = connection.prepareStatement(query)) {
 			for (int j = 0; j < USERCOMPETITIONS; j++) {
 				pst.setString(1, UUID.randomUUID().toString());
 				pst.setString(2, USER_ID[(int)(Math.random() * USERS)]);

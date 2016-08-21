@@ -10,7 +10,6 @@ import java.util.UUID;
 import edu.softserveinc.healthbody.constants.Constants.CompetitionCard;
 import edu.softserveinc.healthbody.constants.ErrorConstants;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.CompetitionDBQueries;
-import edu.softserveinc.healthbody.db.ConnectionManager;
 import edu.softserveinc.healthbody.entity.Competition;
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
@@ -53,14 +52,14 @@ public final class CompetitionDao extends AbstractDao<Competition> {
 			args[CompetitionCard.IDCRITERIA] == null ? UUID.randomUUID().toString() : args[CompetitionCard.IDCRITERIA]);
 	}
 	
-	public boolean createCompetition(final Competition competition)
+	public boolean createCompetition(final Connection connection, final Competition competition)
 			throws JDBCDriverException, QueryNotFoundException, DataBaseReadingException {
 		boolean result = false;
 		String query = sqlQueries.get(DaoQueries.INSERT).toString();
 		if (query == null) {
 			throw new QueryNotFoundException(String.format(ErrorConstants.QUERY_NOT_FOUND, DaoQueries.INSERT.name()));
 		}
-		try (PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query)) {
+		try (PreparedStatement pst = connection.prepareStatement(query)) {
 			int i = 1;
 			pst.setString(i++, competition.getId());
 			pst.setString(i++, competition.getName());
@@ -75,14 +74,14 @@ public final class CompetitionDao extends AbstractDao<Competition> {
 		return result;
 	}
 	
-	public boolean editCompetition(final Competition competition)
+	public boolean editCompetition(final Connection connection, final Competition competition)
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		boolean result = false;
 		String query = sqlQueries.get(DaoQueries.UPDATE).toString();
 		if (query == null) {
 			throw new QueryNotFoundException(String.format(ErrorConstants.QUERY_NOT_FOUND, DaoQueries.UPDATE.name()));
 		}
-		try (PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query)) {
+		try (PreparedStatement pst = connection.prepareStatement(query)) {
 			int i = 1;
 			pst.setString(i++, competition.getId());
 			pst.setString(i++, competition.getName());
@@ -97,17 +96,17 @@ public final class CompetitionDao extends AbstractDao<Competition> {
 		return result;
 	}
 	
-	public Competition getCompetitionByName(final Connection con, final String name)
+	public Competition getCompetitionByName(final Connection connection, final String name)
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
-		return getByFieldName(con, name);
+		return getByFieldName(connection, name);
 	}
 	
-	public List<Competition> view(final Connection con) throws JDBCDriverException, DataBaseReadingException {
-		return getAll(con);
+	public List<Competition> view(final Connection connection) throws JDBCDriverException, DataBaseReadingException {
+		return getAll(connection);
 	}
 
 	@Override
-	public boolean deleteById(final Connection con, String id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
+	public boolean deleteById(final Connection connection, String id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		return false;
 	}
 

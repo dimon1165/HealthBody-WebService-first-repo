@@ -25,8 +25,8 @@ public interface IBasicDao<TEntity> extends IBasicReadDao<TEntity> {
 		DELETE_BY_ID_USER_COMPETITION;
 	}
 	
-	boolean deleteById(final Connection con, String id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException;
+	boolean deleteById(final Connection connection, String id) throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException;
 	
-	boolean deleteByField(final Connection con, String textCondition)
+	boolean deleteByField(final Connection connection, String textCondition)
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException;
 }

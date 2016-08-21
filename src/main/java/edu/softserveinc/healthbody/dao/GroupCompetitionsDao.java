@@ -44,8 +44,8 @@ public final class GroupCompetitionsDao extends AbstractDao<GroupCompetitions> {
 				args[GroupCompetitionsCard.IDCOMPETITION] == null ? UUID.randomUUID().toString() : args[GroupCompetitionsCard.IDCOMPETITION]);
 	}
 		
-	public List<GroupCompetitions> view(final Connection con) throws JDBCDriverException, DataBaseReadingException {
-		return getAll(con);
+	public List<GroupCompetitions> view(final Connection connection) throws JDBCDriverException, DataBaseReadingException {
+		return getAll(connection);
 	}
 
 }

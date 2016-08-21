@@ -6,14 +6,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 import edu.softserveinc.healthbody.log.Log4jWrapper;
 
 public class ConnectionManager {
 	private static final String FAILED_REGISTRATE_DRIVER = "Failed to Registrate JDBC Driver";
 	private static final String ERROR_CONNECTION = "Error while getting connection";	
-	private static final int MAX_POOL_SIZE = 15;
+	private static final int MAX_POOL_SIZE = 10;
+	private static final int MAX_PERMITED_POOL_SIZE = 100;
+	private int counter = 0;
 
 	private static volatile ConnectionManager instance;
 
@@ -78,11 +79,26 @@ public class ConnectionManager {
 	}
 
 	private void populateConnectionPool() {
-		if(connections.size() < MAX_POOL_SIZE) {		  
-			connections.add(createNewConnection());		
+		if(connections.size() < MAX_POOL_SIZE) {
+			if(counter < MAX_PERMITED_POOL_SIZE){
+				connections.add(createNewConnection());					
+			} else {
+				waitFreeConnection();
+				populateConnectionPool();
+			}
 		}
 	}
 	
+	private void waitFreeConnection() {
+		while(counter >= MAX_PERMITED_POOL_SIZE){
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				Log4jWrapper.get().error(ERROR_CONNECTION, e);
+			}					
+		}		
+	}
+
 	private synchronized Connection getConnectionFromPool() {
 	  if(connections.isEmpty()) {
 		  populateConnectionPool();
@@ -97,9 +113,9 @@ public class ConnectionManager {
 		return getConnectionFromPool();
 	}
 	
-	public synchronized void setUpConnectionForTest(Connection con) {
+	public synchronized void setUpConnectionForTest(Connection connection) {
 		if (testConnection == null){			
-				testConnection = con;								
+				testConnection = connection;								
 		} 
 	}
 	
@@ -110,10 +126,10 @@ public class ConnectionManager {
 		return testConnection;
 	}
 	
-	public synchronized void closeTestConnection(Connection con) {
-		if (con != null){
+	public synchronized void closeTestConnection(Connection connection) {
+		if (connection != null){
 			try {
-				con.close();
+				connection.close();
 			} catch (SQLException e) {
 				Log4jWrapper.get().error(FAILED_REGISTRATE_DRIVER, e);
 			}
@@ -121,20 +137,21 @@ public class ConnectionManager {
 		}
 	}
 	
-	private synchronized void returnConnectionToPool(Connection con) throws SQLException {
-		if ((con != null) && (!con.isClosed()) && (connections.size() < MAX_POOL_SIZE)){
-			connections.add(con);
+	private synchronized void returnConnectionToPool(Connection connection) throws SQLException {
+		if ((connection != null) && (!connection.isClosed()) && (connections.size() < MAX_POOL_SIZE)){
+			connections.add(connection);
 		} else {
-			closeConnection(con);
+			closeConnection(connection);
 		}
 	}
 
-	private void closeConnection(Connection con) {
+	private void closeConnection(Connection connection) {
 			try {
-				con.close();
+				connection.close();
 			} catch (SQLException e) {
 				Log4jWrapper.get().error(FAILED_REGISTRATE_DRIVER, e);
 			}
+			counter--;
 	}
 
 	private final Connection createNewConnection() {
@@ -144,26 +161,27 @@ public class ConnectionManager {
 					getDataSource().getPasswrd());
 		} catch (SQLException e) {
 			Log4jWrapper.get().error(ERROR_CONNECTION, e);
-		}		
+		}	
+		counter++;
 		return connection;
 	}
 		
 	public final Connection beginTransaction() throws SQLException, JDBCDriverException {
-		Connection con = getConnection();
-		con.setAutoCommit(false);
-		return con;
+		Connection connection = getConnection();
+		connection.setAutoCommit(false);
+		return connection;
 	}
 
-	public final void commitTransaction(Connection con) throws SQLException, JDBCDriverException {
-		con.commit();
-		con.setAutoCommit(true);
-		returnConnectionToPool(con);
+	public final void commitTransaction(Connection connection) throws SQLException, JDBCDriverException {
+		connection.commit();
+		connection.setAutoCommit(true);
+		returnConnectionToPool(connection);
 	}
 
-	public final void rollbackTransaction(Connection con) throws SQLException, JDBCDriverException {
-		con.rollback();
-		con.setAutoCommit(true);
-		returnConnectionToPool(con);
+	public final void rollbackTransaction(Connection connection) throws SQLException, JDBCDriverException {
+		connection.rollback();
+		connection.setAutoCommit(true);
+		returnConnectionToPool(connection);
 	}
 
 	private List<Connection> getAllConections() {
@@ -173,10 +191,10 @@ public class ConnectionManager {
 	private void closeAllConnections() throws JDBCDriverException {
 		if (instance != null) {
 			for (Iterator<Connection> iterator = instance.getAllConections().iterator(); iterator.hasNext();) {
-			    Connection conn = iterator.next();
-				if (conn != null) {
+			    Connection connection = iterator.next();
+				if (connection != null) {
 					try {
-						conn.close();
+						connection.close();
 					} catch (SQLException e) {
 						throw new JDBCDriverException(FAILED_REGISTRATE_DRIVER, e);
 					}

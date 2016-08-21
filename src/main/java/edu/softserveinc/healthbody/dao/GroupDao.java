@@ -11,7 +11,6 @@ import java.util.UUID;
 import edu.softserveinc.healthbody.constants.Constants.GroupCard;
 import edu.softserveinc.healthbody.constants.ErrorConstants;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.GroupDBQueries;
-import edu.softserveinc.healthbody.db.ConnectionManager;
 import edu.softserveinc.healthbody.entity.Group;
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
@@ -53,14 +52,14 @@ public final class GroupDao extends AbstractDao<Group> {
 				args[GroupCard.STATUS] == null ? new String() : args[GroupCard.STATUS]);
 	}
 
-	public boolean editGroup(final Group group)
+	public boolean editGroup(final Connection connection, final Group group)
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		boolean result = false;
 		String query = sqlQueries.get(DaoQueries.UPDATE).toString();
 		if (query == null) {
 			throw new QueryNotFoundException(String.format(ErrorConstants.QUERY_NOT_FOUND, DaoQueries.UPDATE.name()));
 		}
-		try (PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query)) {
+		try (PreparedStatement pst = connection.prepareStatement(query)) {
 			int i = 1;
 			pst.setString(i++, group.getId());
 			pst.setInt(i++, group.getCount());
@@ -74,12 +73,12 @@ public final class GroupDao extends AbstractDao<Group> {
 		return result;
 	}
 
-	public boolean deleteGroup(final Connection con, final Group group)
+	public boolean deleteGroup(final Connection connection, final Group group)
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
-		return delete(con, group);
+		return delete(connection, group);
 	}
 
-	public List<Group> getAll(final int partNumber, final int partSize) 
+	public List<Group> getAll(final Connection connection, final int partNumber, final int partSize) 
 			throws QueryNotFoundException, JDBCDriverException,	DataBaseReadingException {
 		List<Group> result = new ArrayList<>();
 		String query = sqlQueries.get(DaoQueries.GET_ALL).toString();
@@ -89,7 +88,7 @@ public final class GroupDao extends AbstractDao<Group> {
 		if ((partNumber >= 0) && (partSize > 0)) {
 			query = query.substring(0, query.lastIndexOf(";")) + SQL_LIMIT;
 		}
-		try (PreparedStatement pst = createPreparedStatement(query, partNumber, partSize);
+		try (PreparedStatement pst = createPreparedStatement(connection, query, partNumber, partSize);
 			ResultSet resultSet = pst.executeQuery()) {
 			String[] queryResult = new String[resultSet.getMetaData().getColumnCount()];
 			while (resultSet.next()) {
@@ -101,15 +100,15 @@ public final class GroupDao extends AbstractDao<Group> {
 		return result;
 	}
 
-	public Group getGroupByName(final Connection con, final String name)
+	public Group getGroupByName(final Connection connection, final String name)
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
-		return getByFieldName(con, name);
+		return getByFieldName(connection, name);
 	}
 	
 	//methods for try-with-resources
-	private PreparedStatement createPreparedStatement(final String query, final int partNumber, final int partSize) 
+	private PreparedStatement createPreparedStatement(final Connection connection, final String query, final int partNumber, final int partSize) 
 			throws SQLException, JDBCDriverException {
-		PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query);
+		PreparedStatement pst = connection.prepareStatement(query);
 			if ((partNumber >= 0) && (partSize > 0)) {
 				pst.setInt(1, (partNumber - 1) * partSize);
 				pst.setInt(2, partSize);

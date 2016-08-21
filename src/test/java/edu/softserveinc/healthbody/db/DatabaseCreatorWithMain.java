@@ -11,12 +11,12 @@ public class DatabaseCreatorWithMain {
     public static void main(String[] args) {
 		try {
 			DataSource ds = DataSourceRepository.getInstance().getPostgresNoDatabase();
-			Connection conn = ConnectionManager.getInstance(ds).getConnection();
-			DBCreationManager.getInstance().createDatabaseIfNotExists(conn, DATABASE_NAME);
+			Connection connection = ConnectionManager.getInstance(ds).getConnection();
+			DBCreationManager.getInstance().createDatabaseIfNotExists(connection, DATABASE_NAME);
 			ds = DataSourceRepository.getInstance().getPostgresDatabase();
-			conn = ConnectionManager.getInstance(ds).getConnection();
-			DBCreationManager.getInstance().createDatabaseTables(conn);
-			DBPopulateManager.getInstance().populateDatabaseTables(conn);
+			connection = ConnectionManager.getInstance(ds).getConnection();
+			DBCreationManager.getInstance().createDatabaseTables(connection);
+			DBPopulateManager.getInstance().populateDatabaseTables(connection);
 		} catch (JDBCDriverException | SQLException e) {
 			System.out.println("Error while creating and/or populating database " + DATABASE_NAME);
 			e.printStackTrace();

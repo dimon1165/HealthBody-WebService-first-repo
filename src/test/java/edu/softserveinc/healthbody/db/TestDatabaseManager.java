@@ -42,8 +42,8 @@ public class TestDatabaseManager {
 		}
 		Log4jWrapper.get().info("Start checking database " + testDatabase + ".");
 		try {
-			Connection con = ConnectionManager.getInstance(DataSourceRepository.getInstance().getPostgresNoDatabase()).getConnection();
-			DBCreationManager.getInstance().createDatabaseIfNotExists(con, testDatabase);
+			Connection connection = ConnectionManager.getInstance(DataSourceRepository.getInstance().getPostgresNoDatabase()).getConnection();
+			DBCreationManager.getInstance().createDatabaseIfNotExists(connection, testDatabase);
 		} catch (SQLException e) {
 			String failMessage = "Problem with creating database " + testDatabase + ".";
 			Log4jWrapper.get().error(failMessage, e);
@@ -58,8 +58,8 @@ public class TestDatabaseManager {
 	
 	private void setupTestDatabaseConnection(){
 		try {
-			Connection con = ConnectionManager.getInstance(DataSourceRepository.getInstance().getPostgresTestDatabase()).getConnection();
-			ConnectionManager.getInstance().setUpConnectionForTest(con);
+			Connection connection = ConnectionManager.getInstance(DataSourceRepository.getInstance().getPostgresTestDatabase()).getConnection();
+			ConnectionManager.getInstance().setUpConnectionForTest(connection);
 		} catch (JDBCDriverException e) {
 			String failMessage = "Couldn't get connection.";
 			Log4jWrapper.get().error(failMessage, e);
@@ -70,8 +70,8 @@ public class TestDatabaseManager {
 	private void dropTestDatabaseTables(){
 		Log4jWrapper.get().info("Start dropping tables in database.");
 		try {
-			Connection con = ConnectionManager.getInstance().getConnectionForTest();
-			DBCreationManager.getInstance().dropAllDatabaseTables(con);
+			Connection connection = ConnectionManager.getInstance().getConnectionForTest();
+			DBCreationManager.getInstance().dropAllDatabaseTables(connection);
 		} catch (SQLException | JDBCDriverException e) {
 			String failMessage = "Error while dropping tables in database.";
 			Log4jWrapper.get().error(failMessage, e);
@@ -83,8 +83,8 @@ public class TestDatabaseManager {
 	private void createTestDatabaseTables(){
 		Log4jWrapper.get().info("Start creating tables in database.");
 		try {
-			Connection con = ConnectionManager.getInstance().getConnectionForTest();
-			DBCreationManager.getInstance().createDatabaseTables(con);
+			Connection connection = ConnectionManager.getInstance().getConnectionForTest();
+			DBCreationManager.getInstance().createDatabaseTables(connection);
 		} catch (SQLException | JDBCDriverException e) {
 			String failMessage = "Error while creating tables in database.";
 			Log4jWrapper.get().error(failMessage, e);
@@ -96,8 +96,8 @@ public class TestDatabaseManager {
 	private void populateTestDatabaseTables(){
 		Log4jWrapper.get().info("Start populating tables in database.");
 		try {
-			Connection con = ConnectionManager.getInstance().getConnectionForTest();
-			DBPopulateManager.getInstance().populateDatabaseTables(con);
+			Connection connection = ConnectionManager.getInstance().getConnectionForTest();
+			DBPopulateManager.getInstance().populateDatabaseTables(connection);
 		} catch (JDBCDriverException | SQLException e) {
 			String failMessage = "Error while populating tables in database.";
 			Log4jWrapper.get().error(failMessage, e);
@@ -109,8 +109,8 @@ public class TestDatabaseManager {
 	public void cleanTestDatabaseTables(){
 		Log4jWrapper.get().info("Start cleaning tables in database.");
 		try {
-			Connection con = ConnectionManager.getInstance().getConnectionForTest();
-			DBCreationManager.getInstance().deleteAllDatabaseData(con);
+			Connection connection = ConnectionManager.getInstance().getConnectionForTest();
+			DBCreationManager.getInstance().deleteAllDatabaseData(connection);
 		} catch (JDBCDriverException | SQLException e) {
 			String failMessage = "Error while cleaning tables in database.";
 			Log4jWrapper.get().error(failMessage, e);
@@ -122,8 +122,8 @@ public class TestDatabaseManager {
 	private void closeConnection() {
 		Log4jWrapper.get().info("Clossing connection to test database.");
 		try {
-			Connection con = ConnectionManager.getInstance().getConnectionForTest();
-			ConnectionManager.getInstance().closeTestConnection(con);
+			Connection connection = ConnectionManager.getInstance().getConnectionForTest();
+			ConnectionManager.getInstance().closeTestConnection(connection);
 		} catch (JDBCDriverException e) {
 			String failMessage = "Error while clossing connection to test database.";
 			Log4jWrapper.get().error(failMessage, e);

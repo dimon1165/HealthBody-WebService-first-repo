@@ -46,13 +46,13 @@ public final class CriteriaDao extends AbstractDao<Criteria> {
 				args[CriteriaCard.GETGOOGLE] == null ? new String() : args[CriteriaCard.METRICS]);
 	}
 
-	public boolean deleteCriteria(final Connection con, final Criteria criteria) 
+	public boolean deleteCriteria(final Connection connection, final Criteria criteria) 
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
-		return delete(con, criteria);
+		return delete(connection, criteria);
 	}
 	
-	public List<Criteria> view(final Connection con) throws JDBCDriverException, DataBaseReadingException {
-		return getAll(con);
+	public List<Criteria> view(final Connection connection) throws JDBCDriverException, DataBaseReadingException {
+		return getAll(connection);
 	}
 	
 

@@ -51,20 +51,20 @@ public final class UserGroupDao extends AbstractDao<UserGroup> {
 							 args[UserGroupCard.IDGROUP] == null ? UUID.randomUUID().toString() : args[UserGroupCard.IDGROUP]);
 	}
 
-	public List<UserGroup> getUserGroupbyId(final Connection con, final String id) 
+	public List<UserGroup> getUserGroupbyId(final Connection connection, final String id) 
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException, 
 			CloseStatementException, EmptyResultSetException {
-		return getAllbyId(con, id);
+		return getAllbyId(connection, id);
 	}
 	
-	public boolean createUserGroup (final Connection con, final User user, final Group group)
+	public boolean createUserGroup (final Connection connection, final User user, final Group group)
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		boolean result = false;
 		String query = sqlQueries.get(DaoQueries.INSERT).toString();
 			if (query == null) {
 				throw new QueryNotFoundException(String.format(ErrorConstants.QUERY_NOT_FOUND, DaoQueries.INSERT.name()));
 			}
-			try (PreparedStatement pst = con.prepareStatement(query)) {
+			try (PreparedStatement pst = connection.prepareStatement(query)) {
 				int i = 1;
 				pst.setString(i++, UUID.randomUUID().toString());
 				pst.setString(i++, user.getId());
@@ -76,8 +76,8 @@ public final class UserGroupDao extends AbstractDao<UserGroup> {
 		return result;
 	}
 	
-	public boolean deleteByUserId (final Connection con, final String id) 
+	public boolean deleteByUserId (final Connection connection, final String id) 
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
-		return deleteById(con, id);
+		return deleteById(connection, id);
 	}
 }
