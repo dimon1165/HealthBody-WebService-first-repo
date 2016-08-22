@@ -81,7 +81,7 @@ public class UserController {
 		return null;
 	}
 	/*For RestClient POST method **/
-	@Request(url = "/updateUser")
+	@Request(url = "/UpdateUser")
 	public void updateUser(@Param(name = "userDTO") UserDTO userDTO) {
 		try {
 			UserProfileServiceImpl.getInstance().update(userDTO);
