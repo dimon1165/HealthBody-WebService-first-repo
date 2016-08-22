@@ -276,6 +276,7 @@ public class DaoStatementsConstant {
 				+ " LEFT OUTER JOIN usercompetitions ON competitions.id_competition = usercompetitions.id_competition"
 				+ " WHERE competitions.finish >= NOW()"
 				+ " GROUP BY competitions.id_competition, competitions.name, competitions.start, competitions.finish"
+				+ " ORDER BY competitions.name"
 				+ ";"),
 		GET_ALL_BY_USER("SELECT DISTINCT competitions.id_competition, competitions.name, competitions.description, competitions.start,competitions.finish, user_competition_count" 
 				+ " FROM competitions"
@@ -287,6 +288,7 @@ public class DaoStatementsConstant {
 					+ " GROUP BY id_competition) AS countselect" 
 				+ " ON usercompetitions.id_competition = countselect.id_competition"
 				+ " WHERE users.login = ?"
+				+ " ORDER BY competitions.name"
 				+ " ;"),
 		GET_ALL_ACTIVE_BY_USER("SELECT DISTINCT competitions.id_competition, competitions.name, competitions.description,"
 				+ " competitions.start, competitions.finish, user_competition_count"
@@ -300,11 +302,13 @@ public class DaoStatementsConstant {
 				+ " ON usercompetitions.id_competition = countselect.id_competition"
 				+ " WHERE competitions.finish >= NOW()"
 				+ " AND users.login = ?"
+				+ " ORDER BY competitions.name"
 				+ " ;"),
 		GET_ALL("SELECT competitions.id_competition, competitions.name, competitions.description, competitions.start, competitions.finish, COUNT(usercompetitions.id_user)"
 				+ " FROM competitions"
 				+ " LEFT OUTER JOIN usercompetitions ON competitions.id_competition = usercompetitions.id_competition"
 				+ " GROUP BY competitions.id_competition, competitions.name, competitions.start, competitions.finish"
+				+ " ORDER BY competitions.name"
 				+ " ;");
 		
 		private String query;
