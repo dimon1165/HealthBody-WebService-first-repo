@@ -11,9 +11,12 @@ import edu.softserveinc.healthbody.log.Log4jWrapper;
 
 public class ConnectionManager {
 	private static final String FAILED_REGISTRATE_DRIVER = "Failed to Registrate JDBC Driver";
-	private static final String ERROR_CONNECTION = "Error while getting connection";	
+	private static final String ERROR_CONNECTION = "Error while getting connection";
+	private static final String ERROR_FREE_CONNECTION =  "At this moment there is no free connection";
 	private static final int MAX_POOL_SIZE = 10;
 	private static final int MAX_PERMITED_POOL_SIZE = 100;
+	private static final int WAIT_TIME_FOR_CONNECTION = 100;
+	private static final int WAIT_ALL_TIME_FOR_CONNECTION = 30000;
 	private int counter = 0;
 
 	private static volatile ConnectionManager instance;
@@ -78,23 +81,29 @@ public class ConnectionManager {
 		}
 	}
 
-	private void populateConnectionPool() {
-		if(connections.size() < MAX_POOL_SIZE) {
-			if(counter < MAX_PERMITED_POOL_SIZE){
-				connections.add(createNewConnection());					
-			} else {
-				waitFreeConnection();
-				populateConnectionPool();
-			}
-		}
+	private void populateConnectionPool() {		
+		if (counter < MAX_PERMITED_POOL_SIZE){
+			connections.add(createNewConnection());
+		} else {
+			waitFreeConnection();
+		}		
 	}
 	
 	private void waitFreeConnection() {
-		while(counter >= MAX_PERMITED_POOL_SIZE){
+		int count = 0; 
+		while(count <= WAIT_ALL_TIME_FOR_CONNECTION ){
 			try {
-				Thread.sleep(3000);
+				Thread.sleep(WAIT_TIME_FOR_CONNECTION);
+				if (connections.size() > 0){
+					return;
+				}
+				if (counter < MAX_PERMITED_POOL_SIZE){
+					connections.add(createNewConnection());
+					return;
+				} 
+				count += WAIT_TIME_FOR_CONNECTION;				
 			} catch (InterruptedException e) {
-				Log4jWrapper.get().error(ERROR_CONNECTION, e);
+				Log4jWrapper.get().error(ERROR_FREE_CONNECTION, e);
 			}					
 		}		
 	}
@@ -103,10 +112,15 @@ public class ConnectionManager {
 	  if(connections.isEmpty()) {
 		  populateConnectionPool();
 	  } 
-	  int lastElement = connections.size() - 1;
-	  Connection connection = connections.get(lastElement);
-	  connections.remove(lastElement);	 
-	  return connection;
+	  if(!connections.isEmpty()) {
+		  int lastElement = connections.size() - 1;
+		  Connection connection = connections.get(lastElement);
+		  connections.remove(lastElement);	 
+		  return connection;		  
+	  } else {
+		  Log4jWrapper.get().error(ERROR_FREE_CONNECTION);
+		  return null;
+	  }
 	}
 	
 	public synchronized Connection getConnection() {

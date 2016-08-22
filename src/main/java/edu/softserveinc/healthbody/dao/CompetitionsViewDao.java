@@ -11,7 +11,6 @@ import java.util.UUID;
 import edu.softserveinc.healthbody.constants.Constants.CompetitionsViewCard;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.CompetitionsViewQueries;
 import edu.softserveinc.healthbody.constants.ErrorConstants;
-import edu.softserveinc.healthbody.db.ConnectionManager;
 import edu.softserveinc.healthbody.entity.CompetitionsView;
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
 import edu.softserveinc.healthbody.exceptions.IllegalAgrumentCheckedException;
@@ -56,7 +55,7 @@ public class CompetitionsViewDao extends AbstractDao<CompetitionsView> {
 						args[CompetitionsViewCard.USERSCOUNT] == null ? "0" : args[CompetitionsViewCard.USERSCOUNT]));
 	}
 
-	public List<CompetitionsView> getActiveCompetitionsView(final int partNumber, final int partSize)
+	public List<CompetitionsView> getActiveCompetitionsView(final Connection connection, final int partNumber, final int partSize)
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		List<CompetitionsView> result = new ArrayList<>();
 		String query = sqlQueries.get(CompetitionsViewQueries.GET_ALL_ACTIVE).toString();
@@ -67,7 +66,7 @@ public class CompetitionsViewDao extends AbstractDao<CompetitionsView> {
 		if ((partNumber >= 0) && (partSize > 0)) {
 			query = query.substring(0, query.lastIndexOf(";")) + SQL_LIMIT;
 		}
-		try (PreparedStatement pst = createPreparedStatement(query, partNumber, partSize);
+		try (PreparedStatement pst = createPreparedStatement(connection, query, partNumber, partSize);
 				ResultSet resultSet = pst.executeQuery()) {
 			String[] queryResult = new String[resultSet.getMetaData().getColumnCount()];
 			while (resultSet.next()) {
@@ -79,7 +78,7 @@ public class CompetitionsViewDao extends AbstractDao<CompetitionsView> {
 		return result;
 	}
 
-	public List<CompetitionsView> getActiveCompetitionsByUserView(final int partNumber, final int partSize,
+	public List<CompetitionsView> getActiveCompetitionsByUserView(final Connection connection, final int partNumber, final int partSize,
 			final String login) throws DataBaseReadingException, IllegalAgrumentCheckedException,
 			QueryNotFoundException, JDBCDriverException {
 		if (login == null || login.isEmpty()) {
@@ -96,7 +95,7 @@ public class CompetitionsViewDao extends AbstractDao<CompetitionsView> {
 		if ((partNumber >= 0) && (partSize > 0)) {
 			query = query.substring(0, query.lastIndexOf(";")) + SQL_LIMIT;
 		}
-		try (PreparedStatement pst = createPreparedStatementLogin(query, login, partNumber, partSize);
+		try (PreparedStatement pst = createPreparedStatementLogin(connection, query, login, partNumber, partSize);
 				ResultSet resultSet = pst.executeQuery()) {
 			String[] queryResult = new String[resultSet.getMetaData().getColumnCount()];
 			while (resultSet.next()) {
@@ -108,7 +107,7 @@ public class CompetitionsViewDao extends AbstractDao<CompetitionsView> {
 		return result;
 	}
 
-	public List<CompetitionsView> getAllCompetitionsView(final int partNumber, final int partSize)
+	public List<CompetitionsView> getAllCompetitionsView(final Connection connection, final int partNumber, final int partSize)
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		List<CompetitionsView> result = new ArrayList<>();
 		String query = sqlQueries.get(CompetitionsViewQueries.GET_ALL).toString();
@@ -119,7 +118,7 @@ public class CompetitionsViewDao extends AbstractDao<CompetitionsView> {
 		if ((partNumber >= 0) && (partSize > 0)) {
 			query = query.substring(0, query.lastIndexOf(";")) + SQL_LIMIT;
 		}
-		try (PreparedStatement pst = createPreparedStatement(query, partNumber, partSize);
+		try (PreparedStatement pst = createPreparedStatement(connection, query, partNumber, partSize);
 				ResultSet resultSet = pst.executeQuery()) {
 			String[] queryResult = new String[resultSet.getMetaData().getColumnCount()];
 			while (resultSet.next()) {
@@ -131,7 +130,7 @@ public class CompetitionsViewDao extends AbstractDao<CompetitionsView> {
 		return result;
 	}
 
-	public List<CompetitionsView> getCompetitionsByUserView(int partNumber, final int partSize, final String login)
+	public List<CompetitionsView> getCompetitionsByUserView(final Connection connection, int partNumber, final int partSize, final String login)
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException,
 			IllegalAgrumentCheckedException {
 		if (login == null || login.isEmpty()) {
@@ -148,7 +147,7 @@ public class CompetitionsViewDao extends AbstractDao<CompetitionsView> {
 		if ((partNumber >= 0) && (partSize > 0)) {
 			query = query.substring(0, query.lastIndexOf(";")) + SQL_LIMIT;
 		}
-		try (PreparedStatement pst = createPreparedStatementLogin(query, login, partNumber, partSize);
+		try (PreparedStatement pst = createPreparedStatementLogin(connection, query, login, partNumber, partSize);
 				ResultSet resultSet = pst.executeQuery()) {
 			String[] queryResult = new String[resultSet.getMetaData().getColumnCount()];
 			while (resultSet.next()) {
@@ -181,9 +180,9 @@ public class CompetitionsViewDao extends AbstractDao<CompetitionsView> {
 	}
 
 	// methods for try-with-resources
-	private PreparedStatement createPreparedStatement(final String query, final int partNumber, final int partSize)
+	private PreparedStatement createPreparedStatement(final Connection connection, final String query, final int partNumber, final int partSize)
 			throws SQLException, JDBCDriverException {
-		PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query);
+		PreparedStatement pst = connection.prepareStatement(query);
 		if ((partNumber >= 0) && (partSize > 0)) {
 			pst.setInt(1, (partNumber - 1) * partSize);
 			pst.setInt(2, partSize);
@@ -191,9 +190,9 @@ public class CompetitionsViewDao extends AbstractDao<CompetitionsView> {
 		return pst;
 	}
 
-	private PreparedStatement createPreparedStatementLogin(final String query, final String login, final int partNumber,
+	private PreparedStatement createPreparedStatementLogin(final Connection connection, final String query, final String login, final int partNumber,
 			final int partSize) throws SQLException, JDBCDriverException {
-		PreparedStatement pst = ConnectionManager.getInstance().getConnection().prepareStatement(query);
+		PreparedStatement pst = connection.prepareStatement(query);
 		int i = 1;
 		pst.setString(i++, login);
 		if ((partNumber >= 0) && (partSize > 0)) {

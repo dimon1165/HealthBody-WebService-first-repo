@@ -51,7 +51,7 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 		Connection connection = ConnectionManager.getInstance().beginTransaction();
 		try {
 			for (CompetitionsView competitionsView : CompetitionsViewDao.getInstance()
-					.getAllCompetitionsView(partNumber, partSize)) {
+					.getAllCompetitionsView(connection, partNumber, partSize)) {
 				competitionDTO.add(new CompetitionDTO(competitionsView.getIdCompetition(), competitionsView.getName(),
 						competitionsView.getUsersCount().toString(), competitionsView.getStart(),
 						competitionsView.getFinish(), competitionsView.getDescription(), null, new ArrayList<String>(),
@@ -72,7 +72,7 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 		Connection connection = ConnectionManager.getInstance().beginTransaction();
 		try {
 			for (CompetitionsView competitionsView : CompetitionsViewDao.getInstance()
-					.getActiveCompetitionsView(partNumber, partSize)) {
+					.getActiveCompetitionsView(connection, partNumber, partSize)) {
 				competitionDTO.add(new CompetitionDTO(competitionsView.getIdCompetition(), competitionsView.getName(),
 						competitionsView.getUsersCount().toString(), competitionsView.getStart(),
 						competitionsView.getFinish(), competitionsView.getDescription(), null, new ArrayList<String>(),
@@ -98,7 +98,7 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 		Connection connection = ConnectionManager.getInstance().beginTransaction();
 		try {
 			for (CompetitionsView competitionsView : CompetitionsViewDao.getInstance()
-					.getCompetitionsByUserView(partNumber, partSize, login)) {
+					.getCompetitionsByUserView(connection, partNumber, partSize, login)) {
 				competitionDTO.add(new CompetitionDTO(competitionsView.getIdCompetition(), competitionsView.getName(),
 						competitionsView.getUsersCount().toString(), competitionsView.getStart(),
 						competitionsView.getFinish(), competitionsView.getDescription(), null, new ArrayList<String>(),
@@ -124,7 +124,7 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 		Connection connection = ConnectionManager.getInstance().beginTransaction();
 		try {
 			for (CompetitionsView competitionsView : CompetitionsViewDao.getInstance()
-					.getActiveCompetitionsByUserView(partNumber, partSize, login)) {
+					.getActiveCompetitionsByUserView(connection, partNumber, partSize, login)) {
 				competitionDTO.add(new CompetitionDTO(competitionsView.getIdCompetition(), competitionsView.getName(),
 						competitionsView.getUsersCount().toString(), competitionsView.getStart(),
 						competitionsView.getFinish(), competitionsView.getDescription(), null, new ArrayList<String>(),
