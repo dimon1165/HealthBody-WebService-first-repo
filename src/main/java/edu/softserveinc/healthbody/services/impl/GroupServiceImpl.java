@@ -93,10 +93,10 @@ public final class GroupServiceImpl implements IGroupService {
 	@Override
 	public void update(GroupDTO groupDTO) throws SQLException, JDBCDriverException, TransactionException, QueryNotFoundException, DataBaseReadingException {
 		Connection connection = ConnectionManager.getInstance().beginTransaction();
-		Group group = GroupDao.getInstance().getByFieldName(connection, groupDTO.getName());
+//		Group group = GroupDao.getInstance().getByFieldName(connection, groupDTO.getName());
 		try {	
 			GroupDao.getInstance().editGroup(connection, new Group(groupDTO.getIdGroup(), groupDTO.getName(), Integer.parseInt(groupDTO.getCount()), 
-					groupDTO.getDescriptions(), groupDTO.getScoreGroup(), group.getStatus()));
+					groupDTO.getDescriptions(), groupDTO.getScoreGroup(), groupDTO.getStatus()));
 		} catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException e) {
 			ConnectionManager.getInstance().rollbackTransaction(connection);
 			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);			
