@@ -80,4 +80,13 @@ public class UserController {
 		}
 		return null;
 	}
+	/*For RestClient POST method **/
+	@Request(url = "/updateUser")
+	public void updateUser(@Param(name = "userDTO") UserDTO userDTO) {
+		try {
+			UserProfileServiceImpl.getInstance().update(userDTO);
+		} catch (SQLException | JDBCDriverException | TransactionException e) {
+			Log4jWrapper.get().error("update user failed ", e);
+		}
+	}
 }
