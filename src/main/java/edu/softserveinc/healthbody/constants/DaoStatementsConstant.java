@@ -14,7 +14,7 @@ public class DaoStatementsConstant {
         GET_ALL(DaoQueries.GET_ALL, "SELECT id_user, login, password, firstname, lastname, \"e-mail\", age, weight, gender, "
         		+ "health, avatar, google_field, id_role, status FROM users WHERE isdisabled = 'false';"),
         UPDATE(DaoQueries.UPDATE, "UPDATE users SET login = ?, password = ?, firstname = ?, lastname = ?, \"e-mail\" = ?, age = ?, "
-        		+ "weight = ?, gender = ?, health = ?, avatar = ?  WHERE login = ?"),
+        		+ "weight = ?, gender = ?, health = ?, avatar = ?, google_field = ?  WHERE login = ?"),
         ISDISABLED(DaoQueries.ISDISABLED, "UPDATE users SET isDisabled = ? WHERE login = ?"),
         DELETE_BY_ID(DaoQueries.DELETE_BY_ID, "DELETE FROM users WHERE id_user = ?;"),
         DELETE_BY_FIELD(DaoQueries.DELETE_BY_FIELD, "DELETE FROM users WHERE login = ?;");

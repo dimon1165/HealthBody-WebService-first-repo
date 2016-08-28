@@ -112,7 +112,8 @@ public final class UserDao extends AbstractDao<User> {
 			pst.setDouble(i++, user.getWeight());
 			pst.setString(i++, user.getGender());
 			pst.setString(i++, user.getHealth());
-			pst.setString(i++, user.getAvatar());			
+			pst.setString(i++, user.getAvatar());
+			pst.setString(i++, user.getGoogleApi());
 			pst.setString(i++, user.getLogin());
 			result = pst.execute();
 		} catch (SQLException e) {
