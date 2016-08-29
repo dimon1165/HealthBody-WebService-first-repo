@@ -178,6 +178,26 @@ public class CompetitionsViewDao extends AbstractDao<CompetitionsView> {
 		}
 		return result;
 	}
+	
+	public CompetitionsView getCompetitionViewById(final Connection connection, final String idCompetition)
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
+		CompetitionsView result = null;
+		String query = sqlQueries.get(CompetitionsViewQueries.GET_BY_ID).toString();
+		if (query == null) {
+			throw new QueryNotFoundException(
+					String.format(ErrorConstants.QUERY_NOT_FOUND, CompetitionsViewQueries.GET_BY_ID.name()));
+		}
+		try (PreparedStatement pst = createPreparedStatementGet(connection, query, idCompetition);
+				ResultSet resultSet = pst.executeQuery()) {
+			String[] queryResult = new String[resultSet.getMetaData().getColumnCount()];
+			while (resultSet.next()) {
+				result = createInstance(getQueryResultArr(queryResult, resultSet));
+			}
+		} catch (SQLException e) {
+			throw new DataBaseReadingException(ErrorConstants.DATABASE_READING_ERROR, e);
+		}
+		return result;
+	}
 
 	// methods for try-with-resources
 	private PreparedStatement createPreparedStatement(final Connection connection, final String query, final int partNumber, final int partSize)

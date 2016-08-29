@@ -83,11 +83,12 @@ public final class CompetitionDao extends AbstractDao<Competition> {
 		}
 		try (PreparedStatement pst = connection.prepareStatement(query)) {
 			int i = 1;
+			pst.setString(i++, competition.getName());
 			pst.setString(i++, competition.getDescription());
 			pst.setDate(i++, competition.getStart());
 			pst.setDate(i++, competition.getFinish());
 			pst.setString(i++, competition.getIdCriteria());
-			pst.setString(i++, competition.getName());
+			pst.setString(i++, competition.getIdCompetition());
 			result = pst.execute();
 		} catch (SQLException e) {
 			throw new DataBaseReadingException(ErrorConstants.DATABASE_READING_ERROR, e);

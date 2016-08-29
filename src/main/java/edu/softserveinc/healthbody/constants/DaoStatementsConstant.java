@@ -99,7 +99,7 @@ public class DaoStatementsConstant {
 		GET_ALL(DaoQueries.GET_ALL,	"SELECT id_competition, name, description, start, finish, id_criteria FROM competitions;"),
 		DELETE_BY_ID(DaoQueries.DELETE_BY_ID, "DELETE FROM competitions WHERE id_competition = ?;"),
 		DELETE_BY_FIELD(DaoQueries.DELETE_BY_FIELD, "DELETE FROM competitions WHERE name = ?;"),
-		UPDATE(DaoQueries.UPDATE, "UPDATE competitions SET description = ?, start = ?, finish = ?, id_criteria = ? WHERE name = ?;");
+		UPDATE(DaoQueries.UPDATE, "UPDATE competitions SET name = ?, description = ?, start = ?, finish = ?, id_criteria = ? WHERE id_competition = ?;");
 		private DaoQueries daoQuery;
 		private String query;
 
@@ -269,6 +269,12 @@ public class DaoStatementsConstant {
     			+ " FROM competitions"
     			+ " LEFT OUTER JOIN usercompetitions ON competitions.id_competition = usercompetitions.id_competition"
     			+ " WHERE competitions.name = ?"
+    			+ " GROUP BY competitions.id_competition, competitions.name, competitions.start, competitions.finish"
+    			+ ";"),
+    	GET_BY_ID("SELECT competitions.id_competition, competitions.name, competitions.description, competitions.start, competitions.finish, COUNT(usercompetitions.id_user)"
+    			+ " FROM competitions"
+    			+ " LEFT OUTER JOIN usercompetitions ON competitions.id_competition = usercompetitions.id_competition"
+    			+ " WHERE competitions.id_competition = ?"
     			+ " GROUP BY competitions.id_competition, competitions.name, competitions.start, competitions.finish"
     			+ ";"),
 		GET_ALL_ACTIVE("SELECT competitions.id_competition, competitions.name, competitions.description, competitions.start, competitions.finish, COUNT(usercompetitions.id_user)"

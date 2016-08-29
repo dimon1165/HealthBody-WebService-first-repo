@@ -47,7 +47,7 @@ public interface HealthBodyService {
 	String getDescriptionOfGroup(String name);
 
 	@WebMethod
-	CompetitionDTO getCompetitionViewByName(String name);
+	CompetitionDTO getCompetitionViewById(String idCompetition);
 
 	@WebMethod
 	void updateGroup(GroupDTO groupDTO);
@@ -74,18 +74,18 @@ public interface HealthBodyService {
 	boolean addUserInCompetition(String nameCompetition, String nameUser);
 
 	@WebMethod
-	boolean addUserInCompetitionView(String nameCompetition, String nameUser);
+	boolean addUserInCompetitionView(String idCompetition, String nameUser);
 
 	@WebMethod
-	boolean removeUserFromCompetition(String nameCompetition, String nameUser);
+	boolean removeUserFromCompetition(String idCompetition, String nameUser);
 
 	@WebMethod
 	List<GroupDTO> getAllGroupsParticipants(int partNumber, int partSize);
 
 	@WebMethod
-	UserCompetitionsDTO getUserCompetition(String nameCompetition, String nameUser);
+	UserCompetitionsDTO getUserCompetition(String idCompetition, String nameUser);
 
 	@WebMethod
-	void deleteUserCompetition(String nameCompetition, String nameUser);
+	void deleteUserCompetition(String idCompetition, String nameUser);
 
 }

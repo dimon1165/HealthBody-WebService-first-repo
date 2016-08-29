@@ -139,11 +139,11 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 	}
 
 	@Override
-	public CompetitionDTO getCompetition(String name) throws JDBCDriverException, SQLException, TransactionException {
+	public CompetitionDTO getCompetition(String idCompetition) throws JDBCDriverException, SQLException, TransactionException {
 		CompetitionsView competitionview;
 		Connection connection = ConnectionManager.getInstance().beginTransaction();
 		try {
-			competitionview = CompetitionsViewDao.getInstance().getCompetitionViewByName(connection, name);
+			competitionview = CompetitionsViewDao.getInstance().getCompetitionViewById(connection, idCompetition);
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
 			ConnectionManager.getInstance().rollbackTransaction(connection);
 			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
@@ -155,13 +155,12 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 	}
 
 	@Override
-	public boolean addUserInCompetition(String nameCompetition, String nameUser)
+	public boolean addUserInCompetition(String idCompetition, String nameUser)
 			throws SQLException, JDBCDriverException, TransactionException {
 		boolean result = false;
 		Connection connection = ConnectionManager.getInstance().beginTransaction();
 		try {
-			CompetitionsView competitionview = CompetitionsViewDao.getInstance().getCompetitionViewByName(connection,
-					nameCompetition);
+			CompetitionsView competitionview = CompetitionsViewDao.getInstance().getCompetitionViewById(connection, idCompetition);
 			User user = UserDao.getInstance().getUserByLoginName(connection, nameUser);
 			UserCompetitionsDao.getInstance().createUserCompetition(connection, user, competitionview);
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
@@ -174,12 +173,12 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 	}
 
 	@Override
-	public boolean removeUserFromCompetition(String nameCompetition, String nameUser)
+	public boolean removeUserFromCompetition(String idCompetition, String nameUser)
 			throws SQLException, JDBCDriverException, TransactionException {
 		boolean result = false;
 		Connection connection = ConnectionManager.getInstance().beginTransaction();
 		try {
-		CompetitionsView competitionview = CompetitionsViewDao.getInstance().getCompetitionViewByName(connection, nameCompetition);
+		CompetitionsView competitionview = CompetitionsViewDao.getInstance().getCompetitionViewById(connection, idCompetition);
 		User user = UserDao.getInstance().getUserByLoginName(connection, nameUser);	
 			result = UserCompetitionsDao.getInstance().deleteUserFromCompetition(connection, user.getId(), competitionview.getId());	
 		} catch (QueryNotFoundException | DataBaseReadingException | EmptyResultSetException | CloseStatementException e) {
@@ -191,12 +190,11 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 	}
 	
 	@Override
-	public UserCompetitionsDTO getUserCompetition(String nameCompetition, String nameUser)
+	public UserCompetitionsDTO getUserCompetition(String idCompetition, String nameUser)
 			throws SQLException, JDBCDriverException, TransactionException {
 		Connection connection = ConnectionManager.getInstance().beginTransaction();
 		try {
-			CompetitionsView competitionview = CompetitionsViewDao.getInstance().getCompetitionViewByName(connection,
-					nameCompetition);
+			CompetitionsView competitionview = CompetitionsViewDao.getInstance().getCompetitionViewById(connection, idCompetition);
 			User user = UserDao.getInstance().getUserByLoginName(connection, nameUser);
 			List<UserCompetitions> list = UserCompetitionsDao.getInstance().getAllbyId(connection, user.getIdUser());
 			for (UserCompetitions usercompetition : list) {
@@ -215,12 +213,11 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 	}
 	
 	@Override
-	public void deleteUserCompetition(String nameCompetition, String nameUser)
+	public void deleteUserCompetition(String idCompetition, String nameUser)
 			throws SQLException, JDBCDriverException, TransactionException {
 		Connection connection = ConnectionManager.getInstance().beginTransaction();
 		try {
-			CompetitionsView competitionview = CompetitionsViewDao.getInstance().getCompetitionViewByName(connection,
-					nameCompetition);
+			CompetitionsView competitionview = CompetitionsViewDao.getInstance().getCompetitionViewById(connection, idCompetition);
 			User user = UserDao.getInstance().getUserByLoginName(connection, nameUser);
 			List<UserCompetitions> list = UserCompetitionsDao.getInstance().getAllbyId(connection, user.getIdUser());
 			for (UserCompetitions usercompetition : list) {
