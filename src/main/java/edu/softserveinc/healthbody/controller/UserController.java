@@ -3,6 +3,8 @@ package edu.softserveinc.healthbody.controller;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.google.gson.Gson;
+
 import edu.softserveinc.healthbody.annotation.Controller;
 import edu.softserveinc.healthbody.annotation.Param;
 import edu.softserveinc.healthbody.annotation.Request;
@@ -82,8 +84,11 @@ public class UserController {
 	}
 	/*For RestClient POST method **/
 	@Request(url = "/UpdateUser")
-	public void updateUser(@Param(name = "userDTO") UserDTO userDTO) {
+	public void updateUser(byte [] bytes ) {
 		try {
+			String json = new String(bytes);
+			Gson gson = new Gson();
+			UserDTO userDTO = gson.fromJson(json, UserDTO.class);
 			UserProfileServiceImpl.getInstance().update(userDTO);
 		} catch (SQLException | JDBCDriverException | TransactionException e) {
 			Log4jWrapper.get().error("update user failed ", e);

@@ -84,4 +84,11 @@ public class ListenerServlet extends HttpServlet {
 		out.print(gson.toJson(object));
 		out.flush();
 	}
+	
+	  // Method to handle POST method request
+	  public void doPost(HttpServletRequest request,
+	                     HttpServletResponse response)
+	      throws ServletException, IOException {
+	     doGet(request, response);
+	  }
 }
