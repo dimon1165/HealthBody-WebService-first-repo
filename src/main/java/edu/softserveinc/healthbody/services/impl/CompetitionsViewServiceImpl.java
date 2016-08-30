@@ -153,6 +153,22 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 				String.valueOf(competitionview.getUsersCount()), competitionview.getStart(),
 				competitionview.getFinish(), competitionview.getDescription(), null, null, null);
 	}
+	
+	@Override
+	public CompetitionDTO getCompetitionByName (String name) throws JDBCDriverException, SQLException, TransactionException {
+		CompetitionsView competitionview;
+		Connection connection = ConnectionManager.getInstance().beginTransaction();
+		try {
+			competitionview = CompetitionsViewDao.getInstance().getCompetitionViewByName(connection, name);
+		} catch (QueryNotFoundException | DataBaseReadingException e) {
+			ConnectionManager.getInstance().rollbackTransaction(connection);
+			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
+		}
+		ConnectionManager.getInstance().commitTransaction(connection);
+		return new CompetitionDTO(competitionview.getIdCompetition(), competitionview.getName(),
+				String.valueOf(competitionview.getUsersCount()), competitionview.getStart(),
+				competitionview.getFinish(), competitionview.getDescription(), null, null, null);
+	}
 
 	@Override
 	public boolean addUserInCompetition(String idCompetition, String nameUser)

@@ -280,6 +280,20 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		}
 		return null;
 	}
+	
+	@Override
+	public final CompetitionDTO getCompetitionViewByName(String name) {
+		try {
+			try {
+				return CompetitionsViewServiceImpl.getInstance().getCompetitionByName(name);
+			} catch (SQLException | TransactionException e) {
+				Log4jWrapper.get().error("get competition by name failed ", e);
+			}
+		} catch (JDBCDriverException e) {
+			Log4jWrapper.get().error("get competition by name failed ", e);
+		}
+		return null;
+	}
 
 	@Override
 	public boolean addUserInCompetitionView(String idCompetition, String nameUser) {
