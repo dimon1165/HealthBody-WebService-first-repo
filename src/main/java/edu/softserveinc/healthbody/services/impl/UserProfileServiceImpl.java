@@ -108,7 +108,7 @@ public final class UserProfileServiceImpl implements IBaseService<UserDTO> {
 			ConnectionManager.getInstance().commitTransaction(connection);
 		return new UserDTO(user.getId(), user.getLogin(), user.getPasswd(), user.getFirsName(), user.getLastName(), user.getMail(),
 				user.getAge().toString(), user.getWeight().toString(), user.getGender(), user.getAvatar(),
-				role.getName(), user.getStatus(), user.getGoogleApi(), user.getHealth(), groups, String.valueOf(user.getIsDisabled()));
+				role.getName(), user.getStatus(), user.getGoogleApi(),"", user.getHealth(), groups, String.valueOf(user.getIsDisabled()));
 		}
 	}
 	
@@ -138,7 +138,7 @@ public final class UserProfileServiceImpl implements IBaseService<UserDTO> {
 		
 		return new UserDTO(user.getId(), user.getLogin(), user.getPasswd(), user.getFirsName(), user.getLastName(), user.getMail(),
 				user.getAge().toString(), user.getWeight().toString(), user.getGender(), user.getAvatar(),
-				role.getName(), user.getStatus(), user.getGoogleApi(), user.getHealth(), groups, String.valueOf(user.getIsDisabled()));
+				role.getName(), user.getStatus(), user.getGoogleApi(),"", user.getHealth(), groups, String.valueOf(user.getIsDisabled()));
 	}
 
 	//Update user
