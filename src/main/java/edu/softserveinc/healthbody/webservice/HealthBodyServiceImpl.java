@@ -124,6 +124,7 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		}
 		return null;
 	}
+
 	@Override
 	public GroupDTO getGroupById(String id) {
 		try {
@@ -147,7 +148,7 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 			} catch (SQLException | TransactionException e) {
 				Log4jWrapper.get().error("get description of group ", e);
 			}
-			return  GroupServiceImpl.getInstance().getDescriptionOfGroup(groupDTO);
+			return GroupServiceImpl.getInstance().getDescriptionOfGroup(groupDTO);
 		} catch (QueryNotFoundException | JDBCDriverException | DataBaseReadingException e) {
 			Log4jWrapper.get().error("get description of group ", e);
 		}
@@ -158,8 +159,8 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 	public final void updateGroup(final GroupDTO groupDTO) {
 		try {
 			GroupServiceImpl.getInstance().update(groupDTO);
-		} catch (SQLException | JDBCDriverException | DataBaseReadingException 
-				| QueryNotFoundException | TransactionException e) {
+		} catch (SQLException | JDBCDriverException | DataBaseReadingException | QueryNotFoundException
+				| TransactionException e) {
 			Log4jWrapper.get().error("update group failed ", e);
 		}
 	}
@@ -185,8 +186,8 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 	}
 
 	@Override
-	public final List<CompetitionDTO> getAllCompetitionsByUser(final int partNumber,
-			final int partSize, final String login) {
+	public final List<CompetitionDTO> getAllCompetitionsByUser(final int partNumber, final int partSize,
+			final String login) {
 		try {
 			return CompetitionsViewServiceImpl.getInstance().getAllByUser(partNumber, partSize, login);
 		} catch (IllegalAgrumentCheckedException | SQLException | JDBCDriverException | TransactionException e) {
@@ -196,8 +197,8 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 	}
 
 	@Override
-	public final List<CompetitionDTO> getAllActiveCompetitionsByUser(final int partNumber,
-			final int partSize, final String login) {
+	public final List<CompetitionDTO> getAllActiveCompetitionsByUser(final int partNumber, final int partSize,
+			final String login) {
 		try {
 			return CompetitionsViewServiceImpl.getInstance().getAllActiveByUser(partNumber, partSize, login);
 		} catch (IllegalAgrumentCheckedException | SQLException | JDBCDriverException | TransactionException e) {
@@ -220,7 +221,7 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 			Log4jWrapper.get().error("create competition failed ", e);
 		}
 	}
-	
+
 	@Override
 	public final void updateCompetition(final CompetitionDTO competitionDTO) {
 		CompetitionsServiceImpl competition = new CompetitionsServiceImpl();
@@ -249,7 +250,7 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public boolean addUserInCompetition(String nameCompetition, String nameUser) {
 		boolean result = false;
@@ -259,14 +260,14 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 				result = competition.addUserInCompetition(nameCompetition, nameUser);
 			} catch (DataBaseReadingException | QueryNotFoundException | EmptyResultSetException
 					| CloseStatementException e) {
-				Log4jWrapper.get().error("Add user " +nameUser+ " to competition " +nameCompetition+ " failed ", e);
+				Log4jWrapper.get().error("Add user " + nameUser + " to competition " + nameCompetition + " failed ", e);
 			}
-		} catch (SQLException | JDBCDriverException | TransactionException e){
-			Log4jWrapper.get().error("Add user " +nameUser+ " to competition " +nameCompetition+ " failed ", e);
+		} catch (SQLException | JDBCDriverException | TransactionException e) {
+			Log4jWrapper.get().error("Add user " + nameUser + " to competition " + nameCompetition + " failed ", e);
 		}
 		return result;
 	}
-	
+
 	@Override
 	public final CompetitionDTO getCompetitionViewById(String idCompetition) {
 		try {
@@ -280,7 +281,7 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public final CompetitionDTO getCompetitionViewByName(String name) {
 		try {
@@ -300,8 +301,8 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		boolean result = false;
 		try {
 			result = CompetitionsViewServiceImpl.getInstance().addUserInCompetition(idCompetition, nameUser);
-		} catch (SQLException | JDBCDriverException | TransactionException e){
-			Log4jWrapper.get().error("Add user " +nameUser+ " to competition " +idCompetition+ " failed ", e);
+		} catch (SQLException | JDBCDriverException | TransactionException e) {
+			Log4jWrapper.get().error("Add user " + nameUser + " to competition " + idCompetition + " failed ", e);
 		}
 		return result;
 	}
@@ -311,24 +312,24 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		boolean result = false;
 		try {
 			result = CompetitionsViewServiceImpl.getInstance().removeUserFromCompetition(idCompetition, nameUser);
-		} catch (SQLException | JDBCDriverException | TransactionException e){
-			Log4jWrapper.get().error("Delete user " +nameUser+ " from competition " +idCompetition+ " failed ", e);
+		} catch (SQLException | JDBCDriverException | TransactionException e) {
+			Log4jWrapper.get().error("Delete user " + nameUser + " from competition " + idCompetition + " failed ", e);
 		}
 		return result;
-	}	
-		
+	}
+
 	public UserCompetitionsDTO getUserCompetition(String idCompetition, String nameUser) {
+		try {
 			try {
-				try {
-					return CompetitionsViewServiceImpl.getInstance().getUserCompetition(idCompetition, nameUser);
-				} catch (SQLException | TransactionException e) {
-					Log4jWrapper.get().error("get UserCompetitionsDTO failed ", e);
-				}
-			} catch (JDBCDriverException e) {
+				return CompetitionsViewServiceImpl.getInstance().getUserCompetition(idCompetition, nameUser);
+			} catch (SQLException | TransactionException e) {
 				Log4jWrapper.get().error("get UserCompetitionsDTO failed ", e);
 			}
-			return null;
+		} catch (JDBCDriverException e) {
+			Log4jWrapper.get().error("get UserCompetitionsDTO failed ", e);
 		}
+		return null;
+	}
 
 	@Override
 	public void deleteUserCompetition(String idCompetition, String nameUser) {
@@ -337,8 +338,18 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		} catch (SQLException | JDBCDriverException | TransactionException e) {
 			Log4jWrapper.get().error("delete user competition failed ", e);
 		}
-		
+
+	}
+
+	@Override
+	public void updateUserCompetition(UserCompetitionsDTO userCompetition) {
+		try {
+			CompetitionsViewServiceImpl.getInstance().updateUserCompetition(userCompetition);
+		} catch (SQLException | JDBCDriverException | TransactionException | QueryNotFoundException
+				| DataBaseReadingException e) {
+			Log4jWrapper.get().error("update competition failed ", e);
+		}
+
 	}
 
 }
-

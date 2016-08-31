@@ -76,6 +76,25 @@ public final class UserCompetitionsDao extends AbstractDao<UserCompetitions> {
 			}
 		return result;
 	}
+	public boolean updateUserCompetition (final Connection connection,final UserCompetitions userCompetition)
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
+		boolean result = false;
+		String query = sqlQueries.get(DaoQueries.UPDATE).toString();
+			if (query == null) {
+				throw new QueryNotFoundException(String.format(ErrorConstants.QUERY_NOT_FOUND, DaoQueries.INSERT.name()));
+			}
+			try (PreparedStatement pst = connection.prepareStatement(query)) {
+				int i = 1;
+				pst.setInt(i++, userCompetition.getUserScore());
+				pst.setString(i++, null);
+				pst.setString(i++, null);
+				pst.setString(i++, userCompetition.getIdUserCompetition());
+				result = pst.execute();
+			} catch (SQLException e) {
+					throw new DataBaseReadingException(ErrorConstants.DATABASE_READING_ERROR, e);
+			}
+		return result;
+	}
 
 	public List<UserCompetitions> viewAll(final Connection connection) 
 			throws JDBCDriverException, DataBaseReadingException, EmptyResultSetException, CloseStatementException {		

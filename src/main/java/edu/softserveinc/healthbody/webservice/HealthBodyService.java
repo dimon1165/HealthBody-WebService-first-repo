@@ -91,4 +91,6 @@ public interface HealthBodyService {
 	@WebMethod
 	void deleteUserCompetition(String idCompetition, String nameUser);
 
+	@WebMethod
+	void updateUserCompetition(UserCompetitionsDTO userCompetition);
 }

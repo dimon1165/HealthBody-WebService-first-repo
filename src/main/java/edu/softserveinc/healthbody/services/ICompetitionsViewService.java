@@ -5,8 +5,10 @@ import java.util.List;
 
 import edu.softserveinc.healthbody.dto.CompetitionDTO;
 import edu.softserveinc.healthbody.dto.UserCompetitionsDTO;
+import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
 import edu.softserveinc.healthbody.exceptions.IllegalAgrumentCheckedException;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
+import edu.softserveinc.healthbody.exceptions.QueryNotFoundException;
 import edu.softserveinc.healthbody.exceptions.TransactionException;
 
 public interface ICompetitionsViewService {
@@ -37,5 +39,8 @@ public interface ICompetitionsViewService {
 			throws SQLException, JDBCDriverException, TransactionException;
 
 	CompetitionDTO getCompetitionByName(String name) throws JDBCDriverException, SQLException, TransactionException;
+
+	void updateUserCompetition(UserCompetitionsDTO userCompetition)
+			throws SQLException, JDBCDriverException, TransactionException, QueryNotFoundException, DataBaseReadingException;
 
 }
