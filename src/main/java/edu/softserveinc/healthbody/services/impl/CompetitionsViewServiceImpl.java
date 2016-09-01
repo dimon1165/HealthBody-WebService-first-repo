@@ -167,6 +167,7 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
 		}
 		ConnectionManager.getInstance().commitTransaction(connection);
+		if (competitionview == null) return null;
 		return new CompetitionDTO(competitionview.getIdCompetition(), competitionview.getName(),
 				String.valueOf(competitionview.getUsersCount()), competitionview.getStart(),
 				competitionview.getFinish(), competitionview.getDescription(), null, null, null);

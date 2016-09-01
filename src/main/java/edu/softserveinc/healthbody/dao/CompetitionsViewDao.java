@@ -170,8 +170,10 @@ public class CompetitionsViewDao extends AbstractDao<CompetitionsView> {
 		try (PreparedStatement pst = createPreparedStatementGet(connection, query, name);
 				ResultSet resultSet = pst.executeQuery()) {
 			String[] queryResult = new String[resultSet.getMetaData().getColumnCount()];
-			while (resultSet.next()) {
-				result = createInstance(getQueryResultArr(queryResult, resultSet));
+			if(!resultSet.wasNull()) {
+				while (resultSet.next()) {
+					result = createInstance(getQueryResultArr(queryResult, resultSet));
+				}
 			}
 		} catch (SQLException e) {
 			throw new DataBaseReadingException(ErrorConstants.DATABASE_READING_ERROR, e);
