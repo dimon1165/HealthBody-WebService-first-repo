@@ -163,6 +163,10 @@ public final class UserProfileServiceImpl implements IBaseService<UserDTO> {
 					for (GroupDTO group : userDTO.getGroups()) {
 						UserGroupDao.getInstance().createUserGroup(connection, user, GroupDao.getInstance().getGroupByName(connection, group.getName()));
 					}
+				} else {
+					for (GroupDTO group : userDTO.getGroups()) {
+						UserGroupDao.getInstance().createUserGroup(connection, user, GroupDao.getInstance().getGroupByName(connection, group.getName()));
+					}
 				}
 				UserDao.getInstance().updateUser(connection, user);
 			} catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException e) {
@@ -171,6 +175,19 @@ public final class UserProfileServiceImpl implements IBaseService<UserDTO> {
 			}
 			ConnectionManager.getInstance().commitTransaction(connection);
 		}
+	}
+	
+	//delete user from group
+	public void deleteUserFromGroup(final UserDTO userDTO, String idGroup)
+			throws SQLException, JDBCDriverException, TransactionException {
+		Connection connection = ConnectionManager.getInstance().beginTransaction();
+		try {
+			UserGroupDao.getInstance().deleteUserGroup(connection, userDTO.getIdUser(), idGroup);
+		} catch (DataBaseReadingException | QueryNotFoundException e) {
+			ConnectionManager.getInstance().rollbackTransaction(connection);
+			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
+		}
+		ConnectionManager.getInstance().commitTransaction(connection);
 	}
 
 	//use just for test

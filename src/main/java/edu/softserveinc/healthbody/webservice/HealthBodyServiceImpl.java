@@ -338,7 +338,6 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		} catch (SQLException | JDBCDriverException | TransactionException e) {
 			Log4jWrapper.get().error("delete user competition failed ", e);
 		}
-
 	}
 
 	@Override
@@ -349,7 +348,14 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 				| DataBaseReadingException e) {
 			Log4jWrapper.get().error("update competition failed ", e);
 		}
-
 	}
 
+	@Override
+	public void deleteUserFromGroup(UserDTO userDTO, String idGroup) {
+		try {
+			UserProfileServiceImpl.getInstance().deleteUserFromGroup(userDTO, idGroup);
+		} catch (SQLException | JDBCDriverException | TransactionException e) {
+			Log4jWrapper.get().error("delete user failed ", e);
+		}
+	}
 }

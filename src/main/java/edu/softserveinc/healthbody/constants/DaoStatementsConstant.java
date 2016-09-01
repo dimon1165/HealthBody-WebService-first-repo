@@ -74,7 +74,8 @@ public class DaoStatementsConstant {
         GET_BY_ID(DaoQueries.GET_BY_ID, "SELECT id_user_group, id_user, id_group FROM usergroups WHERE id_user = ?;"),
         GET_ID_BY_FIELDS(DaoQueries.GET_ID_BY_FIELDS, "SELECT usergroups.id_user_group FROM usergroups WHERE usergroups.id_user = ? AND usergroups.id_group = ?;"),		
         GET_ALL(DaoQueries.GET_ALL, "SELECT usergroups.id_user_group, usergroups.id_user, usergroups.id_groups, usergroups.member_group FROM usergroups;"),
-        DELETE_BY_ID(DaoQueries.DELETE_BY_ID, "DELETE FROM usergroups WHERE id_user = ?;");
+        DELETE_BY_ID(DaoQueries.DELETE_BY_ID, "DELETE FROM usergroups WHERE id_user = ?;"),
+		DELETE_BY_FIELD(DaoQueries.DELETE_BY_FIELD, "DELETE FROM usergroups WHERE id_user = ? and id_group = ?;");
 		private DaoQueries daoQuery;
         private String query;
 

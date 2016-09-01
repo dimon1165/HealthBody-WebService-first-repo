@@ -93,4 +93,7 @@ public interface HealthBodyService {
 
 	@WebMethod
 	void updateUserCompetition(UserCompetitionsDTO userCompetition);
+	
+	@WebMethod
+	void deleteUserFromGroup(UserDTO userDTO, String idGroup);
 }

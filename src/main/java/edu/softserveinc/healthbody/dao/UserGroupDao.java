@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.UUID;
 
 import edu.softserveinc.healthbody.constants.Constants.UserGroupCard;
-import edu.softserveinc.healthbody.constants.ErrorConstants;
 import edu.softserveinc.healthbody.constants.DaoStatementsConstant.UserGroupQueries;
+import edu.softserveinc.healthbody.constants.ErrorConstants;
 import edu.softserveinc.healthbody.entity.Group;
 import edu.softserveinc.healthbody.entity.User;
 import edu.softserveinc.healthbody.entity.UserGroup;
@@ -79,5 +79,23 @@ public final class UserGroupDao extends AbstractDao<UserGroup> {
 	public boolean deleteByUserId (final Connection connection, final String id) 
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		return deleteById(connection, id);
+	}
+	
+	public boolean deleteUserGroup (final Connection connection, final String idUser, final String idGroup)
+			throws QueryNotFoundException, DataBaseReadingException {
+		boolean result = false;
+		String query = sqlQueries.get(DaoQueries.DELETE_BY_FIELD).toString();
+			if (query == null) {
+				throw new QueryNotFoundException(String.format(ErrorConstants.QUERY_NOT_FOUND, DaoQueries.INSERT.name()));
+			}
+			try (PreparedStatement pst = connection.prepareStatement(query)) {
+				int i = 1;
+				pst.setString(i++, idUser);
+				pst.setString(i++, idGroup);					
+				result = pst.execute();
+			} catch (SQLException e) {
+					throw new DataBaseReadingException(ErrorConstants.DATABASE_READING_ERROR, e);
+			}
+		return result;
 	}
 }
