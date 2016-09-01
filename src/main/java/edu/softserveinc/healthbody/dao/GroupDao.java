@@ -52,6 +52,27 @@ public final class GroupDao extends AbstractDao<Group> {
 				args[GroupCard.STATUS] == null ? new String() : args[GroupCard.STATUS]);
 	}
 
+	public boolean  createGroup(final Connection connection, final Group group)
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
+		boolean result = false;
+		String query = sqlQueries.get(DaoQueries.INSERT).toString();
+		if (query == null) {
+			throw new QueryNotFoundException(String.format(ErrorConstants.QUERY_NOT_FOUND, DaoQueries.UPDATE.name()));
+		}
+		try (PreparedStatement pst = connection.prepareStatement(query)) {
+			int i = 1;
+			pst.setString(i++, group.getId());
+			pst.setString(i++, group.getName());
+			pst.setInt(i++, group.getCount());
+			pst.setString(i++, group.getDescription());
+			pst.setString(i++, group.getScoreGroup());
+			pst.setString(i++, group.getStatus());
+			result = pst.execute();
+		} catch (SQLException e) {
+			throw new DataBaseReadingException(ErrorConstants.DATABASE_READING_ERROR, e);
+		}
+		return result;
+	}
 	public boolean editGroup(final Connection connection, final Group group)
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		boolean result = false;

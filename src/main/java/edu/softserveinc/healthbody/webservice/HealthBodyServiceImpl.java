@@ -156,6 +156,16 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 	}
 
 	@Override
+	public void createGroup(GroupDTO groupDTO) {
+		try {
+			GroupServiceImpl.getInstance().insert(groupDTO);
+		} catch (SQLException | JDBCDriverException | DataBaseReadingException | QueryNotFoundException
+				| TransactionException e) {
+			Log4jWrapper.get().error("update group failed ", e);
+		}
+	}
+
+	@Override
 	public final void updateGroup(final GroupDTO groupDTO) {
 		try {
 			GroupServiceImpl.getInstance().update(groupDTO);
