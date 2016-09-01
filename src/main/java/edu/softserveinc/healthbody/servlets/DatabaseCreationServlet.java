@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import edu.softserveinc.healthbody.db.ConnectionManager;
 import edu.softserveinc.healthbody.db.DBCreationManager;
 import edu.softserveinc.healthbody.db.DBPopulateManager;
+import edu.softserveinc.healthbody.db.DataSource;
 import edu.softserveinc.healthbody.db.DataSourceRepository;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 import edu.softserveinc.healthbody.log.Log4jWrapper;
@@ -36,8 +37,8 @@ public class DatabaseCreationServlet extends HttpServlet {
 			throws ServletException, IOException {
 		Connection connection;
 		try {
-			connection = ConnectionManager.getInstance(DataSourceRepository.getInstance().getPostgresDatabase())
-					.getConnection();
+			DataSource ds = DataSourceRepository.getInstance().getPostgresDatabase();
+			connection = ConnectionManager.getInstance(ds).getConnection();
 		} catch (JDBCDriverException e) {
 			Log4jWrapper.get().error("JDBC Driver Exception ", e);
 			return;

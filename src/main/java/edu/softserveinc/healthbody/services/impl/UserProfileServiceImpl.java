@@ -158,9 +158,11 @@ public final class UserProfileServiceImpl implements IBaseService<UserDTO> {
 						userDTO.getGender(), userDTO.getHealth(), userDTO.getPhotoURL(),
 						userDTO.getGoogleApi(), role.getIdRole(), userDTO.getStatus(),
 						Boolean.parseBoolean(userDTO.getIsDisabled()));
-				UserGroupDao.getInstance().deleteById(connection, user.getId());
-				for (GroupDTO group : userDTO.getGroups()) {
-					UserGroupDao.getInstance().createUserGroup(connection, user, GroupDao.getInstance().getGroupByName(connection, group.getName()));
+				if (UserGroupDao.getInstance().getById(connection, user.getId()) != null) {
+					UserGroupDao.getInstance().deleteById(connection, user.getId());
+					for (GroupDTO group : userDTO.getGroups()) {
+						UserGroupDao.getInstance().createUserGroup(connection, user, GroupDao.getInstance().getGroupByName(connection, group.getName()));
+					}
 				}
 				UserDao.getInstance().updateUser(connection, user);
 			} catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException e) {
