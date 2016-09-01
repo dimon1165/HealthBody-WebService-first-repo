@@ -164,8 +164,10 @@ public final class UserProfileServiceImpl implements IBaseService<UserDTO> {
 						UserGroupDao.getInstance().createUserGroup(connection, user, GroupDao.getInstance().getGroupByName(connection, group.getName()));
 					}
 				} else {
-					for (GroupDTO group : userDTO.getGroups()) {
-						UserGroupDao.getInstance().createUserGroup(connection, user, GroupDao.getInstance().getGroupByName(connection, group.getName()));
+					if (userDTO.getGroups() != null) {
+						for (GroupDTO group : userDTO.getGroups()) {
+							UserGroupDao.getInstance().createUserGroup(connection, user, GroupDao.getInstance().getGroupByName(connection, group.getName()));
+						}
 					}
 				}
 				UserDao.getInstance().updateUser(connection, user);
