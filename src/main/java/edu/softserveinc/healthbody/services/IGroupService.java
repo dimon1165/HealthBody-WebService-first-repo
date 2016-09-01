@@ -27,4 +27,7 @@ public interface IGroupService extends IBaseFilterService<GroupDTO> {
 	void update(GroupDTO groupDTO) throws JDBCDriverException, SQLException, TransactionException,
 			QueryNotFoundException, DataBaseReadingException;
 
+	void insert(GroupDTO groupDTO) throws SQLException, JDBCDriverException, TransactionException,
+			QueryNotFoundException, DataBaseReadingException;
+
 }

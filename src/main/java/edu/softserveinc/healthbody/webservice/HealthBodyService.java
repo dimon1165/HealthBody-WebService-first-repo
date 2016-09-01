@@ -53,6 +53,10 @@ public interface HealthBodyService {
 	CompetitionDTO getCompetitionViewByName(String name);
 
 	@WebMethod
+	void createGroup(GroupDTO groupDTO);
+
+	
+	@WebMethod
 	void updateGroup(GroupDTO groupDTO);
 
 	@WebMethod
