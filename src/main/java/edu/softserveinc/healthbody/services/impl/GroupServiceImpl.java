@@ -70,6 +70,7 @@ public final class GroupServiceImpl implements IGroupService {
 			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
 		}
 		ConnectionManager.getInstance().commitTransaction(connection);
+		if (group == null) return null;
 		return new GroupDTO(group.getIdGroup(), group.getName(), String.valueOf(group.getCount()),
 				group.getDescription(), group.getScoreGroup(), group.getStatus(), null, null, null);
 	}
