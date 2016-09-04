@@ -71,7 +71,7 @@ public final class GroupServiceImpl implements IGroupService {
 		}
 		ConnectionManager.getInstance().commitTransaction(connection);
 		return new GroupDTO(group.getIdGroup(), group.getName(), String.valueOf(group.getCount()),
-				group.getDescription(), group.getScoreGroup(), null, null, null, null);
+				group.getDescription(), group.getScoreGroup(), group.getStatus(), null, null, null);
 	}
 
 	@Override
