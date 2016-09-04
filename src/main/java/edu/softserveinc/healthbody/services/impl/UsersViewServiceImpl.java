@@ -115,4 +115,19 @@ public class UsersViewServiceImpl implements IUsersViewService {
 		ConnectionManager.getInstance().commitTransaction(connection);
 		return userDTO;
 	}
+
+	@Override
+	public final List<UsersView> searchUsers(final String login)
+			throws SQLException, JDBCDriverException, TransactionException {
+		List<UsersView> userDTO = new ArrayList<>();
+		Connection connection = ConnectionManager.getInstance().beginTransaction();
+		try {
+			userDTO = UsersViewDao.getInstance().searchUsersView(connection, login);
+		} catch (QueryNotFoundException | DataBaseReadingException e) {
+			ConnectionManager.getInstance().rollbackTransaction(connection);
+			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
+		}
+		ConnectionManager.getInstance().commitTransaction(connection);
+		return userDTO;
+	}
 }

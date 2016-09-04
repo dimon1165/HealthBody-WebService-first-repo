@@ -9,6 +9,7 @@ import edu.softserveinc.healthbody.annotation.Controller;
 import edu.softserveinc.healthbody.annotation.Param;
 import edu.softserveinc.healthbody.annotation.Request;
 import edu.softserveinc.healthbody.dto.UserDTO;
+import edu.softserveinc.healthbody.entity.UsersView;
 import edu.softserveinc.healthbody.exceptions.JDBCDriverException;
 import edu.softserveinc.healthbody.exceptions.TransactionException;
 import edu.softserveinc.healthbody.log.Log4jWrapper;
@@ -23,6 +24,16 @@ public class UserController {
 			@Param(name = "partSize") int partSize) {
 		try {
 			return new UsersViewServiceImpl().getAll(partNumber, partSize);
+		} catch (JDBCDriverException | SQLException | TransactionException e) {
+			Log4jWrapper.get().error("Could't get all users");
+		}
+		return null;
+	}
+
+	@Request(url = "/searchUsers")
+	public List<UsersView> searchUsers(@Param(name = "login") String login) {
+		try {
+			return new UsersViewServiceImpl().searchUsers(login);
 		} catch (JDBCDriverException | SQLException | TransactionException e) {
 			Log4jWrapper.get().error("Could't get all users");
 		}
@@ -82,9 +93,10 @@ public class UserController {
 		}
 		return null;
 	}
-	/*For RestClient POST method **/
+
+	/* For RestClient POST method **/
 	@Request(url = "/UpdateUser")
-	public void updateUser(byte [] bytes ) {
+	public void updateUser(byte[] bytes) {
 		try {
 			String json = new String(bytes);
 			Gson gson = new Gson();
