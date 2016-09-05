@@ -40,6 +40,12 @@ public class DaoStatementsConstant {
 		INSERT(DaoQueries.INSERT, "INSERT INTO groups (id_group, name, count, description, scoreGroup, status) VALUES (?, ?, ?, ?, ?, ?);"),
 		GET_BY_ID(DaoQueries.GET_BY_ID, "SELECT id_group, name, count, description, scoreGroup, status FROM groups WHERE id_group = ?;"),
 		GET_BY_FIELD_NAME(DaoQueries.GET_BY_FIELD_NAME, "SELECT id_group, name, count, description, scoreGroup, status FROM groups WHERE name = ?;"),
+		GET_BY_COMPETITION(DaoQueries.GET_BY_COMPETITION, "SELECT DISTINCT groups.id_group, groups.name, groups.count, groups.description, groups.scoreGroup, groups.status, groupcompetitions.id_competition" 
+				+ " FROM groups"
+				+ " LEFT OUTER JOIN groupcompetitions ON groups.id_group = groupcompetitions.id_group" 
+				+ " WHERE groupcompetitions.id_competition = ?"
+				+ " ORDER BY groups.name"
+				+ " ;"),
 		GET_ALL(DaoQueries.GET_ALL, "SELECT id_group, name, count, description, scoreGroup, status FROM groups;"),
 		GET_ALL_GROUPS_PARTICIPANTS(DaoQueries.GET_ALL_GROUPS_PARTICIPANTS, "SELECT groups.id_group, groups.name, groups.count, groups.description, groups.scoregroup, groups.status, "
 				+ "array_to_string(array_agg(login) ,';') AS users_in_groups, "
@@ -168,7 +174,7 @@ public class DaoStatementsConstant {
 
 }	public static enum GroupCompetitionsDBQueries {
 		INSERT(DaoQueries.INSERT, "INSERT INTO groupcompetitions (id_group_competition, id_group, id_competition) VALUES (?, ?, ?);"),
-		GET_BY_ID(DaoQueries.GET_BY_ID,	"SELECT id_group_competition, id_group, id_competition FROM groupcompetitions WHERE id_group_competition = ?;"),
+		GET_BY_ID(DaoQueries.GET_BY_ID,	"SELECT id_group_competition, id_group, id_competition FROM groupcompetitions WHERE id_group = ?;"),
 		GET_ALL(DaoQueries.GET_ALL,	"SELECT id_group_competition, id_group, id_competition FROM groupcompetitions;"),
 		DELETE_BY_ID(DaoQueries.DELETE_BY_ID, "DELETE FROM groupcompetitions WHERE id_group_competition = ?;");
 		private DaoQueries daoQuery;
