@@ -13,6 +13,7 @@ import edu.softserveinc.healthbody.dao.UserCompetitionsDao;
 import edu.softserveinc.healthbody.dao.UserDao;
 import edu.softserveinc.healthbody.db.ConnectionManager;
 import edu.softserveinc.healthbody.dto.CompetitionDTO;
+import edu.softserveinc.healthbody.dto.GroupCompetitionsDTO;
 import edu.softserveinc.healthbody.dto.GroupDTO;
 import edu.softserveinc.healthbody.dto.UserCompetitionsDTO;
 import edu.softserveinc.healthbody.entity.CompetitionsView;
@@ -274,6 +275,26 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 					return new UserCompetitionsDTO(usercompetition.getIdUserCompetition(), nameUser, null,
 							usercompetition.getUserScore().toString(), usercompetition.getIdAwards(),
 							usercompetition.getTimeReceived());
+				}
+			}
+		} catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException | CloseStatementException
+				| EmptyResultSetException e) {
+			ConnectionManager.getInstance().rollbackTransaction(connection);
+			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
+		}
+		ConnectionManager.getInstance().commitTransaction(connection);
+		return null;
+	}
+	
+	@Override
+	public GroupCompetitionsDTO getGroupCompetition(String idCompetition, String idGroup)
+			throws SQLException, JDBCDriverException, TransactionException {
+		Connection connection = ConnectionManager.getInstance().beginTransaction();
+		try {
+			List<GroupCompetitions> list = GroupCompetitionsDao.getInstance().getGroupCompetitionsByGroupId(connection, idGroup);
+			for (GroupCompetitions groupcompetition : list) {
+				if (groupcompetition.getIdCompetition().equals(idCompetition)) {
+					return new GroupCompetitionsDTO(groupcompetition.getIdGroupCompetitions(), idCompetition, idGroup);
 				}
 			}
 		} catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException | CloseStatementException

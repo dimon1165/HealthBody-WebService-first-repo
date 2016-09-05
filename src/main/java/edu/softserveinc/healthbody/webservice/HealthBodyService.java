@@ -6,6 +6,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebService;
 
 import edu.softserveinc.healthbody.dto.CompetitionDTO;
+import edu.softserveinc.healthbody.dto.GroupCompetitionsDTO;
 import edu.softserveinc.healthbody.dto.GroupDTO;
 import edu.softserveinc.healthbody.dto.UserCompetitionsDTO;
 import edu.softserveinc.healthbody.dto.UserDTO;
@@ -97,6 +98,9 @@ public interface HealthBodyService {
 
 	@WebMethod
 	UserCompetitionsDTO getUserCompetition(String idCompetition, String nameUser);
+	
+	@WebMethod
+	GroupCompetitionsDTO getGroupCompetition(String idCompetition, String idGroup);
 
 	@WebMethod
 	void deleteUserCompetition(String idCompetition, String nameUser);
