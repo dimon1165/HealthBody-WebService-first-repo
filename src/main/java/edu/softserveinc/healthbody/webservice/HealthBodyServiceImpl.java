@@ -205,6 +205,16 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		}
 		return null;
 	}
+	
+	@Override
+	public final List<GroupDTO> getAllByCompetition(int partNumber, int partSize, String idCompetition) {
+		try {
+			return CompetitionsViewServiceImpl.getInstance().getAllByCompetition(partNumber, partSize, idCompetition);
+		} catch (IllegalAgrumentCheckedException | SQLException | JDBCDriverException | TransactionException e) {
+			Log4jWrapper.get().error("get all groups by competition failed ", e);
+		}
+		return null;
+	}
 
 	@Override
 	public final List<CompetitionDTO> getAllActiveCompetitionsByUser(final int partNumber, final int partSize,
@@ -316,6 +326,17 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		}
 		return result;
 	}
+	
+	@Override
+	public boolean addGroupInCompetition(String idCompetition, String idGroup) {
+		boolean result = false;
+		try {
+			result = CompetitionsViewServiceImpl.getInstance().addGroupInCompetition(idCompetition, idGroup);
+		} catch (SQLException | JDBCDriverException | TransactionException e) {
+			Log4jWrapper.get().error("Add group " + idGroup + " to competition " + idCompetition + " failed ", e);
+		}
+		return result;
+	}
 
 	@Override
 	public boolean removeUserFromCompetition(String idCompetition, String nameUser) {
@@ -347,6 +368,15 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 			CompetitionsViewServiceImpl.getInstance().deleteUserCompetition(idCompetition, nameUser);
 		} catch (SQLException | JDBCDriverException | TransactionException e) {
 			Log4jWrapper.get().error("delete user competition failed ", e);
+		}
+	}
+	
+	@Override
+	public void deleteGroupCompetition(String idCompetition, String idGroup) {
+		try {
+			CompetitionsViewServiceImpl.getInstance().deleteGroupCompetition(idCompetition, idGroup);
+		} catch (SQLException | JDBCDriverException | TransactionException e) {
+			Log4jWrapper.get().error("delete group competition failed ", e);
 		}
 	}
 

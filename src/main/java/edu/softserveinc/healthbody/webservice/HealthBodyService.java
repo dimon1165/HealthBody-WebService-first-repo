@@ -67,6 +67,9 @@ public interface HealthBodyService {
 
 	@WebMethod
 	List<CompetitionDTO> getAllCompetitionsByUser(int partNumber, int partSize, String login);
+	
+	@WebMethod
+	List<GroupDTO> getAllByCompetition(int partNumber, int partSize, String idCompetition);
 
 	@WebMethod
 	List<CompetitionDTO> getAllActiveCompetitionsByUser(int partNumber, int partSize, String login);
@@ -82,6 +85,9 @@ public interface HealthBodyService {
 
 	@WebMethod
 	boolean addUserInCompetitionView(String idCompetition, String nameUser);
+	
+	@WebMethod
+	boolean addGroupInCompetition(String idCompetition, String idGroup);
 
 	@WebMethod
 	boolean removeUserFromCompetition(String idCompetition, String nameUser);
@@ -94,6 +100,9 @@ public interface HealthBodyService {
 
 	@WebMethod
 	void deleteUserCompetition(String idCompetition, String nameUser);
+	
+	@WebMethod
+	void deleteGroupCompetition(String idCompetition, String idGroup);
 
 	@WebMethod
 	void updateUserCompetition(UserCompetitionsDTO userCompetition);

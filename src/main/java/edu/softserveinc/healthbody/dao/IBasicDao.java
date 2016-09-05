@@ -13,6 +13,7 @@ public interface IBasicDao<TEntity> extends IBasicReadDao<TEntity> {
 		GET_BY_ID,
 		GET_BY_FIELD,
 		GET_BY_FIELD_NAME,
+		GET_BY_COMPETITION,
 		GET_ID_BY_FIELDS,
 		GET_ALL,
 		GET_ALL_GROUPS_PARTICIPANTS,

@@ -114,7 +114,7 @@ public final class UserCompetitionsDao extends AbstractDao<UserCompetitions> {
 		boolean result = false;
 		String query = sqlQueries.get(DaoQueries.DELETE_USER_FROM_COMPETITION).toString();
 			if (query == null) {
-				throw new QueryNotFoundException(String.format(ErrorConstants.QUERY_NOT_FOUND, DaoQueries.INSERT.name()));
+				throw new QueryNotFoundException(String.format(ErrorConstants.QUERY_NOT_FOUND, DaoQueries.DELETE_USER_FROM_COMPETITION.name()));
 			}
 			UserCompetitions userCompetition = getUserCompetitionByIds(connection, userId, competitionId);
 			try (PreparedStatement pst = connection.prepareStatement(query)) {

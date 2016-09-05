@@ -7,14 +7,18 @@ import java.util.List;
 
 import edu.softserveinc.healthbody.constants.ErrorConstants;
 import edu.softserveinc.healthbody.dao.CompetitionsViewDao;
+import edu.softserveinc.healthbody.dao.GroupCompetitionsDao;
+import edu.softserveinc.healthbody.dao.GroupDao;
 import edu.softserveinc.healthbody.dao.UserCompetitionsDao;
 import edu.softserveinc.healthbody.dao.UserDao;
 import edu.softserveinc.healthbody.db.ConnectionManager;
 import edu.softserveinc.healthbody.dto.CompetitionDTO;
+import edu.softserveinc.healthbody.dto.GroupDTO;
 import edu.softserveinc.healthbody.dto.UserCompetitionsDTO;
 import edu.softserveinc.healthbody.entity.CompetitionsView;
+import edu.softserveinc.healthbody.entity.Group;
+import edu.softserveinc.healthbody.entity.GroupCompetitions;
 import edu.softserveinc.healthbody.entity.User;
-
 import edu.softserveinc.healthbody.entity.UserCompetitions;
 import edu.softserveinc.healthbody.exceptions.CloseStatementException;
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
@@ -113,6 +117,30 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 	}
 
 	@Override
+	public List<GroupDTO> getAllByCompetition(final int partNumber, final int partSize, final String idCompetition)
+			throws IllegalAgrumentCheckedException, SQLException, JDBCDriverException, TransactionException {
+		if (idCompetition == null || idCompetition.isEmpty()) {
+			String errorStr = "Illegal parameter. \"idCompetition\" is empty or null.";
+			Log4jWrapper.get().error(errorStr);
+			throw new IllegalAgrumentCheckedException(errorStr);
+		}
+		List<GroupDTO> groupDTO = new ArrayList<>();
+		Connection connection = ConnectionManager.getInstance().beginTransaction();
+		try {
+			for (Group group : GroupDao.getInstance().getGroupsByIdCompetition(connection, partNumber, partSize,
+					idCompetition)) {
+				groupDTO.add(new GroupDTO(group.getIdGroup(), group.getName(), group.getCount().toString(),
+						group.getDescription(), group.getScoreGroup(), group.getStatus(), null, null, null));
+			}
+		} catch (QueryNotFoundException | DataBaseReadingException e) {
+			ConnectionManager.getInstance().rollbackTransaction(connection);
+			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
+		}
+		ConnectionManager.getInstance().commitTransaction(connection);
+		return groupDTO;
+	}
+
+	@Override
 	public List<CompetitionDTO> getAllActiveByUser(final int partNumber, final int partSize, final String login)
 			throws IllegalAgrumentCheckedException, SQLException, JDBCDriverException, TransactionException {
 		if (login == null || login.isEmpty()) {
@@ -167,7 +195,8 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
 		}
 		ConnectionManager.getInstance().commitTransaction(connection);
-		if (competitionview == null) return null;
+		if (competitionview == null)
+			return null;
 		return new CompetitionDTO(competitionview.getIdCompetition(), competitionview.getName(),
 				String.valueOf(competitionview.getUsersCount()), competitionview.getStart(),
 				competitionview.getFinish(), competitionview.getDescription(), null, null, null);
@@ -183,6 +212,25 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 					idCompetition);
 			User user = UserDao.getInstance().getUserByLoginName(connection, nameUser);
 			UserCompetitionsDao.getInstance().createUserCompetition(connection, user, competitionview);
+		} catch (QueryNotFoundException | DataBaseReadingException e) {
+			ConnectionManager.getInstance().rollbackTransaction(connection);
+			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
+		}
+		ConnectionManager.getInstance().commitTransaction(connection);
+		result = true;
+		return result;
+	}
+
+	@Override
+	public boolean addGroupInCompetition(String idCompetition, String idGroup)
+			throws SQLException, JDBCDriverException, TransactionException {
+		boolean result = false;
+		Connection connection = ConnectionManager.getInstance().beginTransaction();
+		try {
+			CompetitionsView competitionview = CompetitionsViewDao.getInstance().getCompetitionViewById(connection,
+					idCompetition);
+			Group group = GroupDao.getInstance().getGroupById(connection, idGroup);
+			GroupCompetitionsDao.getInstance().createGroupCompetition(connection, group, competitionview);
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
 			ConnectionManager.getInstance().rollbackTransaction(connection);
 			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
@@ -268,6 +316,26 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 				if (usercompetition.getIdCompetition().equals(competitionview.getIdCompetition())) {
 					UserCompetitionsDao.getInstance().deleteByUserCompetitionId(connection,
 							usercompetition.getIdUserCompetition());
+				}
+			}
+		} catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException | CloseStatementException
+				| EmptyResultSetException e) {
+			ConnectionManager.getInstance().rollbackTransaction(connection);
+			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
+		}
+		ConnectionManager.getInstance().commitTransaction(connection);
+	}
+
+	@Override
+	public void deleteGroupCompetition(String idCompetition, String idGroup)
+			throws SQLException, JDBCDriverException, TransactionException {
+		Connection connection = ConnectionManager.getInstance().beginTransaction();
+		try {
+			List<GroupCompetitions> list = GroupCompetitionsDao.getInstance().getGroupCompetitionsByGroupId(connection, idGroup);
+			for (GroupCompetitions groupcompetition : list) {
+				if (groupcompetition.getIdCompetition().equals(idCompetition)) {
+					GroupCompetitionsDao.getInstance().deleteByGroupCompetitionId(connection,
+							groupcompetition.getIdGroupCompetitions());
 				}
 			}
 		} catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException | CloseStatementException

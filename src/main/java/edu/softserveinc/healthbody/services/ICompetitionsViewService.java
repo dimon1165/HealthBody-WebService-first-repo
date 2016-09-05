@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import edu.softserveinc.healthbody.dto.CompetitionDTO;
+import edu.softserveinc.healthbody.dto.GroupDTO;
 import edu.softserveinc.healthbody.dto.UserCompetitionsDTO;
 import edu.softserveinc.healthbody.exceptions.DataBaseReadingException;
 import edu.softserveinc.healthbody.exceptions.IllegalAgrumentCheckedException;
@@ -42,5 +43,14 @@ public interface ICompetitionsViewService {
 
 	void updateUserCompetition(UserCompetitionsDTO userCompetition)
 			throws SQLException, JDBCDriverException, TransactionException, QueryNotFoundException, DataBaseReadingException;
+
+	boolean addGroupInCompetition(String idCompetition, String idGroup)
+			throws SQLException, JDBCDriverException, TransactionException;
+
+	void deleteGroupCompetition(String idCompetition, String idGroup)
+			throws SQLException, JDBCDriverException, TransactionException;
+
+	List<GroupDTO> getAllByCompetition(int partNumber, int partSize, String idCompetition)
+			throws IllegalAgrumentCheckedException, SQLException, JDBCDriverException, TransactionException;
 
 }
