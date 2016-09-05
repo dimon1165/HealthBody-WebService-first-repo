@@ -50,7 +50,7 @@ public interface ICompetitionsViewService {
 	void deleteGroupCompetition(String idCompetition, String idGroup)
 			throws SQLException, JDBCDriverException, TransactionException;
 
-	List<GroupDTO> getAllByCompetition(int partNumber, int partSize, String idCompetition)
+	List<GroupDTO> getAllGroupsByCompetition(int partNumber, int partSize, String idCompetition)
 			throws IllegalAgrumentCheckedException, SQLException, JDBCDriverException, TransactionException;
 
 }

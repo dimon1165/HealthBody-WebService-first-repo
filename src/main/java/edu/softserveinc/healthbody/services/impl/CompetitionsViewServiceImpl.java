@@ -117,7 +117,7 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 	}
 
 	@Override
-	public List<GroupDTO> getAllByCompetition(final int partNumber, final int partSize, final String idCompetition)
+	public List<GroupDTO> getAllGroupsByCompetition(final int partNumber, final int partSize, final String idCompetition)
 			throws IllegalAgrumentCheckedException, SQLException, JDBCDriverException, TransactionException {
 		if (idCompetition == null || idCompetition.isEmpty()) {
 			String errorStr = "Illegal parameter. \"idCompetition\" is empty or null.";

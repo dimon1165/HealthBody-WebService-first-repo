@@ -207,9 +207,9 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 	}
 	
 	@Override
-	public final List<GroupDTO> getAllByCompetition(int partNumber, int partSize, String idCompetition) {
+	public final List<GroupDTO> getAllGroupsByCompetition(int partNumber, int partSize, String idCompetition) {
 		try {
-			return CompetitionsViewServiceImpl.getInstance().getAllByCompetition(partNumber, partSize, idCompetition);
+			return CompetitionsViewServiceImpl.getInstance().getAllGroupsByCompetition(partNumber, partSize, idCompetition);
 		} catch (IllegalAgrumentCheckedException | SQLException | JDBCDriverException | TransactionException e) {
 			Log4jWrapper.get().error("get all groups by competition failed ", e);
 		}
