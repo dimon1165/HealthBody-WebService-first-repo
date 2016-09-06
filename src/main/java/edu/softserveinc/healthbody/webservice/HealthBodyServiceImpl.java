@@ -6,6 +6,7 @@ import java.util.List;
 import javax.jws.WebService;
 
 import edu.softserveinc.healthbody.dto.CompetitionDTO;
+import edu.softserveinc.healthbody.dto.GroupCompetitionsDTO;
 import edu.softserveinc.healthbody.dto.GroupDTO;
 import edu.softserveinc.healthbody.dto.UserCompetitionsDTO;
 import edu.softserveinc.healthbody.dto.UserDTO;
@@ -207,9 +208,9 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 	}
 	
 	@Override
-	public final List<GroupDTO> getAllByCompetition(int partNumber, int partSize, String idCompetition) {
+	public final List<GroupDTO> getAllGroupsByCompetition(int partNumber, int partSize, String idCompetition) {
 		try {
-			return CompetitionsViewServiceImpl.getInstance().getAllByCompetition(partNumber, partSize, idCompetition);
+			return CompetitionsViewServiceImpl.getInstance().getAllGroupsByCompetition(partNumber, partSize, idCompetition);
 		} catch (IllegalAgrumentCheckedException | SQLException | JDBCDriverException | TransactionException e) {
 			Log4jWrapper.get().error("get all groups by competition failed ", e);
 		}
@@ -349,6 +350,7 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		return result;
 	}
 
+	@Override
 	public UserCompetitionsDTO getUserCompetition(String idCompetition, String nameUser) {
 		try {
 			try {
@@ -358,6 +360,20 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 			}
 		} catch (JDBCDriverException e) {
 			Log4jWrapper.get().error("get UserCompetitionsDTO failed ", e);
+		}
+		return null;
+	}
+	
+	@Override
+	public GroupCompetitionsDTO getGroupCompetition(String idCompetition, String idGroup) {
+		try {
+			try {
+				return CompetitionsViewServiceImpl.getInstance().getGroupCompetition(idCompetition, idGroup);
+			} catch (SQLException | TransactionException e) {
+				Log4jWrapper.get().error("get GroupCompetitionsDTO failed ", e);
+			}
+		} catch (JDBCDriverException e) {
+			Log4jWrapper.get().error("get GroupCompetitionsDTO failed ", e);
 		}
 		return null;
 	}

@@ -6,6 +6,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebService;
 
 import edu.softserveinc.healthbody.dto.CompetitionDTO;
+import edu.softserveinc.healthbody.dto.GroupCompetitionsDTO;
 import edu.softserveinc.healthbody.dto.GroupDTO;
 import edu.softserveinc.healthbody.dto.UserCompetitionsDTO;
 import edu.softserveinc.healthbody.dto.UserDTO;
@@ -69,7 +70,7 @@ public interface HealthBodyService {
 	List<CompetitionDTO> getAllCompetitionsByUser(int partNumber, int partSize, String login);
 	
 	@WebMethod
-	List<GroupDTO> getAllByCompetition(int partNumber, int partSize, String idCompetition);
+	List<GroupDTO> getAllGroupsByCompetition(int partNumber, int partSize, String idCompetition);
 
 	@WebMethod
 	List<CompetitionDTO> getAllActiveCompetitionsByUser(int partNumber, int partSize, String login);
@@ -97,6 +98,9 @@ public interface HealthBodyService {
 
 	@WebMethod
 	UserCompetitionsDTO getUserCompetition(String idCompetition, String nameUser);
+	
+	@WebMethod
+	GroupCompetitionsDTO getGroupCompetition(String idCompetition, String idGroup);
 
 	@WebMethod
 	void deleteUserCompetition(String idCompetition, String nameUser);
