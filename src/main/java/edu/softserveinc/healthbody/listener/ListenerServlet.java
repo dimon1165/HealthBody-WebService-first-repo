@@ -82,6 +82,8 @@ public class ListenerServlet extends HttpServlet {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Accept", "application/json");
+		response.setHeader("Connection", "keep-alive");
 		PrintWriter out = response.getWriter();
 		out.print(gson.toJson(object));
 		out.flush();
