@@ -81,6 +81,7 @@ public class ListenerServlet extends HttpServlet {
 	private void wrightResponse(Object object, HttpServletResponse response) throws IOException {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*");
 		PrintWriter out = response.getWriter();
 		out.print(gson.toJson(object));
 		out.flush();
