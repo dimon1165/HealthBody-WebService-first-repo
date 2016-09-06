@@ -53,7 +53,9 @@ public class DaoStatementsConstant {
 				+ "array_to_string(array_agg(Lastname ) ,';') AS users_lastnames_in_groups "
 				+ "FROM (SELECT DISTINCT groups.id_group, groups.name, groups.count, groups.description, groups.scoregroup, groups.status, users.login, users.firstname, users.lastname "
 				+ "FROM groups JOIN usergroups ON usergroups.id_group=groups.id_group JOIN users ON users.id_user = usergroups.id_user ORDER BY groups.id_group) AS groups "
-				+ "GROUP BY groups.id_group, groups.name, groups.count, groups.description, groups.scoregroup, groups.status;"),
+				+ "GROUP BY groups.id_group, groups.name, groups.count, groups.description, groups.scoregroup, groups.status "
+				+ "ORDER BY groups.name "
+				+ ";"),
 		UPDATE(DaoQueries.UPDATE, "UPDATE groups SET name = ?, count = ?, description = ?, scoreGroup = ? WHERE id_group = ?"),
 		DELETE_BY_ID(DaoQueries.DELETE_BY_ID, "DELETE FROM groups WHERE id_group = ?;"),
 		DELETE_BY_FIELD(DaoQueries.DELETE_BY_FIELD, "DELETE FROM groups WHERE name = ?;");
