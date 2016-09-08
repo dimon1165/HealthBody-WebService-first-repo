@@ -158,6 +158,35 @@ public class CompetitionsViewDao extends AbstractDao<CompetitionsView> {
 		}
 		return result;
 	}
+	
+	public List<CompetitionsView> getCompetitionsByGroup(final Connection connection, int partNumber, final int partSize, final String idGroup)
+			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException,
+			IllegalAgrumentCheckedException {
+		if (idGroup == null || idGroup.isEmpty()) {
+			String errorStr = "Illegal parameter. \"idGroup\" is empty or null.";
+			Log4jWrapper.get().error(errorStr);
+			throw new IllegalAgrumentCheckedException(errorStr);
+		}
+		List<CompetitionsView> result = new ArrayList<>();
+		String query = sqlQueries.get(CompetitionsViewQueries.GET_ALL_BY_GROUP).toString();
+		if (query == null) {
+			throw new QueryNotFoundException(
+					String.format(ErrorConstants.QUERY_NOT_FOUND, CompetitionsViewQueries.GET_ALL_BY_GROUP.name()));
+		}
+		if ((partNumber >= 0) && (partSize > 0)) {
+			query = query.substring(0, query.lastIndexOf(";")) + SQL_LIMIT;
+		}
+		try (PreparedStatement pst = createPreparedStatementLogin(connection, query, idGroup, partNumber, partSize);
+				ResultSet resultSet = pst.executeQuery()) {
+			String[] queryResult = new String[resultSet.getMetaData().getColumnCount()];
+			while (resultSet.next()) {
+				result.add(createInstance(getQueryResultArr(queryResult, resultSet)));
+			}
+		} catch (SQLException e) {
+			throw new DataBaseReadingException(ErrorConstants.DATABASE_READING_ERROR, e);
+		}
+		return result;
+	}
 
 	public CompetitionsView getCompetitionViewByName(final Connection connection, final String name)
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {

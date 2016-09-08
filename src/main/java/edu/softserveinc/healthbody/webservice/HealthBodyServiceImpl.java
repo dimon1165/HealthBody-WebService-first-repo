@@ -208,6 +208,17 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 	}
 	
 	@Override
+	public final List<CompetitionDTO> getAllCompetitionsByGroup(final int partNumber, final int partSize,
+			final String idGroup) {
+		try {
+			return CompetitionsViewServiceImpl.getInstance().getAllByGroup(partNumber, partSize, idGroup);
+		} catch (IllegalAgrumentCheckedException | SQLException | JDBCDriverException | TransactionException e) {
+			Log4jWrapper.get().error("get all competitions by group failed ", e);
+		}
+		return null;
+	}
+	
+	@Override
 	public final List<GroupDTO> getAllGroupsByCompetition(int partNumber, int partSize, String idCompetition) {
 		try {
 			return CompetitionsViewServiceImpl.getInstance().getAllGroupsByCompetition(partNumber, partSize, idCompetition);

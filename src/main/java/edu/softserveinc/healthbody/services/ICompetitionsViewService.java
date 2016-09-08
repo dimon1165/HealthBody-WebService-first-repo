@@ -57,4 +57,7 @@ public interface ICompetitionsViewService {
 	GroupCompetitionsDTO getGroupCompetition(String idCompetition, String idGroup)
 			throws SQLException, JDBCDriverException, TransactionException;
 
+	List<CompetitionDTO> getAllByGroup(int partNumber, int partSize, String idGroup)
+			throws IllegalAgrumentCheckedException, SQLException, JDBCDriverException, TransactionException;
+
 }

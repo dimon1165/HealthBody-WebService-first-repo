@@ -70,6 +70,9 @@ public interface HealthBodyService {
 	List<CompetitionDTO> getAllCompetitionsByUser(int partNumber, int partSize, String login);
 	
 	@WebMethod
+	List<CompetitionDTO> getAllCompetitionsByGroup(int partNumber, int partSize, String idGroup);
+	
+	@WebMethod
 	List<GroupDTO> getAllGroupsByCompetition(int partNumber, int partSize, String idCompetition);
 
 	@WebMethod

@@ -312,6 +312,13 @@ public class DaoStatementsConstant {
 				+ " WHERE users.login = ?"
 				+ " ORDER BY competitions.name"
 				+ " ;"),
+		GET_ALL_BY_GROUP("SELECT DISTINCT competitions.id_competition, competitions.name, competitions.description, competitions.start,"
+				+ " competitions.finish"
+				+ " FROM competitions"
+				+ " LEFT OUTER JOIN groupcompetitions ON competitions.id_competition = groupcompetitions.id_competition"
+				+ " WHERE groupcompetitions.id_group = ?"
+				+ " ORDER BY competitions.name"
+				+ " ;"),
 		GET_ALL_ACTIVE_BY_USER("SELECT DISTINCT competitions.id_competition, competitions.name, competitions.description,"
 				+ " competitions.start, competitions.finish, user_competition_count"
 				+ " FROM competitions"

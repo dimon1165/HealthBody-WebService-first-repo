@@ -116,6 +116,32 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 		ConnectionManager.getInstance().commitTransaction(connection);
 		return competitionDTO;
 	}
+	
+	@Override
+	public List<CompetitionDTO> getAllByGroup(final int partNumber, final int partSize, final String idGroup)
+			throws IllegalAgrumentCheckedException, SQLException, JDBCDriverException, TransactionException {
+		if (idGroup == null || idGroup.isEmpty()) {
+			String errorStr = "Illegal parameter. \"idGroup\" is empty or null.";
+			Log4jWrapper.get().error(errorStr);
+			throw new IllegalAgrumentCheckedException(errorStr);
+		}
+		List<CompetitionDTO> competitionDTO = new ArrayList<>();
+		Connection connection = ConnectionManager.getInstance().beginTransaction();
+		try {
+			for (CompetitionsView competitionsView : CompetitionsViewDao.getInstance()
+					.getCompetitionsByGroup(connection, partNumber, partSize, idGroup)) {
+				competitionDTO.add(new CompetitionDTO(competitionsView.getIdCompetition(), competitionsView.getName(),
+						"0", competitionsView.getStart(),
+						competitionsView.getFinish(), competitionsView.getDescription(), null, new ArrayList<String>(),
+						new ArrayList<String>()));
+			}
+		} catch (QueryNotFoundException | DataBaseReadingException e) {
+			ConnectionManager.getInstance().rollbackTransaction(connection);
+			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
+		}
+		ConnectionManager.getInstance().commitTransaction(connection);
+		return competitionDTO;
+	}
 
 	@Override
 	public List<GroupDTO> getAllGroupsByCompetition(final int partNumber, final int partSize, final String idCompetition)
