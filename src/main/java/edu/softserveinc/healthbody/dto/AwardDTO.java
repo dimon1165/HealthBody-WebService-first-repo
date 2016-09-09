@@ -29,9 +29,17 @@ public class AwardDTO {
 	public String getIdAward() {
 		return idAward;
 	}
-	/** Setter*/
+	
 	public final String getName() {
 		return name;
 	}
-
+	
+	/** Setter*/
+	public void setIdAward(String idAward) {
+		this.idAward = idAward;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
 }
