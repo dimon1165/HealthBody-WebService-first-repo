@@ -13,8 +13,8 @@ public class ConnectionManager {
 	private static final String FAILED_REGISTRATE_DRIVER = "Failed to Registrate JDBC Driver";
 	private static final String ERROR_CONNECTION = "Error while getting connection";
 	private static final String ERROR_FREE_CONNECTION =  "At this moment there is no free connection";
-	private static final int MAX_POOL_SIZE = 10;
-	private static final int MAX_PERMITED_POOL_SIZE = 100;
+	private static final int MAX_POOL_SIZE = 50;
+	private static final int MAX_PERMITED_POOL_SIZE = 500;
 	private static final int WAIT_TIME_FOR_CONNECTION = 100;
 	private static final int WAIT_ALL_TIME_FOR_CONNECTION = 30000;
 	private int counter = 0;
