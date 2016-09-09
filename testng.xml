@@ -2,7 +2,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="HealthBodyTestNGTests">
 	<parameter name="testDatabase" value="healthbodydbtest" />
-	<test name="PrepareDatabase">
+<!-- <test name="PrepareDatabase">
 		<classes>
 			<class name="edu.softserveinc.healthbody.db.TestDatabaseManager" /> 
 		</classes>
@@ -30,5 +30,5 @@
 		<classes>
 					<class name="edu.softserveinc.healthbody.groups.GroupServiceImplTest" />
 		</classes>
-	</test>
+	</test> -->
 </suite> 
