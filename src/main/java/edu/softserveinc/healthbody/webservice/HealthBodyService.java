@@ -5,6 +5,7 @@ import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 
+import edu.softserveinc.healthbody.dto.AwardDTO;
 import edu.softserveinc.healthbody.dto.CompetitionDTO;
 import edu.softserveinc.healthbody.dto.GroupCompetitionsDTO;
 import edu.softserveinc.healthbody.dto.GroupDTO;
@@ -56,7 +57,6 @@ public interface HealthBodyService {
 	@WebMethod
 	void createGroup(GroupDTO groupDTO);
 
-	
 	@WebMethod
 	void updateGroup(GroupDTO groupDTO);
 
@@ -116,4 +116,7 @@ public interface HealthBodyService {
 	
 	@WebMethod
 	void deleteUserFromGroup(UserDTO userDTO, String idGroup);
+	
+	@WebMethod
+	List<AwardDTO> getAllAwards();
 }

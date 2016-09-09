@@ -3,6 +3,7 @@ package edu.softserveinc.healthbody.services;
 import java.sql.SQLException;
 import java.util.List;
 
+import edu.softserveinc.healthbody.dto.AwardDTO;
 import edu.softserveinc.healthbody.dto.CompetitionDTO;
 import edu.softserveinc.healthbody.dto.GroupCompetitionsDTO;
 import edu.softserveinc.healthbody.dto.GroupDTO;
@@ -59,5 +60,8 @@ public interface ICompetitionsViewService {
 
 	List<CompetitionDTO> getAllByGroup(int partNumber, int partSize, String idGroup)
 			throws IllegalAgrumentCheckedException, SQLException, JDBCDriverException, TransactionException;
+
+	List<AwardDTO> getAllAwards()
+			throws JDBCDriverException, SQLException, TransactionException;
 
 }

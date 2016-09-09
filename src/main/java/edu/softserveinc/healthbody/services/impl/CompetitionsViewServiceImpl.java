@@ -6,16 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.softserveinc.healthbody.constants.ErrorConstants;
+import edu.softserveinc.healthbody.dao.AwardDao;
 import edu.softserveinc.healthbody.dao.CompetitionsViewDao;
 import edu.softserveinc.healthbody.dao.GroupCompetitionsDao;
 import edu.softserveinc.healthbody.dao.GroupDao;
 import edu.softserveinc.healthbody.dao.UserCompetitionsDao;
 import edu.softserveinc.healthbody.dao.UserDao;
 import edu.softserveinc.healthbody.db.ConnectionManager;
+import edu.softserveinc.healthbody.dto.AwardDTO;
 import edu.softserveinc.healthbody.dto.CompetitionDTO;
 import edu.softserveinc.healthbody.dto.GroupCompetitionsDTO;
 import edu.softserveinc.healthbody.dto.GroupDTO;
 import edu.softserveinc.healthbody.dto.UserCompetitionsDTO;
+import edu.softserveinc.healthbody.entity.Award;
 import edu.softserveinc.healthbody.entity.CompetitionsView;
 import edu.softserveinc.healthbody.entity.Group;
 import edu.softserveinc.healthbody.entity.GroupCompetitions;
@@ -391,6 +394,23 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
 		}
 		ConnectionManager.getInstance().commitTransaction(connection);
+	}
+	
+	@Override
+	public List<AwardDTO> getAllAwards()
+			throws JDBCDriverException, SQLException, TransactionException {
+		List<AwardDTO> awardDTO = new ArrayList<>();
+		Connection connection = ConnectionManager.getInstance().beginTransaction();
+		try {
+			for (Award award : AwardDao.getInstance().getAllAwards(connection)) {
+				awardDTO.add(new AwardDTO(award.getIdAward(), award.getName()));
+			}
+		} catch (DataBaseReadingException e) {
+			ConnectionManager.getInstance().rollbackTransaction(connection);
+			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
+		}
+		ConnectionManager.getInstance().commitTransaction(connection);
+		return awardDTO;
 	}
 
 }

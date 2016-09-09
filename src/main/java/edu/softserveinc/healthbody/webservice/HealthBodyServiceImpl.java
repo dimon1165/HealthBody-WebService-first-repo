@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.jws.WebService;
 
+import edu.softserveinc.healthbody.dto.AwardDTO;
 import edu.softserveinc.healthbody.dto.CompetitionDTO;
 import edu.softserveinc.healthbody.dto.GroupCompetitionsDTO;
 import edu.softserveinc.healthbody.dto.GroupDTO;
@@ -424,5 +425,15 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 		} catch (SQLException | JDBCDriverException | TransactionException e) {
 			Log4jWrapper.get().error("delete user failed ", e);
 		}
+	}
+	
+	@Override
+	public final List<AwardDTO> getAllAwards() {
+		try {
+			return CompetitionsViewServiceImpl.getInstance().getAllAwards();
+		} catch (SQLException | JDBCDriverException | TransactionException e) {
+			Log4jWrapper.get().error("get all awards failed ", e);
+		}
+		return null;
 	}
 }
