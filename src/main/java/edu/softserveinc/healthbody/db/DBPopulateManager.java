@@ -16,7 +16,7 @@ public class DBPopulateManager {
 	private static final int GROUPS = 3;
 	private static final int ROLES = 3;
 	private static final int COMPETITIONS = 20;
-	private static final int AWARDS = 4;
+	private static final int AWARDS = 3;
 	private static final int CRITERIA = 4;
 	private static final int METADATA = 8;
 	private static final String[] USER_ID = new String[USERS];
@@ -157,7 +157,14 @@ public class DBPopulateManager {
 			for (int j = 0; j < AWARDS; j++) {
 				AWARD_ID[j] = UUID.randomUUID().toString();
 				pst.setString(1, AWARD_ID[j]);		
-				pst.setString(2, "Name award " + j);
+//				pst.setString(2, "Name award " + j);
+				if(j == AWARDS - 1) {
+					pst.setString(2, "gold");
+				} else if (j == AWARDS - 2) {
+					pst.setString(2, "silver");
+				} else {
+					pst.setString(2, "bronze");
+				}
 				successfulInsert = (pst.executeUpdate() > 0) ? true : false;
 				if (!successfulInsert) {
 					break;
