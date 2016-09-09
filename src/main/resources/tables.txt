@@ -1,6 +1,65 @@
+CREATE TABLE IF NOT EXISTS "roles"(
+id_role varchar(50) primary key,
+name varchar(50),
+description varchar(200));
+
+CREATE TABLE IF NOT EXISTS "users"(
+id_user varchar(50) primary key,
+login varchar(50),
+password varchar(25),
+firstname varchar(50),
+lastname varchar(50),
+"e-mail" varchar(50),
+age bigint,
+weight real,
+gender varchar(25),
+health varchar(50),
+avatar varchar(250),
+google_field varchar(150),
+id_role varchar(50),
+status varchar(50),
+isDisabled boolean,
+FOREIGN KEY (id_role)  REFERENCES "roles" (id_role));
+
+CREATE TABLE IF NOT EXISTS "groups"(
+id_group varchar(50) primary key,
+name varchar(50),
+count bigint,
+description varchar(50),
+scoreGroup varchar(50),
+status varchar(50));
+
+CREATE TABLE IF NOT EXISTS "competitions"(
+id_competition varchar(50) primary key,
+name varchar(50) unique,
+description varchar(200),
+start date,
+finish date,
+id_criteria varchar(50));
+
 CREATE TABLE IF NOT EXISTS "awards"(
 id_award varchar(50) primary key,
 name varchar(50));
+
+CREATE TABLE IF NOT EXISTS "criteria"(
+id_criteria varchar(50) primary key,
+name varchar(50),
+metrics real,
+get_google varchar(200));
+
+CREATE TABLE IF NOT EXISTS "usergroups"(
+id_user_group varchar(50) primary key,
+id_user varchar(50),
+id_group varchar(50),
+FOREIGN KEY (id_group)  REFERENCES "groups" (id_group),
+FOREIGN KEY (id_user) REFERENCES "users" (id_user));
+
+CREATE TABLE IF NOT EXISTS "groupcompetitions"(
+id_group_competition varchar(50) primary key,
+id_group varchar(50),
+id_competition varchar(50),
+FOREIGN KEY (id_group)  REFERENCES "groups" (id_group),
+FOREIGN KEY (id_competition) REFERENCES "competitions" (id_competition));
 
 CREATE TABLE IF NOT EXISTS "usercompetitions"(
 id_user_competition varchar(50) primary key,
@@ -12,3 +71,7 @@ time_received varchar(50),
 FOREIGN KEY (id_user) REFERENCES "users" (id_user),
 FOREIGN KEY (id_competition)  REFERENCES "competitions" (id_competition),
 FOREIGN KEY (id_award) REFERENCES "awards" (id_award));
+
+CREATE TABLE IF NOT EXISTS "metadata"(
+id_metadata varchar(50) primary key,
+last_synch varchar(50));

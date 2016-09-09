@@ -86,7 +86,7 @@
 
 	<target name="testng" depends="compile-tests, testngdef, test-offline" description="Run the test cases">
 		<mkdir dir="${test.reports}" />
-		<testng outputdir="${test.reports}" classpath="./target/lib/*;./target/classes;./target/test-classes;" useDefaultListeners="true">
+		<testng outputdir="${test.reports}" classpath="./target/lib/*;./target/classes;./target/test-classes;" useDefaultListeners="true" failureProperty="test.failed">
 			<xmlfileset dir="." includes="testng.xml" />
 		</testng>
 	</target>
