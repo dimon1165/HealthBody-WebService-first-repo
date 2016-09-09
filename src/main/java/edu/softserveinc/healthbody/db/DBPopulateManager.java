@@ -48,15 +48,15 @@ public class DBPopulateManager {
     
     public boolean populateDatabaseTables(Connection connection) throws SQLException {
     	boolean result = true;
-		result = result && getInstance().populateRolesTable(connection);
-		result = result && getInstance().populateUsersTable(connection);
-		result = result && getInstance().populateGroupsTable(connection);
-		result = result && getInstance().populateUserGroupsTable(connection);
+//		result = result && getInstance().populateRolesTable(connection);
+//		result = result && getInstance().populateUsersTable(connection);
+//		result = result && getInstance().populateGroupsTable(connection);
+//		result = result && getInstance().populateUserGroupsTable(connection);
 		result = result && getInstance().populateAwardsTable(connection);
-		result = result && getInstance().populateCompetitionsTable(connection);
-		result = result && getInstance().populateCriteriaTable(connection);
-		result = result && getInstance().populateGroupCompetitionsTable(connection);
-		result = result && getInstance().populateMetaDataTable(connection);
+//		result = result && getInstance().populateCompetitionsTable(connection);
+//		result = result && getInstance().populateCriteriaTable(connection);
+//		result = result && getInstance().populateGroupCompetitionsTable(connection);
+//		result = result && getInstance().populateMetaDataTable(connection);
 		result = result && getInstance().populateUserCompetitionsTable(connection);
     	return result;
     }
@@ -292,15 +292,19 @@ public class DBPopulateManager {
 		}
 		return successfulInsert;
 	}
+	
+	
 
 	private boolean populateUserCompetitionsTable(Connection connection) throws SQLException {
+		String UU[] = {"8ea407f4-b735-4efe-82f2-9d246857025a", "524c7c0d-5873-488a-a942-d118cc22cad4", "28f1026a-93bf-4a70-8da9-e30afed8040a", "5975e190-2813-46d8-8464-68a64be41dce", "077f36d6-42fb-42d7-a72b-77f7bdcf1727", "889d8dc4-b659-4611-86a0-a477217234f3", "d7c37438-2b98-4661-bd02-7eea4f71ba4a", "301cf010-fe45-41a9-956f-3432e1c4a204", "9a7b0f7f-5eb5-4383-9e50-5d7b62352c26", "3ae89751-b7ce-4bbd-9c74-d72df80b1277"};
+		String CC[] = {"c5b792b0-7f81-45f5-af16-eaee76b9ee38", "b8953c4f-b548-4bfb-911a-d455d773ddfc", "1783e778-7e07-4e04-aee8-394df6962c28", "3c996082-dfa7-45e5-a849-6dc9bc77aae7", "79280c5b-a49d-4a49-b06d-59a2a47b6cf0", "663139b6-9b79-4dca-a361-7cc40640490a", "503c6ec6-260b-4df1-9fab-f19e4a6af346", "61940ec0-69e3-48b4-9f26-a70f07e1d24f", "29e969da-cb42-46a1-b262-5a476507e98b", "d18795d0-cfae-4927-b5d2-831e0b744b82", "6188483f-e87a-4214-bdf1-a5ad4fa8ba4e", "a0b0f929-467f-450b-af02-b3b673607062", "1a632d39-b137-45dc-90ed-7c724da35604", "395b3bc8-feaf-4043-a6ba-ef35b6acbdb3", "61520fc3-5786-402c-ae4b-85aa1e200c9d", "00c7b04f-580c-45f2-bddf-6d3343318510", "48a4b9a1-a90b-4faa-8761-62fced735df1", "287ac352-2ffe-48de-8ea5-07bb1cfa2068", "62c00c74-af41-449a-a684-b85e6c106e0b", "1cd1c1d1-6a97-4cd4-9933-a601b3ec91ac"};
 		boolean successfulInsert = false;
 		String query = DaoStatementsConstant.UserCompetitionsDBQueries.INSERT.toString();
 		try (PreparedStatement pst = connection.prepareStatement(query)) {
 			for (int j = 0; j < USERCOMPETITIONS; j++) {
 				pst.setString(1, UUID.randomUUID().toString());
-				pst.setString(2, USER_ID[(int)(Math.random() * USERS)]);
-				pst.setString(3, COMPETITION_ID[(int)(Math.random() * COMPETITIONS)]);
+				pst.setString(2, UU[(int)(Math.random() * USERS)]);
+				pst.setString(3, CC[(int)(Math.random() * COMPETITIONS)]);
 				pst.setInt(4, (int)(Math.random() * USERCOMPETITIONS)) ;
 				pst.setString(5, AWARD_ID[(int)(Math.random() * AWARDS)]);
 				pst.setString(6, "time " + j);

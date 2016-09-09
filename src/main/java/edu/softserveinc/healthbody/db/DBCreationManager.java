@@ -122,8 +122,8 @@ public final class DBCreationManager {
 
     public boolean dropAllDatabaseTables(Connection connection) throws SQLException {
 		boolean result = false;
-		String query = "drop TABLE if exists usercompetitions, usergroups, groupcompetitions, roles, " 
-				+ "users, groups, competitions, awards, criteria, metadata CASCADE;";
+		String query = "drop TABLE if exists usercompetitions, " 
+				+ "awards CASCADE;";
 		try (PreparedStatement pst = connection.prepareStatement(query)) {
 			result = pst.execute();
 		} catch (SQLException e) {
