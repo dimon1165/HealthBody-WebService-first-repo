@@ -134,7 +134,7 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 			for (CompetitionsView competitionsView : CompetitionsViewDao.getInstance()
 					.getCompetitionsByGroup(connection, partNumber, partSize, idGroup)) {
 				competitionDTO.add(new CompetitionDTO(competitionsView.getIdCompetition(), competitionsView.getName(),
-						"0", competitionsView.getStart(),
+						competitionsView.getUsersCount().toString(), competitionsView.getStart(),
 						competitionsView.getFinish(), competitionsView.getDescription(), null, new ArrayList<String>(),
 						new ArrayList<String>()));
 			}

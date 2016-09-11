@@ -13,7 +13,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.resources.plugin.version>2.7</maven.resources.plugin.version>
 		<!-- - - - - - Sonar - - - - - -->
-		 <sonar.host.url> http://localhost:9000/ </sonar.host.url>
+		<sonar.host.url> http://localhost:9000/ </sonar.host.url>
 		<!-- - - - - - Java - - - - - -->
 		<jdk.source.version.local>1.7</jdk.source.version.local>
 		<jdk.compiler.version.local>1.7</jdk.compiler.version.local>
@@ -112,6 +112,11 @@
 			<artifactId>google-api-client</artifactId>
 			<version>1.19.1</version>
 		</dependency>
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.9.4</version>
+		</dependency>
 		<!-- Reflection -->
 		<dependency>
 			<groupId>org.reflections</groupId>
@@ -119,15 +124,15 @@
 			<version>0.9.10</version>
 			<exclusions>
 				<exclusion>
-		            <groupId>org.javassist</groupId>
-		            <artifactId>javassist</artifactId>
+					<groupId>org.javassist</groupId>
+					<artifactId>javassist</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
-		    <groupId>org.javassist</groupId>
-		    <artifactId>javassist</artifactId>
-		    <version>3.17.1-GA</version>
+			<groupId>org.javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.17.1-GA</version>
 		</dependency>
 
 	</dependencies>
@@ -151,11 +156,8 @@
 					<warName>HealthBody-WebService</warName>
 				</configuration>
 			</plugin>
-			<!-- <plugin>
-	            <groupId>org.codehaus.mojo</groupId>
-	            <artifactId>sonar-maven-plugin</artifactId>
-	            <version>2.4</version>
-        	</plugin> -->
+			<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>sonar-maven-plugin</artifactId> 
+				<version>2.4</version> </plugin> -->
 			<!--formatter -->
 			<!-- <plugin> <groupId>com.googlecode.maven-java-formatter-plugin</groupId> 
 				<artifactId>maven-java-formatter-plugin</artifactId> <version>0.4</version> 
@@ -170,11 +172,11 @@
 				<failOnViolation>true</failOnViolation> <violationSeverity>warning</violationSeverity> 
 				</configuration> <goals> <goal>check</goal> </goals> </execution> </executions> 
 				</plugin> -->
-				<plugin>
-   					 <groupId>org.codehaus.mojo</groupId>
-   					 <artifactId>sonar-maven-plugin</artifactId>
-   					 <version>2.4</version>
-  				</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>2.4</version>
+			</plugin>
 		</plugins>
 	</build>
 	<profiles>
