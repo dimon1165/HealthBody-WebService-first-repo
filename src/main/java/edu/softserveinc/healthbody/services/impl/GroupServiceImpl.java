@@ -48,7 +48,7 @@ public final class GroupServiceImpl implements IGroupService {
 		try {
 			for (Group group : GroupDao.getInstance().getAll(connection, partNumber, partSize)) {
 				resultGroup.add(new GroupDTO(group.getIdGroup(), group.getName(), group.getCount().toString(),
-						group.getDescription(), group.getScoreGroup(), null, null, null, null));
+						group.getDescription(), group.getScoreGroup(), group.getStatus(), null, null, null));
 			}
 		} catch (QueryNotFoundException | DataBaseReadingException e) {
 			ConnectionManager.getInstance().rollbackTransaction(connection);
