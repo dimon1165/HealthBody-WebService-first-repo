@@ -42,36 +42,36 @@ public class UserServlet extends HttpServlet {
 	@Override
     protected final void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 		
-		/** Get  User's login as parameter from jsp*/
+//		 Get  User's login as parameter from jsp
 		String userLogin = request.getParameter("login");
 		
-		/** Check if requested info from jsp is not null*/
+//		 Check if requested info from jsp is not null
 		if (userLogin != null) {
 			try{
-				/** Get User by his login*/
+//				 Get User by his login
 				UserDTO userDTO = UserProfileServiceImpl.getInstance().get(userLogin);
 					
-					/** Check if user with such login exist's*/
+//					 Check if user with such login exist's
 					if (userDTO == null) {
 						getServletContext().getRequestDispatcher(USER_BAD_REQUEST_PAGE).forward(request, response);
 					}
 			    		else {
-			    				/**Create JAXBElement of type UserDTO and pass it the userDTO object */ 
+//			    				Create JAXBElement of type UserDTO and pass it the userDTO object  
 						    JAXBElement<UserDTO> jaxbElement =  new JAXBElement<UserDTO>(new QName(UserDTO.class.getName()), UserDTO.class, userDTO);
 						    
-						    /**Create a String writer object for writing JAXBElement xml to string */ 
+//						    Create a String writer object for writing JAXBElement xml to string  
 						    StringWriter writer = new StringWriter();
 						    
-						    /**JAXBContext for updating writer*/
+//						    JAXBContext for updating writer
 						    JAXBContext context = JAXBContext.newInstance(UserDTO.class);
 						    			    
-						    /** Converting JAXBElement containing userDTO to xml format*/
+//						     Converting JAXBElement containing userDTO to xml format
 						    context.createMarshaller().marshal(jaxbElement, writer);
 						    
-						    /** Print xml representation of userDTO object into console*/
+//						     Print xml representation of userDTO object into console
 					 	    Log4jWrapper.get().info(writer.toString());
 					 	    
-					 	   /** Transfer xml representation of userDTO object into jsp page*/
+//					 	    Transfer xml representation of userDTO object into jsp page
 							request.setAttribute("data", writer);
 							getServletContext().getRequestDispatcher(USER_VIEW_RESULT_PAGE).forward(request, response);
 
@@ -82,7 +82,7 @@ public class UserServlet extends HttpServlet {
 						}
 		}
 		
-		/** If requested info is null */
+//		 If requested info is null 
 	    else {
 			getServletContext().getRequestDispatcher(USER_VIEW_LOGIN_PAGE).forward(request, response);
 		}	
