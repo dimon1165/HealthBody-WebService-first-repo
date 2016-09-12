@@ -345,7 +345,7 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 			UserCompetitionsDao.getInstance().updateUserCompetition(connection,
 					new UserCompetitions(userCompetition.getIdUserCompetition(), userCompetitions.getIdUser(),
 							userCompetitions.getIdCompetition(), Integer.parseInt(userCompetition.getUserScore()),
-							userCompetitions.getIdAwards(), userCompetitions.getTimeReceived()));
+							userCompetition.getAwardsName(), userCompetition.getTimeReceivedAward()));
 		} catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException e) {
 			ConnectionManager.getInstance().rollbackTransaction(connection);
 			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);

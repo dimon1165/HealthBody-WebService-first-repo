@@ -81,13 +81,13 @@ public final class UserCompetitionsDao extends AbstractDao<UserCompetitions> {
 		boolean result = false;
 		String query = sqlQueries.get(DaoQueries.UPDATE).toString();
 			if (query == null) {
-				throw new QueryNotFoundException(String.format(ErrorConstants.QUERY_NOT_FOUND, DaoQueries.INSERT.name()));
+				throw new QueryNotFoundException(String.format(ErrorConstants.QUERY_NOT_FOUND, DaoQueries.UPDATE.name()));
 			}
 			try (PreparedStatement pst = connection.prepareStatement(query)) {
 				int i = 1;
 				pst.setInt(i++, userCompetition.getUserScore());
-				pst.setString(i++, null);
-				pst.setString(i++, null);
+				pst.setString(i++, userCompetition.getIdAwards());
+				pst.setString(i++, userCompetition.getTimeReceived());
 				pst.setString(i++, userCompetition.getIdUserCompetition());
 				result = pst.execute();
 			} catch (SQLException e) {
