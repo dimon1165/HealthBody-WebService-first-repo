@@ -338,19 +338,24 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 	@Override
 	public void updateUserCompetition(UserCompetitionsDTO userCompetition) throws SQLException, JDBCDriverException,
 			TransactionException, QueryNotFoundException, DataBaseReadingException {
-		Connection connection = ConnectionManager.getInstance().beginTransaction();
-		UserCompetitions userCompetitions = UserCompetitionsDao.getInstance().getByFieldName(connection,
-				userCompetition.getIdUserCompetition());
-		try {
-			UserCompetitionsDao.getInstance().updateUserCompetition(connection,
-					new UserCompetitions(userCompetition.getIdUserCompetition(), userCompetitions.getIdUser(),
-							userCompetitions.getIdCompetition(), Integer.parseInt(userCompetition.getUserScore()),
-							userCompetition.getAwardsName(), userCompetition.getTimeReceivedAward()));
-		} catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException e) {
-			ConnectionManager.getInstance().rollbackTransaction(connection);
-			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
+		if (userCompetition == null) {
+			Log4jWrapper.get().error("You didn't enter userCompetition");
+			throw new IllegalArgumentException();
+		} else {
+			Connection connection = ConnectionManager.getInstance().beginTransaction();
+			UserCompetitions userCompetitions = UserCompetitionsDao.getInstance().getByFieldName(connection,
+					userCompetition.getIdUserCompetition());
+			try {
+				UserCompetitionsDao.getInstance().updateUserCompetition(connection,
+						new UserCompetitions(userCompetitions.getIdUserCompetition(), userCompetitions.getIdUser(),
+								userCompetitions.getIdCompetition(), Integer.parseInt(userCompetition.getUserScore()),
+								userCompetition.getAwardsName(), userCompetition.getTimeReceivedAward()));
+			} catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException e) {
+				ConnectionManager.getInstance().rollbackTransaction(connection);
+				throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
+			}
+			ConnectionManager.getInstance().commitTransaction(connection);
 		}
-		ConnectionManager.getInstance().commitTransaction(connection);
 	}
 
 	@Override

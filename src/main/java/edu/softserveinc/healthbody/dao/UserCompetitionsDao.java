@@ -76,7 +76,7 @@ public final class UserCompetitionsDao extends AbstractDao<UserCompetitions> {
 			}
 		return result;
 	}
-	public boolean updateUserCompetition (final Connection connection,final UserCompetitions userCompetition)
+	public boolean updateUserCompetition (final Connection connection, final UserCompetitions userCompetition)
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		boolean result = false;
 		String query = sqlQueries.get(DaoQueries.UPDATE).toString();
