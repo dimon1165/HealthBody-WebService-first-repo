@@ -2,11 +2,11 @@ package edu.softserveinc.healthbody.dto;
 
 /**
  * Class edu.softserveinc.healthbody.dto.UserCompetitionsDTO is POJO. Used by:
- * edu.softserveinc.healthbody.services.impl.UserProfileServiceImpl
- * edu.softserveinc.healthbody.services.impl.GroupServiceImpl to transfer data
- * about groups, users, users in groups.
+ * edu.softserveinc.healthbody.services.impl.CompetitionsViewServiceImpl
+ * to transfer data
+ * about competitions, users, users in competitions.
  * 
- * @version 9 August 2016
+ * @version 15 September 2016
  * 
  */
 public class UserCompetitionsDTO {
