@@ -1,7 +1,5 @@
 package edu.softserveinc.healthbody.dto;
 
-import java.util.List;
-
 /**
  * Class edu.softserveinc.healthbody.dto.UserCompetitionsDTO is POJO. Used by:
  * edu.softserveinc.healthbody.services.impl.UserProfileServiceImpl
@@ -14,11 +12,11 @@ import java.util.List;
 public class UserCompetitionsDTO {
 
 	private String idUserCompetition;
-	private String login;
-	private List<String> competitions;
+	private String idUser;
+	private String idCompetition;
 	private String userScore;
-	private String awardsName;
-	private String timeReceivedAward;
+	private String idAwards;
+	private String timeReceived;
 
 	/**
 	 * Default constructor of
@@ -30,69 +28,67 @@ public class UserCompetitionsDTO {
 	/**
 	 * Constructor of edu.softserveinc.healthbody.dto.UserCompetitionsDTO
 	 */
-	public UserCompetitionsDTO(final String idUserCompetition, final String login, final List<String> competitions,
-			final String userScore, final String awardsName, final String timeReceivedAward) {
+	public UserCompetitionsDTO(String idUserCompetition, String idUser, String idCompetition, String userScore,
+			String idAwards, String timeReceived) {
 		this.idUserCompetition = idUserCompetition;
-		this.login = login;
-		this.competitions = competitions;
+		this.idUser = idUser;
+		this.idCompetition = idCompetition;
 		this.userScore = userScore;
-		this.awardsName = awardsName;
-		this.timeReceivedAward = timeReceivedAward;
+		this.idAwards = idAwards;
+		this.timeReceived = timeReceived;
 	}
 
 	/**
 	 * Getters
 	 */
-
 	public String getIdUserCompetition() {
 		return idUserCompetition;
 	}
 
-	public String getLogin() {
-		return login;
+	public String getIdUser() {
+		return idUser;
 	}
 
-	public List<String> getCompetitions() {
-		return competitions;
+	public String getIdCompetition() {
+		return idCompetition;
 	}
 
 	public String getUserScore() {
 		return userScore;
 	}
 
-	public String getAwardsName() {
-		return awardsName;
+	public String getIdAwards() {
+		return idAwards;
 	}
 
-	public String getTimeReceivedAward() {
-		return timeReceivedAward;
+	public String getTimeReceived() {
+		return timeReceived;
 	}
-
+	
 	/**
 	 * Setters
 	 */
-
 	public void setIdUserCompetition(String idUserCompetition) {
 		this.idUserCompetition = idUserCompetition;
 	}
 
-	public void setLogin(String login) {
-		this.login = login;
+	public void setIdUser(String idUser) {
+		this.idUser = idUser;
 	}
 
-	public void setCompetitions(List<String> competitions) {
-		this.competitions = competitions;
+	public void setIdCompetition(String idCompetition) {
+		this.idCompetition = idCompetition;
 	}
 
 	public void setUserScore(String userScore) {
 		this.userScore = userScore;
 	}
 
-	public void setAwardsName(String awardsName) {
-		this.awardsName = awardsName;
+	public void setIdAwards(String idAwards) {
+		this.idAwards = idAwards;
 	}
 
-	public void setTimeReceivedAward(String timeReceivedAward) {
-		this.timeReceivedAward = timeReceivedAward;
+	public void setTimeReceived(String timeReceived) {
+		this.timeReceived = timeReceived;
 	}
 }

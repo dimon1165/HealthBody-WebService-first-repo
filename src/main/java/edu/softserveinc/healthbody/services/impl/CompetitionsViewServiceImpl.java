@@ -301,7 +301,7 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 			List<UserCompetitions> list = UserCompetitionsDao.getInstance().getAllbyId(connection, user.getIdUser());
 			for (UserCompetitions usercompetition : list) {
 				if (usercompetition.getIdCompetition().equals(competitionview.getIdCompetition())) {
-					return new UserCompetitionsDTO(usercompetition.getIdUserCompetition(), nameUser, null,
+					return new UserCompetitionsDTO(usercompetition.getIdUserCompetition(), usercompetition.getIdUser(), usercompetition.getIdCompetition(),
 							usercompetition.getUserScore().toString(), usercompetition.getIdAwards(),
 							usercompetition.getTimeReceived());
 				}
@@ -343,13 +343,11 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 			throw new IllegalArgumentException();
 		} else {
 			Connection connection = ConnectionManager.getInstance().beginTransaction();
-			UserCompetitions userCompetitions = UserCompetitionsDao.getInstance().getByFieldName(connection,
-					userCompetition.getIdUserCompetition());
 			try {
 				UserCompetitionsDao.getInstance().updateUserCompetition(connection,
-						new UserCompetitions(userCompetitions.getIdUserCompetition(), userCompetitions.getIdUser(),
-								userCompetitions.getIdCompetition(), Integer.parseInt(userCompetition.getUserScore()),
-								userCompetition.getAwardsName(), userCompetition.getTimeReceivedAward()));
+						new UserCompetitions(userCompetition.getIdUserCompetition(), userCompetition.getIdUser(),
+								userCompetition.getIdCompetition(), Integer.parseInt(userCompetition.getUserScore()),
+								userCompetition.getIdAwards(), userCompetition.getTimeReceived()));
 			} catch (JDBCDriverException | DataBaseReadingException | QueryNotFoundException e) {
 				ConnectionManager.getInstance().rollbackTransaction(connection);
 				throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
