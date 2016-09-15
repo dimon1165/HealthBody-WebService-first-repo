@@ -65,7 +65,7 @@ public final class UserCompetitionsDao extends AbstractDao<UserCompetitions> {
 			try (PreparedStatement pst = connection.prepareStatement(query)) {
 				int i = 1;
 				pst.setString(i++, UUID.randomUUID().toString());
-				pst.setString(i++, user.getId().toString());
+				pst.setString(i++, user.getIdUser().toString());
 				pst.setString(i++, competitionview.getIdCompetition().toString());
 				pst.setInt(i++, 0);
 				pst.setString(i++, null);
