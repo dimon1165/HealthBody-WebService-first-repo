@@ -316,6 +316,26 @@ public class CompetitionsViewServiceImpl implements ICompetitionsViewService {
 	}
 	
 	@Override
+	public List<UserCompetitionsDTO> getAllUserCompetitions ()
+			throws JDBCDriverException, SQLException, TransactionException {
+		List<UserCompetitionsDTO> userCompetitions = new ArrayList<>();
+		Connection connection = ConnectionManager.getInstance().beginTransaction();
+		try {
+			for (UserCompetitions userCompetition : UserCompetitionsDao.getInstance()
+					.viewAll(connection)) {
+				userCompetitions.add(new UserCompetitionsDTO(userCompetition.getIdUserCompetition(), userCompetition.getIdUser(),
+						userCompetition.getIdCompetition(), userCompetition.getUserScore().toString(),
+						userCompetition.getIdAwards(), userCompetition.getTimeReceived()));
+			}
+		} catch (DataBaseReadingException | EmptyResultSetException | CloseStatementException e) {
+			ConnectionManager.getInstance().rollbackTransaction(connection);
+			throw new TransactionException(ErrorConstants.TRANSACTION_ERROR, e);
+		}
+		ConnectionManager.getInstance().commitTransaction(connection);
+		return userCompetitions;
+	}
+	
+	@Override
 	public GroupCompetitionsDTO getGroupCompetition(String idCompetition, String idGroup)
 			throws SQLException, JDBCDriverException, TransactionException {
 		Connection connection = ConnectionManager.getInstance().beginTransaction();

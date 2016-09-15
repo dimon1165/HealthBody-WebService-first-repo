@@ -230,6 +230,7 @@ public class DaoStatementsConstant {
 		GET_BY_ID(DaoQueries.GET_BY_ID, "SELECT id_user_competition, id_user, id_competition, user_score, id_award, time_received FROM usercompetitions WHERE id_user = ?;"),
 		GET_BY_FIELD_NAME(DaoQueries.GET_BY_FIELD_NAME, "SELECT id_user_competition, id_user, id_competition, user_score, id_award, time_received FROM usercompetitions WHERE id_user_competition = ?;"),
 		UPDATE(DaoQueries.UPDATE, "UPDATE usercompetitions SET user_score = ?, id_award = ?, time_received = ? WHERE id_user_competition = ?;"),
+		GET_ALL(DaoQueries.GET_ALL, "SELECT id_user_competition, id_user, id_competition, user_score, id_award, time_received FROM usercompetitions;"),
 		DELETE_USER_FROM_COMPETITION(DaoQueries.DELETE_USER_FROM_COMPETITION, "DELETE FROM usercompetitions WHERE id_user_competition = ?;"),
 		DELETE_BY_ID(DaoQueries.DELETE_BY_ID, "DELETE FROM usercompetitions WHERE id_user = ?;"),
 		DELETE_BY_ID_USER_COMPETITION(DaoQueries.DELETE_BY_ID_USER_COMPETITION, "DELETE FROM usercompetitions WHERE id_user_competition = ?;");

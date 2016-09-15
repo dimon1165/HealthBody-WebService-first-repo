@@ -64,4 +64,6 @@ public interface ICompetitionsViewService {
 	List<AwardDTO> getAllAwards()
 			throws JDBCDriverException, SQLException, TransactionException;
 
+	List<UserCompetitionsDTO> getAllUserCompetitions() throws JDBCDriverException, SQLException, TransactionException;
+
 }

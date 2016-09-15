@@ -2,7 +2,6 @@ package edu.softserveinc.healthbody.webservice;
 
 import java.sql.SQLException;
 import java.util.List;
-
 import javax.jws.WebService;
 
 import edu.softserveinc.healthbody.dto.AwardDTO;
@@ -434,6 +433,16 @@ public class HealthBodyServiceImpl implements HealthBodyService {
 			return CompetitionsViewServiceImpl.getInstance().getAllAwards();
 		} catch (SQLException | JDBCDriverException | TransactionException e) {
 			Log4jWrapper.get().error("get all awards failed ", e);
+		}
+		return null;
+	}
+	
+	@Override
+	public final List<UserCompetitionsDTO> getAllUserCompetitions() {
+		try {
+			return CompetitionsViewServiceImpl.getInstance().getAllUserCompetitions();
+		} catch (SQLException | JDBCDriverException | TransactionException e) {
+			Log4jWrapper.get().error("get all userCompetitions failed ", e);
 		}
 		return null;
 	}

@@ -1,7 +1,6 @@
 package edu.softserveinc.healthbody.webservice;
 
 import java.util.List;
-
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 
@@ -119,4 +118,7 @@ public interface HealthBodyService {
 	
 	@WebMethod
 	List<AwardDTO> getAllAwards();
+	
+	@WebMethod
+	List<UserCompetitionsDTO> getAllUserCompetitions();
 }
