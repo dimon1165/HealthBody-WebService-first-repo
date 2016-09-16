@@ -51,8 +51,8 @@ public final class UserCompetitionsDao extends AbstractDao<UserCompetitions> {
 				args[UserCompetitionsCard.IDUSER] == null ? UUID.randomUUID().toString() : args[UserCompetitionsCard.IDUSER],
 				args[UserCompetitionsCard.IDCOMPETITION] == null ? UUID.randomUUID().toString() : args[UserCompetitionsCard.IDCOMPETITION],
 				Integer.parseInt(args[UserCompetitionsCard.USERSCORE] == null ? "0" : args[UserCompetitionsCard.USERSCORE]),
-				args[UserCompetitionsCard.IDAWARD] == null ? new String() : args[UserCompetitionsCard.IDAWARD],
-				args[UserCompetitionsCard.TIMERECEIVED] == null ? new String() : args[UserCompetitionsCard.TIMERECEIVED]);
+				args[UserCompetitionsCard.IDAWARD] == null ? null : args[UserCompetitionsCard.IDAWARD],
+				args[UserCompetitionsCard.TIMERECEIVED] == null ? null : args[UserCompetitionsCard.TIMERECEIVED]);
 	}
 	
 	public boolean createUserCompetition (final Connection connection, final User user, final CompetitionsView competitionview)
