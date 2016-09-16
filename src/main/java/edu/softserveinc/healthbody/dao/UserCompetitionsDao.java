@@ -51,7 +51,7 @@ public final class UserCompetitionsDao extends AbstractDao<UserCompetitions> {
 				args[UserCompetitionsCard.IDUSER] == null ? UUID.randomUUID().toString() : args[UserCompetitionsCard.IDUSER],
 				args[UserCompetitionsCard.IDCOMPETITION] == null ? UUID.randomUUID().toString() : args[UserCompetitionsCard.IDCOMPETITION],
 				Integer.parseInt(args[UserCompetitionsCard.USERSCORE] == null ? "0" : args[UserCompetitionsCard.USERSCORE]),
-				args[UserCompetitionsCard.IDAWARD] == null ? UUID.randomUUID().toString() : args[UserCompetitionsCard.IDAWARD],
+				args[UserCompetitionsCard.IDAWARD] == null ? new String() : args[UserCompetitionsCard.IDAWARD],
 				args[UserCompetitionsCard.TIMERECEIVED] == null ? new String() : args[UserCompetitionsCard.TIMERECEIVED]);
 	}
 	
@@ -76,6 +76,7 @@ public final class UserCompetitionsDao extends AbstractDao<UserCompetitions> {
 			}
 		return result;
 	}
+	
 	public boolean updateUserCompetition (final Connection connection, final UserCompetitions userCompetition)
 			throws QueryNotFoundException, JDBCDriverException, DataBaseReadingException {
 		boolean result = false;
